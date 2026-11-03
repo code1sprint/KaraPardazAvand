@@ -3,6 +3,12 @@
 import { NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import {
+  IconAlignLeft,
+  IconAlignCenter,
+  IconAlignRight,
+  IconTrash,
+} from "./EditorIcons";
 
 export function ImageNodeView({
   node,
@@ -50,34 +56,37 @@ export function ImageNodeView({
             type="button"
             onClick={() => updateAttributes({ align: "left" })}
             className={cn(
-              "px-1.5 py-0.5 rounded font-bold transition-colors",
+              "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
               align === "left" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
             )}
             title="چپ‌چین با پیچش متن در سمت راست"
           >
-            ⬅ چپ (متن راست)
+            <IconAlignLeft className="size-3" />
+            <span>چپ</span>
           </button>
           <button
             type="button"
             onClick={() => updateAttributes({ align: "center" })}
             className={cn(
-              "px-1.5 py-0.5 rounded font-bold transition-colors",
+              "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
               align === "center" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
             )}
             title="وسط‌چین بدون پیچش متن"
           >
-            ⏺ وسط
+            <IconAlignCenter className="size-3" />
+            <span>وسط</span>
           </button>
           <button
             type="button"
             onClick={() => updateAttributes({ align: "right" })}
             className={cn(
-              "px-1.5 py-0.5 rounded font-bold transition-colors",
+              "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
               align === "right" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
             )}
             title="راست‌چین با پیچش متن در سمت چپ"
           >
-            راست (متن چپ) ➡️
+            <IconAlignRight className="size-3" />
+            <span>راست</span>
           </button>
         </div>
 
@@ -103,10 +112,10 @@ export function ImageNodeView({
         <button
           type="button"
           onClick={deleteNode}
-          className="rounded-lg border border-line bg-bg px-1.5 py-0.5 text-xs text-muted hover:text-red-500 hover:border-red-300"
+          className="rounded-lg border border-line bg-bg p-1 text-xs text-muted hover:text-red-500 hover:border-red-300 flex items-center justify-center"
           title="حذف تصویر"
         >
-          ×
+          <IconTrash className="size-3" />
         </button>
       </div>
 

@@ -3,6 +3,14 @@
 import { NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import {
+  IconAlignRight,
+  IconAlignCenter,
+  IconAlignLeft,
+  IconFullWidth,
+  IconPencil,
+  IconTrash,
+} from "./EditorIcons";
 
 export function CtaNodeView({
   node,
@@ -54,21 +62,22 @@ export function CtaNodeView({
         {/* Layout Alignment Toggles */}
         <div className="flex items-center gap-0.5 bg-bg p-0.5 rounded-lg border border-line">
           {[
-            { id: "right", label: "راست ➡️" },
-            { id: "center", label: "⏺ وسط" },
-            { id: "left", label: "⬅ چپ" },
-            { id: "full", label: "↔ کامل" },
+            { id: "right", label: "راست", icon: <IconAlignRight className="size-3" /> },
+            { id: "center", label: "وسط", icon: <IconAlignCenter className="size-3" /> },
+            { id: "left", label: "چپ", icon: <IconAlignLeft className="size-3" /> },
+            { id: "full", label: "کامل", icon: <IconFullWidth className="size-3" /> },
           ].map((opt) => (
             <button
               key={opt.id}
               type="button"
               onClick={() => updateAttributes({ align: opt.id })}
               className={cn(
-                "px-1.5 py-0.5 rounded font-bold transition-colors text-[11px]",
+                "px-1.5 py-0.5 rounded font-bold transition-colors text-[11px] inline-flex items-center gap-1",
                 align === opt.id ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
               )}
             >
-              {opt.label}
+              {opt.icon}
+              <span>{opt.label}</span>
             </button>
           ))}
         </div>
@@ -103,17 +112,18 @@ export function CtaNodeView({
           className="rounded-lg border border-line bg-bg px-2 py-0.5 text-xs font-bold text-muted hover:text-blue hover:border-blue/40 transition-colors flex items-center gap-1"
           title="ویرایش عنوان یا لینک دکمه"
         >
-          ✏ ویرایش
+          <IconPencil className="size-3" />
+          <span>ویرایش</span>
         </button>
 
         {/* Delete Button */}
         <button
           type="button"
           onClick={deleteNode}
-          className="rounded-lg border border-line bg-bg px-2 py-0.5 text-xs font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors"
+          className="rounded-lg border border-line bg-bg p-1 text-xs font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors flex items-center justify-center"
           title="حذف دکمه"
         >
-          ×
+          <IconTrash className="size-3" />
         </button>
       </div>
 

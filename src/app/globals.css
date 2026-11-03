@@ -186,6 +186,30 @@ body:has(.admin-root) [data-skip-link] {
   display: none !important;
 }
 
+/* Admin Panel scroll isolation & custom scrollbar */
+.admin-root * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.admin-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-root ::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 9999px;
+}
+
+.admin-root ::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
 /* Editor & Public Prose Enhancements */
 .callout {
   margin: 1.5rem 0;

@@ -42,7 +42,7 @@ export function ButtonLink({
     <IntlLink
       href={href}
       className={cn(
-        "inline-flex items-center justify-center gap-2.5 rounded-pill border font-bold no-underline transition-[transform,box-shadow,background-color,border-color] duration-[var(--motion-hover)]",
+        "inline-flex shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-pill border font-bold no-underline transition-[transform,box-shadow,background-color,border-color] duration-[var(--motion-hover)]",
         variants[variant],
         sizes[size],
         className,

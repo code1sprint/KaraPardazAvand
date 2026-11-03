@@ -19,7 +19,7 @@ export function LanguageSwitcher({ className, onNavigate }: Props) {
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1 rounded-pill border border-line bg-panel p-1",
+        "inline-flex shrink-0 items-center gap-1 rounded-pill border border-line bg-panel p-1",
         className,
       )}
       role="group"
@@ -35,7 +35,7 @@ export function LanguageSwitcher({ className, onNavigate }: Props) {
             hrefLang={loc}
             onClick={onNavigate}
             className={cn(
-              "inline-flex h-11 min-w-11 items-center justify-center rounded-pill px-2.5 text-sm font-medium transition-colors",
+              "inline-flex h-11 min-w-11 shrink-0 items-center justify-center whitespace-nowrap rounded-pill px-2.5 text-sm font-medium transition-colors",
               active
                 ? "bg-blue-soft font-semibold text-text"
                 : "text-muted hover:bg-blue-soft hover:text-text",

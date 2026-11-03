@@ -2,6 +2,30 @@
 
 import type { Editor } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import {
+  IconBold,
+  IconItalic,
+  IconCode,
+  IconCodeBlock,
+  IconBulletList,
+  IconOrderedList,
+  IconQuote,
+  IconInfo,
+  IconAlertTriangle,
+  IconLayers,
+  IconTable,
+  IconLink,
+  IconImage,
+  IconVideo,
+  IconCta,
+  IconMinus,
+  IconEraser,
+  IconUndo,
+  IconRedo,
+  IconPlus,
+  IconTrash,
+  IconClose,
+} from "./EditorIcons";
 
 interface TiptapToolbarProps {
   editor: Editor | null;
@@ -62,7 +86,7 @@ export function TiptapToolbar({
 
   const btnClass = (isActive: boolean) =>
     cn(
-      "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-colors border select-none",
+      "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-colors border select-none inline-flex items-center gap-1.5",
       isActive
         ? "bg-blue/15 text-blue border-blue/40 font-bold"
         : "text-muted hover:text-text hover:bg-bg/60 border-transparent",
@@ -99,7 +123,7 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("bold"))}
         title="پررنگ (Bold)"
       >
-        B
+        <IconBold className="size-3.5" />
       </button>
       <button
         type="button"
@@ -107,7 +131,7 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("italic"))}
         title="مورب (Italic)"
       >
-        I
+        <IconItalic className="size-3.5" />
       </button>
       <button
         type="button"
@@ -115,7 +139,7 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("code"))}
         title="کد درون‌متنی (Inline Code)"
       >
-        `کد`
+        <IconCode className="size-3.5" />
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />
@@ -127,7 +151,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("bulletList"))}
         title="لیست نشانه‌دار"
       >
-        • فهرست
+        <IconBulletList className="size-3.5" />
+        <span>فهرست</span>
       </button>
       <button
         type="button"
@@ -135,7 +160,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("orderedList"))}
         title="لیست شماره‌دار"
       >
-        ۱. لیست
+        <IconOrderedList className="size-3.5" />
+        <span>لیست</span>
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />
@@ -147,7 +173,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("blockquote"))}
         title="نقل‌قول (Quote)"
       >
-        ❝ نقل‌قول
+        <IconQuote className="size-3.5" />
+        <span>نقل‌قول</span>
       </button>
       <button
         type="button"
@@ -155,7 +182,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("codeBlock"))}
         title="بلوک کد (LTR Code Block)"
       >
-        &lt;/&gt; کد LTR
+        <IconCodeBlock className="size-3.5" />
+        <span>کد LTR</span>
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />
@@ -167,7 +195,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("callout", { type: "note" }))}
         title="کادر نکته (Note)"
       >
-        ℹ نکته
+        <IconInfo className="size-3.5" />
+        <span>نکته</span>
       </button>
       <button
         type="button"
@@ -175,7 +204,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("callout", { type: "warning" }))}
         title="کادر هشدار (Warning)"
       >
-        ⚠ هشدار
+        <IconAlertTriangle className="size-3.5 text-orange" />
+        <span>هشدار</span>
       </button>
       <button
         type="button"
@@ -198,7 +228,8 @@ export function TiptapToolbar({
         className={btnClass(false)}
         title="ایجاد کادر تو در تو (Nested Container)"
       >
-        + کادر تو در تو
+        <IconLayers className="size-3.5" />
+        <span>کادر تو در تو</span>
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />
@@ -216,7 +247,8 @@ export function TiptapToolbar({
         className={btnClass(isTableActive)}
         title="درج جدول ۳×۳"
       >
-        ▦ جدول
+        <IconTable className="size-3.5" />
+        <span>جدول</span>
       </button>
 
       {isTableActive && (
@@ -224,42 +256,47 @@ export function TiptapToolbar({
           <button
             type="button"
             onClick={() => editor.chain().focus().addColumnAfter().run()}
-            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text"
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text inline-flex items-center gap-1"
             title="افزودن ستون"
           >
-            + ستون
+            <IconPlus className="size-2.5" />
+            <span>ستون</span>
           </button>
           <button
             type="button"
             onClick={() => editor.chain().focus().deleteColumn().run()}
-            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500"
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500 inline-flex items-center gap-1"
             title="حذف ستون"
           >
-            - ستون
+            <IconTrash className="size-2.5" />
+            <span>ستون</span>
           </button>
           <button
             type="button"
             onClick={() => editor.chain().focus().addRowAfter().run()}
-            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text"
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text inline-flex items-center gap-1"
             title="افزودن سطر"
           >
-            + سطر
+            <IconPlus className="size-2.5" />
+            <span>سطر</span>
           </button>
           <button
             type="button"
             onClick={() => editor.chain().focus().deleteRow().run()}
-            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500"
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500 inline-flex items-center gap-1"
             title="حذف سطر"
           >
-            - سطر
+            <IconTrash className="size-2.5" />
+            <span>سطر</span>
           </button>
           <button
             type="button"
             onClick={() => editor.chain().focus().deleteTable().run()}
-            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500 font-bold"
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500 font-bold inline-flex items-center gap-1"
             title="حذف کل جدول"
           >
-            × جدول
+            <IconClose className="size-2.5" />
+            <span>حذف جدول</span>
           </button>
         </div>
       )}
@@ -273,7 +310,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("link"))}
         title="افزودن / ویرایش لینک"
       >
-        🔗 لینک
+        <IconLink className="size-3.5" />
+        <span>لینک</span>
       </button>
       <button
         type="button"
@@ -281,7 +319,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("image"))}
         title="درج و مرور تصویر (از سیستم یا کتابخانه)"
       >
-        🖼 عکس
+        <IconImage className="size-3.5" />
+        <span>عکس</span>
       </button>
       <button
         type="button"
@@ -289,7 +328,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("video"))}
         title="درج و مرور ویدیو (از سیستم یا لینک آپارات / یوتیوب)"
       >
-        🎬 ویدیو
+        <IconVideo className="size-3.5" />
+        <span>ویدیو</span>
       </button>
       <button
         type="button"
@@ -297,7 +337,8 @@ export function TiptapToolbar({
         className={btnClass(editor.isActive("inlineCta"))}
         title="درج دکمه اقدام (CTA Button)"
       >
-        🔘 دکمه CTA
+        <IconCta className="size-3.5" />
+        <span>دکمه CTA</span>
       </button>
       <button
         type="button"
@@ -305,7 +346,8 @@ export function TiptapToolbar({
         className={btnClass(false)}
         title="خط جداکننده (Divider)"
       >
-        ― خط
+        <IconMinus className="size-3.5" />
+        <span>خط</span>
       </button>
 
       {/* Persian ZWNJ Button */}
@@ -324,10 +366,11 @@ export function TiptapToolbar({
       <button
         type="button"
         onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
-        className="px-2 py-1 text-xs text-muted hover:text-red-500 transition-colors"
+        className="px-2 py-1 text-xs text-muted hover:text-red-500 transition-colors inline-flex items-center gap-1"
         title="پاکسازی تمام قالب‌بندی‌ها"
       >
-        🧹 پاکسازی
+        <IconEraser className="size-3.5" />
+        <span>پاکسازی</span>
       </button>
 
       {/* Undo / Redo */}
@@ -336,19 +379,19 @@ export function TiptapToolbar({
           type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
-          className="px-2 py-1 text-xs text-muted hover:text-text disabled:opacity-30 disabled:pointer-events-none rounded"
+          className="p-1.5 text-xs text-muted hover:text-text disabled:opacity-30 disabled:pointer-events-none rounded hover:bg-bg/60 transition-colors"
           title="بازگشت (Undo)"
         >
-          ↶
+          <IconUndo className="size-3.5" />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
-          className="px-2 py-1 text-xs text-muted hover:text-text disabled:opacity-30 disabled:pointer-events-none rounded"
+          className="p-1.5 text-xs text-muted hover:text-text disabled:opacity-30 disabled:pointer-events-none rounded hover:bg-bg/60 transition-colors"
           title="انجام مجدد (Redo)"
         >
-          ↷
+          <IconRedo className="size-3.5" />
         </button>
       </div>
     </div>

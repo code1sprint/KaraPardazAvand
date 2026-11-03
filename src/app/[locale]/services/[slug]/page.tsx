@@ -25,6 +25,7 @@ import {
   pickLocalized,
   services,
 } from "@/content/services";
+import { getServiceDetail } from "@/lib/services";
 import { getSiteUrl } from "@/content/site";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
@@ -85,7 +86,7 @@ async function ServiceDetailContent({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const service = getServiceBySlug(slug);
+  const service = await getServiceDetail(slug);
   if (!service) {
     notFound();
   }
@@ -272,6 +273,25 @@ async function ServiceDetailContent({ params }: Props) {
         serviceSlug={service.slug}
         relatedSlugs={service.relatedProjects}
       />
+
+      {service.deepDiveHtml && (
+        <Section id="service-deep-dive" aria-labelledby="service-deep-dive-heading">
+          <Container narrow>
+            <Reveal>
+              <Eyebrow>{appLocale === "fa" ? "تحلیل فنی و معماری" : "Technical Deep-Dive"}</Eyebrow>
+              <Heading as={2} id="service-deep-dive-heading" className="mt-2">
+                {appLocale === "fa"
+                  ? "ملاحظات معماری و جزییات پیاده‌سازی"
+                  : "Architecture & Implementation Notes"}
+              </Heading>
+            </Reveal>
+            <div
+              className="prose prose-slate max-w-none mt-8 text-text"
+              dangerouslySetInnerHTML={{ __html: service.deepDiveHtml }}
+            />
+          </Container>
+        </Section>
+      )}
 
       <Section id="service-faq" aria-labelledby="service-faq-heading">
         <Container narrow>

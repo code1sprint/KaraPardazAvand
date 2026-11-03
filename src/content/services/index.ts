@@ -22,6 +22,10 @@ export type {
   ServiceSystemMap,
 } from "@/lib/content";
 
+export type ServiceDetail = Service & {
+  deepDiveHtml?: string;
+};
+
 /**
  * Service catalog — add a file under this folder and register it here.
  * Nav dropdown, bento tiles, sitemap and `/services/[slug]` all read from this list.

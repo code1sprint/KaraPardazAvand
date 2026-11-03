@@ -121,7 +121,7 @@ export function ServicesMenu({
         ref={triggerRef}
         type="button"
         className={cn(
-          "inline-flex min-h-11 items-center gap-2 rounded-pill text-sm font-medium transition-colors",
+          "inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-pill text-sm font-medium transition-colors",
           density === "nav"
             ? "px-2 py-2 text-muted hover:text-text"
             : "w-full justify-start px-3 py-3 text-base text-text",

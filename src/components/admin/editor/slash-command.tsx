@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Extension } from "@tiptap/core";
 import Suggestion, {
   type SuggestionProps,
@@ -6,11 +7,25 @@ import Suggestion, {
 import { ReactRenderer } from "@tiptap/react";
 import type { Editor, Range } from "@tiptap/core";
 import { SlashCommandList, type SlashCommandListRef } from "./SlashCommandList";
+import {
+  IconCodeBlock,
+  IconTable,
+  IconInfo,
+  IconAlertTriangle,
+  IconLayers,
+  IconImage,
+  IconVideo,
+  IconBulletList,
+  IconOrderedList,
+  IconQuote,
+  IconMinus,
+  IconCta,
+} from "./EditorIcons";
 
 export interface CommandItem {
   title: string;
   description: string;
-  icon: string;
+  icon: ReactNode;
   command: (params: { editor: Editor; range: Range }) => void;
 }
 
@@ -18,7 +33,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "تیتر اصلی (H2)",
     description: "بخش‌بندی اصلی با سایز بزرگ",
-    icon: "H2",
+    icon: <span className="font-bold text-xs">H2</span>,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setNode("heading", { level: 2 }).run();
     },
@@ -26,7 +41,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "تیتر فرعی (H3)",
     description: "زیربخش‌های مقاله",
-    icon: "H3",
+    icon: <span className="font-bold text-xs">H3</span>,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
     },
@@ -34,7 +49,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "بلوک کد ترمینال LTR",
     description: "کدنویسی فنی با انتخاب زبان و کپی",
-    icon: "</>",
+    icon: <IconCodeBlock className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
     },
@@ -42,7 +57,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "جدول اطلاعاتی",
     description: "درج جدول ۳ در ۳ برای مقایسه و داده‌ها",
-    icon: "▦",
+    icon: <IconTable className="size-4" />,
     command: ({ editor, range }) => {
       editor
         .chain()
@@ -55,7 +70,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "کادر نکته (Note)",
     description: "کادر رنگی آبی برای توضیحات کلیدی",
-    icon: "ℹ",
+    icon: <IconInfo className="size-4 text-blue" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setCallout({ type: "note" }).run();
     },
@@ -63,7 +78,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "کادر هشدار (Warning)",
     description: "کادر نارنجی برای نکات احتیاطی",
-    icon: "⚠",
+    icon: <IconAlertTriangle className="size-4 text-orange" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setCallout({ type: "warning" }).run();
     },
@@ -71,7 +86,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "کادر تو در تو (Nested Container)",
     description: "ایجاد کادر داخل کادر با استایل چندلایه",
-    icon: "❐",
+    icon: <IconLayers className="size-4" />,
     command: ({ editor, range }) => {
       editor
         .chain()
@@ -93,7 +108,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "تصویر (Image Browser)",
     description: "آپلود و مرور فایل از سیستم یا کتابخانه",
-    icon: "🖼",
+    icon: <IconImage className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run();
       if (typeof window !== "undefined") {
@@ -106,7 +121,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "ویدیو (Video Browser & Embed)",
     description: "آپلود فایل ویدیو یا پخش از آپارات / یوتیوب",
-    icon: "🎬",
+    icon: <IconVideo className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run();
       if (typeof window !== "undefined") {
@@ -119,7 +134,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "فهرست نشانه‌دار",
     description: "لیست ترتیبی با بولت",
-    icon: "•",
+    icon: <IconBulletList className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleBulletList().run();
     },
@@ -127,7 +142,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "فهرست شماره‌دار",
     description: "لیست ترتیبی عددی",
-    icon: "۱.",
+    icon: <IconOrderedList className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleOrderedList().run();
     },
@@ -135,7 +150,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "نقل‌قول (Quote)",
     description: "برجسته کردن متن یا گفتاورد",
-    icon: "❝",
+    icon: <IconQuote className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleBlockquote().run();
     },
@@ -143,7 +158,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "خط جداکننده",
     description: "تفکیک بصری افقی بین بخش‌ها",
-    icon: "―",
+    icon: <IconMinus className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setHorizontalRule().run();
     },
@@ -151,7 +166,7 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   {
     title: "دکمه اقدام (CTA)",
     description: "درج دکمه ارتباط، رزرو جلسه یا لینک به خدمات و اسلاگ‌ها",
-    icon: "🔘",
+    icon: <IconCta className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run();
       if (typeof window !== "undefined") {
@@ -164,81 +179,101 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
 export const SlashCommandExtension = Extension.create({
   name: "slashCommand",
 
+  addOptions() {
+    return {
+      suggestion: {
+        char: "/",
+        command: ({
+          editor,
+          range,
+          props,
+        }: {
+          editor: Editor;
+          range: Range;
+          props: CommandItem;
+        }) => {
+          props.command({ editor, range });
+        },
+      },
+    };
+  },
+
   addProseMirrorPlugins() {
     return [
       Suggestion({
         editor: this.editor,
-        char: "/",
+        ...this.options.suggestion,
         items: ({ query }: { query: string }) => {
-          return SUGGESTION_ITEMS.filter(
-            (item) =>
+          return SUGGESTION_ITEMS.filter((item) => {
+            if (!query) return true;
+            return (
               item.title.toLowerCase().includes(query.toLowerCase()) ||
-              item.description.toLowerCase().includes(query.toLowerCase()),
-          );
+              item.description.toLowerCase().includes(query.toLowerCase())
+            );
+          });
         },
         render: () => {
           let component: ReactRenderer<SlashCommandListRef> | null = null;
-          let popup: HTMLDivElement | null = null;
-
-          const updatePosition = (props: SuggestionProps<CommandItem>) => {
-            if (!popup) return;
-            const rect = props.clientRect?.();
-            if (!rect) return;
-
-            const scrollX = window.scrollX;
-            const scrollY = window.scrollY;
-
-            popup.style.position = "absolute";
-            popup.style.left = `${rect.left + scrollX}px`;
-            popup.style.top = `${rect.bottom + scrollY + 8}px`;
-            popup.style.zIndex = "9999";
-          };
+          let popupEl: HTMLDivElement | null = null;
 
           return {
             onStart: (props: SuggestionProps<CommandItem>) => {
-              popup = document.createElement("div");
-              document.body.appendChild(popup);
-
               component = new ReactRenderer(SlashCommandList, {
-                props: {
-                  items: props.items,
-                  command: (item: CommandItem) => {
-                    item.command({ editor: props.editor, range: props.range });
-                  },
-                },
+                props,
                 editor: props.editor,
               });
 
-              popup.appendChild(component.element);
-              updatePosition(props);
+              if (!props.clientRect) {
+                return;
+              }
+
+              popupEl = document.createElement("div");
+              popupEl.style.position = "absolute";
+              popupEl.style.zIndex = "9999";
+              document.body.appendChild(popupEl);
+
+              const rect = props.clientRect();
+              if (rect && popupEl) {
+                popupEl.style.top = `${rect.bottom + window.scrollY + 8}px`;
+                popupEl.style.left = `${rect.left + window.scrollX}px`;
+              }
+
+              if (popupEl && component.element) {
+                popupEl.appendChild(component.element);
+              }
             },
 
-            onUpdate: (props: SuggestionProps<CommandItem>) => {
-              component?.updateProps({
-                items: props.items,
-                command: (item: CommandItem) => {
-                  item.command({ editor: props.editor, range: props.range });
-                },
-              });
-              updatePosition(props);
+            onUpdate(props: SuggestionProps<CommandItem>) {
+              component?.updateProps(props);
+
+              if (!props.clientRect || !popupEl) {
+                return;
+              }
+
+              const rect = props.clientRect();
+              if (rect) {
+                popupEl.style.top = `${rect.bottom + window.scrollY + 8}px`;
+                popupEl.style.left = `${rect.left + window.scrollX}px`;
+              }
             },
 
-            onKeyDown: (props: SuggestionKeyDownProps) => {
+            onKeyDown(props: SuggestionKeyDownProps) {
               if (props.event.key === "Escape") {
-                popup?.remove();
+                if (popupEl && popupEl.parentNode) {
+                  popupEl.parentNode.removeChild(popupEl);
+                }
                 component?.destroy();
-                popup = null;
-                component = null;
                 return true;
               }
+
               return component?.ref?.onKeyDown(props) ?? false;
             },
 
-            onExit: () => {
-              popup?.remove();
+            onExit() {
+              if (popupEl && popupEl.parentNode) {
+                popupEl.parentNode.removeChild(popupEl);
+              }
               component?.destroy();
-              popup = null;
-              component = null;
             },
           };
         },

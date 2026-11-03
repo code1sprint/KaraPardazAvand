@@ -3,6 +3,17 @@
 import { useState, useEffect, useRef } from "react";
 import type { MediaItem } from "@/app/api/admin/media/route";
 import { cn } from "@/lib/cn";
+import {
+  IconClose,
+  IconImage,
+  IconVideo,
+  IconUpload,
+  IconSpinner,
+  IconAlertTriangle,
+  IconAlignLeft,
+  IconAlignCenter,
+  IconAlignRight,
+} from "./EditorIcons";
 
 export interface MediaInsertParams {
   src: string;
@@ -160,9 +171,9 @@ export function MediaModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-line p-1.5 text-muted hover:text-text hover:bg-bg transition-colors"
+            className="rounded-xl border border-line p-1.5 text-muted hover:text-text hover:bg-bg transition-colors flex items-center justify-center"
           >
-            ✕
+            <IconClose className="size-4" />
           </button>
         </div>
 
@@ -174,21 +185,23 @@ export function MediaModal({
               type="button"
               onClick={() => setMediaType("image")}
               className={cn(
-                "px-3 py-1 rounded-lg transition-colors",
+                "px-3 py-1 rounded-lg transition-colors inline-flex items-center gap-1.5",
                 mediaType === "image" ? "bg-panel text-blue shadow-sm font-black" : "text-muted",
               )}
             >
-              🖼 تصویر
+              <IconImage className="size-3.5" />
+              <span>تصویر</span>
             </button>
             <button
               type="button"
               onClick={() => setMediaType("video")}
               className={cn(
-                "px-3 py-1 rounded-lg transition-colors",
+                "px-3 py-1 rounded-lg transition-colors inline-flex items-center gap-1.5",
                 mediaType === "video" ? "bg-panel text-blue shadow-sm font-black" : "text-muted",
               )}
             >
-              🎬 ویدیو
+              <IconVideo className="size-3.5" />
+              <span>ویدیو</span>
             </button>
           </div>
 
@@ -247,8 +260,12 @@ export function MediaModal({
                   }
                 }}
               />
-              <div className="h-12 w-12 rounded-2xl bg-blue/10 text-blue flex items-center justify-center text-xl font-bold">
-                {uploading ? "⏳" : "📁"}
+              <div className="h-12 w-12 rounded-2xl bg-blue/10 text-blue flex items-center justify-center font-bold">
+                {uploading ? (
+                  <IconSpinner className="size-6 animate-spin text-blue" />
+                ) : (
+                  <IconUpload className="size-6 text-blue" />
+                )}
               </div>
               <div>
                 <p className="text-xs font-bold text-text">
@@ -263,8 +280,9 @@ export function MediaModal({
             </div>
 
             {uploadError && (
-              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20">
-                ⚠️ {uploadError}
+              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20 inline-flex items-center gap-1.5 w-full">
+                <IconAlertTriangle className="size-4 text-red-500 shrink-0" />
+                <span>{uploadError}</span>
               </div>
             )}
           </div>
@@ -315,7 +333,7 @@ export function MediaModal({
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span className="text-xl">🎬</span>
+                          <IconVideo className="size-6 text-muted" />
                         )}
                       </div>
                       <div className="text-[10px] font-bold text-text truncate">
@@ -356,7 +374,7 @@ export function MediaModal({
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={selectedUrl} alt="" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-xl">🎬</span>
+                  <IconVideo className="size-6 text-muted" />
                 )}
               </div>
               <div className="min-w-0 flex-1">
@@ -382,25 +400,27 @@ export function MediaModal({
                       if (selectedWidth === "100%") setSelectedWidth("50%");
                     }}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
                       selectedAlign === "left"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    ⬅ چپ (متن راست)
+                    <IconAlignLeft className="size-3" />
+                    <span>چپ (متن راست)</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setSelectedAlign("center")}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
                       selectedAlign === "center"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    ⏺ وسط‌چین
+                    <IconAlignCenter className="size-3" />
+                    <span>وسط‌چین</span>
                   </button>
                   <button
                     type="button"
@@ -409,13 +429,14 @@ export function MediaModal({
                       if (selectedWidth === "100%") setSelectedWidth("50%");
                     }}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
                       selectedAlign === "right"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    راست (متن چپ) ➡️
+                    <IconAlignRight className="size-3" />
+                    <span>راست (متن چپ)</span>
                   </button>
                 </div>
               </div>

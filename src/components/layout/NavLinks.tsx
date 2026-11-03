@@ -33,7 +33,7 @@ export function NavLinks({
     <ul
       className={cn(
         orientation === "horizontal"
-          ? "flex flex-nowrap items-center gap-3 lg:gap-5"
+          ? "flex flex-nowrap items-center gap-3 lg:gap-3.5 xl:gap-5"
           : "flex flex-col gap-1",
         className,
       )}
@@ -41,7 +41,10 @@ export function NavLinks({
       {primaryNav.map((item) => {
         if (item.id === "services" && withServicesMenu) {
           return (
-            <li key={item.id} className={orientation === "vertical" ? "w-full" : undefined}>
+            <li
+              key={item.id}
+              className={orientation === "vertical" ? "w-full" : "shrink-0"}
+            >
               <ServicesMenu
                 density={density}
                 onNavigate={onNavigate}
@@ -53,12 +56,15 @@ export function NavLinks({
         const active = isNavActive(pathname, item.href);
 
         return (
-          <li key={item.id}>
+          <li
+            key={item.id}
+            className={orientation === "vertical" ? "w-full" : "shrink-0"}
+          >
             <Link
               href={item.href}
               variant="nav"
               className={cn(
-                "inline-flex items-center gap-2 rounded-pill text-sm font-medium no-underline hover:no-underline",
+                "inline-flex items-center gap-2 whitespace-nowrap rounded-pill text-sm font-medium no-underline hover:no-underline",
                 orientation === "horizontal"
                   ? "text-muted hover:text-text"
                   : "w-full justify-start px-3 py-3 text-base text-text",

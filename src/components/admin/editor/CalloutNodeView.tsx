@@ -3,6 +3,14 @@
 import { NodeViewWrapper, NodeViewContent } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import {
+  IconInfo,
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconLightbulb,
+  IconLayers,
+  IconTrash,
+} from "./EditorIcons";
 
 export function CalloutNodeView({
   node,
@@ -18,25 +26,25 @@ export function CalloutNodeView({
       label: "نکته (Note)",
       badgeBg: "bg-blue/15 text-blue border-blue/30",
       borderColor: "border-blue/30 bg-blue/[0.03]",
-      icon: "ℹ",
+      icon: <IconInfo className="size-3.5" />,
     },
     warning: {
       label: "هشدار (Warning)",
       badgeBg: "bg-orange/15 text-orange border-orange/30",
       borderColor: "border-orange/30 bg-orange/[0.04]",
-      icon: "⚠",
+      icon: <IconAlertTriangle className="size-3.5 text-orange" />,
     },
     success: {
       label: "موفقیت (Success)",
       badgeBg: "bg-ok/15 text-ok border-ok/30",
       borderColor: "border-ok/30 bg-ok/[0.03]",
-      icon: "✓",
+      icon: <IconCheckCircle className="size-3.5 text-ok" />,
     },
     tip: {
       label: "راهنما (Tip)",
       badgeBg: "bg-amber/15 text-amber border-amber/30",
       borderColor: "border-amber/30 bg-amber/[0.04]",
-      icon: "💡",
+      icon: <IconLightbulb className="size-3.5 text-amber" />,
     },
   };
 
@@ -75,7 +83,7 @@ export function CalloutNodeView({
         <div className="flex items-center gap-2">
           <span
             className={cn(
-              "inline-flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[11px] font-bold",
+              "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg border text-[11px] font-bold",
               current.badgeBg,
             )}
           >
@@ -88,10 +96,10 @@ export function CalloutNodeView({
             onChange={(e) => updateAttributes({ type: e.target.value })}
             className="rounded-lg border border-line bg-panel px-2 py-0.5 text-[11px] font-bold text-text focus:border-blue focus:outline-none cursor-pointer"
           >
-            <option value="note">ℹ نکته آبی</option>
-            <option value="warning">⚠ هشدار نارنجی</option>
-            <option value="success">✓ موفقیت سبز</option>
-            <option value="tip">💡 راهنمای کهربایی</option>
+            <option value="note">نکته (Note) - آبی</option>
+            <option value="warning">هشدار (Warning) - نارنجی</option>
+            <option value="success">موفقیت (Success) - سبز</option>
+            <option value="tip">راهنما (Tip) - کهربایی</option>
           </select>
         </div>
 
@@ -102,15 +110,16 @@ export function CalloutNodeView({
             className="inline-flex items-center gap-1 rounded-lg border border-line bg-panel px-2 py-0.5 text-[11px] font-bold text-muted hover:text-blue hover:border-blue transition-colors"
             title="ایجاد کادر جدید داخل این کادر"
           >
-            <span>+ کادر تو در تو</span>
+            <IconLayers className="size-3" />
+            <span>کادر تو در تو</span>
           </button>
           <button
             type="button"
             onClick={deleteNode}
-            className="rounded-lg border border-line bg-panel px-1.5 py-0.5 text-[11px] font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors"
+            className="rounded-lg border border-line bg-panel p-1 text-[11px] font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors"
             title="حذف این کادر"
           >
-            ×
+            <IconTrash className="size-3" />
           </button>
         </div>
       </div>

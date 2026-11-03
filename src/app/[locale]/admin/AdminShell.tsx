@@ -125,6 +125,26 @@ export function AdminShell({ children }: AdminShellProps) {
       ),
     },
     {
+      href: "/admin/services",
+      label: "مدیریت خدمات و راهکارها",
+      badge: null,
+      icon: (
+        <svg
+          className="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+          />
+        </svg>
+      ),
+    },
+    {
       href: "/admin/posts",
       label: "مدیریت مقالات و محتوا",
       badge: null,
@@ -168,11 +188,11 @@ export function AdminShell({ children }: AdminShellProps) {
   ];
 
   return (
-    <div className="admin-root flex min-h-screen bg-bg">
+    <div className="admin-root flex h-screen h-[100dvh] overflow-hidden bg-bg">
       {/* Sidebar for Desktop */}
-      <aside className="hidden w-72 shrink-0 border-e border-line bg-panel lg:flex lg:flex-col">
+      <aside className="hidden w-72 shrink-0 border-e border-line bg-panel lg:flex lg:flex-col lg:h-full lg:overflow-y-auto">
         {/* Brand header */}
-        <div className="flex h-20 items-center justify-between border-b border-line px-6">
+        <div className="flex h-20 shrink-0 items-center justify-between border-b border-line px-6">
           <Link href="/admin" className="flex items-center gap-3 no-underline">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-white p-2 shadow-xs">
               <Image
@@ -198,7 +218,7 @@ export function AdminShell({ children }: AdminShellProps) {
         </div>
 
         {/* Database Quick Health */}
-        <div className="px-6 py-4">
+        <div className="shrink-0 px-6 py-4">
           <div
             className={cn(
               "flex items-center justify-between rounded-xl border px-3 py-2 text-xs",
@@ -265,7 +285,7 @@ export function AdminShell({ children }: AdminShellProps) {
         </nav>
 
         {/* Bottom User Profile & Actions */}
-        <div className="border-t border-line p-4">
+        <div className="shrink-0 border-t border-line p-4 mt-auto">
           <div className="mb-3 flex items-center justify-between rounded-2xl bg-bg p-3">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-xs font-black text-blue">
@@ -306,9 +326,9 @@ export function AdminShell({ children }: AdminShellProps) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex flex-1 flex-col overflow-x-hidden">
+      <div className="flex flex-1 flex-col h-full min-w-0 overflow-hidden">
         {/* Top Header */}
-        <header className="flex h-20 items-center justify-between border-b border-line bg-panel px-4 sm:px-8">
+        <header className="flex h-20 shrink-0 items-center justify-between border-b border-line bg-panel px-4 sm:px-8">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -388,7 +408,7 @@ export function AdminShell({ children }: AdminShellProps) {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="border-b border-line bg-panel p-4 lg:hidden">
+          <div className="shrink-0 border-b border-line bg-panel p-4 lg:hidden max-h-[calc(100vh-5rem)] overflow-y-auto">
             <nav className="space-y-1">
               {navItems.map((item) => (
                 <Link
@@ -410,7 +430,7 @@ export function AdminShell({ children }: AdminShellProps) {
         )}
 
         {/* Dynamic Page Content */}
-        <main className="flex-1 p-4 sm:p-8">{children}</main>
+        <main className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-8">{children}</main>
       </div>
     </div>
   );

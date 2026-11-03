@@ -3,6 +3,13 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { STATIC_SITE_LINKS, type SiteLinkItem } from "@/lib/site-links";
 import { cn } from "@/lib/cn";
+import {
+  IconClose,
+  IconAlignRight,
+  IconAlignCenter,
+  IconAlignLeft,
+  IconFullWidth,
+} from "./EditorIcons";
 
 export interface CtaModalParams {
   label: string;
@@ -176,10 +183,10 @@ export function CtaModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-muted hover:text-text hover:bg-bg transition-colors"
+            className="rounded-lg p-1.5 text-muted hover:text-text hover:bg-bg transition-colors flex items-center justify-center"
             title="بستن پنجره"
           >
-            ✕
+            <IconClose className="size-4" />
           </button>
         </div>
 
@@ -366,22 +373,23 @@ export function CtaModal({
             </label>
             <div className="grid grid-cols-4 gap-2">
               {[
-                { id: "center", label: "⏺ وسط‌چین", desc: "مرکز متن" },
-                { id: "right", label: "راست‌چین ➡️", desc: "سمت راست (شروع)" },
-                { id: "left", label: "⬅ چپ‌چین", desc: "سمت چپ (پایان)" },
-                { id: "full", label: "↔ تمام‌عرض", desc: "عرض ۱۰۰٪" },
+                { id: "right", label: "راست‌چین", desc: "سمت راست (شروع)", icon: <IconAlignRight className="size-4" /> },
+                { id: "center", label: "وسط‌چین", desc: "مرکز متن", icon: <IconAlignCenter className="size-4" /> },
+                { id: "left", label: "چپ‌چین", desc: "سمت چپ (پایان)", icon: <IconAlignLeft className="size-4" /> },
+                { id: "full", label: "تمام‌عرض", desc: "عرض ۱۰۰٪", icon: <IconFullWidth className="size-4" /> },
               ].map((opt) => (
                 <button
                   key={opt.id}
                   type="button"
                   onClick={() => setAlign(opt.id as typeof align)}
                   className={cn(
-                    "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all text-xs",
+                    "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all text-xs gap-1",
                     align === opt.id
                       ? "border-blue bg-blue/10 text-blue font-bold shadow-sm"
                       : "border-line bg-bg text-muted hover:text-text",
                   )}
                 >
+                  {opt.icon}
                   <span className="font-semibold">{opt.label}</span>
                   <span className="text-[10px] text-muted mt-0.5">{opt.desc}</span>
                 </button>

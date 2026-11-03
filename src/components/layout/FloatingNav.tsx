@@ -84,7 +84,7 @@ export function FloatingNav() {
         <Link
           href="/"
           variant="nav"
-          className="flex min-w-0 shrink-0 items-center gap-2.5 ps-3.5 no-underline hover:no-underline"
+          className="flex shrink-0 items-center gap-2.5 ps-3.5 whitespace-nowrap no-underline hover:no-underline"
           aria-label={t("brand.homeAria")}
         >
           <BrandMark priority size={26} />
@@ -94,7 +94,7 @@ export function FloatingNav() {
         </Link>
 
         <nav
-          className="ms-auto hidden min-w-0 lg:block"
+          className="ms-auto hidden shrink-0 lg:block"
           aria-label={t("nav.primaryLabel")}
         >
           <Suspense fallback={<NavLinksFallback />}>
@@ -102,8 +102,8 @@ export function FloatingNav() {
           </Suspense>
         </nav>
 
-        <div className="ms-auto flex items-center gap-2 lg:ms-0">
-          <div className="hidden items-center gap-2 lg:flex">
+        <div className="ms-auto flex shrink-0 items-center gap-2 lg:ms-0">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <Suspense fallback={<LanguageSwitcherFallback />}>
               <LanguageSwitcher className="border-line/80 bg-panel/70" />
             </Suspense>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { NodeViewWrapper, NodeViewContent } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
+import { IconCheck, IconCopy, IconTrash } from "./EditorIcons";
 
 const POPULAR_LANGUAGES = [
   { value: "typescript", label: "TypeScript" },
@@ -70,19 +71,27 @@ export function CodeBlockNodeView({
           <button
             type="button"
             onClick={handleCopy}
-            className="rounded-lg border border-win-line bg-win-bg px-2 py-1 font-mono text-[11px] text-win-muted hover:text-win-text hover:border-blue transition-colors"
+            className="rounded-lg border border-win-line bg-win-bg px-2 py-1 font-mono text-[11px] text-win-muted hover:text-win-text hover:border-blue transition-colors inline-flex items-center gap-1"
             title="کپی کردن متن کد"
           >
-            {copied ? "✓ Copied" : "Copy"}
+            {copied ? (
+              <span className="inline-flex items-center gap-1 text-ok">
+                <IconCheck className="size-3" /> Copied
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1">
+                <IconCopy className="size-3" /> Copy
+              </span>
+            )}
           </button>
 
           <button
             type="button"
             onClick={deleteNode}
-            className="rounded-lg border border-win-line bg-win-bg px-1.5 py-1 text-[11px] text-win-muted hover:text-red-400 hover:border-red-400 transition-colors"
+            className="rounded-lg border border-win-line bg-win-bg p-1 text-[11px] text-win-muted hover:text-red-400 hover:border-red-400 transition-colors flex items-center justify-center"
             title="حذف بلوک کد"
           >
-            ×
+            <IconTrash className="size-3" />
           </button>
         </div>
       </div>

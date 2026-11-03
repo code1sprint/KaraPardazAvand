@@ -22,6 +22,7 @@ import { CustomImageExtension } from "./image-extension";
 import { SlashCommandExtension } from "./slash-command";
 import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
+import { IconEraser, IconLightbulb } from "./EditorIcons";
 import { MediaModal, type MediaInsertParams } from "./MediaModal";
 import { CtaModal, type CtaModalParams } from "./CtaModal";
 import { cn } from "@/lib/cn";
@@ -282,10 +283,10 @@ export function TiptapEditor({
           <button
             type="button"
             onClick={() => editor.chain().focus().unsetAllMarks().run()}
-            className="px-1.5 py-1 rounded text-muted hover:text-red-500"
+            className="px-1.5 py-1 rounded text-muted hover:text-red-500 flex items-center justify-center"
             title="حذف فرمت انتخاب"
           >
-            🧹
+            <IconEraser className="size-3.5" />
           </button>
         </BubbleMenu>
       )}
@@ -317,8 +318,11 @@ export function TiptapEditor({
           <span>{characters} نویسه</span>
           <span>~ {readingTime} دقیقه مطالعه</span>
         </div>
-        <div className="text-[10px] text-muted">
-          💡 راهنما: برای منوی سریع <code className="bg-panel px-1 rounded border border-line">/</code>، برای عکس و ویدیو دکمه‌های نوار ابزار، و برای نیم‌فاصله <code className="bg-panel px-1 rounded border border-line">Shift+Space</code> بزنید.
+        <div className="flex items-center gap-1.5 text-[10px] text-muted">
+          <IconLightbulb className="size-3 text-amber shrink-0" />
+          <span>
+            راهنما: برای منوی سریع <code className="bg-panel px-1 rounded border border-line">/</code>، برای عکس و ویدیو دکمه‌های نوار ابزار، و برای نیم‌فاصله <code className="bg-panel px-1 rounded border border-line">Shift+Space</code> بزنید.
+          </span>
         </div>
       </div>
 

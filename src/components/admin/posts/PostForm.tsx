@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
+import {
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconSparkles,
+} from "@/components/admin/editor/EditorIcons";
 import { slugifyHeading } from "@/lib/editor/normalizer";
 import { cn } from "@/lib/cn";
 
@@ -168,13 +173,15 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Messages */}
       {errorMsg && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20">
-          ⚠️ {errorMsg}
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20 inline-flex items-center gap-2 w-full">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{errorMsg}</span>
         </div>
       )}
       {successMsg && (
-        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-sm font-bold text-ok">
-          ✓ {successMsg}
+        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-sm font-bold text-ok inline-flex items-center gap-2 w-full">
+          <IconCheckCircle className="size-4 shrink-0 text-ok" />
+          <span>{successMsg}</span>
         </div>
       )}
 
@@ -341,7 +348,8 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold rounded-lg border border-orange/40 bg-orange/10 text-orange hover:bg-orange/20 transition-colors disabled:opacity-50"
                 title="تکمیل خودکار خلاصه سئو و برچسب‌ها با تحلیل محتوای مقاله"
               >
-                <span>⚡ {aiLoading ? "در حال تحلیل..." : "پیشنهاد هوش مصنوعی"}</span>
+                <IconSparkles className="size-3 text-orange shrink-0" />
+                <span>{aiLoading ? "در حال تحلیل..." : "پیشنهاد هوش مصنوعی"}</span>
               </button>
             </div>
 

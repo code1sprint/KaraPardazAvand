@@ -3,6 +3,13 @@
 import { NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import {
+  IconVideo,
+  IconAlignLeft,
+  IconAlignCenter,
+  IconAlignRight,
+  IconTrash,
+} from "./EditorIcons";
 
 export function VideoNodeView({ node, updateAttributes, deleteNode }: NodeViewProps) {
   const src = (node.attrs.src as string) || "";
@@ -54,7 +61,7 @@ export function VideoNodeView({ node, updateAttributes, deleteNode }: NodeViewPr
         className="flex flex-wrap items-center justify-between gap-2 border-b border-line pb-2 mb-3 text-xs text-muted"
       >
         <span className="font-bold flex items-center gap-1.5 text-text">
-          <span>🎬</span>
+          <IconVideo className="size-4 text-blue shrink-0" />
           <span>{title || "ویدیو"}</span>
         </span>
 
@@ -66,34 +73,37 @@ export function VideoNodeView({ node, updateAttributes, deleteNode }: NodeViewPr
               type="button"
               onClick={() => updateAttributes({ align: "left" })}
               className={cn(
-                "px-1.5 py-0.5 rounded font-bold transition-colors",
+                "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
                 align === "left" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
               )}
               title="چپ‌چین با پیچش متن در سمت راست"
             >
-              ⬅ چپ
+              <IconAlignLeft className="size-3" />
+              <span>چپ</span>
             </button>
             <button
               type="button"
               onClick={() => updateAttributes({ align: "center" })}
               className={cn(
-                "px-1.5 py-0.5 rounded font-bold transition-colors",
+                "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
                 align === "center" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
               )}
               title="وسط‌چین بدون پیچش متن"
             >
-              ⏺ وسط
+              <IconAlignCenter className="size-3" />
+              <span>وسط</span>
             </button>
             <button
               type="button"
               onClick={() => updateAttributes({ align: "right" })}
               className={cn(
-                "px-1.5 py-0.5 rounded font-bold transition-colors",
+                "px-1.5 py-0.5 rounded font-bold transition-colors inline-flex items-center gap-1",
                 align === "right" ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
               )}
               title="راست‌چین با پیچش متن در سمت چپ"
             >
-              راست ➡️
+              <IconAlignRight className="size-3" />
+              <span>راست</span>
             </button>
           </div>
 
@@ -117,10 +127,10 @@ export function VideoNodeView({ node, updateAttributes, deleteNode }: NodeViewPr
           <button
             type="button"
             onClick={deleteNode}
-            className="rounded-lg border border-line bg-bg px-2 py-0.5 text-xs font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors"
+            className="rounded-lg border border-line bg-bg p-1 text-xs font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors flex items-center justify-center"
             title="حذف ویدیو"
           >
-            ×
+            <IconTrash className="size-3" />
           </button>
         </div>
       </div>
