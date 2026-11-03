@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getServiceModel } from "@/lib/db/models/Service";
 import {
@@ -11,7 +12,7 @@ export type { ServiceDetail };
 export async function getServiceDetail(
   slug: string,
 ): Promise<ServiceDetail | undefined> {
-  "use cache";
+  await connection();
 
   try {
     await connectToDatabase();
@@ -34,7 +35,7 @@ export async function getServiceDetail(
       };
     }
   } catch {
-    // If DB is offline or during static build without MongoDB, fall back to static definition
+    // If DB is offline or during build, fall back to static definition
   }
 
   const staticService = getServiceBySlug(slug);
