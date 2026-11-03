@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -18,11 +18,18 @@ import { ZwnjExtension } from "./zwnj-extension";
 import { CalloutExtension } from "./callout-extension";
 import { InlineCtaExtension } from "./cta-extension";
 import { SlashCommandExtension } from "./slash-command";
+import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
 import { useEffect } from "react";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
+
+const InteractiveCodeBlock = CodeBlockLowlight.extend({
+  addNodeView() {
+    return ReactNodeViewRenderer(CodeBlockNodeView);
+  },
+});
 
 interface TiptapEditorProps {
   contentJson?: Record<string, unknown>;
@@ -52,13 +59,9 @@ export function TiptapEditor({
           levels: [2, 3],
         },
       }),
-      CodeBlockLowlight.configure({
+      InteractiveCodeBlock.configure({
         lowlight,
-        HTMLAttributes: {
-          dir: "ltr",
-          class:
-            "rounded-xl bg-win-bg text-win-text border border-win-line p-4 font-mono text-xs overflow-x-auto my-4 text-left",
-        },
+        defaultLanguage: "typescript",
       }),
       Link.configure({
         openOnClick: false,

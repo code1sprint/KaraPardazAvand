@@ -195,6 +195,19 @@ body:has(.admin-root) [data-skip-link] {
   background-color: var(--panel);
 }
 
+/* Nested callouts styling */
+.callout .callout {
+  margin: 1rem 0;
+  border-width: 1.5px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.callout .callout .callout {
+  margin: 0.75rem 0;
+  border-style: dashed;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
 .callout-note {
   border-color: rgba(29, 109, 209, 0.35);
   background-color: rgba(29, 109, 209, 0.06);
@@ -217,6 +230,64 @@ body:has(.admin-root) [data-skip-link] {
   border-color: rgba(255, 184, 67, 0.4);
   background-color: rgba(255, 184, 67, 0.08);
   color: var(--text);
+}
+
+/* CodeBlock Syntax Highlighting (Dark Theme Matching v3 Tokens) */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: var(--sky);
+  font-weight: 600;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+  color: var(--ok);
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion,
+.hljs-meta {
+  color: var(--win-muted);
+  font-style: italic;
+}
+
+.hljs-number,
+.hljs-regexp,
+.hljs-link {
+  color: var(--orange);
+}
+
+.hljs-variable,
+.hljs-params {
+  color: var(--win-text);
+}
+
+.hljs-subst {
+  color: var(--win-text);
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--amber);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
 }
 
 /* Enhanced Prose Tables */

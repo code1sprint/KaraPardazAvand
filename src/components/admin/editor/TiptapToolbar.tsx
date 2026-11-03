@@ -144,7 +144,7 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
 
       <div className="h-4 w-px bg-line mx-1" />
 
-      {/* Callouts */}
+      {/* Callouts & Nested Containers */}
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleCallout({ type: "note" }).run()}
@@ -160,6 +160,29 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
         title="کادر هشدار (Warning)"
       >
         ⚠ هشدار
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .insertContent({
+              type: "callout",
+              attrs: { type: "tip" },
+              content: [
+                {
+                  type: "paragraph",
+                  content: [{ type: "text", text: "متن کادر تو در تو..." }],
+                },
+              ],
+            })
+            .run()
+        }
+        className={btnClass(false)}
+        title="ایجاد کادر تو در تو (Nested Container)"
+      >
+        + کادر تو در تو
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />

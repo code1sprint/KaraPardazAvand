@@ -1,4 +1,6 @@
 import { Node, mergeAttributes } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+import { CalloutNodeView } from "./CalloutNodeView";
 
 export type CalloutType = "note" | "warning" | "success" | "tip";
 
@@ -24,7 +26,7 @@ export const CalloutExtension = Node.create({
         parseHTML: (element) => element.getAttribute("data-callout-type") || "note",
         renderHTML: (attributes) => ({
           "data-callout-type": attributes.type,
-          class: `callout callout-${attributes.type} rounded-2xl border p-4 my-5 leading-relaxed`,
+          class: `callout callout-${attributes.type} rounded-2xl border p-4 my-4 leading-relaxed`,
         }),
       },
     };
@@ -33,13 +35,17 @@ export const CalloutExtension = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div[data-callout-type]',
+        tag: "div[data-callout-type]",
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
     return ["div", mergeAttributes(HTMLAttributes), 0];
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(CalloutNodeView);
   },
 
   addCommands() {
