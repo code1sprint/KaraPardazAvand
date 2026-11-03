@@ -6,9 +6,14 @@ import { cn } from "@/lib/cn";
 interface TiptapToolbarProps {
   editor: Editor | null;
   locale: "fa" | "en";
+  onOpenMediaModal?: (type: "image" | "video") => void;
 }
 
-export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
+export function TiptapToolbar({
+  editor,
+  locale,
+  onOpenMediaModal,
+}: TiptapToolbarProps) {
   if (!editor) return null;
 
   const setLink = () => {
@@ -24,11 +29,12 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
-  const insertImage = () => {
-    const url = window.prompt("آدرس تصویر (Image URL):");
-    if (!url) return;
-    const alt = window.prompt("متن جایگزین تصویر (Alt Text):") || "";
-    editor.chain().focus().setImage({ src: url, alt }).run();
+  const handleOpenImage = () => {
+    onOpenMediaModal?.("image");
+  };
+
+  const handleOpenVideo = () => {
+    onOpenMediaModal?.("video");
   };
 
   const insertCta = () => {
@@ -261,11 +267,19 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
       </button>
       <button
         type="button"
-        onClick={insertImage}
+        onClick={handleOpenImage}
         className={btnClass(editor.isActive("image"))}
-        title="درج تصویر"
+        title="درج و مرور تصویر (از سیستم یا کتابخانه)"
       >
         🖼 عکس
+      </button>
+      <button
+        type="button"
+        onClick={handleOpenVideo}
+        className={btnClass(editor.isActive("video"))}
+        title="درج و مرور ویدیو (از سیستم یا لینک آپارات / یوتیوب)"
+      >
+        🎬 ویدیو
       </button>
       <button
         type="button"

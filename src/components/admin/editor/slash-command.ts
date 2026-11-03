@@ -32,8 +32,8 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
     },
   },
   {
-    title: "بلوک کد LTR",
-    description: "کدنویسی فنی با فونت مونو",
+    title: "بلوک کد ترمینال LTR",
+    description: "کدنویسی فنی با انتخاب زبان و کپی",
     icon: "</>",
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
@@ -69,11 +69,51 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
     },
   },
   {
-    title: "کادر موفقیت (Success)",
-    description: "کادر سبز رنگ برای بهترین تجارب",
-    icon: "✓",
+    title: "کادر تو در تو (Nested Container)",
+    description: "ایجاد کادر داخل کادر با استایل چندلایه",
+    icon: "❐",
     command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setCallout({ type: "success" }).run();
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertContent({
+          type: "callout",
+          attrs: { type: "tip" },
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "متن کادر تو در تو..." }],
+            },
+          ],
+        })
+        .run();
+    },
+  },
+  {
+    title: "تصویر (Image Browser)",
+    description: "آپلود و مرور فایل از سیستم یا کتابخانه",
+    icon: "🖼",
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("kara-open-media-modal", { detail: { type: "image" } }),
+        );
+      }
+    },
+  },
+  {
+    title: "ویدیو (Video Browser & Embed)",
+    description: "آپلود فایل ویدیو یا پخش از آپارات / یوتیوب",
+    icon: "🎬",
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("kara-open-media-modal", { detail: { type: "video" } }),
+        );
+      }
     },
   },
   {
@@ -113,27 +153,16 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
     description: "درج دکمه ارتباط یا مشاهده پروژه",
     icon: "🔘",
     command: ({ editor, range }) => {
-      const label = window.prompt("عنوان دکمه (CTA Label):", "درخواست جلسه ارزیابی فنی");
-      if (!label) return;
-      const url = window.prompt("آدرس لینک (URL):", "/contact");
-      if (!url) return;
-
       editor
         .chain()
         .focus()
         .deleteRange(range)
-        .insertInlineCta({ label, url, variant: "primary" })
+        .insertInlineCta({
+          label: "درخواست ارزیابی فنی",
+          url: "/contact",
+          variant: "primary",
+        })
         .run();
-    },
-  },
-  {
-    title: "تصویر",
-    description: "افزودن تصویر با آدرس اینترنتی",
-    icon: "🖼",
-    command: ({ editor, range }) => {
-      const url = window.prompt("آدرس اینترنتی تصویر را وارد کنید:");
-      if (!url) return;
-      editor.chain().focus().deleteRange(range).setImage({ src: url }).run();
     },
   },
 ];
@@ -147,9 +176,10 @@ export const SlashCommandExtension = Extension.create({
         editor: this.editor,
         char: "/",
         items: ({ query }: { query: string }) => {
-          return SUGGESTION_ITEMS.filter((item) =>
-            item.title.toLowerCase().includes(query.toLowerCase()) ||
-            item.description.toLowerCase().includes(query.toLowerCase()),
+          return SUGGESTION_ITEMS.filter(
+            (item) =>
+              item.title.toLowerCase().includes(query.toLowerCase()) ||
+              item.description.toLowerCase().includes(query.toLowerCase()),
           );
         },
         render: () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
@@ -17,10 +18,11 @@ import { createLowlight, common } from "lowlight";
 import { ZwnjExtension } from "./zwnj-extension";
 import { CalloutExtension } from "./callout-extension";
 import { InlineCtaExtension } from "./cta-extension";
+import { VideoExtension } from "./video-extension";
 import { SlashCommandExtension } from "./slash-command";
 import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
-import { useEffect } from "react";
+import { MediaModal } from "./MediaModal";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -46,6 +48,9 @@ export function TiptapEditor({
   placeholder = "متن مقاله را اینجا بنویسید (برای دستورات سریع / را تایپ کنید)...",
   onChange,
 }: TiptapEditorProps) {
+  const [mediaModalOpen, setMediaModalOpen] = useState(false);
+  const [mediaModalType, setMediaModalType] = useState<"image" | "video">("image");
+
   const initialContent =
     contentJson && Object.keys(contentJson).length > 0 && contentJson.type === "doc"
       ? contentJson
@@ -89,9 +94,10 @@ export function TiptapEditor({
       Image.configure({
         inline: false,
         HTMLAttributes: {
-          class: "rounded-2xl border border-line my-6 max-w-full mx-auto",
+          class: "rounded-2xl border border-line my-6 max-w-full mx-auto shadow-sm",
         },
       }),
+      VideoExtension,
       CharacterCount,
       Placeholder.configure({
         placeholder,
@@ -129,6 +135,47 @@ export function TiptapEditor({
       }
     }
   }, [contentJson, editor]);
+
+  // Listen for Slash Command media requests
+  useEffect(() => {
+    const handleSlashMedia = (e: Event) => {
+      const customEvent = e as CustomEvent<{ type: "image" | "video" }>;
+      if (customEvent.detail?.type) {
+        setMediaModalType(customEvent.detail.type);
+        setMediaModalOpen(true);
+      }
+    };
+
+    window.addEventListener("kara-open-media-modal", handleSlashMedia);
+    return () => {
+      window.removeEventListener("kara-open-media-modal", handleSlashMedia);
+    };
+  }, []);
+
+  const handleInsertImage = (attrs: { src: string; alt?: string; title?: string }) => {
+    if (!editor) return;
+    editor
+      .chain()
+      .focus()
+      .setImage({
+        src: attrs.src,
+        alt: attrs.alt || "",
+        title: attrs.title || "",
+      })
+      .run();
+  };
+
+  const handleInsertVideo = (attrs: { src: string; title?: string }) => {
+    if (!editor) return;
+    editor
+      .chain()
+      .focus()
+      .insertVideo({
+        src: attrs.src,
+        title: attrs.title || "ویدیو",
+      })
+      .run();
+  };
 
   const words = editor?.storage.characterCount?.words() ?? 0;
   const characters = editor?.storage.characterCount?.characters() ?? 0;
@@ -193,7 +240,14 @@ export function TiptapEditor({
       )}
 
       {/* Main Top Toolbar */}
-      <TiptapToolbar editor={editor} locale={locale} />
+      <TiptapToolbar
+        editor={editor}
+        locale={locale}
+        onOpenMediaModal={(type) => {
+          setMediaModalType(type);
+          setMediaModalOpen(true);
+        }}
+      />
 
       {/* Editor Surface */}
       <div className="bg-panel min-h-[420px]">
@@ -208,9 +262,19 @@ export function TiptapEditor({
           <span>~ {readingTime} دقیقه مطالعه</span>
         </div>
         <div className="text-[10px] text-muted">
-          💡 راهنما: برای منوی سریع <code className="bg-panel px-1 rounded border border-line">/</code> و برای نیم‌فاصله <code className="bg-panel px-1 rounded border border-line">Shift+Space</code> بزنید.
+          💡 راهنما: برای منوی سریع <code className="bg-panel px-1 rounded border border-line">/</code>، برای عکس و ویدیو دکمه‌های نوار ابزار، و برای نیم‌فاصله <code className="bg-panel px-1 rounded border border-line">Shift+Space</code> بزنید.
         </div>
       </div>
+
+      {/* Dedicated Custom Media Modal (No window.prompt!) */}
+      <MediaModal
+        key={mediaModalOpen ? `${mediaModalType}-open` : "closed"}
+        isOpen={mediaModalOpen}
+        onClose={() => setMediaModalOpen(false)}
+        defaultType={mediaModalType}
+        onInsertImage={handleInsertImage}
+        onInsertVideo={handleInsertVideo}
+      />
     </div>
   );
 }
