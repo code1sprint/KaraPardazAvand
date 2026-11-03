@@ -33,18 +33,20 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-  // Cache Components requires ≥1 result when drafts strip everything in prod.
-  const effectiveSlugs = slugs.length > 0 ? slugs : ["__none__"];
-  return routing.locales.flatMap((locale) =>
-    effectiveSlugs.map((slug) => ({ locale, slug })),
+  const results = await Promise.all(
+    routing.locales.map(async (locale) => {
+      const slugs = await getPostSlugs(locale);
+      const effectiveSlugs = slugs.length > 0 ? slugs : ["__none__"];
+      return effectiveSlugs.map((slug) => ({ locale, slug }));
+    }),
   );
+  return results.flat();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug, locale);
   const siteUrl = getSiteUrl().replace(/\/$/, "");
 
   if (!post) {
@@ -105,7 +107,7 @@ async function InsightPostContent({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug, locale);
   if (!post) {
     notFound();
   }
@@ -113,8 +115,26 @@ async function InsightPostContent({ params }: Props) {
   const t = await getTranslations("Insights");
   const metaT = await getTranslations("Meta");
   const breadcrumbT = await getTranslations("Breadcrumb");
-  const { content, toc } = await compileMdxSource(post.content);
-  const related = await getRelatedPosts(slug, 3);
+
+  let articleContent: React.ReactNode = null;
+  let effectiveToc: Array<{ id: string; title: string; depth: 2 | 3 }> = [];
+
+  if (post.contentHtml) {
+    articleContent = (
+      <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+    );
+    effectiveToc = (post.toc || []).map((item) => ({
+      id: item.id,
+      title: item.title,
+      depth: (item.depth === 3 ? 3 : 2) as 2 | 3,
+    }));
+  } else {
+    const compiled = await compileMdxSource(post.content);
+    articleContent = compiled.content;
+    effectiveToc = compiled.toc;
+  }
+
+  const related = await getRelatedPosts(slug, 3, locale);
 
   const canonical = absoluteUrl(locale, `/insights/${slug}`);
   const siteUrl = getSiteUrl().replace(/\/$/, "");
@@ -216,7 +236,7 @@ async function InsightPostContent({ params }: Props) {
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_14rem]">
             <article id="insight-article" className="min-w-0">
-              <Prose>{content}</Prose>
+              <Prose>{articleContent}</Prose>
               <AuthorBox
                 author={post.meta.author}
                 label={t("detail.author")}
@@ -228,7 +248,7 @@ async function InsightPostContent({ params }: Props) {
               />
             </article>
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <TableOfContents items={toc} label={t("detail.toc")} />
+              <TableOfContents items={effectiveToc} label={t("detail.toc")} />
             </aside>
           </div>
         </Container>

@@ -63,7 +63,7 @@ async function InsightsIndexContent({ params }: Props) {
 
   const t = await getTranslations("Insights");
   const breadcrumbT = await getTranslations("Breadcrumb");
-  const posts = await getAllPosts();
+  const posts = await getAllPosts(locale);
   const tags = collectPostTags(posts);
 
   return (
