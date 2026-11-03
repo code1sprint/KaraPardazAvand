@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "seed:admin": "tsx scripts/seed-admin.ts",
+    "seed:posts": "tsx scripts/seed-posts.ts",
     "test:backend": "tsx scripts/test-auth-db.ts"
   },
   "dependencies": {
