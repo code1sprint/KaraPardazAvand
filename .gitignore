@@ -36,3 +36,8 @@ next-env.d.ts
 
 # superpowers / internal
 .superpowers/
+
+# user uploads
+/public/uploads/*
+!/public/uploads/.gitkeep
+

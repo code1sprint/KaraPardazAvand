@@ -11,7 +11,6 @@ import { Table } from "@tiptap/extension-table";
 import { TableRow } from "@tiptap/extension-table-row";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { TableCell } from "@tiptap/extension-table-cell";
-import Image from "@tiptap/extension-image";
 import CharacterCount from "@tiptap/extension-character-count";
 import { createLowlight, common } from "lowlight";
 
@@ -19,10 +18,11 @@ import { ZwnjExtension } from "./zwnj-extension";
 import { CalloutExtension } from "./callout-extension";
 import { InlineCtaExtension } from "./cta-extension";
 import { VideoExtension } from "./video-extension";
+import { CustomImageExtension } from "./image-extension";
 import { SlashCommandExtension } from "./slash-command";
 import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
-import { MediaModal } from "./MediaModal";
+import { MediaModal, type MediaInsertParams } from "./MediaModal";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -91,11 +91,8 @@ export function TiptapEditor({
           class: "border border-line px-4 py-2.5 text-start",
         },
       }),
-      Image.configure({
+      CustomImageExtension.configure({
         inline: false,
-        HTMLAttributes: {
-          class: "rounded-2xl border border-line my-6 max-w-full mx-auto shadow-sm",
-        },
       }),
       VideoExtension,
       CharacterCount,
@@ -152,7 +149,7 @@ export function TiptapEditor({
     };
   }, []);
 
-  const handleInsertImage = (attrs: { src: string; alt?: string; title?: string }) => {
+  const handleInsertImage = (attrs: MediaInsertParams) => {
     if (!editor) return;
     editor
       .chain()
@@ -161,11 +158,13 @@ export function TiptapEditor({
         src: attrs.src,
         alt: attrs.alt || "",
         title: attrs.title || "",
+        width: attrs.width || "100%",
+        align: attrs.align || "center",
       })
       .run();
   };
 
-  const handleInsertVideo = (attrs: { src: string; title?: string }) => {
+  const handleInsertVideo = (attrs: MediaInsertParams) => {
     if (!editor) return;
     editor
       .chain()
@@ -173,6 +172,8 @@ export function TiptapEditor({
       .insertVideo({
         src: attrs.src,
         title: attrs.title || "ویدیو",
+        width: attrs.width || "100%",
+        align: attrs.align || "center",
       })
       .run();
   };

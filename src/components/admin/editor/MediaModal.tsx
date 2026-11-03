@@ -4,11 +4,19 @@ import { useState, useEffect, useRef } from "react";
 import type { MediaItem } from "@/app/api/admin/media/route";
 import { cn } from "@/lib/cn";
 
+export interface MediaInsertParams {
+  src: string;
+  alt?: string;
+  title?: string;
+  width?: string;
+  align?: "center" | "left" | "right";
+}
+
 interface MediaModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onInsertImage: (attrs: { src: string; alt?: string; title?: string }) => void;
-  onInsertVideo: (attrs: { src: string; title?: string }) => void;
+  onInsertImage: (attrs: MediaInsertParams) => void;
+  onInsertVideo: (attrs: MediaInsertParams) => void;
   defaultType?: "image" | "video";
 }
 
@@ -24,6 +32,8 @@ export function MediaModal({
   const [selectedUrl, setSelectedUrl] = useState("");
   const [altText, setAltText] = useState("");
   const [titleText, setTitleText] = useState("");
+  const [selectedWidth, setSelectedWidth] = useState<string>("100%");
+  const [selectedAlign, setSelectedAlign] = useState<"center" | "left" | "right">("center");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
@@ -96,7 +106,6 @@ export function MediaModal({
       if (!altText) {
         setAltText(file.name.replace(/\.[^/.]+$/, ""));
       }
-      // Refresh library in background
       void refreshLibrary();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "خطا در آپلود فایل.";
@@ -116,17 +125,18 @@ export function MediaModal({
   const handleConfirmInsert = () => {
     if (!selectedUrl) return;
 
+    const params: MediaInsertParams = {
+      src: selectedUrl,
+      alt: altText || titleText,
+      title: titleText,
+      width: selectedWidth,
+      align: selectedAlign,
+    };
+
     if (mediaType === "video") {
-      onInsertVideo({
-        src: selectedUrl,
-        title: titleText || altText || "ویدیو",
-      });
+      onInsertVideo(params);
     } else {
-      onInsertImage({
-        src: selectedUrl,
-        alt: altText || titleText,
-        title: titleText,
-      });
+      onInsertImage(params);
     }
 
     onClose();
@@ -144,7 +154,7 @@ export function MediaModal({
               درج و مدیریت رسانه (تصویر / ویدیو)
             </h2>
             <p className="text-xs text-muted mt-0.5">
-              آپلود از حافظه سیستم، انتخاب از کتابخانه رسانه‌ها یا وارد کردن لینک.
+              آپلود از حافظه سیستم، انتخاب از کتابخانه، تعیین سایز و پیچش متن (Float).
             </p>
           </div>
           <button
@@ -339,8 +349,8 @@ export function MediaModal({
 
         {/* Selected Preview & Metadata Attributes */}
         {selectedUrl && (
-          <div className="rounded-2xl border border-line bg-bg/40 p-3 space-y-3">
-            <div className="flex items-center gap-3">
+          <div className="rounded-2xl border border-line bg-bg/40 p-4 space-y-3.5">
+            <div className="flex items-center gap-3 border-b border-line/60 pb-3">
               <div className="h-14 w-20 shrink-0 rounded-xl overflow-hidden border border-line bg-panel flex items-center justify-center">
                 {mediaType === "image" ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -353,10 +363,89 @@ export function MediaModal({
                 <span className="block text-xs font-mono text-blue truncate" dir="ltr">
                   {selectedUrl}
                 </span>
-                <span className="text-[11px] text-muted">رسانه انتخاب شده برای درج</span>
+                <span className="text-[11px] text-muted">فایل رسانه انتخاب شده</span>
               </div>
             </div>
 
+            {/* Layout & Text Wrapping Controls */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-line/60 pb-3">
+              {/* Alignment / Wrap */}
+              <div>
+                <label className="block text-xs font-bold text-muted mb-1.5">
+                  تراز و پیچش متن (Text Wrapping)
+                </label>
+                <div className="flex items-center gap-1 bg-panel p-1 rounded-xl border border-line text-xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedAlign("left");
+                      if (selectedWidth === "100%") setSelectedWidth("50%");
+                    }}
+                    className={cn(
+                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      selectedAlign === "left"
+                        ? "bg-blue/15 text-blue"
+                        : "text-muted hover:text-text",
+                    )}
+                  >
+                    ⬅ چپ (متن راست)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedAlign("center")}
+                    className={cn(
+                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      selectedAlign === "center"
+                        ? "bg-blue/15 text-blue"
+                        : "text-muted hover:text-text",
+                    )}
+                  >
+                    ⏺ وسط‌چین
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedAlign("right");
+                      if (selectedWidth === "100%") setSelectedWidth("50%");
+                    }}
+                    className={cn(
+                      "flex-1 py-1 rounded-lg font-bold transition-colors text-center",
+                      selectedAlign === "right"
+                        ? "bg-blue/15 text-blue"
+                        : "text-muted hover:text-text",
+                    )}
+                  >
+                    راست (متن چپ) ➡️
+                  </button>
+                </div>
+              </div>
+
+              {/* Width Presets */}
+              <div>
+                <label className="block text-xs font-bold text-muted mb-1.5">
+                  سایز و عرض رسانه (Width)
+                </label>
+                <div className="flex items-center gap-1 bg-panel p-1 rounded-xl border border-line text-xs font-mono">
+                  {(["25%", "50%", "75%", "100%"] as const).map((w) => (
+                    <button
+                      key={w}
+                      type="button"
+                      onClick={() => setSelectedWidth(w)}
+                      className={cn(
+                        "flex-1 py-1 rounded-lg transition-colors text-center",
+                        selectedWidth === w
+                          ? "bg-blue text-white font-bold"
+                          : "text-muted hover:text-text",
+                      )}
+                    >
+                      {w}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Alt & Caption */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-muted mb-1">
