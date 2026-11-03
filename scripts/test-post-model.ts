@@ -60,7 +60,7 @@ async function main() {
       ...validData,
       title: "Duplicate",
     });
-  } catch (err: any) {
+  } catch {
     duplicateThrew = true;
   }
 

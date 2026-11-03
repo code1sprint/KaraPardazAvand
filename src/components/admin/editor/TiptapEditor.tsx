@@ -14,11 +14,11 @@ import { cn } from "@/lib/cn";
 const lowlight = createLowlight(common);
 
 interface TiptapEditorProps {
-  contentJson?: Record<string, any>;
+  contentJson?: Record<string, unknown>;
   contentHtml?: string;
   locale?: "fa" | "en";
   placeholder?: string;
-  onChange: (json: Record<string, any>, html: string) => void;
+  onChange: (json: Record<string, unknown>, html: string) => void;
 }
 
 export function TiptapEditor({

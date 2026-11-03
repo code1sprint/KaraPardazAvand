@@ -15,7 +15,7 @@ export const GET = withAuth(
     const status = searchParams.get("status");
     const query = searchParams.get("q");
 
-    const filter: Record<string, any> = {};
+    const filter: Record<string, unknown> = {};
     if (locale && (locale === "fa" || locale === "en")) {
       filter.locale = locale;
     }

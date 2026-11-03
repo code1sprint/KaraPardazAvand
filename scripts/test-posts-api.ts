@@ -70,7 +70,7 @@ async function run() {
   const listRes = await getPostsList(listReq);
   const listJson = await listRes.json();
   assert.strictEqual(listRes.status, 200);
-  assert(listJson.posts.some((p: any) => p.slug === "api-test-post"), "List must contain created test post");
+  assert(listJson.posts.some((p: { slug: string }) => p.slug === "api-test-post"), "List must contain created test post");
 
   // 3. Test GET /api/admin/posts/[id]
   const getReq = new Request(`http://localhost:3000/api/admin/posts/${postId}`, {

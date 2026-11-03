@@ -57,7 +57,7 @@ export function processPostContent(
   // Match <h2>...</h2> and <h3>...</h3>
   const headingRegex = /<h([23])(?:\s+[^>]*)?>([\s\S]*?)<\/h\1>/gi;
 
-  let htmlWithIds = rawHtml.replace(headingRegex, (match, levelStr, innerText) => {
+  const htmlWithIds = rawHtml.replace(headingRegex, (match, levelStr, innerText) => {
     const depth = parseInt(levelStr, 10);
     // Strip nested tags to get plain title
     const plainTitle = innerText.replace(/<[^>]+>/g, "").trim();
