@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
@@ -23,6 +23,7 @@ import { SlashCommandExtension } from "./slash-command";
 import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
 import { MediaModal, type MediaInsertParams } from "./MediaModal";
+import { CtaModal, type CtaModalParams } from "./CtaModal";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -50,6 +51,9 @@ export function TiptapEditor({
 }: TiptapEditorProps) {
   const [mediaModalOpen, setMediaModalOpen] = useState(false);
   const [mediaModalType, setMediaModalType] = useState<"image" | "video">("image");
+  const [ctaModalOpen, setCtaModalOpen] = useState(false);
+  const [ctaModalParams, setCtaModalParams] = useState<Partial<CtaModalParams> | undefined>(undefined);
+  const activeCtaUpdateRef = useRef<((params: CtaModalParams) => void) | null>(null);
 
   const initialContent =
     contentJson && Object.keys(contentJson).length > 0 && contentJson.type === "doc"
@@ -148,6 +152,52 @@ export function TiptapEditor({
       window.removeEventListener("kara-open-media-modal", handleSlashMedia);
     };
   }, []);
+
+  // Listen for Slash Command & toolbar CTA requests and edit events
+  useEffect(() => {
+    const handleSlashCta = () => {
+      activeCtaUpdateRef.current = null;
+      setCtaModalParams(undefined);
+      setCtaModalOpen(true);
+    };
+
+    const handleEditCta = (e: Event) => {
+      const customEvent = e as CustomEvent<{
+        label: string;
+        url: string;
+        variant: "primary" | "secondary" | "outline";
+        align: "center" | "left" | "right" | "full";
+        update: (params: CtaModalParams) => void;
+      }>;
+      if (customEvent.detail) {
+        activeCtaUpdateRef.current = customEvent.detail.update;
+        setCtaModalParams({
+          label: customEvent.detail.label,
+          url: customEvent.detail.url,
+          variant: customEvent.detail.variant,
+          align: customEvent.detail.align,
+        });
+        setCtaModalOpen(true);
+      }
+    };
+
+    window.addEventListener("kara-open-cta-modal", handleSlashCta);
+    window.addEventListener("kara-edit-cta-node", handleEditCta);
+
+    return () => {
+      window.removeEventListener("kara-open-cta-modal", handleSlashCta);
+      window.removeEventListener("kara-edit-cta-node", handleEditCta);
+    };
+  }, []);
+
+  const handleConfirmCta = (params: CtaModalParams) => {
+    if (activeCtaUpdateRef.current) {
+      activeCtaUpdateRef.current(params);
+      activeCtaUpdateRef.current = null;
+    } else if (editor) {
+      editor.chain().focus().insertInlineCta(params).run();
+    }
+  };
 
   const handleInsertImage = (attrs: MediaInsertParams) => {
     if (!editor) return;
@@ -248,6 +298,11 @@ export function TiptapEditor({
           setMediaModalType(type);
           setMediaModalOpen(true);
         }}
+        onOpenCtaModal={() => {
+          activeCtaUpdateRef.current = null;
+          setCtaModalParams(undefined);
+          setCtaModalOpen(true);
+        }}
       />
 
       {/* Editor Surface */}
@@ -275,6 +330,22 @@ export function TiptapEditor({
         defaultType={mediaModalType}
         onInsertImage={handleInsertImage}
         onInsertVideo={handleInsertVideo}
+      />
+
+      {/* Dedicated Custom CTA Modal (No window.prompt!) */}
+      <CtaModal
+        key={
+          ctaModalOpen
+            ? `${ctaModalParams?.label || ""}-${ctaModalParams?.url || ""}-${ctaModalParams?.variant || ""}-${ctaModalParams?.align || ""}`
+            : "cta-closed"
+        }
+        isOpen={ctaModalOpen}
+        onClose={() => {
+          setCtaModalOpen(false);
+          activeCtaUpdateRef.current = null;
+        }}
+        onConfirm={handleConfirmCta}
+        initialParams={ctaModalParams}
       />
     </div>
   );

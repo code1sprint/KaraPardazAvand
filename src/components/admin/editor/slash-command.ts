@@ -150,19 +150,13 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
   },
   {
     title: "دکمه اقدام (CTA)",
-    description: "درج دکمه ارتباط یا مشاهده پروژه",
+    description: "درج دکمه ارتباط، رزرو جلسه یا لینک به خدمات و اسلاگ‌ها",
     icon: "🔘",
     command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .insertInlineCta({
-          label: "درخواست ارزیابی فنی",
-          url: "/contact",
-          variant: "primary",
-        })
-        .run();
+      editor.chain().focus().deleteRange(range).run();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("kara-open-cta-modal"));
+      }
     },
   },
 ];

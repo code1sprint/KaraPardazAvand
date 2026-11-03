@@ -1,9 +1,12 @@
 import { Node, mergeAttributes } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+import { CtaNodeView } from "./CtaNodeView";
 
 export interface CtaAttributes {
   label: string;
   url: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "outline";
+  align?: "center" | "left" | "right" | "full";
 }
 
 declare module "@tiptap/core" {
@@ -22,7 +25,7 @@ export const InlineCtaExtension = Node.create({
   addAttributes() {
     return {
       label: {
-        default: "درخواست مشاوره اختصاصی",
+        default: "درخواست جلسه ارزیابی فنی",
         parseHTML: (el) => el.getAttribute("data-cta-label") || "درخواست مشاوره",
         renderHTML: (attrs) => ({ "data-cta-label": attrs.label }),
       },
@@ -33,8 +36,13 @@ export const InlineCtaExtension = Node.create({
       },
       variant: {
         default: "primary",
-        parseHTML: (el) => el.getAttribute("data-cta-variant") || "primary",
+        parseHTML: (el) => (el.getAttribute("data-cta-variant") as CtaAttributes["variant"]) || "primary",
         renderHTML: (attrs) => ({ "data-cta-variant": attrs.variant }),
+      },
+      align: {
+        default: "center",
+        parseHTML: (el) => (el.getAttribute("data-cta-align") as CtaAttributes["align"]) || "center",
+        renderHTML: (attrs) => ({ "data-cta-align": attrs.align }),
       },
     };
   },
@@ -48,31 +56,72 @@ export const InlineCtaExtension = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const isPrimary = HTMLAttributes["data-cta-variant"] === "primary";
-    const btnClasses = isPrimary
-      ? "inline-flex items-center gap-2 rounded-2xl bg-blue text-white px-6 py-3 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose"
-      : "inline-flex items-center gap-2 rounded-2xl border border-line bg-panel text-text px-6 py-3 font-bold text-sm hover:border-blue transition-all not-prose";
+    const label = HTMLAttributes["data-cta-label"] || "درخواست جلسه ارزیابی فنی";
+    const url = HTMLAttributes["data-cta-url"] || "/contact";
+    const variant = HTMLAttributes["data-cta-variant"] || "primary";
+    const align = HTMLAttributes["data-cta-align"] || "center";
+
+    let alignClasses = "justify-center";
+    if (align === "right") {
+      alignClasses = "justify-start";
+    } else if (align === "left") {
+      alignClasses = "justify-end";
+    } else if (align === "full") {
+      alignClasses = "w-full";
+    }
+
+    let btnClasses =
+      "inline-flex items-center gap-2 rounded-2xl bg-blue text-white px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose";
+
+    if (variant === "secondary") {
+      btnClasses =
+        "inline-flex items-center gap-2 rounded-2xl border border-line bg-panel text-text px-6 py-3.5 font-bold text-sm hover:border-blue transition-all not-prose";
+    } else if (variant === "outline") {
+      btnClasses =
+        "inline-flex items-center gap-2 rounded-2xl border-2 border-blue text-blue bg-transparent px-6 py-3.5 font-bold text-sm hover:bg-blue/10 transition-all not-prose";
+    }
+
+    if (align === "full") {
+      btnClasses += " w-full text-center justify-center";
+    }
 
     return [
       "div",
-      mergeAttributes(
-        {
-          "data-inline-cta": "",
-          class: "my-8 flex justify-center not-prose",
-        },
-        HTMLAttributes,
-      ),
+      mergeAttributes({
+        "data-inline-cta": "",
+        "data-cta-label": label,
+        "data-cta-url": url,
+        "data-cta-variant": variant,
+        "data-cta-align": align,
+        class: `my-8 flex items-center ${alignClasses} not-prose`,
+      }),
       [
         "a",
         {
-          href: HTMLAttributes["data-cta-url"] || "/contact",
+          href: url,
           class: btnClasses,
-          target: "_blank",
-          rel: "noopener noreferrer",
+          target: url.startsWith("http") ? "_blank" : undefined,
+          rel: url.startsWith("http") ? "noopener noreferrer" : undefined,
         },
-        HTMLAttributes["data-cta-label"] || "مشاهده جزییات",
+        [
+          "span",
+          {},
+          label,
+        ],
+        [
+          "span",
+          {
+            class: "text-orange text-xs",
+            "aria-hidden": "true",
+          },
+          "◀",
+        ],
       ],
     ];
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(CtaNodeView);
   },
 
   addCommands() {

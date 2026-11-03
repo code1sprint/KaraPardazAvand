@@ -1,0 +1,149 @@
+"use client";
+
+import { NodeViewWrapper } from "@tiptap/react";
+import type { NodeViewProps } from "@tiptap/react";
+import { cn } from "@/lib/cn";
+
+export function CtaNodeView({
+  node,
+  updateAttributes,
+  deleteNode,
+  selected,
+}: NodeViewProps) {
+  const label = (node.attrs.label as string) || "درخواست جلسه ارزیابی فنی";
+  const url = (node.attrs.url as string) || "/contact";
+  const variant = (node.attrs.variant as "primary" | "secondary" | "outline") || "primary";
+  const align = (node.attrs.align as "center" | "left" | "right" | "full") || "center";
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("kara-edit-cta-node", {
+          detail: {
+            label,
+            url,
+            variant,
+            align,
+            update: (params: { label: string; url: string; variant: string; align: string }) => {
+              updateAttributes(params);
+            },
+          },
+        }),
+      );
+    }
+  };
+
+  return (
+    <NodeViewWrapper
+      className="relative group my-8 select-none not-prose"
+      data-inline-cta=""
+      data-cta-label={label}
+      data-cta-url={url}
+      data-cta-variant={variant}
+      data-cta-align={align}
+    >
+      {/* Floating Control Toolbar on Hover or Selection */}
+      <div
+        contentEditable={false}
+        className={cn(
+          "absolute -top-11 start-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 bg-panel border border-line shadow-xl rounded-xl p-1 text-xs select-none transition-all",
+          selected ? "opacity-100 visible" : "opacity-0 group-hover:opacity-100 group-hover:visible",
+        )}
+      >
+        {/* Layout Alignment Toggles */}
+        <div className="flex items-center gap-0.5 bg-bg p-0.5 rounded-lg border border-line">
+          {[
+            { id: "right", label: "راست ➡️" },
+            { id: "center", label: "⏺ وسط" },
+            { id: "left", label: "⬅ چپ" },
+            { id: "full", label: "↔ کامل" },
+          ].map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              onClick={() => updateAttributes({ align: opt.id })}
+              className={cn(
+                "px-1.5 py-0.5 rounded font-bold transition-colors text-[11px]",
+                align === opt.id ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Variant Toggles */}
+        <div className="flex items-center gap-0.5 bg-bg p-0.5 rounded-lg border border-line text-[11px]">
+          {[
+            { id: "primary", label: "اصلی" },
+            { id: "secondary", label: "روشن" },
+            { id: "outline", label: "خطی" },
+          ].map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => updateAttributes({ variant: v.id })}
+              className={cn(
+                "px-1.5 py-0.5 rounded transition-colors",
+                variant === v.id
+                  ? "bg-panel text-blue font-bold shadow-sm"
+                  : "text-muted hover:text-text",
+              )}
+            >
+              {v.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Edit Button */}
+        <button
+          type="button"
+          onClick={handleEditClick}
+          className="rounded-lg border border-line bg-bg px-2 py-0.5 text-xs font-bold text-muted hover:text-blue hover:border-blue/40 transition-colors flex items-center gap-1"
+          title="ویرایش عنوان یا لینک دکمه"
+        >
+          ✏ ویرایش
+        </button>
+
+        {/* Delete Button */}
+        <button
+          type="button"
+          onClick={deleteNode}
+          className="rounded-lg border border-line bg-bg px-2 py-0.5 text-xs font-bold text-muted hover:text-red-500 hover:border-red-300 transition-colors"
+          title="حذف دکمه"
+        >
+          ×
+        </button>
+      </div>
+
+      {/* Button Render Surface */}
+      <div
+        className={cn(
+          "w-full flex items-center",
+          align === "center" && "justify-center",
+          align === "right" && "justify-start",
+          align === "left" && "justify-end",
+          align === "full" && "w-full",
+        )}
+      >
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          className={cn(
+            "inline-flex items-center gap-2.5 rounded-2xl px-6 py-3.5 font-bold text-sm shadow-sm cursor-pointer transition-all",
+            align === "full" && "w-full justify-center text-center",
+            variant === "primary" && "bg-blue text-white shadow hover:bg-navy-2",
+            variant === "secondary" && "bg-panel text-text border border-line hover:border-blue",
+            variant === "outline" && "border-2 border-blue text-blue bg-transparent hover:bg-blue/10",
+          )}
+        >
+          <span>{label}</span>
+          {/* Orange triangle from the logo as small signature marker */}
+          <span className="text-orange text-xs">◀</span>
+        </div>
+      </div>
+    </NodeViewWrapper>
+  );
+}

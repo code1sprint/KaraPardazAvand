@@ -7,12 +7,14 @@ interface TiptapToolbarProps {
   editor: Editor | null;
   locale: "fa" | "en";
   onOpenMediaModal?: (type: "image" | "video") => void;
+  onOpenCtaModal?: () => void;
 }
 
 export function TiptapToolbar({
   editor,
   locale,
   onOpenMediaModal,
+  onOpenCtaModal,
 }: TiptapToolbarProps) {
   if (!editor) return null;
 
@@ -38,12 +40,20 @@ export function TiptapToolbar({
   };
 
   const insertCta = () => {
-    const label = window.prompt("عنوان دکمه (CTA Label):", "درخواست جلسه ارزیابی فنی");
-    if (!label) return;
-    const url = window.prompt("آدرس مقصد (URL):", "/contact");
-    if (!url) return;
-
-    editor.chain().focus().insertInlineCta({ label, url, variant: "primary" }).run();
+    if (onOpenCtaModal) {
+      onOpenCtaModal();
+    } else {
+      editor
+        .chain()
+        .focus()
+        .insertInlineCta({
+          label: "درخواست جلسه ارزیابی فنی",
+          url: "/contact",
+          variant: "primary",
+          align: "center",
+        })
+        .run();
+    }
   };
 
   const insertZwnj = () => {
