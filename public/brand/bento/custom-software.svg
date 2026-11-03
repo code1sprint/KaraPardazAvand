@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="csBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A3A86"/>
+      <stop offset="35%" stop-color="#061D44"/>
+      <stop offset="70%" stop-color="#12203d"/>
+      <stop offset="100%" stop-color="#0A3A86"/>
+    </linearGradient>
+    <filter id="csSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#csBg)"/>
+  <circle cx="160" cy="100" r="5" fill="#2E8FF0" opacity="0.5"/>
+  <circle cx="820" cy="90" r="5" fill="#FF800D" opacity="0.5"/>
+  <circle cx="860" cy="480" r="5" fill="#34C48B" opacity="0.45"/>
+  <path d="M160 100 L340 220" stroke="#2E8FF0" stroke-width="2" opacity="0.28" stroke-dasharray="4 6"/>
+  <path d="M820 90 L700 200" stroke="#FF800D" stroke-width="2" opacity="0.28" stroke-dasharray="4 6"/>
+  <g filter="url(#csSoft)">
+    <rect x="60" y="100" width="460" height="420" rx="24" fill="#0A1530" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+    <rect x="60" y="100" width="460" height="56" rx="24" fill="#08112A"/>
+    <rect x="60" y="136" width="460" height="20" fill="#08112A"/>
+    <circle cx="100" cy="128" r="10" fill="#FF800D"/>
+    <circle cx="136" cy="128" r="10" fill="#2E8FF0"/>
+    <circle cx="172" cy="128" r="10" fill="#8EA3C8"/>
+    <rect x="60" y="156" width="110" height="364" fill="#08112A"/>
+    <rect x="86" y="190" width="60" height="16" rx="8" fill="#2E8FF0" opacity="0.9"/>
+    <rect x="86" y="226" width="60" height="12" rx="6" fill="rgba(255,255,255,0.12)"/>
+    <rect x="86" y="256" width="48" height="12" rx="6" fill="rgba(255,255,255,0.08)"/>
+    <rect x="86" y="286" width="54" height="12" rx="6" fill="rgba(255,255,255,0.08)"/>
+    <rect x="200" y="190" width="28" height="14" rx="4" fill="#FF800D" opacity="0.75"/>
+    <rect x="236" y="190" width="120" height="14" rx="4" fill="#2E8FF0" opacity="0.55"/>
+    <rect x="364" y="190" width="70" height="14" rx="4" fill="#8EA3C8" opacity="0.4"/>
+    <rect x="220" y="224" width="90" height="14" rx="4" fill="#E6EDFB" opacity="0.22"/>
+    <rect x="318" y="224" width="140" height="14" rx="4" fill="#2E8FF0" opacity="0.35"/>
+    <rect x="220" y="258" width="56" height="14" rx="4" fill="#FFB843" opacity="0.55"/>
+    <rect x="284" y="258" width="180" height="14" rx="4" fill="#E6EDFB" opacity="0.18"/>
+    <rect x="220" y="292" width="150" height="14" rx="4" fill="#34C48B" opacity="0.45"/>
+    <rect x="380" y="292" width="90" height="14" rx="4" fill="#E6EDFB" opacity="0.18"/>
+    <rect x="220" y="326" width="70" height="14" rx="4" fill="#2E8FF0" opacity="0.4"/>
+    <rect x="300" y="326" width="160" height="14" rx="4" fill="#E6EDFB" opacity="0.22"/>
+    <rect x="220" y="360" width="100" height="14" rx="4" fill="#E6EDFB" opacity="0.2"/>
+    <rect x="330" y="360" width="110" height="14" rx="4" fill="#8EA3C8" opacity="0.35"/>
+    <rect x="220" y="420" width="240" height="36" rx="12" fill="#0A3A86"/>
+  </g>
+  <g filter="url(#csSoft)">
+    <rect x="600" y="120" width="260" height="120" rx="22" fill="#1D6DD1"/>
+    <rect x="640" y="158" width="120" height="12" rx="6" fill="#FFFFFF" opacity="0.5"/>
+    <rect x="640" y="186" width="80" height="12" rx="6" fill="#FFFFFF" opacity="0.3"/>
+  </g>
+  <g filter="url(#csSoft)" transform="rotate(6 740 320)">
+    <rect x="580" y="270" width="280" height="130" rx="22" fill="#0A3A86" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+    <circle cx="640" cy="335" r="24" fill="#FF800D"/>
+    <rect x="684" y="316" width="120" height="12" rx="6" fill="#8EA3C8"/>
+    <rect x="684" y="344" width="80" height="12" rx="6" fill="rgba(255,255,255,0.15)"/>
+  </g>
+  <g filter="url(#csSoft)" transform="rotate(-8 780 500)">
+    <rect x="640" y="450" width="220" height="90" rx="18" fill="#08112A" stroke="#2E8FF0" stroke-width="2.5"/>
+    <rect x="680" y="484" width="140" height="12" rx="6" fill="#2E8FF0" opacity="0.6"/>
+  </g>
+  <circle cx="540" cy="260" r="14" fill="#FF800D" filter="url(#csSoft)"/>
+  <path d="M500 260 H580" stroke="#FFB843" stroke-width="4" opacity="0.7"/>
+</svg>

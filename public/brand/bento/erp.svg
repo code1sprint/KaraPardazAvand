@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="erpBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8eef8"/>
+      <stop offset="40%" stop-color="#f6f9fe"/>
+      <stop offset="100%" stop-color="#dde7f4"/>
+    </linearGradient>
+    <filter id="erpSoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#0B1B38" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#erpBg)"/>
+  <g fill="#B8C9E0" opacity="0.35">
+    <circle cx="120" cy="80" r="3"/><circle cx="180" cy="80" r="3"/><circle cx="240" cy="80" r="3"/>
+    <circle cx="120" cy="140" r="3"/><circle cx="180" cy="140" r="3"/><circle cx="240" cy="140" r="3"/>
+    <circle cx="720" cy="80" r="3"/><circle cx="780" cy="80" r="3"/><circle cx="840" cy="80" r="3"/>
+    <circle cx="720" cy="520" r="3"/><circle cx="780" cy="520" r="3"/><circle cx="840" cy="520" r="3"/>
+  </g>
+  <path d="M480 80 L860 260 L480 440 L100 260 Z" fill="#DCE4F1" opacity="0.45"/>
+  <path d="M480 120 L760 260 L480 400 L200 260 Z" fill="#F6F9FE" opacity="0.75"/>
+  <path d="M260 240 L480 340 L700 240" fill="none" stroke="#2E8FF0" stroke-width="6" opacity="0.55"/>
+  <path d="M480 340 L480 460" fill="none" stroke="#FF800D" stroke-width="6" opacity="0.75"/>
+  <path d="M260 240 L480 170 L700 240" fill="none" stroke="#1D6DD1" stroke-width="5" opacity="0.4" stroke-dasharray="10 8"/>
+  <g filter="url(#erpSoft)">
+    <path d="M200 180 L300 130 L400 180 L300 230 Z" fill="#2E8FF0"/>
+    <path d="M200 180 L200 250 L300 300 L300 230 Z" fill="#1D6DD1"/>
+    <path d="M400 180 L400 250 L300 300 L300 230 Z" fill="#0A3A86"/>
+  </g>
+  <g filter="url(#erpSoft)">
+    <path d="M560 180 L660 130 L760 180 L660 230 Z" fill="#8EC5F7"/>
+    <path d="M560 180 L560 250 L660 300 L660 230 Z" fill="#2E8FF0"/>
+    <path d="M760 180 L760 250 L660 300 L660 230 Z" fill="#1D6DD1"/>
+  </g>
+  <g filter="url(#erpSoft)">
+    <path d="M380 420 L480 370 L580 420 L480 470 Z" fill="#FFB843"/>
+    <path d="M380 420 L380 480 L480 530 L480 470 Z" fill="#FF800D"/>
+    <path d="M580 420 L580 480 L480 530 L480 470 Z" fill="#c45f00"/>
+  </g>
+  <g filter="url(#erpSoft)">
+    <ellipse cx="480" cy="290" rx="78" ry="42" fill="#061D44" opacity="0.92"/>
+    <ellipse cx="480" cy="278" rx="60" ry="32" fill="#2E8FF0" opacity="0.88"/>
+    <ellipse cx="480" cy="268" rx="28" ry="14" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+  <circle cx="370" cy="300" r="12" fill="#FFFFFF" stroke="#2E8FF0" stroke-width="4"/>
+  <circle cx="590" cy="300" r="12" fill="#FFFFFF" stroke="#1D6DD1" stroke-width="4"/>
+  <circle cx="480" cy="400" r="12" fill="#FFFFFF" stroke="#FF800D" stroke-width="4"/>
+</svg>

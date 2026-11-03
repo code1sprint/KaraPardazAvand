@@ -1,0 +1,49 @@
+---
+slug: rag-knowledge-pilot
+title: "نمونه — پایلوت RAG دانش داخلی"
+sector: خدمات سازمانی
+year: 1403
+services:
+  - rag-ai
+  - data-science
+role: معماری بازیابی و رابط پرسش‌وپاسخ
+problem: پاسخ به پرسش‌های تکراری عملیات وابسته به جست‌وجوی دستی در اسناد پراکنده بود و منبع پاسخ قابل ردیابی نبود.
+solution: ایندکس امن اسناد داخلی با خط لوله بازیابی و تولید پاسخ، همراه با لاگ منبع برای هر پاسخ.
+results:
+  - label: پوشش اسناد ایندکس‌شده
+    value: پایلوت محدود به یک واحد
+    source: یادداشت داخلی پایلوت (نمونه)
+  - label: رضایت کیفی
+    value: اندازه‌گیری نشده
+stack:
+  - Python
+  - Vector store
+  - TypeScript UI
+cover: /projects/rag-pilot-cover.svg
+gallery:
+  - src: /projects/rag-pilot-cover.svg
+    caption: نمای شماتیک خط لوله بازیابی (نمونهٔ پیش‌نویس)
+    alt: شماتیک پایپ‌لاین RAG
+  - src: /projects/rag-pilot-cover.svg
+    caption: قاب دوم برای بررسی فاصله و زیرنویس گالری
+    alt: قاب بررسی گالری
+systemMap:
+  windowTitle: "kara://rag-knowledge-pilot"
+  descriptionLead: "اسناد ایندکس‌شده، پاسخ با منبع."
+  description: "اسناد داخلی ایندکس می‌شوند؛ بازیابی و تولید پاسخ با لاگ منبع برای هر خروجی انجام می‌شود."
+  nodes:
+    inputTop: اسناد داخلی
+    inputBottom: پرسش عملیات
+    core: بازیابی + تولید
+    outputTop: پاسخ با منبع
+    outputBottom: لاگ استناد
+  logs:
+    - "index.docs  unit=pilot"
+    - "retrieve.ok"
+    - "cite.logged"
+featured: true
+status: draft
+needs_business_confirmation: true
+---
+
+این فایل **نمونهٔ پیش‌نویس** برای بازبینی چیدمان است. ادعای آماری واقعی در آن نیست.

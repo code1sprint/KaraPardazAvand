@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-blue: var(--blue);
+  --color-sky: var(--sky);
+  --color-sky-bright: var(--sky-bright);
+  --color-orange: var(--orange);
+  --color-amber: var(--amber);
+  --color-ok: var(--ok);
+  --color-on-brand: var(--on-brand);
+  --color-blue-soft: var(--blue-soft);
+  --color-sky-soft: var(--sky-soft);
+  --color-orange-soft: var(--orange-soft);
+  --color-band-muted: var(--band-muted);
+  --color-tile-hover-line: var(--tile-hover-line);
+  --color-win-bg: var(--win-bg);
+  --color-win-deep: var(--win-deep);
+  --color-win-line: var(--win-line);
+  --color-win-text: var(--win-text);
+  --color-win-muted: var(--win-muted);
+  --color-win-desc: var(--win-desc);
+  --color-win-node: var(--win-node);
+  --color-win-node-line: var(--win-node-line);
+  --color-win-node-core: var(--win-node-core);
+  --color-win-dot: var(--win-dot);
+  --color-tile-dark-from: var(--tile-dark-from);
+  --color-tile-dark-to: var(--tile-dark-to);
+
+  /* Compat aliases */
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+
+  --radius-pill: var(--radius-pill);
+  --radius-tile: var(--radius-tile);
+  --radius-window: var(--radius-window);
+  --radius-node: var(--radius-node);
+  --radius-code: var(--radius-code);
+  --radius-chip: var(--radius-chip);
+  --radius-control: var(--radius-control);
+  --radius-button: var(--radius-button);
+  --radius-card: var(--radius-card);
+  --radius-card-lg: var(--radius-card-lg);
+  --radius-badge: var(--radius-badge);
+
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+
+  --font-sans: var(--font-vazirmatn), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --text-body: var(--text-body);
+  --text-body-lg: var(--text-body-lg);
+  --text-h1: var(--h1-size);
+  --text-h2: var(--h2-size);
+}
+
+@layer base {
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100%;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  ::selection {
+    background-color: var(--sky-soft);
+    color: var(--text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(
+      110deg,
+      var(--blue),
+      var(--sky) 60%,
+      var(--sky-bright)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-brand {
+    background-image: linear-gradient(135deg, var(--blue), var(--navy-2));
+  }
+
+  .bg-band-stripe {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 90px,
+      var(--stripe) 90px 170px
+    );
+  }
+
+  .animate-route-fade {
+    /* forwards only — avoid `both` (opacity:0 before start delays LCP). */
+    animation: kara-route-fade var(--motion-route) ease-out forwards;
+  }
+
+  /* rehype-pretty-code github-dark comments (#6A737D) fail AA on win-bg. */
+  pre[data-theme="github-dark"] span[style*="color:#6A737D"],
+  pre[data-theme="github-dark"] span[style*="color: #6A737D"] {
+    color: var(--win-muted) !important;
+  }
+}
+
+/* Signature motion (respects reduced-motion via base layer) */
+@keyframes kara-float {
+  50% {
+    transform: translateY(-16px) rotate(2deg);
+  }
+}
+
+@keyframes kara-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes kara-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes kara-route-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Admin Panel isolation: hides consumer marketing header and footer */
+body:has(.admin-root) > header,
+body:has(.admin-root) > footer,
+body:has(.admin-root) [data-skip-link] {
+  display: none !important;
+}

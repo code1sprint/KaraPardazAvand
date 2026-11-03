@@ -1,0 +1,49 @@
+---
+slug: ops-crm-pilot
+title: "نمونه — پایلوت CRM عملیات فروش"
+sector: توزیع و فروش B2B
+year: 1403
+services:
+  - crm
+  - custom-software
+role: طراحی محصول و پیاده‌سازی هسته CRM
+problem: پیگیری فرصت‌ها و پیگیری پس از فروش در چند کانال پراکنده بود و وضعیت قیف برای مدیر تیم شفاف نبود.
+solution: مدل مخاطب و فرصت یکپارچه با داشبورد وضعیت قیف و نقش‌های دسترسی مشخص برای تیم فروش.
+results:
+  - label: زمان آماده‌سازی گزارش هفتگی
+    value: اندازه‌گیری نشده
+  - label: وضعیت داده
+    value: EXAMPLE_LAYOUT_ONLY
+    source: ""
+stack:
+  - TypeScript
+  - PostgreSQL
+  - Next.js
+cover: /projects/ops-crm-cover.svg
+gallery:
+  - src: /projects/ops-crm-cover.svg
+    caption: نمای شماتیک داشبورد قیف (نمونهٔ پیش‌نویس)
+    alt: شماتیک داشبورد CRM
+  - src: /projects/ops-crm-cover.svg
+    caption: قاب برند برای بررسی چیدمان گالری
+    alt: قاب بررسی چیدمان
+systemMap:
+  windowTitle: "kara://ops-crm-pilot"
+  descriptionLead: "مدل مخاطب و فرصت در یک هسته."
+  description: "ورودی کانال‌ها به هسته CRM می‌رسد؛ خروجی داشبورد قیف و نقش‌های دسترسی برای تیم فروش است."
+  nodes:
+    inputTop: کانال فروش
+    inputBottom: پیگیری پس از فروش
+    core: هسته CRM
+    outputTop: داشبورد قیف
+    outputBottom: نقش‌های دسترسی
+  logs:
+    - "ingest.channels  ok"
+    - "funnel.synced"
+    - "roles.applied"
+featured: true
+status: draft
+needs_business_confirmation: true
+---
+
+این فایل **نمونهٔ پیش‌نویس** برای بازبینی چیدمان صفحهٔ مطالعه موردی است و دادهٔ واقعی مشتری نیست.

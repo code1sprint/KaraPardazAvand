@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 410" role="img" aria-label="Kara Pardaz Oond">
+  <defs>
+    <linearGradient id="leftWingGrad" x1="10%" y1="98%" x2="86%" y2="4%">
+      <stop offset="0%" stop-color="#051A44" />
+      <stop offset="42%" stop-color="#093078" />
+      <stop offset="78%" stop-color="#114CB0" />
+      <stop offset="100%" stop-color="#1B67DE" />
+    </linearGradient>
+
+    <linearGradient id="mainArchGrad" x1="20%" y1="96%" x2="78%" y2="8%">
+      <stop offset="0%" stop-color="#061D4C" />
+      <stop offset="32%" stop-color="#0A347E" />
+      <stop offset="62%" stop-color="#1354C4" />
+      <stop offset="85%" stop-color="#2174F0" />
+      <stop offset="100%" stop-color="#1A66DE" />
+    </linearGradient>
+
+    <radialGradient id="archCrownGlow" cx="66%" cy="15%" r="30%">
+      <stop offset="0%" stop-color="#4295FF" stop-opacity="0.58" />
+      <stop offset="55%" stop-color="#1E6CE5" stop-opacity="0.20" />
+      <stop offset="100%" stop-color="#1354C4" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="rightLegGrad" x1="68%" y1="26%" x2="92%" y2="96%">
+      <stop offset="0%" stop-color="#031233" />
+      <stop offset="18%" stop-color="#062054" />
+      <stop offset="55%" stop-color="#0B3582" />
+      <stop offset="100%" stop-color="#062156" />
+    </linearGradient>
+
+    <linearGradient id="foldShadowGrad" x1="74%" y1="24%" x2="83%" y2="52%">
+      <stop offset="0%" stop-color="#01081B" stop-opacity="0.78" />
+      <stop offset="45%" stop-color="#041844" stop-opacity="0.32" />
+      <stop offset="100%" stop-color="#0B3582" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="innerBevelGrad" x1="36%" y1="96%" x2="66%" y2="26%">
+      <stop offset="0%" stop-color="#041538" />
+      <stop offset="48%" stop-color="#082866" />
+      <stop offset="82%" stop-color="#1045A2" />
+      <stop offset="100%" stop-color="#0A327C" />
+    </linearGradient>
+
+    <linearGradient id="orangePyramidGrad" x1="70%" y1="54%" x2="34%" y2="98%">
+      <stop offset="0%" stop-color="#FFB43A" />
+      <stop offset="32%" stop-color="#FF890A" />
+      <stop offset="75%" stop-color="#F26200" />
+      <stop offset="100%" stop-color="#CC4600" />
+    </linearGradient>
+  </defs>
+
+  <path id="left-wing" d="M 18 396
+           C 10 396, 7 390, 12 383
+           L 250 64
+           C 280 22, 318 8, 372 8
+           L 442 8
+           C 447 8, 449 12, 445 17
+           L 169 390
+           C 166 394, 161 396, 154 396
+           Z" fill="url(#leftWingGrad)" />
+
+  <path id="inner-arch-bevel" d="M 330 396
+           L 520 135
+           C 575 75, 665 70, 745 110
+           L 715 205
+           C 682 152, 654 132, 624 132
+           C 594 132, 570 150, 544 184
+           L 386 396
+           Z" fill="url(#innerBevelGrad)" />
+
+  <path id="right-leg" d="M 636 88
+           C 720 82, 804 114, 868 172
+           L 1010 382
+           C 1016 390, 1013 396, 1003 396
+           L 840 396
+           C 833 396, 828 393, 824 387
+           L 678 158
+           C 662 134, 648 112, 636 88
+           Z" fill="url(#rightLegGrad)" />
+
+  <path id="right-leg-fold-shadow" d="M 636 88
+           C 720 82, 804 114, 868 172
+           L 922 252
+           C 844 190, 756 154, 678 158
+           C 662 134, 648 112, 636 88
+           Z" fill="url(#foldShadowGrad)" />
+
+  <path id="main-arch-ribbon" d="M 218 396
+           C 210 396, 207 390, 212 383
+           L 451 64
+           C 492 14, 548 8, 618 8
+           C 688 8, 750 32, 802 92
+           L 868 172
+           C 806 124, 728 98, 648 104
+           C 604 107, 572 130, 540 170
+           L 372 390
+           C 368 394, 364 396, 356 396
+           Z" fill="url(#mainArchGrad)" />
+
+  <path id="main-arch-highlight" d="M 218 396
+           C 210 396, 207 390, 212 383
+           L 451 64
+           C 492 14, 548 8, 618 8
+           C 688 8, 750 32, 802 92
+           L 868 172
+           C 806 124, 728 98, 648 104
+           C 604 107, 572 130, 540 170
+           L 372 390
+           C 368 394, 364 396, 356 396
+           Z" fill="url(#archCrownGlow)" />
+
+  <path id="orange-pyramid" d="M 438 396
+           C 431 396, 429 390, 434 384
+           L 578 228
+           C 584 221, 594 218, 616 218
+           C 638 218, 648 221, 654 228
+           L 794 384
+           C 799 390, 797 396, 790 396
+           Z" fill="url(#orangePyramidGrad)" />
+</svg>

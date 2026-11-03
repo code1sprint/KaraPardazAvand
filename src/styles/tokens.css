@@ -1,0 +1,159 @@
+/* Kara Pardaz v3 design tokens — light page default; dark only as product surfaces */
+
+:root {
+  /* Light page */
+  --bg: #f6f9fe;
+  --panel: #ffffff;
+  --line: #dce4f1;
+  --text: #0b1b38;
+  --muted: #52627f;
+
+  /* Brand */
+  --navy: #061d44;
+  --navy-2: #0a3a86;
+  --blue: #1d6dd1;
+  --sky: #2e8ff0;
+  --sky-bright: #6fb5ff;
+  --orange: #ff800d;
+  --amber: #ffb843;
+  --ok: #34c48b;
+  --stripe: rgba(46, 143, 240, 0.1);
+
+  /* Dark product surfaces (AppWindow, code, console) — not a site theme */
+  --win-bg: #0a1530;
+  --win-deep: #08112a;
+  --win-line: rgba(255, 255, 255, 0.1);
+  --win-text: #e6edfb;
+  --win-muted: #8ea3c8;
+  --win-desc: #9fb2d6;
+  --win-node: #101c3d;
+  --win-node-line: #2a3f72;
+  --win-node-core: #12275a;
+  --tile-dark-from: #071b42;
+  --tile-dark-to: #0b3272;
+  --glow-sky: rgba(46, 143, 240, 0.4);
+  --hero-glow-sky: rgba(46, 143, 240, 0.22);
+  --hero-glow-blue: rgba(29, 109, 209, 0.14);
+  --hero-glow-orange: rgba(255, 128, 13, 0.12);
+
+  /* Derived / soft fills (tokenized — never hard-code in components) */
+  --blue-soft: rgba(29, 109, 209, 0.09);
+  --sky-soft: rgba(46, 143, 240, 0.16);
+  --orange-soft: rgba(255, 128, 13, 0.14);
+  --on-brand: #ffffff;
+  --band-muted: #b7c8e6;
+  --win-dot: #2a3a62;
+  --tile-hover-line: #b9cdeb;
+
+  /*
+   * Compat aliases for pre-v3 call sites (pages/sections not yet rebuilt).
+   * Prefer --blue / --sky / --blue-soft in new components.
+   */
+  --accent: var(--blue);
+  --accent-soft: var(--blue-soft);
+  --on-accent: var(--on-brand);
+
+  /* Radii */
+  --radius-pill: 99px;
+  --radius-tile: 24px;
+  --radius-window: 22px;
+  --radius-node: 10px;
+  --radius-code: 14px;
+  --radius-chip: 14px;
+  --radius-control: 12px;
+  /* Legacy aliases */
+  --radius-button: var(--radius-pill);
+  --radius-card: var(--radius-tile);
+  --radius-card-lg: var(--radius-tile);
+  --radius-badge: var(--radius-pill);
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Layout */
+  --container-max: 1180px;
+  --container-narrow: 48rem;
+  --section-pad-y: 72px;
+  --section-pad-y-lg: 110px;
+  /* Denser rhythm for multi-section content pages (process, service detail). */
+  --section-pad-y-dense: 48px;
+  --section-pad-y-dense-lg: 72px;
+  --band-slant: 56px;
+  --band-pad-y: 120px;
+  --band-pad-y-lg: 170px;
+
+  /* Typography */
+  --text-body: 1rem;
+  --text-body-lg: 1.0625rem;
+  --leading-body: 1.8;
+  --leading-heading: 1.15;
+  --leading-h2: 1.25;
+  --h1-size: clamp(40px, 7.4vw, 96px);
+  --h2-size: clamp(30px, 4.4vw, 54px);
+  --h1-tracking: -0.025em;
+  --h2-tracking: -0.015em;
+
+  /* Focus */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+  --focus-ring-color: var(--sky);
+
+  /* Controls */
+  --control-height: 52px;
+  --control-height-sm: 40px;
+
+  /* Site chrome */
+  --header-height: 4rem;
+  --header-z: 50;
+  --drawer-z: 60;
+  --nav-max: 880px;
+  --nav-blur: 14px;
+  --nav-glass: rgba(255, 255, 255, 0.72);
+  --nav-offset-top: 12px;
+  --nav-pad-y: 8px;
+  --nav-pad-inline-start: 8px;
+  --nav-pad-inline-end: 20px;
+  /* Fixed sticky header block (offset + pill) — locks layout for CLS. */
+  --nav-block-height: 74px;
+  --nav-pill-height: 62px;
+  --footer-wm-opacity: 0.1;
+  --footer-muted: #8ea3c8;
+
+  /* Border */
+  --border-width: 1px;
+
+  /* Motion */
+  --motion-hover: 0.2s;
+  --motion-tile: 0.25s;
+  --motion-float: 9s;
+  --motion-flow: 1.6s;
+  --motion-marquee: 38s;
+  --motion-stagger: 70ms;
+  --motion-route: 0.28s;
+
+  /* Shadows (window + tile hover + floating nav) */
+  --shadow-window:
+    0 70px 120px -50px rgba(6, 29, 68, 0.7),
+    0 0 0 1px rgba(46, 143, 240, 0.18),
+    0 0 90px -20px rgba(46, 143, 240, 0.35);
+  --shadow-tile-hover: 0 24px 50px -30px rgba(29, 109, 209, 0.5);
+  --shadow-btn-primary: 0 12px 28px -12px rgba(29, 109, 209, 0.7);
+  --shadow-logo-tile: 0 8px 24px -12px rgba(6, 29, 68, 0.45);
+  --shadow-nav: 0 10px 30px -18px rgba(6, 29, 68, 0.4);
+}
+
+@media (min-width: 900px) {
+  :root {
+    --section-pad-y: var(--section-pad-y-lg);
+    --band-pad-y: var(--band-pad-y-lg);
+  }
+}

@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استودیو سه‌بعدی‌سازی لوگو | 3D Logo Visualizer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Vazirmatn & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Three.js r128 & OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #050811;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #f1f5f9;
+        }
+        #canvas-container {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(10, 16, 30, 0.76);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+        .glass-pill {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-pill:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-2px);
+        }
+        .mode-btn.active {
+            background: linear-gradient(135deg, rgba(25, 103, 210, 0.45), rgba(255, 123, 0, 0.35));
+            border-color: #3b82f6;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.35), inset 0 0 12px rgba(255, 123, 0, 0.25);
+        }
+        /* Custom Range Sliders */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #ff7b00);
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+            transition: transform 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.4);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.5);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.8);
+        }
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            direction: ltr;
+            text-align: left;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        .badge-glow {
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative w-screen h-screen overflow-hidden select-none">
+
+    <!-- 3D Viewport Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Top Navigation & Action Bar -->
+    <header class="fixed top-4 inset-x-4 z-20 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
+        <!-- Brand / Logo Badge -->
+        <div class="glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-3.5 pointer-events-auto">
+            <!-- Mini 2D Vector SVG Replica of User's Logo (With Clean Separation Gap) -->
+            <div class="w-12 h-8 rounded-lg bg-black/80 border border-white/10 flex items-center justify-center p-1 shadow-inner" title="نسخه ۲بعدی مرجع با شکاف دقیق">
+                <svg viewBox="-5.6 -4.3 10.8 4.6" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="svgLeftGrad" x1="0" y1="1" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#062256"/>
+                            <stop offset="100%" stop-color="#1557b8"/>
+                        </linearGradient>
+                        <linearGradient id="svgTopGrad" x1="0" y1="1" x2="0.8" y2="0">
+                            <stop offset="0%" stop-color="#093075"/>
+                            <stop offset="65%" stop-color="#1a6ce0"/>
+                            <stop offset="100%" stop-color="#2684ff"/>
+                        </linearGradient>
+                        <linearGradient id="svgRightGrad" x1="0" y1="0" x2="0.5" y2="1">
+                            <stop offset="0%" stop-color="#051e4d"/>
+                            <stop offset="100%" stop-color="#0d3c8c"/>
+                        </linearGradient>
+                        <linearGradient id="svgOrangeGrad" x1="0.5" y1="1" x2="0.5" y2="0">
+                            <stop offset="0%" stop-color="#ff5e00"/>
+                            <stop offset="100%" stop-color="#ffaa00"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Left Wing (Separated by clean parallel gap) -->
+                    <path d="M -5.20 0.0 L -3.55 0.0 L -0.90 -3.92 Q -0.85 -4.00 -0.98 -4.00 L -2.05 -4.00 Q -2.75 -4.00 -3.17 -3.00 Z" fill="url(#svgLeftGrad)" />
+                    <!-- Right Lower Leg -->
+                    <path d="M 1.30 -2.65 Q 2.45 -2.85 3.65 -1.75 L 4.85 0.0 L 3.15 0.0 Z" fill="url(#svgRightGrad)" />
+                    <!-- Main Arch Top -->
+                    <path d="M -2.45 0.0 L -0.75 0.0 L 1.15 -2.55 Q 2.35 -2.90 3.65 -1.75 Q 2.65 -3.95 1.25 -4.00 Q 0.15 -4.00 -0.42 -3.00 Z" fill="url(#svgTopGrad)" />
+                    <!-- Orange Peak -->
+                    <path d="M -0.20 0.0 L 2.65 0.0 L 1.55 -1.50 L 0.90 -1.50 Z" fill="url(#svgOrangeGrad)" />
+                </svg>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-sm sm:text-base font-bold text-white tracking-tight">استودیو سه‌بعدی‌سازی لوگو</h1>
+                    <span class="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 badge-glow">Three.js WebGL</span>
+                </div>
+                <p class="text-[11px] text-slate-400 hidden sm:block">تبدیل دقیق هندسه لوگو با تفکیک کامل بازوی چپ و کمان اصلی در ۶ حالت حجمی</p>
+            </div>
+        </div>
+
+        <!-- Top Action Buttons -->
+        <div class="flex items-center gap-2 pointer-events-auto">
+            <!-- Toggle Controls Drawer on Mobile / Desktop -->
+            <button id="btn-toggle-panel" class="glass-pill px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-blue-400"></i>
+                <span>تنظیمات حجم و نور</span>
+            </button>
+
+            <!-- Transparent Background Toggle -->
+            <button id="btn-bg-toggle" class="glass-pill px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-200 flex items-center gap-2" title="تغییر پس‌زمینه استودیو">
+                <i class="fa-solid fa-circle-half-stroke text-orange-400"></i>
+                <span class="hidden md:inline">پس‌زمینه: تیره استودیویی</span>
+            </button>
+
+            <!-- Snapshot PNG Button -->
+            <button id="btn-snapshot" class="glass-pill px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-emerald-300 border-emerald-500/30 flex items-center gap-2">
+                <i class="fa-solid fa-camera"></i>
+                <span class="hidden sm:inline">خروجی تصویر PNG</span>
+            </button>
+
+            <!-- View Three.js Code Modal Button -->
+            <button id="btn-show-code" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-500 hover:to-orange-400 shadow-lg shadow-blue-600/25 transition flex items-center gap-2">
+                <i class="fa-solid fa-code"></i>
+                <span>دریافت کد سه‌بعدی</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Right Collapsible Inspector Panel (Sliders & Camera Views) -->
+    <aside id="inspector-panel" class="fixed top-20 right-4 bottom-28 w-80 max-w-[calc(100vw-2rem)] z-20 glass-panel rounded-2xl p-4 flex flex-col justify-between overflow-y-auto transition-transform duration-300">
+        <div class="space-y-4">
+            <!-- Panel Header -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-cube text-orange-400"></i>
+                    <h2 class="text-sm font-bold text-white">پارامترهای مهندسی سه‌بعدی</h2>
+                </div>
+                <button id="btn-reset-params" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>پیش‌فرض</span>
+                </button>
+            </div>
+
+            <!-- Left Wing Separation Gap (CRITICAL SLIDER) -->
+            <div class="space-y-1.5 bg-blue-500/10 border border-blue-500/25 rounded-xl p-2.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-blue-200 font-semibold"><i class="fa-solid fa-arrows-left-right ml-1 text-blue-400"></i>فاصله بازوی چپ (Gap)</span>
+                    <span id="val-wing-gap" class="font-mono text-blue-300 font-bold">1.06</span>
+                </div>
+                <input id="slider-wing-gap" type="range" min="0.50" max="1.80" step="0.02" value="1.06">
+            </div>
+
+            <!-- Extrusion Depth -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-300">ضخامت سه‌بعدی (Extrude Depth)</span>
+                    <span id="val-depth" class="font-mono text-blue-400">0.75</span>
+                </div>
+                <input id="slider-depth" type="range" min="0.15" max="2.0" step="0.05" value="0.75">
+            </div>
+
+            <!-- Bevel Smoothness / Size -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-300">نرمی لبه‌ها (Bevel)</span>
+                    <span id="val-bevel" class="font-mono text-blue-400">0.040</span>
+                </div>
+                <input id="slider-bevel" type="range" min="0.005" max="0.045" step="0.005" value="0.040">
+            </div>
+
+            <!-- Z-Layer Separation (Fold Overlap Gap) -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-300">فاصله لایه‌ها در عمق (Z-Offset)</span>
+                    <span id="val-gap" class="font-mono text-orange-400">1.0x</span>
+                </div>
+                <input id="slider-gap" type="range" min="0.0" max="3.5" step="0.1" value="1.0">
+            </div>
+
+            <!-- Auto-Rotation Speed -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-300">سرعت چرخش خودکار</span>
+                    <span id="val-rot-speed" class="font-mono text-emerald-400">1.0x</span>
+                </div>
+                <input id="slider-rot-speed" type="range" min="0.0" max="3.0" step="0.1" value="1.0">
+            </div>
+
+            <!-- Lighting & Rim Intensity -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-300">شدت نورپردازی استودیو</span>
+                    <span id="val-light" class="font-mono text-amber-400">1.4x</span>
+                </div>
+                <input id="slider-light" type="range" min="0.4" max="3.0" step="0.1" value="1.4">
+            </div>
+
+            <!-- Animation Style Presets -->
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <label class="text-xs font-semibold text-slate-300 block">حالت حرکت و انیمیشن:</label>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button data-anim="float" class="anim-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-blue-300 border-blue-500/40 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-wind"></i> شناور معلق
+                    </button>
+                    <button data-anim="turntable" class="anim-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-sync"></i> چرخش ۳۶۰ درجه
+                    </button>
+                    <button data-anim="wave" class="anim-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-layer-group"></i> موج لایه‌ها
+                    </button>
+                    <button data-anim="static" class="anim-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-300 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-pause"></i> ثابت (دستی)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Camera Angles -->
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <label class="text-xs font-semibold text-slate-300 block">زاویه دوربین استودیو:</label>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button data-cam="front" class="cam-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-200 hover:text-white">
+                        نمای روبرو (اصلی)
+                    </button>
+                    <button data-cam="iso" class="cam-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-200 hover:text-white">
+                        نمای ایزومتریک
+                    </button>
+                    <button data-cam="gap-closeup" class="cam-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-blue-300 border-blue-500/30 hover:text-white">
+                        نمای نزدیک شکاف بازوها
+                    </button>
+                    <button data-cam="top" class="cam-btn glass-pill px-2.5 py-1.5 rounded-lg text-xs text-slate-200 hover:text-white">
+                        نمای بالا و تای کمان
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Color Tweak -->
+            <div class="space-y-2 pt-2 border-t border-white/10">
+                <label class="text-xs font-semibold text-slate-300 block">رنگ‌بندی بخش‌های لوگو:</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <label class="glass-pill p-2 rounded-lg flex flex-col items-center gap-1 cursor-pointer">
+                        <span class="text-[10px] text-slate-400">کمان اصلی</span>
+                        <input type="color" id="color-primary" value="#1a6ce0" class="w-7 h-5 bg-transparent border-0 cursor-pointer">
+                    </label>
+                    <label class="glass-pill p-2 rounded-lg flex flex-col items-center gap-1 cursor-pointer">
+                        <span class="text-[10px] text-slate-400">سایه و زیرِ تا</span>
+                        <input type="color" id="color-secondary" value="#092d69" class="w-7 h-5 bg-transparent border-0 cursor-pointer">
+                    </label>
+                    <label class="glass-pill p-2 rounded-lg flex flex-col items-center gap-1 cursor-pointer">
+                        <span class="text-[10px] text-slate-400">هرم مرکزی</span>
+                        <input type="color" id="color-accent" value="#ff7b00" class="w-7 h-5 bg-transparent border-0 cursor-pointer">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helper Hint Footer -->
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+            <span><i class="fa-solid fa-computer-mouse ml-1 text-blue-400"></i>چپ‌کلیک: چرخش | اسکرول: زوم</span>
+            <span id="fps-counter" class="font-mono text-emerald-400">60 FPS</span>
+        </div>
+    </aside>
+
+    <!-- Bottom Mode Switcher Dock (6 3D Variations) -->
+    <nav class="fixed bottom-4 inset-x-4 z-20 flex justify-center pointer-events-none">
+        <div class="glass-panel p-2 rounded-2xl flex items-center gap-2 overflow-x-auto max-w-full pointer-events-auto">
+            <!-- Mode 1: Classic Faithful Ribbon 3D -->
+            <button data-mode="classic" class="mode-btn active glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center text-white shadow">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۱. استودیویی وفادار</div>
+                    <div class="text-[10px] text-slate-300">حجم نوار خمیده + سایه واقعی</div>
+                </div>
+            </button>
+
+            <!-- Mode 2: Brushed Titanium & 24K Gold -->
+            <button data-mode="luxury" class="mode-btn glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-700 via-blue-900 to-amber-400 flex items-center justify-center text-amber-300 shadow">
+                    <i class="fa-solid fa-gem"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۲. تیتانیوم و طلا</div>
+                    <div class="text-[10px] text-slate-300">فلز صیقلی + انعکاس آینه‌ای</div>
+                </div>
+            </button>
+
+            <!-- Mode 3: Frosted Glass & Crystal -->
+            <button data-mode="glass" class="mode-btn glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400/40 to-blue-600/40 border border-cyan-300/40 flex items-center justify-center text-cyan-200 shadow">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۳. کریستال شیشه‌ای</div>
+                    <div class="text-[10px] text-slate-300">شکست نور شیشه + نئون داخلی</div>
+                </div>
+            </button>
+
+            <!-- Mode 4: Cyberpunk Hologram & Wireframe -->
+            <button data-mode="cyberpunk" class="mode-btn glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-slate-950 border border-cyan-400 flex items-center justify-center text-cyan-400 shadow">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۴. هولوگرام سیمی</div>
+                    <div class="text-[10px] text-slate-300">شبکه سایبرپانک + اسکن لیزری</div>
+                </div>
+            </button>
+
+            <!-- Mode 5: Architectural Matte Clay -->
+            <button data-mode="clay" class="mode-btn glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-orange-300 flex items-center justify-center text-slate-900 shadow">
+                    <i class="fa-solid fa-monument"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۵. معماری مات</div>
+                    <div class="text-[10px] text-slate-300">سرامیک نرم + نور استودیویی</div>
+                </div>
+            </button>
+
+            <!-- Mode 6: Exploded Layer Matrix -->
+            <button data-mode="exploded" class="mode-btn glass-pill px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-orange-500 flex items-center justify-center text-white shadow">
+                    <i class="fa-solid fa-cubes-stacked"></i>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">۶. انفجار لایه‌ها</div>
+                    <div class="text-[10px] text-slate-300">تفکیک مهندسی قطعات در عمق</div>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 glass-panel px-5 py-2.5 rounded-full text-xs font-semibold text-emerald-300 border-emerald-500/40 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-msg">عملیات با موفقیت انجام شد</span>
+    </div>
+
+    <!-- Code Viewer Modal -->
+    <div id="code-modal" class="fixed inset-0 z-40 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-4xl max-h-[88vh] rounded-2xl flex flex-col overflow-hidden border border-white/15">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-slate-900/60">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-file-code text-blue-400 text-lg"></i>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">کد ماژول سه‌بعدی لوگو (Three.js / WebGL)</h3>
+                        <p class="text-[11px] text-slate-400">قابل استفاده مستقیم در پروژه‌های HTML، React (Three Fiber) یا Vue</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="btn-copy-code" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 transition">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>کپی کد</span>
+                    </button>
+                    <button id="btn-close-modal" class="w-8 h-8 rounded-lg glass-pill flex items-center justify-center text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Code Content -->
+            <div class="p-4 overflow-y-auto bg-slate-950/90 flex-1">
+                <pre id="code-display" class="code-block text-xs text-slate-200 leading-relaxed overflow-x-auto"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main 3D Application Script -->
+    <script>
+        window.onload = function () {
+            // ============================================================================
+            // 1. STATE & CONFIGURATION
+            // ============================================================================
+            const state = {
+                mode: 'classic',           // classic | luxury | glass | cyberpunk | clay | exploded
+                wingGap: 1.06,             // Horizontal separation gap between Left Wing & Main Arch
+                depth: 0.75,               // Extrusion depth
+                bevel: 0.040,              // Controlled bevel size (capped at 0.045 so pieces NEVER touch)
+                gapMultiplier: 1.0,        // Layer separation in Z
+                rotSpeed: 1.0,             // Auto-rotation / animation speed multiplier
+                lightIntensity: 1.4,       // Studio light multiplier
+                animMode: 'float',         // float | turntable | wave | static
+                bgStyle: 'dark',           // dark | blue | transparent
+                colors: {
+                    primary: '#1a6ce0',    // Main arch bright royal blue
+                    secondary: '#082b66',  // Under-fold & deep shadow navy
+                    slash: '#1251b5',      // Left diagonal slash blue
+                    accent: '#ff7b00'      // Bottom orange pyramid core
+                },
+                mouseX: 0,
+                mouseY: 0,
+                targetCameraPos: null,
+                targetControlsLookAt: null
+            };
+
+            // ============================================================================
+            // 2. THREE.JS SCENE, CAMERA & RENDERER SETUP
+            // ============================================================================
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x050811);
+            scene.fog = new THREE.FogExp2(0x050811, 0.032);
+
+            const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 150);
+            camera.position.set(0, 0.25, 13.5);
+
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true,
+                preserveDrawingBuffer: true, // Required for PNG export
+                powerPreference: 'high-performance'
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.15;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.06;
+            controls.maxDistance = 32;
+            controls.minDistance = 4;
+            controls.target.set(0, -0.1, 0);
+
+            // ============================================================================
+            // 3. PROCEDURAL STUDIO ENVIRONMENT MAP (No External URL Dependencies)
+            // ============================================================================
+            function createStudioEnvironment() {
+                const pmremGenerator = new THREE.PMREMGenerator(renderer);
+                pmremGenerator.compileEquirectangularShader();
+
+                const envScene = new THREE.Scene();
+                envScene.background = new THREE.Color(0x060a14);
+
+                // Overhead softbox
+                const topBox = new THREE.Mesh(
+                    new THREE.PlaneGeometry(30, 12),
+                    new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+                );
+                topBox.position.set(0, 14, 4);
+                topBox.rotation.x = Math.PI / 2;
+                envScene.add(topBox);
+
+                // Left cool blue studio strip
+                const leftBox = new THREE.Mesh(
+                    new THREE.PlaneGeometry(16, 20),
+                    new THREE.MeshBasicMaterial({ color: 0x3b82f6, side: THREE.DoubleSide })
+                );
+                leftBox.position.set(-16, 4, 6);
+                leftBox.rotation.y = Math.PI / 2;
+                envScene.add(leftBox);
+
+                // Right warm rim studio strip
+                const rightBox = new THREE.Mesh(
+                    new THREE.PlaneGeometry(16, 20),
+                    new THREE.MeshBasicMaterial({ color: 0xff9500, side: THREE.DoubleSide })
+                );
+                rightBox.position.set(16, 2, 5);
+                rightBox.rotation.y = -Math.PI / 2;
+                envScene.add(rightBox);
+
+                // Front soft fill ring
+                const frontPanel = new THREE.Mesh(
+                    new THREE.PlaneGeometry(24, 8),
+                    new THREE.MeshBasicMaterial({ color: 0x93c5fd, side: THREE.DoubleSide })
+                );
+                frontPanel.position.set(0, 2, 18);
+                envScene.add(frontPanel);
+
+                const envRT = pmremGenerator.fromScene(envScene, 0.04);
+                scene.environment = envRT.texture;
+                pmremGenerator.dispose();
+            }
+            createStudioEnvironment();
+
+            // ============================================================================
+            // 4. LIGHTING RIG
+            // ============================================================================
+            const ambientLight = new THREE.AmbientLight(0xdbeafe, 0.55);
+            scene.add(ambientLight);
+
+            // Main Key Light (Top-Left Front)
+            const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+            keyLight.position.set(-5, 8, 9);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.width = 2048;
+            keyLight.shadow.mapSize.height = 2048;
+            keyLight.shadow.camera.near = 1;
+            keyLight.shadow.camera.far = 30;
+            const d = 7;
+            keyLight.shadow.camera.left = -d;
+            keyLight.shadow.camera.right = d;
+            keyLight.shadow.camera.top = d;
+            keyLight.shadow.camera.bottom = -d;
+            keyLight.shadow.bias = -0.0005;
+            scene.add(keyLight);
+
+            // Cool Blue Rim Light (Top-Right Back)
+            const rimLight = new THREE.SpotLight(0x38bdf8, 2.2, 35, Math.PI / 3, 0.5);
+            rimLight.position.set(8, 6, -7);
+            scene.add(rimLight);
+
+            // Warm Fill Light (Left Side)
+            const fillLight = new THREE.DirectionalLight(0x60a5fa, 0.9);
+            fillLight.position.set(-9, -2, 5);
+            scene.add(fillLight);
+
+            // Internal Orange Peak Point Light (Casts warm orange bounce onto inner blue arch!)
+            const orangeCoreLight = new THREE.PointLight(0xff7b00, 1.8, 6.5, 1.5);
+            orangeCoreLight.position.set(1.22, -0.95, 0.55);
+            scene.add(orangeCoreLight);
+
+            // ============================================================================
+            // 5. PRECISION NON-OVERLAPPING LOGO VECTOR SHAPES (Y_base = 0.0 to Y_top = 4.00)
+            //    Vertical center offset Y_OFFSET = -2.0 is applied so [0,0] is screen center.
+            // ============================================================================
+            const Y_OFFSET = -2.0;
+
+            function createLogoShapes() {
+                // ------------------------------------------------------------------------
+                // 1) LEFT DIAGONAL WING (`leftWing`)
+                //    - Bottom base at y = 0.0: from x = -5.20 to x = -3.55 (width = 1.65)
+                //    - Parallel diagonal slope m = 1.48 (dx = 2.70 over dy = 4.00)
+                //    - Outer-left edge rises from (-5.20, 0.0) to (-3.17, 3.00), then curves
+                //      smoothly around the top-left shoulder to (-2.05, 4.00).
+                //    - Top horizontal edge runs from (-2.05, 4.00) to (-0.92, 4.00) with a
+                //      rounded corner (r = 0.06) turning onto (-0.86, 3.92) to prevent any bevel spike.
+                //    - Inner-right diagonal edge descends strictly straight from (-0.86, 3.92)
+                //      down to (-3.51, 0.0) with a rounded corner back to (-3.55, 0.0).
+                // ------------------------------------------------------------------------
+                const leftSlashShape = new THREE.Shape();
+                leftSlashShape.moveTo(-5.14, 0.0 + Y_OFFSET);
+                leftSlashShape.lineTo(-3.57, 0.0 + Y_OFFSET);
+                // Small rounded bottom-right corner turning onto inner-right diagonal
+                leftSlashShape.quadraticCurveTo(-3.51, 0.0 + Y_OFFSET, -3.47, 0.06 + Y_OFFSET);
+                // Strictly straight inner-right diagonal edge up to (-0.86, 3.92)
+                leftSlashShape.lineTo(-0.86, 3.92 + Y_OFFSET);
+                // Small rounded top-right tip (r = 0.06) so acute angle never creates a bevel spike
+                leftSlashShape.quadraticCurveTo(-0.82, 4.00 + Y_OFFSET, -0.92, 4.00 + Y_OFFSET);
+                // Top horizontal edge to (-2.05, 4.00)
+                leftSlashShape.lineTo(-2.05, 4.00 + Y_OFFSET);
+                // Smooth cubic Bezier around top-left shoulder down to (-3.17, 3.00)
+                leftSlashShape.bezierCurveTo(
+                    -2.52, 4.00 + Y_OFFSET,
+                    -2.88, 3.55 + Y_OFFSET,
+                    -3.17, 3.00 + Y_OFFSET
+                );
+                // Outer-left diagonal descending along slope 1.48 to bottom-left corner
+                leftSlashShape.lineTo(-5.16, 0.06 + Y_OFFSET);
+                leftSlashShape.quadraticCurveTo(-5.20, 0.0 + Y_OFFSET, -5.14, 0.0 + Y_OFFSET);
+
+                // ------------------------------------------------------------------------
+                // 2) MAIN CENTRAL ARCH & FOLD (`mainArchTop`)
+                //    - Separated from Left Wing by a wide 1.06-unit horizontal gap!
+                //    - Starts at bottom y = 0.0 from x = -2.45 to x = -0.75 (width = 1.70).
+                //    - Outer-left edge rises parallel to Left Wing from (-2.45, 0.0) to (-0.42, 3.00),
+                //      arches over top crest (1.25, 4.00), and sweeps down-right to fold (3.65, 1.75).
+                //    - Curves inward along fold line to inner arch crest (1.30, 2.65),
+                //      then descends parallel to outer-left edge down to (-0.75, 0.0).
+                // ------------------------------------------------------------------------
+                const mainArchTopShape = new THREE.Shape();
+                mainArchTopShape.moveTo(-2.39, 0.0 + Y_OFFSET);
+                mainArchTopShape.lineTo(-0.81, 0.0 + Y_OFFSET);
+                mainArchTopShape.quadraticCurveTo(-0.75, 0.0 + Y_OFFSET, -0.71, 0.06 + Y_OFFSET);
+                // Inner-left slope ascending parallel to outer-left edge up to inner arch crest
+                mainArchTopShape.lineTo(0.96, 2.48 + Y_OFFSET);
+                mainArchTopShape.quadraticCurveTo(1.12, 2.68 + Y_OFFSET, 1.30, 2.65 + Y_OFFSET);
+                // Signature ribbon fold line sweeping across to outer fold point (3.65, 1.75)
+                mainArchTopShape.bezierCurveTo(
+                    2.05, 2.78 + Y_OFFSET,
+                    2.88, 2.42 + Y_OFFSET,
+                    3.65, 1.75 + Y_OFFSET
+                );
+                // Upper-right dome ascending from (3.65, 1.75) to top crest (1.25, 4.00)
+                mainArchTopShape.bezierCurveTo(
+                    3.12, 2.75 + Y_OFFSET,
+                    2.38, 4.00 + Y_OFFSET,
+                    1.25, 4.00 + Y_OFFSET
+                );
+                // Upper-left dome curving from top crest (1.25, 4.00) to (-0.42, 3.00)
+                mainArchTopShape.bezierCurveTo(
+                    0.42, 4.00 + Y_OFFSET,
+                    -0.08, 3.52 + Y_OFFSET,
+                    -0.42, 3.00 + Y_OFFSET
+                );
+                // Outer-left straight diagonal descending parallel to Left Wing down to (-2.45, 0.0)
+                mainArchTopShape.lineTo(-2.41, 0.06 + Y_OFFSET);
+                mainArchTopShape.quadraticCurveTo(-2.45, 0.0 + Y_OFFSET, -2.39, 0.0 + Y_OFFSET);
+
+                // ------------------------------------------------------------------------
+                // 3) RIGHT LOWER LEG (`rightArchLeg`)
+                //    - Tucked in Z (z = -0.14) under the curved fold line so the fold casts
+                //      a natural 3D shadow crease onto the right leg.
+                //    - Descends to bottom-right base from x = 3.15 to x = 4.85 at y = 0.0.
+                // ------------------------------------------------------------------------
+                const mainArchRightShape = new THREE.Shape();
+                mainArchRightShape.moveTo(1.30, 2.65 + Y_OFFSET);
+                mainArchRightShape.bezierCurveTo(
+                    2.05, 2.78 + Y_OFFSET,
+                    2.88, 2.42 + Y_OFFSET,
+                    3.65, 1.75 + Y_OFFSET
+                );
+                mainArchRightShape.lineTo(4.81, 0.06 + Y_OFFSET);
+                mainArchRightShape.quadraticCurveTo(4.85, 0.0 + Y_OFFSET, 4.78, 0.0 + Y_OFFSET);
+                mainArchRightShape.lineTo(3.21, 0.0 + Y_OFFSET);
+                mainArchRightShape.quadraticCurveTo(3.15, 0.0 + Y_OFFSET, 3.11, 0.06 + Y_OFFSET);
+                mainArchRightShape.lineTo(1.30, 2.65 + Y_OFFSET);
+
+                // ------------------------------------------------------------------------
+                // 4) INNER ARCH UNDER-STEP (`innerArchStep`)
+                //    - Recessed darker blue rim tucked inside the arch (z = -0.28).
+                // ------------------------------------------------------------------------
+                const innerArchStepShape = new THREE.Shape();
+                innerArchStepShape.moveTo(1.04, 2.55 + Y_OFFSET);
+                innerArchStepShape.lineTo(1.45, 2.68 + Y_OFFSET);
+                innerArchStepShape.lineTo(3.45, 0.0 + Y_OFFSET);
+                innerArchStepShape.lineTo(2.92, 0.0 + Y_OFFSET);
+                innerArchStepShape.lineTo(1.04, 2.55 + Y_OFFSET);
+
+                // ------------------------------------------------------------------------
+                // 5) ORANGE TRUNCATED PYRAMID (`orangePeak`)
+                //    - Centered inside the arch, completely separated from both blue legs.
+                //    - Bottom base at y = 0.0 from x = -0.20 to x = 2.65.
+                //    - Rises to a gently rounded flat top plateau at y = 1.50 (x = 0.90 to 1.55).
+                // ------------------------------------------------------------------------
+                const orangePeakShape = new THREE.Shape();
+                orangePeakShape.moveTo(-0.14, 0.0 + Y_OFFSET);
+                orangePeakShape.lineTo(2.59, 0.0 + Y_OFFSET);
+                orangePeakShape.quadraticCurveTo(2.65, 0.0 + Y_OFFSET, 2.60, 0.07 + Y_OFFSET);
+                orangePeakShape.lineTo(1.61, 1.43 + Y_OFFSET);
+                orangePeakShape.quadraticCurveTo(1.55, 1.50 + Y_OFFSET, 1.46, 1.50 + Y_OFFSET);
+                orangePeakShape.lineTo(0.99, 1.50 + Y_OFFSET);
+                orangePeakShape.quadraticCurveTo(0.90, 1.50 + Y_OFFSET, 0.84, 1.43 + Y_OFFSET);
+                orangePeakShape.lineTo(-0.15, 0.07 + Y_OFFSET);
+                orangePeakShape.quadraticCurveTo(-0.20, 0.0 + Y_OFFSET, -0.14, 0.0 + Y_OFFSET);
+
+                return {
+                    leftSlashShape,
+                    mainArchTopShape,
+                    mainArchRightShape,
+                    innerArchStepShape,
+                    orangePeakShape
+                };
+            }
+
+            const logoShapes = createLogoShapes();
+
+            // ============================================================================
+            // 6. GROUPS, EXTRAS & ENVIRONMENT DECORATIONS
+            // ============================================================================
+            const logoRoot = new THREE.Group();
+            scene.add(logoRoot);
+
+            // Studio Floor Shadow Catcher / Mirror Plane
+            const floorGeo = new THREE.PlaneGeometry(60, 60);
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0x050811,
+                roughness: 0.35,
+                metalness: 0.4
+            });
+            const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+            floorMesh.rotation.x = -Math.PI / 2;
+            floorMesh.position.y = -2.28;
+            floorMesh.receiveShadow = true;
+            scene.add(floorMesh);
+
+            // Subtle Grid Helper for Cyberpunk & Exploded Modes
+            const studioGrid = new THREE.GridHelper(32, 32, 0x3b82f6, 0x1e293b);
+            studioGrid.position.y = -2.27;
+            studioGrid.material.transparent = true;
+            studioGrid.material.opacity = 0.22;
+            studioGrid.visible = false;
+            scene.add(studioGrid);
+
+            // Cyberpunk Scanning Laser Plane
+            const laserGeo = new THREE.PlaneGeometry(13, 0.08);
+            const laserMat = new THREE.MeshBasicMaterial({
+                color: 0x00f2fe,
+                transparent: true,
+                opacity: 0.75,
+                side: THREE.DoubleSide
+            });
+            const laserScanner = new THREE.Mesh(laserGeo, laserMat);
+            laserScanner.position.z = 0.85;
+            laserScanner.visible = false;
+            logoRoot.add(laserScanner);
+
+            // Floating Ambient Particles (Used in Cyberpunk, Glass & Exploded modes)
+            const particleCount = 160;
+            const particleGeo = new THREE.BufferGeometry();
+            const pPositions = new Float32Array(particleCount * 3);
+            const pColors = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                pPositions[i * 3] = (Math.random() - 0.5) * 16;
+                pPositions[i * 3 + 1] = (Math.random() - 0.5) * 8;
+                pPositions[i * 3 + 2] = (Math.random() - 0.5) * 6;
+
+                const isOrange = Math.random() > 0.7;
+                const c = new THREE.Color(isOrange ? 0xff7b00 : 0x38bdf8);
+                pColors[i * 3] = c.r;
+                pColors[i * 3 + 1] = c.g;
+                pColors[i * 3 + 2] = c.b;
+            }
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+            particleGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
+            const particleMat = new THREE.PointsMaterial({
+                size: 0.09,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.7
+            });
+            const particleSystem = new THREE.Points(particleGeo, particleMat);
+            scene.add(particleSystem);
+
+            // ============================================================================
+            // 7. BUILD / REBUILD 3D LOGO GEOMETRY & MATERIALS FOR EACH MODE
+            // ============================================================================
+            let partMeshes = [];
+
+            function clearLogoMeshes() {
+                for (let i = partMeshes.length - 1; i >= 0; i--) {
+                    const obj = partMeshes[i];
+                    logoRoot.remove(obj);
+                    if (obj.geometry) obj.geometry.dispose();
+                    if (obj.material) {
+                        if (Array.isArray(obj.material)) obj.material.forEach(m => m.dispose());
+                        else obj.material.dispose();
+                    }
+                }
+                partMeshes = [];
+            }
+
+            function getMaterialsForMode(mode) {
+                const cPrimary = new THREE.Color(state.colors.primary);
+                const cSecondary = new THREE.Color(state.colors.secondary);
+                const cSlash = cPrimary.clone().lerp(cSecondary, 0.32);
+                const cStep = cSecondary.clone().multiplyScalar(0.65);
+                const cAccent = new THREE.Color(state.colors.accent);
+
+                if (mode === 'classic') {
+                    return {
+                        slash: new THREE.MeshPhysicalMaterial({
+                            color: cSlash,
+                            metalness: 0.25,
+                            roughness: 0.28,
+                            clearcoat: 0.4,
+                            clearcoatRoughness: 0.25
+                        }),
+                        archTop: new THREE.MeshPhysicalMaterial({
+                            color: cPrimary,
+                            metalness: 0.22,
+                            roughness: 0.22,
+                            clearcoat: 0.55,
+                            clearcoatRoughness: 0.2
+                        }),
+                        archRight: new THREE.MeshPhysicalMaterial({
+                            color: cSecondary,
+                            metalness: 0.3,
+                            roughness: 0.35,
+                            clearcoat: 0.25
+                        }),
+                        innerStep: new THREE.MeshStandardMaterial({
+                            color: cStep,
+                            metalness: 0.2,
+                            roughness: 0.5
+                        }),
+                        orange: new THREE.MeshPhysicalMaterial({
+                            color: cAccent,
+                            emissive: cAccent.clone().multiplyScalar(0.18),
+                            metalness: 0.15,
+                            roughness: 0.22,
+                            clearcoat: 0.6
+                        })
+                    };
+                }
+
+                if (mode === 'luxury') {
+                    return {
+                        slash: new THREE.MeshStandardMaterial({
+                            color: new THREE.Color(0x0f2952),
+                            metalness: 0.92,
+                            roughness: 0.18
+                        }),
+                        archTop: new THREE.MeshStandardMaterial({
+                            color: new THREE.Color(0x1d4ed8),
+                            metalness: 0.95,
+                            roughness: 0.12
+                        }),
+                        archRight: new THREE.MeshStandardMaterial({
+                            color: new THREE.Color(0x091936),
+                            metalness: 0.92,
+                            roughness: 0.22
+                        }),
+                        innerStep: new THREE.MeshStandardMaterial({
+                            color: new THREE.Color(0xd97706),
+                            metalness: 0.98,
+                            roughness: 0.15
+                        }),
+                        orange: new THREE.MeshStandardMaterial({
+                            color: new THREE.Color(0xffb703),
+                            emissive: new THREE.Color(0x451a03),
+                            metalness: 0.98,
+                            roughness: 0.08
+                        })
+                    };
+                }
+
+                if (mode === 'glass') {
+                    return {
+                        slash: new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color(0x38bdf8),
+                            transmission: 0.82,
+                            opacity: 1,
+                            transparent: true,
+                            roughness: 0.12,
+                            ior: 1.5,
+                            thickness: 1.8,
+                            clearcoat: 1.0
+                        }),
+                        archTop: new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color(0x60a5fa),
+                            transmission: 0.86,
+                            opacity: 1,
+                            transparent: true,
+                            roughness: 0.08,
+                            ior: 1.55,
+                            thickness: 2.2,
+                            clearcoat: 1.0
+                        }),
+                        archRight: new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color(0x1e40af),
+                            transmission: 0.78,
+                            opacity: 1,
+                            transparent: true,
+                            roughness: 0.18,
+                            ior: 1.5,
+                            thickness: 1.5
+                        }),
+                        innerStep: new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color(0x00f2fe),
+                            emissive: new THREE.Color(0x0284c7),
+                            emissiveIntensity: 0.6,
+                            roughness: 0.2
+                        }),
+                        orange: new THREE.MeshPhysicalMaterial({
+                            color: new THREE.Color(0xff8800),
+                            emissive: new THREE.Color(0xff5500),
+                            emissiveIntensity: 0.45,
+                            transmission: 0.7,
+                            transparent: true,
+                            roughness: 0.1,
+                            ior: 1.6,
+                            clearcoat: 1.0
+                        })
+                    };
+                }
+
+                if (mode === 'cyberpunk') {
+                    return {
+                        slash: new THREE.MeshStandardMaterial({
+                            color: 0x041026,
+                            emissive: 0x0284c7,
+                            emissiveIntensity: 0.25,
+                            roughness: 0.3,
+                            metalness: 0.8,
+                            transparent: true,
+                            opacity: 0.85
+                        }),
+                        archTop: new THREE.MeshStandardMaterial({
+                            color: 0x061633,
+                            emissive: 0x00f2fe,
+                            emissiveIntensity: 0.3,
+                            roughness: 0.2,
+                            metalness: 0.85,
+                            transparent: true,
+                            opacity: 0.88
+                        }),
+                        archRight: new THREE.MeshStandardMaterial({
+                            color: 0x030917,
+                            emissive: 0x1d4ed8,
+                            emissiveIntensity: 0.2,
+                            roughness: 0.4,
+                            metalness: 0.8
+                        }),
+                        innerStep: new THREE.MeshBasicMaterial({
+                            color: 0x00f2fe,
+                            wireframe: true
+                        }),
+                        orange: new THREE.MeshStandardMaterial({
+                            color: 0x2a0a00,
+                            emissive: 0xff6d00,
+                            emissiveIntensity: 0.65,
+                            roughness: 0.2,
+                            metalness: 0.7
+                        })
+                    };
+                }
+
+                if (mode === 'clay') {
+                    return {
+                        slash: new THREE.MeshStandardMaterial({
+                            color: cSlash.clone().lerp(new THREE.Color(0xffffff), 0.12),
+                            roughness: 0.88,
+                            metalness: 0.02
+                        }),
+                        archTop: new THREE.MeshStandardMaterial({
+                            color: cPrimary.clone().lerp(new THREE.Color(0xffffff), 0.15),
+                            roughness: 0.85,
+                            metalness: 0.02
+                        }),
+                        archRight: new THREE.MeshStandardMaterial({
+                            color: cSecondary.clone().lerp(new THREE.Color(0xffffff), 0.08),
+                            roughness: 0.9,
+                            metalness: 0.02
+                        }),
+                        innerStep: new THREE.MeshStandardMaterial({
+                            color: cStep,
+                            roughness: 0.95,
+                            metalness: 0.0
+                        }),
+                        orange: new THREE.MeshStandardMaterial({
+                            color: cAccent.clone().lerp(new THREE.Color(0xffffff), 0.1),
+                            roughness: 0.82,
+                            metalness: 0.02
+                        })
+                    };
+                }
+
+                // Mode 6: Exploded Layer Matrix
+                return {
+                    slash: new THREE.MeshPhysicalMaterial({
+                        color: cSlash,
+                        metalness: 0.4,
+                        roughness: 0.25,
+                        clearcoat: 0.5
+                    }),
+                    archTop: new THREE.MeshPhysicalMaterial({
+                        color: cPrimary,
+                        metalness: 0.35,
+                        roughness: 0.2,
+                        clearcoat: 0.6
+                    }),
+                    archRight: new THREE.MeshPhysicalMaterial({
+                        color: cSecondary,
+                        metalness: 0.45,
+                        roughness: 0.3
+                    }),
+                    innerStep: new THREE.MeshStandardMaterial({
+                        color: 0x38bdf8,
+                        emissive: 0x0284c7,
+                        emissiveIntensity: 0.35,
+                        roughness: 0.3
+                    }),
+                    orange: new THREE.MeshPhysicalMaterial({
+                        color: cAccent,
+                        emissive: cAccent.clone().multiplyScalar(0.25),
+                        metalness: 0.3,
+                        roughness: 0.2,
+                        clearcoat: 0.7
+                    })
+                };
+            }
+
+            function buildLogo3D() {
+                clearLogoMeshes();
+
+                const mats = getMaterialsForMode(state.mode);
+                const d = state.depth;
+                // Cap bevelSize strictly at 0.045 so the 1.06-unit gap remains wide open in all modes
+                const b = Math.min(state.bevel, 0.045);
+                const isExploded = state.mode === 'exploded';
+                const gap = state.gapMultiplier * (isExploded ? 2.4 : 1.0);
+                // Dynamic horizontal offset for Left Wing controlled by the "فاصله بازوی چپ (Gap)" slider
+                const wingOffsetX = -(state.wingGap - 1.06) - (isExploded ? 0.45 : 0.0);
+
+                // Configure ExtrudeSettings per part so the ribbon fold has real depth hierarchy
+                function makeExtrudeConfig(depthScale, bevelScale = 1.0) {
+                    const actualDepth = d * depthScale;
+                    const actualBevelSize = Math.min(b * bevelScale, 0.045);
+                    const actualBevelThickness = actualBevelSize * 1.35;
+                    return {
+                        depth: actualDepth,
+                        bevelEnabled: true,
+                        bevelSegments: state.mode === 'clay' ? 8 : 6,
+                        steps: 2,
+                        bevelSize: actualBevelSize,
+                        bevelThickness: actualBevelThickness
+                    };
+                }
+
+                // Define the 5 structural layers of the logo
+                const partsConfig = [
+                    {
+                        name: 'leftWing',
+                        shape: logoShapes.leftSlashShape,
+                        mat: mats.slash,
+                        depthScale: 0.94,
+                        bevelScale: 0.95,
+                        baseX: wingOffsetX,
+                        baseY: isExploded ? 0.15 : 0.0,
+                        baseZ: 0.04 * gap,
+                        wireColor: 0x00f2fe
+                    },
+                    {
+                        name: 'mainArchTop',
+                        shape: logoShapes.mainArchTopShape,
+                        mat: mats.archTop,
+                        depthScale: 1.05,
+                        bevelScale: 1.0,
+                        baseX: 0.0,
+                        baseY: isExploded ? 0.22 : 0.0,
+                        // Sits forward in Z so the ribbon fold at (3.65, 1.75) casts a real 3D shadow on rightArchLeg
+                        baseZ: 0.16 * gap,
+                        wireColor: 0x38bdf8
+                    },
+                    {
+                        name: 'rightArchLeg',
+                        shape: logoShapes.mainArchRightShape,
+                        mat: mats.archRight,
+                        depthScale: 0.86,
+                        bevelScale: 0.9,
+                        baseX: isExploded ? 0.35 : 0.0,
+                        baseY: isExploded ? -0.12 : 0.0,
+                        baseZ: -0.14 * gap,
+                        wireColor: 0x3b82f6
+                    },
+                    {
+                        name: 'innerArchStep',
+                        shape: logoShapes.innerArchStepShape,
+                        mat: mats.innerStep,
+                        depthScale: 0.68,
+                        bevelScale: 0.65,
+                        baseX: isExploded ? 0.18 : 0.0,
+                        baseY: 0.0,
+                        baseZ: -0.28 * gap,
+                        wireColor: 0x60a5fa
+                    },
+                    {
+                        name: 'orangePeak',
+                        shape: logoShapes.orangePeakShape,
+                        mat: mats.orange,
+                        depthScale: 1.12,
+                        bevelScale: 1.0,
+                        baseX: 0.0,
+                        baseY: isExploded ? -0.28 : 0.0,
+                        baseZ: 0.24 * gap,
+                        wireColor: 0xff9e00
+                    }
+                ];
+
+                partsConfig.forEach((part, idx) => {
+                    const cfg = makeExtrudeConfig(part.depthScale, part.bevelScale);
+                    const geo = new THREE.ExtrudeGeometry(part.shape, cfg);
+                    // Center geometry along its own Z thickness
+                    geo.translate(0, 0, -cfg.depth / 2);
+
+                    const mesh = new THREE.Mesh(geo, part.mat);
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    mesh.position.set(part.baseX, part.baseY, part.baseZ);
+                    mesh.userData = {
+                        partName: part.name,
+                        baseX: part.baseX,
+                        baseY: part.baseY,
+                        baseZ: part.baseZ,
+                        layerIndex: idx
+                    };
+
+                    // Add glowing edge lines in Cyberpunk, Glass, or Exploded modes
+                    if (state.mode === 'cyberpunk' || state.mode === 'exploded' || state.mode === 'glass') {
+                        const edgesGeo = new THREE.EdgesGeometry(geo, state.mode === 'cyberpunk' ? 12 : 28);
+                        const edgesMat = new THREE.LineBasicMaterial({
+                            color: part.wireColor,
+                            transparent: true,
+                            opacity: state.mode === 'cyberpunk' ? 0.9 : 0.42
+                        });
+                        const lineSeg = new THREE.LineSegments(edgesGeo, edgesMat);
+                        mesh.add(lineSeg);
+                    }
+
+                    logoRoot.add(mesh);
+                    partMeshes.push(mesh);
+                });
+
+                // Update scene extras based on active mode
+                studioGrid.visible = (state.mode === 'cyberpunk' || state.mode === 'exploded');
+                laserScanner.visible = (state.mode === 'cyberpunk');
+                particleSystem.visible = (state.mode === 'cyberpunk' || state.mode === 'glass' || state.mode === 'exploded');
+
+                // Update Floor Material based on mode
+                if (state.mode === 'luxury') {
+                    floorMat.roughness = 0.08;
+                    floorMat.metalness = 0.85;
+                    floorMat.color.setHex(0x040710);
+                } else if (state.mode === 'clay') {
+                    floorMat.roughness = 0.9;
+                    floorMat.metalness = 0.05;
+                    floorMat.color.setHex(0x0f172a);
+                } else {
+                    floorMat.roughness = 0.35;
+                    floorMat.metalness = 0.4;
+                    floorMat.color.setHex(0x050811);
+                }
+            }
+
+            buildLogo3D();
+
+            // ============================================================================
+            // 8. UI EVENT LISTENERS & INTERACTIVITY
+            // ============================================================================
+            function showToast(msg) {
+                const toast = document.getElementById('toast');
+                document.getElementById('toast-msg').textContent = msg;
+                toast.classList.remove('opacity-0');
+                toast.classList.add('opacity-100');
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                }, 2600);
+            }
+
+            // Mode Buttons (6 3D Presets)
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.mode = btn.getAttribute('data-mode');
+
+                    // Automatically adjust camera slightly if Exploded mode is chosen
+                    if (state.mode === 'exploded') {
+                        setCameraPreset('iso');
+                    }
+                    buildLogo3D();
+                });
+            });
+
+            // Range Sliders
+            const sliderWingGap = document.getElementById('slider-wing-gap');
+            const sliderDepth = document.getElementById('slider-depth');
+            const sliderBevel = document.getElementById('slider-bevel');
+            const sliderGap = document.getElementById('slider-gap');
+            const sliderRotSpeed = document.getElementById('slider-rot-speed');
+            const sliderLight = document.getElementById('slider-light');
+
+            // Live Left Wing Gap Slider (Translates leftWing.position.x smoothly in real time)
+            sliderWingGap.addEventListener('input', (e) => {
+                state.wingGap = parseFloat(e.target.value);
+                document.getElementById('val-wing-gap').textContent = state.wingGap.toFixed(2);
+                const isExploded = state.mode === 'exploded';
+                const wingOffsetX = -(state.wingGap - 1.06) - (isExploded ? 0.45 : 0.0);
+                partMeshes.forEach(mesh => {
+                    if (mesh.userData.partName === 'leftWing') {
+                        mesh.userData.baseX = wingOffsetX;
+                        mesh.position.x = wingOffsetX;
+                    }
+                });
+            });
+
+            sliderDepth.addEventListener('input', (e) => {
+                state.depth = parseFloat(e.target.value);
+                document.getElementById('val-depth').textContent = state.depth.toFixed(2);
+                buildLogo3D();
+            });
+
+            sliderBevel.addEventListener('input', (e) => {
+                state.bevel = parseFloat(e.target.value);
+                document.getElementById('val-bevel').textContent = state.bevel.toFixed(3);
+                buildLogo3D();
+            });
+
+            sliderGap.addEventListener('input', (e) => {
+                state.gapMultiplier = parseFloat(e.target.value);
+                document.getElementById('val-gap').textContent = state.gapMultiplier.toFixed(1) + 'x';
+                partMeshes.forEach(mesh => {
+                    const isExploded = state.mode === 'exploded';
+                    const mult = state.gapMultiplier * (isExploded ? 2.4 : 1.0);
+                    const baseFactor =
+                        mesh.userData.partName === 'leftWing' ? 0.04 :
+                        mesh.userData.partName === 'mainArchTop' ? 0.16 :
+                        mesh.userData.partName === 'rightArchLeg' ? -0.14 :
+                        mesh.userData.partName === 'innerArchStep' ? -0.28 : 0.24;
+                    mesh.userData.baseZ = baseFactor * mult;
+                    mesh.position.z = mesh.userData.baseZ;
+                });
+            });
+
+            sliderRotSpeed.addEventListener('input', (e) => {
+                state.rotSpeed = parseFloat(e.target.value);
+                document.getElementById('val-rot-speed').textContent = state.rotSpeed.toFixed(1) + 'x';
+            });
+
+            sliderLight.addEventListener('input', (e) => {
+                state.lightIntensity = parseFloat(e.target.value);
+                document.getElementById('val-light').textContent = state.lightIntensity.toFixed(1) + 'x';
+                keyLight.intensity = 1.3 * state.lightIntensity;
+                rimLight.intensity = 1.6 * state.lightIntensity;
+                orangeCoreLight.intensity = 1.3 * state.lightIntensity;
+            });
+
+            // Color Pickers
+            document.getElementById('color-primary').addEventListener('input', (e) => {
+                state.colors.primary = e.target.value;
+                buildLogo3D();
+            });
+            document.getElementById('color-secondary').addEventListener('input', (e) => {
+                state.colors.secondary = e.target.value;
+                buildLogo3D();
+            });
+            document.getElementById('color-accent').addEventListener('input', (e) => {
+                state.colors.accent = e.target.value;
+                orangeCoreLight.color.set(e.target.value);
+                buildLogo3D();
+            });
+
+            // Reset Parameters Button
+            document.getElementById('btn-reset-params').addEventListener('click', () => {
+                state.wingGap = 1.06;
+                state.depth = 0.75;
+                state.bevel = 0.040;
+                state.gapMultiplier = 1.0;
+                state.rotSpeed = 1.0;
+                state.lightIntensity = 1.4;
+                state.colors.primary = '#1a6ce0';
+                state.colors.secondary = '#082b66';
+                state.colors.accent = '#ff7b00';
+
+                sliderWingGap.value = 1.06;
+                sliderDepth.value = 0.75;
+                sliderBevel.value = 0.040;
+                sliderGap.value = 1.0;
+                sliderRotSpeed.value = 1.0;
+                sliderLight.value = 1.4;
+                document.getElementById('val-wing-gap').textContent = '1.06';
+                document.getElementById('val-depth').textContent = '0.75';
+                document.getElementById('val-bevel').textContent = '0.040';
+                document.getElementById('val-gap').textContent = '1.0x';
+                document.getElementById('val-rot-speed').textContent = '1.0x';
+                document.getElementById('val-light').textContent = '1.4x';
+                document.getElementById('color-primary').value = '#1a6ce0';
+                document.getElementById('color-secondary').value = '#082b66';
+                document.getElementById('color-accent').value = '#ff7b00';
+
+                setCameraPreset('front');
+                buildLogo3D();
+                showToast('تنظیمات به حالت استاندارد بازگردانده شد');
+            });
+
+            // Animation Mode Buttons
+            document.querySelectorAll('.anim-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.anim-btn').forEach(b => {
+                        b.classList.remove('text-blue-300', 'border-blue-500/40');
+                        b.classList.add('text-slate-300');
+                    });
+                    btn.classList.remove('text-slate-300');
+                    btn.classList.add('text-blue-300', 'border-blue-500/40');
+                    state.animMode = btn.getAttribute('data-anim');
+                    if (state.animMode === 'static') {
+                        logoRoot.rotation.set(0, 0, 0);
+                        logoRoot.position.set(0, 0, 0);
+                    }
+                });
+            });
+
+            // Camera Angle Presets
+            function setCameraPreset(preset) {
+                if (preset === 'front') {
+                    state.targetCameraPos = new THREE.Vector3(0, 0.25, 13.5);
+                    state.targetControlsLookAt = new THREE.Vector3(0, -0.1, 0);
+                } else if (preset === 'iso') {
+                    state.targetCameraPos = new THREE.Vector3(7.8, 3.8, 11.2);
+                    state.targetControlsLookAt = new THREE.Vector3(0.2, -0.1, 0);
+                } else if (preset === 'gap-closeup') {
+                    // Close-up camera focused directly on the clean separation channel between Left Wing & Main Arch
+                    state.targetCameraPos = new THREE.Vector3(-2.6, 0.6, 7.2);
+                    state.targetControlsLookAt = new THREE.Vector3(-2.1, 0.1, 0);
+                } else if (preset === 'top') {
+                    state.targetCameraPos = new THREE.Vector3(4.8, 5.5, 7.5);
+                    state.targetControlsLookAt = new THREE.Vector3(1.5, 0.3, 0);
+                }
+            }
+
+            document.querySelectorAll('.cam-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setCameraPreset(btn.getAttribute('data-cam'));
+                });
+            });
+
+            // Cancel smooth camera transition if user grabs OrbitControls manually
+            controls.addEventListener('start', () => {
+                state.targetCameraPos = null;
+                state.targetControlsLookAt = null;
+            });
+
+            // Toggle Inspector Drawer
+            const inspectorPanel = document.getElementById('inspector-panel');
+            let panelOpen = true;
+            document.getElementById('btn-toggle-panel').addEventListener('click', () => {
+                panelOpen = !panelOpen;
+                if (panelOpen) {
+                    inspectorPanel.style.transform = 'translateX(0)';
+                } else {
+                    inspectorPanel.style.transform = 'translateX(calc(100% + 2rem))';
+                }
+            });
+
+            // Toggle Studio Background (Dark / Light / Transparent for PNG)
+            const bgBtn = document.getElementById('btn-bg-toggle');
+            bgBtn.addEventListener('click', () => {
+                if (state.bgStyle === 'dark') {
+                    state.bgStyle = 'blue';
+                    scene.background = new THREE.Color(0x0b192c);
+                    scene.fog.color.setHex(0x0b192c);
+                    floorMesh.visible = true;
+                    bgBtn.querySelector('span').textContent = 'پس‌زمینه: سرمه‌ای عمیق';
+                } else if (state.bgStyle === 'blue') {
+                    state.bgStyle = 'transparent';
+                    scene.background = null;
+                    floorMesh.visible = false;
+                    bgBtn.querySelector('span').textContent = 'پس‌زمینه: شفاف (بدون زمینه)';
+                } else {
+                    state.bgStyle = 'dark';
+                    scene.background = new THREE.Color(0x050811);
+                    scene.fog.color.setHex(0x050811);
+                    floorMesh.visible = true;
+                    bgBtn.querySelector('span').textContent = 'پس‌زمینه: تیره استودیویی';
+                }
+            });
+
+            // High-Res PNG Snapshot Download
+            document.getElementById('btn-snapshot').addEventListener('click', () => {
+                renderer.render(scene, camera);
+                const dataURL = renderer.domElement.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = `logo-3d-${state.mode}.png`;
+                link.href = dataURL;
+                link.click();
+                showToast('تصویر سه‌بعدی PNG با موفقیت دانلود شد');
+            });
+
+            // Mouse Move for Subtle Parallax
+            window.addEventListener('mousemove', (e) => {
+                state.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                state.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // ============================================================================
+            // 9. EXPORTABLE THREE.JS CODE GENERATOR MODAL
+            // ============================================================================
+            function generateCleanExportCode() {
+                return `// ============================================================================
+// ماژول ساخت سه‌بعدی لوگو در Three.js (با تفکیک کامل بازوی چپ و کمان اصلی)
+// پارامترهای فعلی: حالت [${state.mode}] | شکاف بازوی چپ [${state.wingGap}] | ضخامت [${state.depth}] | پخ [${state.bevel}]
+// ============================================================================
+import * as THREE from 'three';
+
+export function createCorporateLogo3D(options = {}) {
+    const wingGap = options.wingGap ?? ${state.wingGap};
+    const depth = options.depth ?? ${state.depth};
+    const bevel = Math.min(options.bevel ?? ${state.bevel}, 0.045);
+    const gap = options.gap ?? ${state.gapMultiplier};
+    const Y_OFFSET = -2.0;
+
+    const logoGroup = new THREE.Group();
+
+    // ۱. بازوی مورب چپ (Left Wing - کاملاً جدا از کمان اصلی با شیب موازی 1.48)
+    const leftWingShape = new THREE.Shape();
+    leftWingShape.moveTo(-5.14, 0.0 + Y_OFFSET);
+    leftWingShape.lineTo(-3.57, 0.0 + Y_OFFSET);
+    leftWingShape.quadraticCurveTo(-3.51, 0.0 + Y_OFFSET, -3.47, 0.06 + Y_OFFSET);
+    leftWingShape.lineTo(-0.86, 3.92 + Y_OFFSET);
+    leftWingShape.quadraticCurveTo(-0.82, 4.00 + Y_OFFSET, -0.92, 4.00 + Y_OFFSET);
+    leftWingShape.lineTo(-2.05, 4.00 + Y_OFFSET);
+    leftWingShape.bezierCurveTo(-2.52, 4.00 + Y_OFFSET, -2.88, 3.55 + Y_OFFSET, -3.17, 3.00 + Y_OFFSET);
+    leftWingShape.lineTo(-5.16, 0.06 + Y_OFFSET);
+    leftWingShape.quadraticCurveTo(-5.20, 0.0 + Y_OFFSET, -5.14, 0.0 + Y_OFFSET);
+
+    // ۲. کمان اصلی و تای نوار بالا (Main Central Arch - با فاصله افقی 1.06 واحد از بازوی چپ)
+    const mainArchTopShape = new THREE.Shape();
+    mainArchTopShape.moveTo(-2.39, 0.0 + Y_OFFSET);
+    mainArchTopShape.lineTo(-0.81, 0.0 + Y_OFFSET);
+    mainArchTopShape.quadraticCurveTo(-0.75, 0.0 + Y_OFFSET, -0.71, 0.06 + Y_OFFSET);
+    mainArchTopShape.lineTo(0.96, 2.48 + Y_OFFSET);
+    mainArchTopShape.quadraticCurveTo(1.12, 2.68 + Y_OFFSET, 1.30, 2.65 + Y_OFFSET);
+    mainArchTopShape.bezierCurveTo(2.05, 2.78 + Y_OFFSET, 2.88, 2.42 + Y_OFFSET, 3.65, 1.75 + Y_OFFSET);
+    mainArchTopShape.bezierCurveTo(3.12, 2.75 + Y_OFFSET, 2.38, 4.00 + Y_OFFSET, 1.25, 4.00 + Y_OFFSET);
+    mainArchTopShape.bezierCurveTo(0.42, 4.00 + Y_OFFSET, -0.08, 3.52 + Y_OFFSET, -0.42, 3.00 + Y_OFFSET);
+    mainArchTopShape.lineTo(-2.41, 0.06 + Y_OFFSET);
+    mainArchTopShape.quadraticCurveTo(-2.45, 0.0 + Y_OFFSET, -2.39, 0.0 + Y_OFFSET);
+
+    // ۳. بازوی راست در زیر تای کمان (Right Lower Leg)
+    const rightArchLegShape = new THREE.Shape();
+    rightArchLegShape.moveTo(1.30, 2.65 + Y_OFFSET);
+    rightArchLegShape.bezierCurveTo(2.05, 2.78 + Y_OFFSET, 2.88, 2.42 + Y_OFFSET, 3.65, 1.75 + Y_OFFSET);
+    rightArchLegShape.lineTo(4.81, 0.06 + Y_OFFSET);
+    rightArchLegShape.quadraticCurveTo(4.85, 0.0 + Y_OFFSET, 4.78, 0.0 + Y_OFFSET);
+    rightArchLegShape.lineTo(3.21, 0.0 + Y_OFFSET);
+    rightArchLegShape.quadraticCurveTo(3.15, 0.0 + Y_OFFSET, 3.11, 0.06 + Y_OFFSET);
+    rightArchLegShape.lineTo(1.30, 2.65 + Y_OFFSET);
+
+    // ۴. پله عمق داخلی کمان (Inner Arch Under-Step)
+    const innerArchStepShape = new THREE.Shape();
+    innerArchStepShape.moveTo(1.04, 2.55 + Y_OFFSET);
+    innerArchStepShape.lineTo(1.45, 2.68 + Y_OFFSET);
+    innerArchStepShape.lineTo(3.45, 0.0 + Y_OFFSET);
+    innerArchStepShape.lineTo(2.92, 0.0 + Y_OFFSET);
+    innerArchStepShape.lineTo(1.04, 2.55 + Y_OFFSET);
+
+    // ۵. هرم ناقص نارنجی مرکزی (Orange Truncated Pyramid)
+    const orangePeakShape = new THREE.Shape();
+    orangePeakShape.moveTo(-0.14, 0.0 + Y_OFFSET);
+    orangePeakShape.lineTo(2.59, 0.0 + Y_OFFSET);
+    orangePeakShape.quadraticCurveTo(2.65, 0.0 + Y_OFFSET, 2.60, 0.07 + Y_OFFSET);
+    orangePeakShape.lineTo(1.61, 1.43 + Y_OFFSET);
+    orangePeakShape.quadraticCurveTo(1.55, 1.50 + Y_OFFSET, 1.46, 1.50 + Y_OFFSET);
+    orangePeakShape.lineTo(0.99, 1.50 + Y_OFFSET);
+    orangePeakShape.quadraticCurveTo(0.90, 1.50 + Y_OFFSET, 0.84, 1.43 + Y_OFFSET);
+    orangePeakShape.lineTo(-0.15, 0.07 + Y_OFFSET);
+    orangePeakShape.quadraticCurveTo(-0.20, 0.0 + Y_OFFSET, -0.14, 0.0 + Y_OFFSET);
+
+    // متریال‌های فیزیکی (Physical PBR Materials)
+    const matArchTop = new THREE.MeshPhysicalMaterial({
+        color: '${state.colors.primary}', metalness: 0.22, roughness: 0.22, clearcoat: 0.55
+    });
+    const matSlash = new THREE.MeshPhysicalMaterial({
+        color: '#1251b5', metalness: 0.25, roughness: 0.28, clearcoat: 0.4
+    });
+    const matArchRight = new THREE.MeshPhysicalMaterial({
+        color: '${state.colors.secondary}', metalness: 0.3, roughness: 0.35, clearcoat: 0.25
+    });
+    const matOrange = new THREE.MeshPhysicalMaterial({
+        color: '${state.colors.accent}', emissive: '#331400', metalness: 0.15, roughness: 0.22, clearcoat: 0.6
+    });
+
+    const parts = [
+        { shape: leftWingShape, mat: matSlash, x: -(wingGap - 1.06), z: 0.04 * gap, dScale: 0.94 },
+        { shape: mainArchTopShape, mat: matArchTop, x: 0, z: 0.16 * gap, dScale: 1.05 },
+        { shape: rightArchLegShape, mat: matArchRight, x: 0, z: -0.14 * gap, dScale: 0.86 },
+        { shape: innerArchStepShape, mat: matArchRight, x: 0, z: -0.28 * gap, dScale: 0.68 },
+        { shape: orangePeakShape, mat: matOrange, x: 0, z: 0.24 * gap, dScale: 1.12 }
+    ];
+
+    parts.forEach(p => {
+        const extrudeSettings = {
+            depth: depth * p.dScale,
+            bevelEnabled: true,
+            bevelSegments: 6,
+            steps: 2,
+            bevelSize: bevel,
+            bevelThickness: bevel * 1.35
+        };
+        const geometry = new THREE.ExtrudeGeometry(p.shape, extrudeSettings);
+        geometry.translate(0, 0, -(depth * p.dScale) / 2);
+
+        const mesh = new THREE.Mesh(geometry, p.mat);
+        mesh.position.set(p.x, 0, p.z);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        logoGroup.add(mesh);
+    });
+
+    return logoGroup;
+}`;
+            }
+
+            const codeModal = document.getElementById('code-modal');
+            const codeDisplay = document.getElementById('code-display');
+
+            document.getElementById('btn-show-code').addEventListener('click', () => {
+                codeDisplay.textContent = generateCleanExportCode();
+                codeModal.classList.remove('hidden');
+                codeModal.classList.add('flex');
+            });
+
+            document.getElementById('btn-close-modal').addEventListener('click', () => {
+                codeModal.classList.add('hidden');
+                codeModal.classList.remove('flex');
+            });
+
+            document.getElementById('btn-copy-code').addEventListener('click', () => {
+                const textArea = document.createElement('textarea');
+                textArea.value = codeDisplay.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('کد Three.js در کلیپ‌بورد کپی شد!');
+                } catch (err) {
+                    showToast('خطا در کپی کد');
+                }
+                document.body.removeChild(textArea);
+            });
+
+            // ============================================================================
+            // 10. ANIMATION LOOP & RESIZE HANDLER
+            // ============================================================================
+            const clock = new THREE.Clock();
+            let frameCount = 0;
+            let lastFpsUpdate = performance.now();
+            const fpsEl = document.getElementById('fps-counter');
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const elapsed = clock.getElapsedTime();
+                frameCount++;
+                const now = performance.now();
+                if (now - lastFpsUpdate >= 500) {
+                    const fps = Math.round((frameCount * 1000) / (now - lastFpsUpdate));
+                    fpsEl.textContent = `${Math.min(fps, 60)} FPS`;
+                    frameCount = 0;
+                    lastFpsUpdate = now;
+                }
+
+                // Smooth Camera Preset Transitions
+                if (state.targetCameraPos && state.targetControlsLookAt) {
+                    camera.position.lerp(state.targetCameraPos, 0.08);
+                    controls.target.lerp(state.targetControlsLookAt, 0.08);
+                    if (camera.position.distanceTo(state.targetCameraPos) < 0.05) {
+                        state.targetCameraPos = null;
+                        state.targetControlsLookAt = null;
+                    }
+                }
+
+                // Logo Animations
+                const speed = state.rotSpeed;
+                if (state.animMode === 'float') {
+                    logoRoot.position.y = Math.sin(elapsed * 1.5 * speed) * 0.14;
+                    logoRoot.rotation.y = Math.sin(elapsed * 0.7 * speed) * 0.18 + state.mouseX * 0.18;
+                    logoRoot.rotation.x = Math.cos(elapsed * 0.9 * speed) * 0.06 - state.mouseY * 0.12;
+                } else if (state.animMode === 'turntable') {
+                    logoRoot.position.y = Math.sin(elapsed * 1.5 * speed) * 0.08;
+                    logoRoot.rotation.y += 0.012 * speed;
+                    logoRoot.rotation.x = THREE.MathUtils.lerp(logoRoot.rotation.x, 0.05, 0.05);
+                } else if (state.animMode === 'wave') {
+                    logoRoot.rotation.y = state.mouseX * 0.25;
+                    logoRoot.rotation.x = -state.mouseY * 0.15;
+                    partMeshes.forEach((mesh, idx) => {
+                        mesh.position.z = mesh.userData.baseZ + Math.sin(elapsed * 2.6 * speed + idx * 0.85) * 0.28;
+                    });
+                }
+
+                // Cyberpunk Laser Scanner Animation
+                if (laserScanner.visible) {
+                    laserScanner.position.y = Math.sin(elapsed * 2.2) * 2.05;
+                }
+
+                // Gentle Particle Drift
+                if (particleSystem.visible) {
+                    particleSystem.rotation.y = elapsed * 0.05;
+                }
+
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Start the render loop
+            animate();
+        };
+    </script>
+</body>
+</html>

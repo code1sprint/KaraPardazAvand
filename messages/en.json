@@ -1,0 +1,635 @@
+{
+  "Meta": {
+    "title": "Kara Pardaz Oond",
+    "description": "Custom software, CRM, ERP, enterprise AI, and data dashboards.",
+    "titleTemplate": "%s | Kara Pardaz Oond",
+    "siteName": "Kara Pardaz Oond",
+    "organizationName": "Kara Pardaz Oond",
+    "organizationAlternateName": "کارا پرداز اوند",
+    "ogImageAlt": "Kara Pardaz Oond share image",
+    "pages": {
+      "home": {
+        "title": "Kara Pardaz Oond",
+        "description": "Custom software, websites, CRM, ERP, enterprise AI, and data dashboards for businesses and organizations."
+      },
+      "services": {
+        "title": "Kara Pardaz Oond services",
+        "description": "Six collaboration areas—custom software, web, CRM, ERP, enterprise AI, and data—each with a clear outcome."
+      },
+      "about": {
+        "title": "About",
+        "description": "Kara Pardaz Oond’s story, working principles, and relationship to parent brand Code1Sprint."
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "Send a short note about your need so we can outline a collaboration path."
+      },
+      "portfolio": {
+        "title": "Work",
+        "description": "Published case studies focused on problem, solution, and sourced results."
+      },
+      "insights": {
+        "title": "Insights",
+        "description": "Short notes on software delivery, data, and enterprise AI."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "description": "Privacy information and how data is handled on the Kara Pardaz Oond website."
+      },
+      "terms": {
+        "title": "Terms",
+        "description": "Terms of use for the Kara Pardaz Oond website and services."
+      },
+      "faq": {
+        "title": "FAQ",
+        "description": "Short answers to common questions about working with Kara Pardaz Oond."
+      },
+      "process": {
+        "title": "Process",
+        "description": "From needs analysis to support—engagement steps, deliverables, and your role."
+      },
+      "design": {
+        "title": "Component gallery",
+        "description": "Internal design-system gallery — not for search indexing."
+      }
+    }
+  },
+  "A11y": {
+    "skipToContent": "Skip to main content"
+  },
+  "Layout": {
+    "brand": {
+      "name": "Kara Pardaz Oond",
+      "family": "Part of the Code1Sprint family",
+      "familyPrefix": "Parent brand:",
+      "homeAria": "Kara Pardaz Oond — home"
+    },
+    "nav": {
+      "primaryLabel": "Primary",
+      "menuLabel": "Menu",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "services": "Services",
+      "servicesMenu": "Services menu",
+      "allServices": "All services",
+      "portfolio": "Work",
+      "process": "Process",
+      "insights": "Insights",
+      "about": "About us",
+      "consult": "Request a consultation",
+      "faq": "FAQ"
+    },
+    "language": {
+      "label": "Language",
+      "fa": "فارسی",
+      "en": "English"
+    },
+    "footer": {
+      "description": "Custom software, websites, CRM, ERP, enterprise AI, and data dashboards for businesses and organizations.",
+      "services": "Services",
+      "resources": "Resources",
+      "contact": "Contact",
+      "contactPending": "Contact channels will be published when confirmed.",
+      "address": "Address",
+      "channels": {
+        "email": "Email",
+        "phone": "Phone",
+        "telegram": "Telegram",
+        "whatsapp": "WhatsApp",
+        "instagram": "Instagram",
+        "github": "GitHub",
+        "linkedin": "LinkedIn"
+      },
+      "legal": {
+        "privacy": "Privacy",
+        "terms": "Terms"
+      },
+      "copyright": "© 2026 Kara Pardaz Oond",
+      "cta": {
+        "headline": "Let’s build your organization’s next system",
+        "button": "Request a consultation"
+      },
+      "resourcesItems": {
+        "portfolio": "Work",
+        "insights": "Insights",
+        "faq": "FAQ",
+        "process": "Process"
+      }
+    }
+  },
+  "HomePage": {
+    "title": "Kara Pardaz Oond",
+    "lead": "Project scaffold is ready. Later phases will build the site sections.",
+    "localeLabel": "Language",
+    "direction": "Left to right"
+  },
+  "Hero": {
+    "pill": "From the Code1Sprint family",
+    "titleBefore": "Systems that move ",
+    "titleGradient": "your organization's work",
+    "titleAfter": " forward",
+    "lead": "Custom software design and development, CRM, ERP, enterprise AI, and data dashboards—from needs analysis through post-delivery support.",
+    "ctaPrimary": "Request a free consultation",
+    "ctaSecondary": "View services",
+    "windowTitle": "kara / systems",
+    "tabsLabel": "System maps",
+    "mapLabel": "System architecture diagram",
+    "marqueeCaption": "Technologies we build with every day"
+  },
+  "Process": {
+    "eyebrow": "Engagement process",
+    "title": "From analysis to support, step by step",
+    "lead": "Every engagement follows a clear sequence; each step has defined outputs and a clear role for you.",
+    "deliverables": "Deliverables",
+    "clientInvolvement": "Your involvement",
+    "duration": "Duration range",
+    "stepAria": "Step {number}: {title}",
+    "detailsLink": "Process details"
+  },
+  "Stack": {
+    "eyebrow": "Technology stack",
+    "title": "What we build with",
+    "lead": "We choose tools for the problem and long-term maintainability—not for fashion.",
+    "tabsLabel": "Technology groups",
+    "selectedGroup": "Selected group: {group}"
+  },
+  "Breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "Services": {
+    "eyebrow": "Services",
+    "title": "Every system, with a clear outcome",
+    "lead": "From custom software to enterprise AI; for each service, outcome and scope are clear from the start.",
+    "listLabel": "Services list",
+    "deliverables": "Deliverables",
+    "stack": "Typical stack",
+    "detailLink": "Service details",
+    "page": {
+      "title": "Kara Pardaz Oond services",
+      "lead": "Six primary engagement areas—each with an outcome, deliverables, and a clear path."
+    },
+    "detail": {
+      "heroCtaPrimary": "Request a consult",
+      "heroCtaSecondary": "How we work",
+      "mapLabel": "{service} system map",
+      "audienceEyebrow": "Audience",
+      "audienceTitle": "Who is it for?",
+      "deliverablesEyebrow": "Output",
+      "processEyebrow": "Path",
+      "processTitle": "How we work",
+      "stackEyebrow": "Technology",
+      "faqEyebrow": "Questions",
+      "faqTitle": "Frequently asked questions",
+      "relatedTitle": "Related work",
+      "relatedLead": "Published case studies linked to this service.",
+      "relatedEmpty": "No published case studies for this service yet.",
+      "ctaTitle": "Shall we review this service?",
+      "ctaLead": "We will briefly walk through collaboration for “{service}”.",
+      "ctaButton": "Request a consult"
+    },
+    "selector": {
+      "eyebrow": "Match",
+      "title": "Which service fits me?",
+      "lead": "Three short questions; recommendations are computed only on this page and are never sent anywhere.",
+      "q1": "What is the main problem?",
+      "q2": "About how large is the team?",
+      "q3": "Existing system or starting new?",
+      "hint": "Answer the questions to see one or two recommended services.",
+      "empty": "Complete more answers for a sharper recommendation.",
+      "result": "Suggested for you",
+      "privacy": "Answers stay in your browser only.",
+      "problems": {
+        "sales": "Sales and customer follow-up",
+        "operations": "Operations, warehouse, or finance",
+        "knowledge": "Internal knowledge and answers",
+        "metrics": "Reporting and management metrics",
+        "web": "Website or web platform",
+        "custom": "Unique process / custom software"
+      },
+      "team": {
+        "small": "Small (up to 10)",
+        "medium": "Medium (10–50)",
+        "large": "Large (50+)"
+      },
+      "system": {
+        "existing": "We have an existing system",
+        "new": "We are starting from scratch",
+        "unsure": "Not sure yet"
+      }
+    }
+  },
+  "About": {
+    "breadcrumb": "About",
+    "eyebrow": "About Kara Pardaz Oond",
+    "title": "About",
+    "parentLink": "Code1Sprint website",
+    "principles": {
+      "eyebrow": "Principles",
+      "title": "How we work",
+      "lead": "A few principles that keep collaboration clear and reviewable."
+    },
+    "brands": {
+      "eyebrow": "Brand family",
+      "title": "Two brands, one team",
+      "lead": "Kara Pardaz Oond is a sister brand of Code1Sprint; each has a clear focus.",
+      "diagramLabel": "Relationship between the two brands",
+      "parentLabel": "Parent brand",
+      "sisterLabel": "Sister brand",
+      "connector": "one team"
+    },
+    "team": {
+      "eyebrow": "Team",
+      "title": "People",
+      "lead": "Team members appear here once confirmed by the business."
+    },
+    "culture": {
+      "eyebrow": "Tech culture",
+      "title": "Engineering working principles",
+      "lead": "These commitments are drafts and need confirmation before launch."
+    },
+    "ctaTitle": "Shall we start a conversation?",
+    "ctaLead": "If you have a project in mind, we can briefly review a collaboration path.",
+    "ctaButton": "Contact page"
+  },
+  "Legal": {
+    "privacyTitle": "Privacy",
+    "termsTitle": "Terms",
+    "updated": "Updated: {date}",
+    "toc": "On this page"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Page not found",
+    "lead": "This address is invalid or the page has moved. Continue from services, portfolio, or contact.",
+    "home": "Back to home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "Error": {
+    "code": "Error",
+    "title": "Something went wrong",
+    "lead": "This page failed to load. Please try again or reach us via the contact page.",
+    "retry": "Try again",
+    "contact": "Contact us"
+  },
+  "ForceError": {
+    "title": "Error boundary test",
+    "lead": "Press the button to throw a deliberate error so the error page (retry and contact) appears.",
+    "trigger": "Trigger test error"
+  },
+  "ProcessPage": {
+    "breadcrumb": "Engagement process",
+    "eyebrow": "Engagement process",
+    "titleBefore": "From analysis to support, ",
+    "titleGradient": "step by step",
+    "titleAfter": "",
+    "lead": "How we work from needs analysis to support—with clear deliverables, your role, and duration ranges once confirmed.",
+    "stepsTitle": "Five collaboration steps",
+    "stepsLead": "Select a step to see deliverables and what we need from you.",
+    "duration": "Duration range",
+    "models": {
+      "eyebrow": "Engagement",
+      "title": "Engagement models",
+      "lead": "Three common formats; contractual details are confirmed with the business before launch."
+    },
+    "communication": {
+      "eyebrow": "Communication",
+      "title": "Communication and tooling",
+      "lead": "We make reporting and demo cadence clear from the start."
+    },
+    "ctaTitle": "Shall we review a collaboration path?",
+    "ctaLead": "A short note about your need is enough to start.",
+    "ctaButton": "Request a consult"
+  },
+  "Trust": {
+    "label": "Trust metrics",
+    "projects": "Projects delivered",
+    "years": "Years of experience",
+    "industries": "Industries served"
+  },
+  "Why": {
+    "eyebrow": "Why Kara Pardaz Oond",
+    "title": "Three principles that keep the path clear",
+    "lead": "These three commitments are drafts and need confirmation before launch."
+  },
+  "DesignPage": {
+    "eyebrow": "Design system v3",
+    "title": "Component gallery",
+    "lead": "Identity tokens and components for v3. The page stays light; dark appears only on product surfaces like AppWindow.",
+    "sections": {
+      "colors": "Colors",
+      "typography": "Typography",
+      "buttons": "Buttons",
+      "chips": "Chips & pills",
+      "breadcrumb": "Breadcrumb",
+      "forms": "Forms",
+      "tabs": "Horizontal tabs",
+      "verticalTabs": "Vertical tabs",
+      "accordion": "Accordion",
+      "prose": "Prose",
+      "tiles": "Bento tiles",
+      "appWindow": "App window",
+      "code": "Code block",
+      "marquee": "Marquee"
+    },
+    "type": {
+      "eyebrow": "Sample eyebrow",
+      "h1": "Systems that move",
+      "h1Gradient": "your operations",
+      "h2": "Sample section heading",
+      "h3": "Sample subsection",
+      "body": "Body copy with 1.8 line-height for comfortable reading.",
+      "muted": "Muted text for supporting hints.",
+      "mono": "console.log('status: ok')"
+    },
+    "buttons": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "small": "Small",
+      "ghost": "Ghost",
+      "disabled": "Disabled"
+    },
+    "chips": {
+      "soft": "Soft",
+      "panel": "Panel",
+      "ok": "Healthy",
+      "muted": "Muted",
+      "pill": "Pill without marker"
+    },
+    "breadcrumb": {
+      "label": "Sample trail",
+      "home": "Home",
+      "design": "Design",
+      "here": "This page"
+    },
+    "forms": {
+      "name": "Name",
+      "nameHint": "Short hint under the field.",
+      "namePlaceholder": "Enter a name",
+      "role": "Role",
+      "rolePlaceholder": "Choose one",
+      "roleOps": "Operations",
+      "roleCto": "Technical",
+      "message": "Message",
+      "messagePlaceholder": "Sample message",
+      "messageError": "Shown to demonstrate the error state."
+    },
+    "tabs": {
+      "label": "Sample tabs",
+      "overview": "Overview",
+      "tokens": "Tokens",
+      "a11y": "Accessibility",
+      "overviewPanel": "Overview panel — use arrow keys to move between tabs.",
+      "tokensPanel": "Colors and radii come from CSS variables.",
+      "a11yPanel": "Visible focus and ARIA tablist roles are wired."
+    },
+    "verticalTabs": {
+      "label": "Vertical tabs",
+      "crm": "CRM",
+      "erp": "ERP",
+      "rag": "RAG & AI",
+      "crmPanel": "CRM panel — arrow keys are RTL-aware.",
+      "erpPanel": "ERP panel.",
+      "ragPanel": "RAG and AI panel."
+    },
+    "accordion": {
+      "oneTitle": "Item one",
+      "oneBody": "First accordion body. Use Up/Down to move between headers.",
+      "twoTitle": "Item two",
+      "twoBody": "Second accordion body.",
+      "threeTitle": "Item three",
+      "threeBody": "Third accordion body."
+    },
+    "prose": {
+      "heading": "Long-form sample",
+      "body": "Prose styles for articles and legal pages; links are blue and code is mono.",
+      "li1": "No construction metaphors",
+      "li2": "Software-native cues only"
+    },
+    "tiles": {
+      "crmTitle": "Operations CRM",
+      "crmBody": "A live-looking kanban inside a bento tile.",
+      "aiTitle": "Enterprise assistant",
+      "aiBody": "A short chat on a dark surface.",
+      "chatUser": "Queue status?",
+      "chatAgent": "All healthy — 3 active queues."
+    },
+    "appWindow": {
+      "main": "Dark product surface with sidebar and console.",
+      "log1": "pipeline ready",
+      "log2": "health checks passed"
+    },
+    "marquee": {
+      "caption": "Tech names on an LTR marquee"
+    },
+    "band": {
+      "eyebrow": "Brand band",
+      "title": "Navy band with stripe texture",
+      "body": "56px slanted edges, 135deg gradient, optional orange glow.",
+      "cta": "Sample button"
+    }
+  },
+  "Portfolio": {
+    "featured": {
+      "eyebrow": "Work",
+      "title": "Work that clarifies the problem path",
+      "lead": "Case studies focused on the problem, the approach, and sourced results.",
+      "viewAll": "All work"
+    },
+    "list": {
+      "eyebrow": "Work",
+      "title": "Work",
+      "lead": "Browse published case studies and filter by service or sector."
+    },
+    "filter": {
+      "service": "Filter by service",
+      "sector": "Filter by sector",
+      "all": "All"
+    },
+    "viewCaseStudy": "View case study",
+    "empty": "No published case studies yet. When a study is ready, it will appear here.",
+    "emptyFiltered": "No case studies match these filters.",
+    "emptyCta": "Request a conversation",
+    "detail": {
+      "back": "Back to work",
+      "meta": "Project details",
+      "year": "Year",
+      "role": "Role",
+      "problem": "Problem",
+      "solution": "Solution",
+      "architecture": "Solution architecture",
+      "architectureMap": "Solution architecture diagram",
+      "results": "Results",
+      "stack": "Stack",
+      "gallery": "Gallery",
+      "source": "Source",
+      "notes": "Notes",
+      "adjacent": "Adjacent projects",
+      "previous": "Previous project",
+      "next": "Next project",
+      "ctaTitle": "Working on something similar?",
+      "ctaLead": "Share a short note about your need so we can review a collaboration path.",
+      "ctaButton": "Request a conversation"
+    }
+  },
+  "Insights": {
+    "teaser": {
+      "eyebrow": "Insights",
+      "title": "Latest writing",
+      "lead": "Short notes on delivery, data, and enterprise AI.",
+      "viewAll": "All insights"
+    },
+    "list": {
+      "eyebrow": "Insights",
+      "title": "Insights",
+      "lead": "Published notes on architecture, process, and enterprise systems."
+    },
+    "filter": {
+      "all": "All",
+      "tags": "Tag filter",
+      "search": "Search insights",
+      "searchPlaceholder": "Search title or summary…"
+    },
+    "featured": "Featured",
+    "loadMore": "Load more",
+    "detail": {
+      "back": "Back to insights",
+      "toc": "On this page",
+      "author": "Author",
+      "related": "Related posts",
+      "relatedLead": "Based on shared tags.",
+      "updated": "Updated: {date}",
+      "readingProgress": "Reading progress"
+    },
+    "ctaTitle": "Working on something similar?",
+    "ctaLead": "If you have a concrete need, start with a short conversation.",
+    "ctaButton": "Request a conversation",
+    "empty": "No posts published yet.",
+    "emptyFiltered": "No posts match this filter."
+  },
+  "Faq": {
+    "eyebrow": "Questions",
+    "title": "FAQ",
+    "lead": "Short answers to common questions about working with us.",
+    "viewAll": "All questions",
+    "empty": "No FAQ items yet.",
+    "searchLabel": "Search questions",
+    "searchPlaceholder": "Search…",
+    "searchHint": "Questions are grouped by topic.",
+    "searchResults": "{count} matching questions",
+    "searchEmpty": "No questions match that phrase. Try a shorter term or another topic.",
+    "page": {
+      "breadcrumb": "FAQ",
+      "eyebrow": "Answers",
+      "titleBefore": "Frequently ",
+      "titleGradient": "asked",
+      "titleAfter": "",
+      "lead": "Short answers on schedule, cost, security, and support. Final details will be updated after business confirmation.",
+      "listHeading": "Question list",
+      "ctaTitle": "Didn’t find your answer?",
+      "ctaLead": "Send a short note about your need so we can clarify the next step together.",
+      "ctaButton": "Go to contact"
+    }
+  },
+  "Contact": {
+    "page": {
+      "title": "Contact",
+      "eyebrow": "Conversation",
+      "titleBefore": "Let’s ",
+      "titleGradient": "get started",
+      "titleAfter": "",
+      "lead": "Fill in the form or use a confirmed channel; we will clarify the collaboration path together.",
+      "formTitle": "Send a message",
+      "formLead": "Provide at least a phone number or an email so we can reply."
+    },
+    "section": {
+      "title": "Start a conversation",
+      "lead": "Add your name, a contact channel, and the topic so we can plan next steps."
+    },
+    "cta": {
+      "sentence": "Leave a message to review your need and a collaboration path.",
+      "button": "Request a conversation"
+    },
+    "details": {
+      "title": "Contact details",
+      "lead": "Only confirmed channels are shown.",
+      "address": "Address",
+      "hours": "Working hours",
+      "responseTimeLabel": "Expected response time",
+      "emptyChannels": "No public channel is published yet. Please use the form.",
+      "channels": {
+        "email": "Email",
+        "phone": "Phone",
+        "telegram": "Telegram",
+        "whatsapp": "WhatsApp",
+        "instagram": "Instagram",
+        "github": "GitHub",
+        "linkedin": "LinkedIn"
+      }
+    },
+    "fields": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "service": "Service",
+      "stage": "Project stage",
+      "message": "Message",
+      "consent": "I agree that my details are used only to reply to this request.",
+      "website": "Website"
+    },
+    "placeholders": {
+      "name": "Full name",
+      "phone": "+98…",
+      "email": "name@example.com",
+      "service": "Select one",
+      "stage": "Select current stage",
+      "message": "Briefly describe the need, timing, and context"
+    },
+    "hints": {
+      "phoneOrEmail": "At least one of phone or email is required."
+    },
+    "services": {
+      "customSoftware": "Custom software",
+      "webPlatforms": "Websites and platforms",
+      "crm": "CRM",
+      "erp": "ERP",
+      "ragAi": "RAG and enterprise AI",
+      "dataScience": "Data science and dashboards",
+      "other": "Other"
+    },
+    "stages": {
+      "discovery": "Exploring the need",
+      "ready": "Ready to start",
+      "existing": "We have an existing system",
+      "support": "Need support",
+      "other": "Other"
+    },
+    "submit": "Send message",
+    "submitting": "Sending…",
+    "errors": {
+      "nameRequired": "Name is missing. Enter at least 2 characters, then send again.",
+      "nameMax": "Name is too long. Shorten it to 80 characters or fewer.",
+      "contactRequired": "Phone and email are both empty. Add at least one so we can reply.",
+      "phoneInvalid": "That phone number is not valid. Fix the format, or leave it blank and use email.",
+      "emailInvalid": "That email is not valid. Correct it, or leave it blank and use phone.",
+      "serviceRequired": "No service is selected. Choose one option from the list.",
+      "stageRequired": "Project stage is missing. Pick the option that matches your situation.",
+      "messageRequired": "The message is too short. Add at least 10 characters so we understand the need.",
+      "messageMax": "The message exceeds 2000 characters. Shorten it, then send again.",
+      "consentRequired": "Consent is not checked. Tick the consent box so we can send the request."
+    },
+    "status": {
+      "success": "Your message was received. We will contact you shortly to coordinate next steps.",
+      "rateLimited": "Too many requests. Wait a few minutes, then send again.",
+      "misconfigured": "Sending is temporarily unavailable. Try later or use another channel.",
+      "upstream": "The server could not accept the message. Try again shortly; your typed data is still here.",
+      "validation": "Some fields need attention. Fix the highlighted items, then send again.",
+      "network": "Could not connect. Check your network and send again; your typed data is kept.",
+      "generic": "Sending failed. Try again; if it persists, use another channel.",
+      "tryChannel": "You can also reach us here:",
+      "tryLater": "Your typed data is still in the form—retry shortly or use the contact details beside the form."
+    }
+  }
+}

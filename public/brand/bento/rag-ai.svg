@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-hidden="true">
+  <defs>
+    <radialGradient id="ragGlowA" cx="30%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#dbeafe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ragGlowB" cx="85%" cy="70%" r="40%">
+      <stop offset="0%" stop-color="#FF800D" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FF800D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ragBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef4fc"/>
+      <stop offset="50%" stop-color="#f7f9fd"/>
+      <stop offset="100%" stop-color="#e6edf8"/>
+    </linearGradient>
+    <linearGradient id="ragGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#e8f1fc" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="ragSoft" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#0B1B38" flood-opacity="0.16"/>
+    </filter>
+    <filter id="ragGlow">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#ragBg)"/>
+  <rect width="960" height="600" fill="url(#ragGlowA)"/>
+  <rect width="960" height="600" fill="url(#ragGlowB)"/>
+  <ellipse cx="360" cy="280" rx="250" ry="160" fill="none" stroke="#2E8FF0" stroke-width="2" opacity="0.3" stroke-dasharray="8 10"/>
+  <ellipse cx="360" cy="280" rx="170" ry="108" fill="none" stroke="#1D6DD1" stroke-width="1.5" opacity="0.22"/>
+  <g filter="url(#ragSoft)" transform="rotate(-16 220 220)">
+    <rect x="120" y="140" width="150" height="190" rx="18" fill="url(#ragGlass)" stroke="#FFFFFF" stroke-width="2"/>
+    <rect x="148" y="176" width="94" height="10" rx="5" fill="#94a8c4"/>
+    <rect x="148" y="202" width="72" height="10" rx="5" fill="#c5d3e6"/>
+    <rect x="148" y="228" width="86" height="10" rx="5" fill="#c5d3e6"/>
+    <rect x="148" y="254" width="56" height="10" rx="5" fill="#c5d3e6"/>
+    <path d="M148 300 h58" stroke="#2E8FF0" stroke-width="8" stroke-linecap="round" opacity="0.45"/>
+  </g>
+  <g filter="url(#ragSoft)" transform="rotate(10 420 150)">
+    <rect x="340" y="80" width="140" height="170" rx="16" fill="#FFFFFF" stroke="#DCE4F1" stroke-width="2"/>
+    <rect x="368" y="116" width="84" height="10" rx="5" fill="#94a8c4"/>
+    <rect x="368" y="142" width="64" height="10" rx="5" fill="#c5d3e6"/>
+    <rect x="368" y="168" width="74" height="10" rx="5" fill="#c5d3e6"/>
+    <circle cx="392" cy="210" r="16" fill="#E8F1FC"/>
+    <circle cx="432" cy="210" r="16" fill="#E8F1FC"/>
+  </g>
+  <g filter="url(#ragSoft)" transform="rotate(6 180 400)">
+    <rect x="90" y="360" width="160" height="110" rx="18" fill="#061D44"/>
+    <rect x="118" y="392" width="70" height="10" rx="5" fill="#8EA3C8"/>
+    <rect x="118" y="416" width="100" height="10" rx="5" fill="#2E8FF0" opacity="0.6"/>
+    <circle cx="220" cy="440" r="14" fill="#34C48B"/>
+  </g>
+  <path d="M280 200 L520 300" stroke="#2E8FF0" stroke-width="3" opacity="0.4"/>
+  <path d="M440 160 L560 280" stroke="#1D6DD1" stroke-width="3" opacity="0.35"/>
+  <path d="M230 400 L500 320" stroke="#FF800D" stroke-width="2.5" opacity="0.35"/>
+  <g filter="url(#ragGlow)">
+    <circle cx="580" cy="300" r="100" fill="#061D44"/>
+    <circle cx="580" cy="300" r="68" fill="none" stroke="#2E8FF0" stroke-width="4" opacity="0.7"/>
+    <circle cx="580" cy="300" r="32" fill="#2E8FF0"/>
+  </g>
+  <path d="M580 240 L592 284 L636 300 L592 316 L580 360 L568 316 L524 300 L568 284 Z" fill="#FF800D" filter="url(#ragGlow)" transform="translate(580 300) scale(0.55) translate(-580 -300)"/>
+  <g filter="url(#ragSoft)" transform="matrix(0.98 0.08 -0.08 0.98 40 20)">
+    <rect x="620" y="400" width="280" height="130" rx="24" fill="url(#ragGlass)" stroke="#FFFFFF" stroke-width="2"/>
+    <rect x="656" y="440" width="150" height="12" rx="6" fill="#52627F" opacity="0.4"/>
+    <rect x="656" y="466" width="110" height="10" rx="5" fill="#94a8c4" opacity="0.5"/>
+    <rect x="656" y="492" width="180" height="18" rx="9" fill="#0A3A86"/>
+    <circle cx="860" cy="450" r="20" fill="#34C48B" opacity="0.85"/>
+  </g>
+  <g filter="url(#ragSoft)">
+    <rect x="80" y="500" width="140" height="60" rx="30" fill="#FFFFFF" stroke="#DCE4F1" stroke-width="2"/>
+    <circle cx="120" cy="530" r="16" fill="#061D44"/>
+    <rect x="150" y="522" width="48" height="16" rx="8" fill="#DCE4F1"/>
+  </g>
+</svg>
