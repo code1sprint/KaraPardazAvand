@@ -1,8 +1,22 @@
+import { Suspense } from "react";
+import { connection } from "next/server";
 import { notFound } from "next/navigation";
-import { Link } from "@/i18n/navigation";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel } from "@/lib/db/models/Post";
-import { PostForm } from "@/components/admin/posts/PostForm";
+import { EditPostClient } from "./EditPostClient";
+
+const Connection = async () => {
+  await connection();
+  return null;
+};
+
+async function DynamicMarker() {
+  return (
+    <Suspense>
+      <Connection />
+    </Suspense>
+  );
+}
 
 interface EditPostPageProps {
   params: Promise<{
@@ -49,36 +63,14 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-black text-text sm:text-2xl">
-            ویرایش مقاله: {post.title}
-          </h1>
-          <p className="mt-1 text-sm text-muted">
-            ویرایش محتوا و متادیتای مقاله با اسلاگ <span className="font-mono text-xs">{post.slug}</span>
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link
-            href={`/insights/${post.slug}`}
-            target="_blank"
-            className="inline-flex items-center gap-1.5 rounded-2xl border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue"
-          >
-            <span>مشاهده در سایت</span>
-          </Link>
-          <Link
-            href="/admin/posts"
-            className="inline-flex items-center gap-1.5 rounded-2xl border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue"
-          >
-            <span>بازگشت به مقالات</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Form */}
-      <PostForm initialData={initialData} postId={id} isEdit />
-    </div>
+    <>
+      <DynamicMarker />
+      <EditPostClient
+        initialData={initialData}
+        postId={id}
+        slug={post.slug}
+        title={post.title}
+      />
+    </>
   );
 }

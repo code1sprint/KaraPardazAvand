@@ -34,7 +34,7 @@ export function isPostVisible(status: PostStatus): boolean {
 }
 
 function toDateIso(value: Date | string | undefined): string {
-  if (!value) return new Date().toISOString().slice(0, 10);
+  if (!value) return "1405-01-01";
   if (value instanceof Date) {
     return value.toISOString().slice(0, 10);
   }
@@ -46,6 +46,8 @@ function toDateIso(value: Date | string | undefined): string {
 }
 
 export async function getAllPosts(locale?: string): Promise<PostMeta[]> {
+  "use cache";
+
   try {
     await connectToDatabase();
     const Post = await getPostModel();
@@ -91,6 +93,8 @@ export async function getFeaturedPost(locale?: string): Promise<PostMeta | null>
 }
 
 export async function getPostBySlug(slug: string, locale?: string): Promise<PostDetail | null> {
+  "use cache";
+
   try {
     await connectToDatabase();
     const Post = await getPostModel();

@@ -1,6 +1,20 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
+import { connection } from "next/server";
 import { AuthProvider } from "@/lib/auth/context";
 import { AdminShell } from "./AdminShell";
+
+const Connection = async () => {
+  await connection();
+  return null;
+};
+
+async function DynamicMarker() {
+  return (
+    <Suspense>
+      <Connection />
+    </Suspense>
+  );
+}
 
 export const metadata = {
   title: "پیشخوان مدیریت | کارا پرداز اوند",
@@ -14,6 +28,7 @@ export const metadata = {
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
+      <DynamicMarker />
       <AdminShell>{children}</AdminShell>
     </AuthProvider>
   );
