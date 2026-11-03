@@ -58,8 +58,49 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   );
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
   const [loading, setLoading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  const handleAiSuggest = async () => {
+    setAiLoading(true);
+    setErrorMsg(null);
+    try {
+      const res = await fetch("/api/admin/posts/ai-suggest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: formData.title,
+          contentHtml: formData.contentHtml,
+          locale: formData.locale,
+        }),
+      });
+      const json = await res.json();
+      if (res.ok && json.ok) {
+        if (json.suggestedSummary) {
+          setFormData((prev) => ({ ...prev, summary: json.suggestedSummary }));
+        }
+
+        if (json.suggestedTags && json.suggestedTags.length > 0) {
+          setFormData((prev) => ({ ...prev, tags: json.suggestedTags }));
+          setTagsInput(json.suggestedTags.join("، "));
+        }
+
+        if (json.suggestedTitle && !formData.title) {
+          setFormData((prev) => ({
+            ...prev,
+            title: json.suggestedTitle,
+            slug: !prev.slug ? slugifyHeading(json.suggestedTitle) : prev.slug,
+          }));
+        }
+        setSuccessMsg("پیشنهادات هوش مصنوعی برای سئو و برچسب‌ها اعمال شد.");
+      }
+    } catch {
+      setErrorMsg("خطا در برقراری ارتباط با سرویس هوش مصنوعی.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -289,9 +330,20 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
 
           {/* Metadata Card */}
           <div className="rounded-3xl border border-line bg-panel p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-text border-b border-line pb-2">
-              مشخصات و سئو
-            </h3>
+            <div className="flex items-center justify-between border-b border-line pb-2">
+              <h3 className="text-sm font-bold text-text">
+                مشخصات و سئو
+              </h3>
+              <button
+                type="button"
+                onClick={handleAiSuggest}
+                disabled={aiLoading}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold rounded-lg border border-orange/40 bg-orange/10 text-orange hover:bg-orange/20 transition-colors disabled:opacity-50"
+                title="تکمیل خودکار خلاصه سئو و برچسب‌ها با تحلیل محتوای مقاله"
+              >
+                <span>⚡ {aiLoading ? "در حال تحلیل..." : "پیشنهاد هوش مصنوعی"}</span>
+              </button>
+            </div>
 
             {/* Slug */}
             <div>

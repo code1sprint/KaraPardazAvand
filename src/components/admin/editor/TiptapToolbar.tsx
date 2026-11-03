@@ -24,17 +24,35 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
+  const insertImage = () => {
+    const url = window.prompt("آدرس تصویر (Image URL):");
+    if (!url) return;
+    const alt = window.prompt("متن جایگزین تصویر (Alt Text):") || "";
+    editor.chain().focus().setImage({ src: url, alt }).run();
+  };
+
+  const insertCta = () => {
+    const label = window.prompt("عنوان دکمه (CTA Label):", "درخواست جلسه ارزیابی فنی");
+    if (!label) return;
+    const url = window.prompt("آدرس مقصد (URL):", "/contact");
+    if (!url) return;
+
+    editor.chain().focus().insertInlineCta({ label, url, variant: "primary" }).run();
+  };
+
   const insertZwnj = () => {
     editor.chain().focus().insertContent("\u200c").run();
   };
 
   const btnClass = (isActive: boolean) =>
     cn(
-      "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-colors border",
+      "px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-colors border select-none",
       isActive
         ? "bg-blue/15 text-blue border-blue/40 font-bold"
         : "text-muted hover:text-text hover:bg-bg/60 border-transparent",
     );
+
+  const isTableActive = editor.isActive("table");
 
   return (
     <div className="flex flex-wrap items-center gap-1 border-b border-line bg-panel p-2 rounded-t-2xl">
@@ -74,6 +92,14 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
         title="مورب (Italic)"
       >
         I
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        className={btnClass(editor.isActive("code"))}
+        title="کد درون‌متنی (Inline Code)"
+      >
+        `کد`
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />
@@ -118,7 +144,90 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
 
       <div className="h-4 w-px bg-line mx-1" />
 
-      {/* Link */}
+      {/* Callouts */}
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleCallout({ type: "note" }).run()}
+        className={btnClass(editor.isActive("callout", { type: "note" }))}
+        title="کادر نکته (Note)"
+      >
+        ℹ نکته
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleCallout({ type: "warning" }).run()}
+        className={btnClass(editor.isActive("callout", { type: "warning" }))}
+        title="کادر هشدار (Warning)"
+      >
+        ⚠ هشدار
+      </button>
+
+      <div className="h-4 w-px bg-line mx-1" />
+
+      {/* Table Controls */}
+      <button
+        type="button"
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+            .run()
+        }
+        className={btnClass(isTableActive)}
+        title="درج جدول ۳×۳"
+      >
+        ▦ جدول
+      </button>
+
+      {isTableActive && (
+        <div className="flex items-center gap-1 bg-bg p-0.5 rounded-lg border border-line text-[11px]">
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().addColumnAfter().run()}
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text"
+            title="افزودن ستون"
+          >
+            + ستون
+          </button>
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().deleteColumn().run()}
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500"
+            title="حذف ستون"
+          >
+            - ستون
+          </button>
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().addRowAfter().run()}
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-muted hover:text-text"
+            title="افزودن سطر"
+          >
+            + سطر
+          </button>
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().deleteRow().run()}
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500"
+            title="حذف سطر"
+          >
+            - سطر
+          </button>
+          <button
+            type="button"
+            onClick={() => editor.chain().focus().deleteTable().run()}
+            className="px-1.5 py-0.5 hover:bg-panel rounded text-red-500 font-bold"
+            title="حذف کل جدول"
+          >
+            × جدول
+          </button>
+        </div>
+      )}
+
+      <div className="h-4 w-px bg-line mx-1" />
+
+      {/* Media & Interactive */}
       <button
         type="button"
         onClick={setLink}
@@ -127,19 +236,54 @@ export function TiptapToolbar({ editor, locale }: TiptapToolbarProps) {
       >
         🔗 لینک
       </button>
+      <button
+        type="button"
+        onClick={insertImage}
+        className={btnClass(editor.isActive("image"))}
+        title="درج تصویر"
+      >
+        🖼 عکس
+      </button>
+      <button
+        type="button"
+        onClick={insertCta}
+        className={btnClass(editor.isActive("inlineCta"))}
+        title="درج دکمه اقدام (CTA Button)"
+      >
+        🔘 دکمه CTA
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        className={btnClass(false)}
+        title="خط جداکننده (Divider)"
+      >
+        ― خط
+      </button>
 
-      {/* Persian ZWNJ Button (especially in fa locale) */}
+      {/* Persian ZWNJ Button */}
       {locale === "fa" && (
         <button
           type="button"
           onClick={insertZwnj}
-          className="px-2.5 py-1.5 text-xs font-semibold rounded-lg border border-orange/30 bg-orange/10 text-orange hover:bg-orange/20 transition-colors"
+          className="px-2 py-1 text-xs font-semibold rounded-lg border border-orange/30 bg-orange/10 text-orange hover:bg-orange/20 transition-colors"
           title="درج نیم‌فاصله (میانبر: Shift+Space یا Ctrl+Shift+2)"
         >
           نیم‌فاصله [‌]
         </button>
       )}
 
+      {/* Clear format */}
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
+        className="px-2 py-1 text-xs text-muted hover:text-red-500 transition-colors"
+        title="پاکسازی تمام قالب‌بندی‌ها"
+      >
+        🧹 پاکسازی
+      </button>
+
+      {/* Undo / Redo */}
       <div className="ms-auto flex items-center gap-1">
         <button
           type="button"
