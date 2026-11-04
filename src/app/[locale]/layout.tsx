@@ -9,6 +9,7 @@ import {
   RouteTransition,
   SiteFooter,
   SkipLink,
+  SmoothScroll,
 } from "@/components/layout";
 import { JsonLdSite } from "@/components/seo/JsonLdSite";
 import { PrivacyAnalytics } from "@/components/seo/PrivacyAnalytics";
@@ -88,14 +89,16 @@ export default async function LocaleLayout({ children, params }: Props) {
           <SkipLink />
           {/* Pathname consumers suspend inside FloatingNav — keep chrome height stable. */}
           <FloatingNav />
+          <Suspense fallback={null}>
+            <RouteTransition />
+            <SmoothScroll />
+          </Suspense>
           <main
             id={MAIN_ID}
             tabIndex={-1}
             className="flex flex-1 flex-col outline-none"
+            style={{ rowGap: "var(--gap-section)" }}
           >
-            <Suspense fallback={null}>
-              <RouteTransition />
-            </Suspense>
             {children}
           </main>
           <SiteFooter />

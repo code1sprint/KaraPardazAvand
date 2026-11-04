@@ -14,7 +14,8 @@ export type BandProps = HTMLAttributes<HTMLElement> & {
 
 /**
  * Modern Navy brand band with subtle ambient lighting and micro-dot matrix.
- * Decorative only — does not trap focus or alter tab order.
+ * Visual gap to neighbouring sections equals var(--gap-band-edge).
+ * Inner padding equals var(--pad-band) (plus slant offset if slanted).
  */
 export function Band({
   children,
@@ -22,6 +23,7 @@ export function Band({
   bare = false,
   slanted = false,
   className,
+  style,
   ...props
 }: BandProps) {
   return (
@@ -29,10 +31,17 @@ export function Band({
       className={cn(
         "relative overflow-hidden bg-[linear-gradient(180deg,var(--win-deep),var(--navy))] text-on-brand",
         slanted
-          ? "py-[length:var(--band-pad-y)] [clip-path:polygon(0_var(--band-slant),100%_0,100%_calc(100%-var(--band-slant)),0_100%)]"
-          : "border-y border-white/[0.08] py-20 md:py-24 lg:py-28",
+          ? "[clip-path:polygon(0_var(--band-slant),100%_0,100%_calc(100%-var(--band-slant)),0_100%)]"
+          : "border-y border-white/[0.08]",
         className,
       )}
+      style={{
+        marginBlock: "calc(var(--gap-band-edge) - var(--gap-section))",
+        paddingBlock: slanted
+          ? "calc(var(--pad-band) + var(--band-slant))"
+          : "var(--pad-band)",
+        ...style,
+      }}
       {...props}
     >
       {/* Micro dot matrix engineering pattern with smooth radial falloff */}

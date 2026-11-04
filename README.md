@@ -1,4 +1,4 @@
-# Kara Pardaz Oond (کارا پرداز اوند)
+# Kara Pardaz Avand (کارا پرداز اوند)
 
 Official website — Next.js App Router, Tailwind CSS, next-intl (`fa` default, `en` secondary), MDX content.
 

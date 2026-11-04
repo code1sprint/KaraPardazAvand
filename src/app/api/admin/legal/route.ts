@@ -35,7 +35,36 @@ export const POST = withAuth(
       );
     }
 
-    const parseResult = legalDocSchema.safeParse(body);
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = { ...raw };
+
+    if (typeof raw.title === "string") {
+      normalized.title = { fa: raw.title, en: "" };
+    }
+    if (typeof raw.summary === "string") {
+      normalized.summary = { fa: raw.summary, en: "" };
+    }
+
+    // Normalize tiptapBody
+    if (raw.tiptapBody && typeof raw.tiptapBody === "object" && (raw.tiptapBody as Record<string, unknown>).type === "doc") {
+      normalized.tiptapBody = {
+        fa: { html: "", json: raw.tiptapBody },
+        en: { html: "", json: null },
+      };
+    } else if (typeof raw.tiptapBody === "string") {
+      normalized.tiptapBody = {
+        fa: { html: raw.tiptapBody, json: null },
+        en: { html: "", json: null },
+      };
+    } else if (typeof raw.contentHtml === "string" || typeof raw.content === "string" || typeof raw.html === "string") {
+      const htmlVal = (raw.contentHtml || raw.content || raw.html) as string;
+      normalized.tiptapBody = {
+        fa: { html: htmlVal, json: null },
+        en: { html: "", json: null },
+      };
+    }
+
+    const parseResult = legalDocSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

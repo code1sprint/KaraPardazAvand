@@ -25,13 +25,13 @@ async function seed() {
         },
         lead: {
           fa: "کارا پرداز اوند سامانه‌های سفارشی، وب، CRM، ERP، RAG و داشبورد داده را با تمرکز بر نتیجهٔ عملیاتی طراحی و تحویل می‌دهد.",
-          en: "Kara Pardaz Oond designs and delivers custom systems, web, CRM, ERP, RAG, and data dashboards—focused on operational outcomes.",
+          en: "Kara Pardaz Avand designs and delivers custom systems, web, CRM, ERP, RAG, and data dashboards—focused on operational outcomes.",
         },
       },
       story: {
         title: {
           fa: "داستان کارا پرداز اوند",
-          en: "The Story of Kara Pardaz Oond",
+          en: "The Story of Kara Pardaz Avand",
         },
         tiptapBody: {
           fa: {
@@ -39,7 +39,7 @@ async function seed() {
             json: null,
           },
           en: {
-            html: "<p>Kara Pardaz Oond was founded to deliver precise, maintainable enterprise software aligned with real-world business workflows. We believe enterprise software should never rely on empty promises or bloated systems; every line of code must unlock measurable operational value.</p>",
+            html: "<p>Kara Pardaz Avand was founded to deliver precise, maintainable enterprise software aligned with real-world business workflows. We believe enterprise software should never rely on empty promises or bloated systems; every line of code must unlock measurable operational value.</p>",
             json: null,
           },
         },
@@ -106,7 +106,7 @@ async function seed() {
           id: "kara",
           name: {
             fa: "کارا پرداز اوند",
-            en: "Kara Pardaz Oond",
+            en: "Kara Pardaz Avand",
           },
           focus: {
             fa: "تحویل نرم‌افزار سازمانی برای کسب‌وکارهای ایرانی",
@@ -410,7 +410,7 @@ async function seed() {
             json: null,
           },
           en: {
-            html: "<p>At Kara Pardaz Oond, all source code, automated test suites, and CI/CD pipelines are handed over completely with full client ownership from day one. We never introduce vendor lock-in, ensuring your team has total independence.</p>",
+            html: "<p>At Kara Pardaz Avand, all source code, automated test suites, and CI/CD pipelines are handed over completely with full client ownership from day one. We never introduce vendor lock-in, ensuring your team has total independence.</p>",
             json: null,
           },
         },

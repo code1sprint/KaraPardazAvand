@@ -448,14 +448,22 @@ export function CtaModal({
             >
               <div
                 className={cn(
-                  "inline-flex items-center gap-2 font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-sm",
+                  "inline-flex items-center gap-2 font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-sm select-none no-underline",
                   align === "full" && "w-full justify-center",
-                  variant === "primary" && "bg-blue text-white",
+                  variant === "primary" && "bg-blue text-on-brand",
                   variant === "secondary" && "bg-panel text-text border border-line",
                   variant === "outline" && "border-2 border-blue text-blue bg-transparent",
                 )}
               >
-                <span>{label || "عنوان دکمه"}</span>
+                <span
+                  className={cn(
+                    variant === "primary" && "text-on-brand font-bold",
+                    variant === "secondary" && "text-text font-bold",
+                    variant === "outline" && "text-blue font-bold",
+                  )}
+                >
+                  {label || "عنوان دکمه"}
+                </span>
                 {/* Signature Brand Triangle Accent */}
                 <TriMarker className="-rotate-90 size-2" />
               </div>

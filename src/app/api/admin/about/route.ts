@@ -51,7 +51,56 @@ export const PUT = withAuth(
       );
     }
 
-    const parseResult = aboutFormSchema.safeParse(body);
+    const existingAbout = await About.findOne().lean();
+
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = {
+      intro: existingAbout?.intro || {
+        title: { fa: "نرم‌افزاری می‌سازیم که با کار واقعی سازمان هم‌خوان باشد", en: "" },
+        lead: { fa: "کارا پرداز اوند سامانه‌های سفارشی، وب، CRM، ERP، RAG و داشبورد داده را طراحی می‌کند.", en: "" },
+      },
+      story: existingAbout?.story || {
+        title: { fa: "داستان کارا پرداز اوند", en: "" },
+        tiptapBody: { fa: { html: "", json: null }, en: { html: "", json: null } },
+      },
+      principles: existingAbout?.principles || [],
+      brandNodes: existingAbout?.brandNodes || [],
+      team: existingAbout?.team || [],
+      culture: existingAbout?.culture || [],
+      ...raw,
+    };
+
+    // Normalize story editor content
+    if (raw.story && typeof raw.story === "object") {
+      const rawStory = raw.story as Record<string, unknown>;
+      const existingStory = (existingAbout?.story || {}) as Record<string, unknown>;
+      const baseTiptap = (existingStory.tiptapBody || {
+        fa: { html: "", json: null },
+        en: { html: "", json: null },
+      }) as { fa?: { html?: string; json?: unknown }; en?: { html?: string; json?: unknown } };
+
+      const storyTiptap = { ...baseTiptap };
+
+      if (rawStory.tiptapBody && typeof rawStory.tiptapBody === "object") {
+        const tb = rawStory.tiptapBody as Record<string, unknown>;
+        if (tb.type === "doc") {
+          storyTiptap.fa = { html: storyTiptap.fa?.html || "", json: tb };
+        } else {
+          if (tb.fa) storyTiptap.fa = tb.fa as { html?: string; json?: unknown };
+          if (tb.en) storyTiptap.en = tb.en as { html?: string; json?: unknown };
+        }
+      } else if (typeof rawStory.contentHtml === "string" || typeof rawStory.html === "string") {
+        const htmlVal = (rawStory.contentHtml || rawStory.html) as string;
+        storyTiptap.fa = { html: htmlVal, json: storyTiptap.fa?.json || null };
+      }
+
+      normalized.story = {
+        title: rawStory.title || existingStory.title || { fa: "داستان کارا پرداز اوند", en: "" },
+        tiptapBody: storyTiptap,
+      };
+    }
+
+    const parseResult = aboutFormSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

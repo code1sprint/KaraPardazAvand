@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
@@ -31,6 +31,42 @@ export function AboutForm({ initialData }: AboutFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{ resource?: string; path?: string }>;
+      const isAboutResource =
+        customEvent.detail?.resource === "about" || customEvent.detail?.path?.includes("/about");
+
+      if (isAboutResource) {
+        try {
+          const res = await fetch("/api/admin/about");
+          const json = await res.json();
+          if (json.ok && json.about) {
+            const a = json.about;
+            setFormData((prev) => ({
+              ...prev,
+              intro: a.intro ?? prev.intro,
+              story: a.story ?? prev.story,
+              principles: a.principles ?? prev.principles,
+              brandNodes: a.brandNodes ?? prev.brandNodes,
+              team: a.team ?? prev.team,
+              culture: a.culture ?? prev.culture,
+            }));
+            setSuccessMessage("اطلاعات درباره ما از طریق API به‌روزرسانی و در ادیتور همگام شد.");
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

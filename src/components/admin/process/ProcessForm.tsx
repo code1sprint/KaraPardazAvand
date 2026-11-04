@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
@@ -30,6 +30,41 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{ resource?: string; path?: string }>;
+      const isProcessResource =
+        customEvent.detail?.resource === "process" || customEvent.detail?.path?.includes("/process");
+
+      if (isProcessResource) {
+        try {
+          const res = await fetch("/api/admin/process");
+          const json = await res.json();
+          if (json.ok && json.process) {
+            const p = json.process;
+            setFormData((prev) => ({
+              ...prev,
+              hero: p.hero ?? prev.hero,
+              steps: p.steps ?? prev.steps,
+              engagementModels: p.engagementModels ?? prev.engagementModels,
+              communicationRows: p.communicationRows ?? prev.communicationRows,
+              guide: p.guide ?? prev.guide,
+            }));
+            setSuccessMessage("اطلاعات فرایند همکاری از طریق API به‌روزرسانی و در ادیتور همگام شد.");
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -96,6 +96,7 @@ export const serviceSchema = z.object({
   faqs: z.array(serviceFaqSchema).min(3).max(4),
   relatedProjects: z.array(z.string().min(1)).default([]),
   bento: serviceBentoSchema,
+  deepDiveHtml: z.string().optional(),
   needs_business_confirmation: z.literal(true).optional(),
 });
 

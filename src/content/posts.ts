@@ -15,6 +15,7 @@ export type PostMeta = {
   readingTime: string;
   dateIso: string;
   updatedIso?: string;
+  relatedPosts?: string[];
 };
 
 export interface PostDetail {
@@ -75,6 +76,7 @@ export async function getAllPosts(locale?: string): Promise<PostMeta[]> {
         readingTime: `${doc.readingTime} دقیقه`,
         dateIso: toDateIso(doc.publishedAt),
         updatedIso: doc.updatedAt ? toDateIso(doc.updatedAt) : undefined,
+        relatedPosts: doc.relatedPosts || [],
       }));
   } catch (err) {
     console.warn("[posts] Failed to load posts from database:", err);
@@ -124,6 +126,7 @@ export async function getPostBySlug(slug: string, locale?: string): Promise<Post
       readingTime: `${doc.readingTime} دقیقه`,
       dateIso: toDateIso(doc.publishedAt),
       updatedIso: doc.updatedAt ? toDateIso(doc.updatedAt) : undefined,
+      relatedPosts: doc.relatedPosts || [],
     };
 
     return {
@@ -156,7 +159,7 @@ export function collectPostTags(posts: PostMeta[]): string[] {
     .map(([tag]) => tag);
 }
 
-/** Related posts sharing at least one tag, scored by overlap then recency. */
+/** Related posts: manual selection first, then tag overlap, then latest fallback. */
 export async function getRelatedPosts(
   slug: string,
   limit = 3,
@@ -164,23 +167,44 @@ export async function getRelatedPosts(
 ): Promise<PostMeta[]> {
   const posts = await getAllPosts(locale);
   const current = posts.find((post) => post.slug === slug);
-  if (!current || current.tags.length === 0) return [];
+  if (!current) return [];
 
-  const tagSet = new Set(current.tags);
-  return posts
-    .filter((post) => post.slug !== slug)
-    .map((post) => ({
-      post,
-      score: post.tags.reduce(
-        (sum, tag) => sum + (tagSet.has(tag) ? 1 : 0),
-        0,
-      ),
-    }))
-    .filter((entry) => entry.score > 0)
-    .sort(
-      (a, b) =>
-        b.score - a.score || b.post.dateIso.localeCompare(a.post.dateIso),
-    )
-    .slice(0, limit)
-    .map((entry) => entry.post);
+  // 1. Manually selected posts take precedence
+  if (current.relatedPosts && current.relatedPosts.length > 0) {
+    const postMap = new Map(posts.map((p) => [p.slug, p]));
+    const manual = current.relatedPosts
+      .map((relSlug) => postMap.get(relSlug))
+      .filter((p): p is PostMeta => Boolean(p))
+      .filter((p) => p.slug !== slug);
+    if (manual.length > 0) {
+      return manual.slice(0, limit);
+    }
+  }
+
+  // 2. Fallback to tag overlap
+  if (current.tags.length > 0) {
+    const tagSet = new Set(current.tags);
+    const scored = posts
+      .filter((post) => post.slug !== slug)
+      .map((post) => ({
+        post,
+        score: post.tags.reduce(
+          (sum, tag) => sum + (tagSet.has(tag) ? 1 : 0),
+          0,
+        ),
+      }))
+      .filter((entry) => entry.score > 0)
+      .sort(
+        (a, b) =>
+          b.score - a.score || b.post.dateIso.localeCompare(a.post.dateIso),
+      )
+      .slice(0, limit)
+      .map((entry) => entry.post);
+    if (scored.length > 0) {
+      return scored;
+    }
+  }
+
+  // 3. Fallback to other posts in the same locale
+  return posts.filter((p) => p.slug !== slug).slice(0, limit);
 }

@@ -5,7 +5,7 @@
     "titleTemplate": "%s | کارا پرداز اوند",
     "siteName": "کارا پرداز اوند",
     "organizationName": "کارا پرداز اوند",
-    "organizationAlternateName": "Kara Pardaz Oond",
+    "organizationAlternateName": "Kara Pardaz Avand",
     "ogImageAlt": "تصویر اشتراک‌گذاری کارا پرداز اوند",
     "pages": {
       "home": {
@@ -500,9 +500,12 @@
     "detail": {
       "back": "بازگشت به مقالات",
       "toc": "فهرست مطالب",
+      "articlesList": "فهرست مقالات",
+      "allArticles": "مشاهده همهٔ مقالات",
+      "currentArticle": "در حال مطالعه",
       "author": "نویسنده",
       "related": "مقالات مرتبط",
-      "relatedLead": "بر اساس برچسب‌های مشترک.",
+      "relatedLead": "مطالب پیشنهادی و مرتبط برای مطالعه بیشتر.",
       "updated": "به‌روزرسانی: {date}",
       "readingProgress": "پیشرفت مطالعه"
     },

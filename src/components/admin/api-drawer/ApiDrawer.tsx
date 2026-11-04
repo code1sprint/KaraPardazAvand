@@ -248,7 +248,12 @@ export function ApiDrawer({ isOpen, onClose }: ApiDrawerProps) {
       if (res.ok && ["POST", "PUT", "PATCH", "DELETE"].includes(runnerMethod)) {
         window.dispatchEvent(
           new CustomEvent("kara-content-updated", {
-            detail: { method: runnerMethod, path: runnerPath, resource: activeResource.id },
+            detail: {
+              method: runnerMethod,
+              path: runnerPath,
+              resource: activeResource.id,
+              data,
+            },
           }),
         );
       }

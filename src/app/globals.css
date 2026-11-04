@@ -184,6 +184,28 @@
   }
 }
 
+/* Lenis smooth scrolling rules */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 /* Admin Panel isolation: hides consumer marketing header and footer */
 body:has(.admin-root) > header,
 body:has(.admin-root) > footer,
@@ -504,15 +526,78 @@ body:has(.admin-root) [data-skip-link] {
   font-style: italic;
 }
 
-.prose a {
+.prose a:not([data-inline-cta] a):not([data-cta-variant]):not(.cta-btn):not(.not-prose) {
   color: var(--blue);
   text-decoration: underline;
   text-decoration-color: rgba(29, 109, 209, 0.4);
   text-underline-offset: 4px;
 }
 
-.prose a:hover {
+.prose a:not([data-inline-cta] a):not([data-cta-variant]):not(.cta-btn):not(.not-prose):hover {
   text-decoration-color: var(--blue);
+}
+
+/* CTA Buttons within Prose & Editors */
+[data-inline-cta] a,
+.prose [data-inline-cta] a,
+.prose a.cta-btn {
+  text-decoration: none !important;
+}
+
+[data-inline-cta][data-cta-variant="primary"] a,
+[data-inline-cta] a[data-cta-variant="primary"],
+[data-inline-cta] a.cta-btn-primary,
+.prose [data-inline-cta][data-cta-variant="primary"] a,
+.prose [data-inline-cta] a[data-cta-variant="primary"],
+.prose [data-inline-cta] a.cta-btn-primary,
+.prose a.cta-btn-primary {
+  background-color: var(--blue) !important;
+  color: var(--on-brand, #ffffff) !important;
+  text-decoration: none !important;
+}
+
+[data-inline-cta][data-cta-variant="primary"] a:hover,
+.prose [data-inline-cta][data-cta-variant="primary"] a:hover,
+.prose a.cta-btn-primary:hover {
+  background-color: var(--navy-2) !important;
+  color: var(--on-brand, #ffffff) !important;
+}
+
+[data-inline-cta][data-cta-variant="secondary"] a,
+[data-inline-cta] a[data-cta-variant="secondary"],
+[data-inline-cta] a.cta-btn-secondary,
+.prose [data-inline-cta][data-cta-variant="secondary"] a,
+.prose [data-inline-cta] a[data-cta-variant="secondary"],
+.prose [data-inline-cta] a.cta-btn-secondary,
+.prose a.cta-btn-secondary {
+  background-color: var(--panel) !important;
+  color: var(--text) !important;
+  text-decoration: none !important;
+}
+
+[data-inline-cta][data-cta-variant="secondary"] a:hover,
+.prose [data-inline-cta][data-cta-variant="secondary"] a:hover,
+.prose a.cta-btn-secondary:hover {
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+}
+
+[data-inline-cta][data-cta-variant="outline"] a,
+[data-inline-cta] a[data-cta-variant="outline"],
+[data-inline-cta] a.cta-btn-outline,
+.prose [data-inline-cta][data-cta-variant="outline"] a,
+.prose [data-inline-cta] a[data-cta-variant="outline"],
+.prose [data-inline-cta] a.cta-btn-outline,
+.prose a.cta-btn-outline {
+  background-color: transparent !important;
+  color: var(--blue) !important;
+  text-decoration: none !important;
+}
+
+[data-inline-cta][data-cta-variant="outline"] a:hover,
+.prose [data-inline-cta][data-cta-variant="outline"] a:hover,
+.prose a.cta-btn-outline:hover {
+  background-color: rgba(29, 109, 209, 0.1) !important;
 }
 
 /* Tiptap Placeholder */

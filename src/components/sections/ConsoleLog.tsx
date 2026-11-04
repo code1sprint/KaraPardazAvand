@@ -27,7 +27,7 @@ export function ConsoleLog({
       className={cn(
         "font-mono text-[12px] leading-[1.9] text-start",
         isWindow
-          ? "min-h-[6.4em] border-t border-win-line bg-win-deep px-[22px] py-3.5 text-win-muted"
+          ? "border-t border-win-line bg-win-deep px-[22px] py-3.5 text-win-muted"
           : "rounded-[var(--radius-node)] border border-line bg-bg p-3 leading-relaxed text-text",
         className,
       )}

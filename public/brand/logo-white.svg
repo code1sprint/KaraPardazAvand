@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 410" role="img" aria-label="Kara Pardaz Avand">
+  <defs>
+    <linearGradient id="whiteLeftWing" x1="10%" y1="98%" x2="86%" y2="4%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="whiteMainArch" x1="20%" y1="96%" x2="78%" y2="8%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1" />
+    </linearGradient>
+
+    <linearGradient id="whiteRightLeg" x1="68%" y1="26%" x2="92%" y2="96%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="whiteFoldShadow" x1="74%" y1="24%" x2="83%" y2="52%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="whiteInnerBevel" x1="36%" y1="96%" x2="66%" y2="26%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.7" />
+    </linearGradient>
+
+    <linearGradient id="whitePyramid" x1="70%" y1="54%" x2="34%" y2="98%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.85" />
+    </linearGradient>
+  </defs>
+
+  <path id="left-wing" d="M 18 396
+           C 10 396, 7 390, 12 383
+           L 250 64
+           C 280 22, 318 8, 372 8
+           L 442 8
+           C 447 8, 449 12, 445 17
+           L 169 390
+           C 166 394, 161 396, 154 396
+           Z" fill="url(#whiteLeftWing)" />
+
+  <path id="inner-arch-bevel" d="M 330 396
+           L 520 135
+           C 575 75, 665 70, 745 110
+           L 715 205
+           C 682 152, 654 132, 624 132
+           C 594 132, 570 150, 544 184
+           L 386 396
+           Z" fill="url(#whiteInnerBevel)" />
+
+  <path id="right-leg" d="M 636 88
+           C 720 82, 804 114, 868 172
+           L 1010 382
+           C 1016 390, 1013 396, 1003 396
+           L 840 396
+           C 833 396, 828 393, 824 387
+           L 678 158
+           C 662 134, 648 112, 636 88
+           Z" fill="url(#whiteRightLeg)" />
+
+  <path id="right-leg-fold-shadow" d="M 636 88
+           C 720 82, 804 114, 868 172
+           L 922 252
+           C 844 190, 756 154, 678 158
+           C 662 134, 648 112, 636 88
+           Z" fill="url(#whiteFoldShadow)" />
+
+  <path id="main-arch-ribbon" d="M 218 396
+           C 210 396, 207 390, 212 383
+           L 451 64
+           C 492 14, 548 8, 618 8
+           C 688 8, 750 32, 802 92
+           L 868 172
+           C 806 124, 728 98, 648 104
+           C 604 107, 572 130, 540 170
+           L 372 390
+           C 368 394, 364 396, 356 396
+           Z" fill="url(#whiteMainArch)" />
+
+  <path id="orange-pyramid" d="M 438 396
+           C 431 396, 429 390, 434 384
+           L 578 228
+           C 584 221, 594 218, 616 218
+           C 638 218, 648 221, 654 228
+           L 794 384
+           C 799 390, 797 396, 790 396
+           Z" fill="url(#whitePyramid)" />
+</svg>

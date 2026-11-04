@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
 import {
@@ -12,6 +12,7 @@ import { slugifyHeading } from "@/lib/editor/normalizer";
 import { highlightHtmlCodeBlocks } from "@/lib/syntax-highlight";
 import { cn } from "@/lib/cn";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
+import { CoverImagePicker } from "@/components/admin/common/CoverImagePicker";
 
 export interface PostFormData {
   slug: string;
@@ -25,6 +26,7 @@ export interface PostFormData {
     avatar?: string;
   };
   cover?: string;
+  relatedPosts: string[];
   status: "draft" | "published";
   publishedAt: string;
   contentJson: Record<string, unknown>;
@@ -35,6 +37,14 @@ interface PostFormProps {
   initialData?: Partial<PostFormData>;
   postId?: string;
   isEdit?: boolean;
+}
+
+interface AvailablePostOption {
+  id: string;
+  slug: string;
+  title: string;
+  cover?: string;
+  status: string;
 }
 
 export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
@@ -52,6 +62,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
       avatar: initialData?.author?.avatar || "",
     },
     cover: initialData?.cover || "",
+    relatedPosts: initialData?.relatedPosts || [],
     status: initialData?.status || "draft",
     publishedAt: initialData?.publishedAt
       ? new Date(initialData.publishedAt).toISOString().slice(0, 10)
@@ -59,6 +70,9 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     contentJson: initialData?.contentJson || { type: "doc", content: [] },
     contentHtml: initialData?.contentHtml || "",
   });
+
+  const [availablePosts, setAvailablePosts] = useState<AvailablePostOption[]>([]);
+  const [relatedSearch, setRelatedSearch] = useState("");
 
   const [tagsInput, setTagsInput] = useState(
     initialData?.tags ? initialData.tags.join("، ") : "",
@@ -68,6 +82,114 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   const [aiLoading, setAiLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+    async function loadAvailablePosts() {
+      try {
+        const res = await fetch(`/api/admin/posts?locale=${formData.locale}`);
+        const json = await res.json();
+        if (!ignore && json.ok && Array.isArray(json.posts)) {
+          setAvailablePosts(
+            json.posts
+              .filter((p: { _id?: string; slug: string }) => p._id !== postId && p.slug !== formData.slug)
+              .map((p: { _id?: string; id?: string; slug: string; title: string; cover?: string; status: string }) => ({
+                id: p._id || p.id || p.slug,
+                slug: p.slug,
+                title: p.title,
+                cover: p.cover,
+                status: p.status,
+              })),
+          );
+        }
+      } catch (err) {
+        console.warn("Failed to fetch posts for related picker:", err);
+      }
+    }
+    loadAvailablePosts();
+    return () => {
+      ignore = true;
+    };
+  }, [formData.locale, formData.slug, postId]);
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    if (!postId) return;
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{
+        resource?: string;
+        path?: string;
+        data?: { post?: Partial<PostFormData> };
+      }>;
+      const pathMatches = customEvent.detail?.path?.includes(postId) || customEvent.detail?.path?.includes(formData.slug);
+      const isPostResource = customEvent.detail?.resource === "posts" || customEvent.detail?.path?.includes("/posts");
+
+      if (isPostResource && (pathMatches || isEdit)) {
+        try {
+          const res = await fetch(`/api/admin/posts/${postId}`);
+          const json = await res.json();
+          if (json.ok && json.post) {
+            const p = json.post;
+            setFormData((prev) => ({
+              ...prev,
+              slug: p.slug ?? prev.slug,
+              locale: p.locale ?? prev.locale,
+              title: p.title ?? prev.title,
+              summary: p.summary ?? prev.summary,
+              tags: p.tags ?? prev.tags,
+              author: p.author ?? prev.author,
+              cover: p.cover ?? prev.cover,
+              relatedPosts: p.relatedPosts ?? prev.relatedPosts,
+              status: p.status ?? prev.status,
+              publishedAt: p.publishedAt
+                ? new Date(p.publishedAt).toISOString().slice(0, 10)
+                : prev.publishedAt,
+              contentJson: p.contentJson ?? prev.contentJson,
+              contentHtml: p.contentHtml ?? prev.contentHtml,
+            }));
+            if (p.tags) {
+              setTagsInput(p.tags.join("، "));
+            }
+            setSuccessMsg("محتوا با موفقیت از طریق API به‌روزرسانی و در ادیتور همگام شد.");
+          }
+        } catch {
+          // Ignore background fetch failure
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, [postId, isEdit, formData.slug]);
+
+  const toggleRelatedPost = (slug: string) => {
+    setFormData((prev) => {
+      const exists = prev.relatedPosts.includes(slug);
+      return {
+        ...prev,
+        relatedPosts: exists
+          ? prev.relatedPosts.filter((s) => s !== slug)
+          : [...prev.relatedPosts, slug],
+      };
+    });
+  };
+
+  const removeRelatedPost = (slug: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      relatedPosts: prev.relatedPosts.filter((s) => s !== slug),
+    }));
+  };
+
+  const filteredAvailablePosts = useMemo(() => {
+    if (!relatedSearch.trim()) return availablePosts;
+    const q = relatedSearch.toLowerCase();
+    return availablePosts.filter(
+      (p) => p.title.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q),
+    );
+  }, [availablePosts, relatedSearch]);
 
   const handleAiSuggest = async () => {
     setAiLoading(true);
@@ -418,22 +540,13 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
               />
             </div>
 
-            {/* Cover URL */}
-            <div>
-              <label className="block text-xs font-bold text-muted mb-1.5">
-                آدرس تصویر شاخص (Cover URL)
-              </label>
-              <input
-                type="text"
-                dir="ltr"
-                value={formData.cover}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, cover: e.target.value }))
-                }
-                placeholder="/brand/cover.png یا URL مستقیم"
-                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs font-mono text-text focus:border-blue focus:outline-none"
-              />
-            </div>
+            {/* Cover Image Picker */}
+            <CoverImagePicker
+              value={formData.cover || ""}
+              onChange={(url) => setFormData((prev) => ({ ...prev, cover: url }))}
+              label="تصویر شاخص مقاله (Cover Image)"
+              altText="پیش‌نمایش تصویر شاخص مقاله"
+            />
 
             {/* Author */}
             <div className="grid grid-cols-2 gap-2">
@@ -469,6 +582,106 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
                   className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs text-text focus:border-blue focus:outline-none"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Related Posts Card */}
+          <div className="rounded-3xl border border-line bg-panel p-6 shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-2">
+              <div>
+                <h3 className="text-sm font-bold text-text">مقالات مرتبط</h3>
+                <p className="text-[11px] text-muted mt-0.5">
+                  انتخاب دستی مقالاتی که در انتهای این مطلب نمایش داده می‌شوند.
+                </p>
+              </div>
+              <span className="text-xs font-mono font-bold text-blue bg-blue/10 px-2.5 py-1 rounded-full shrink-0">
+                {formData.relatedPosts.length} مورد
+              </span>
+            </div>
+
+            {/* Selected Posts badges */}
+            {formData.relatedPosts.length > 0 ? (
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-bold text-muted block">موارد انتخاب‌شده:</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {formData.relatedPosts.map((slug) => {
+                    const item = availablePosts.find((p) => p.slug === slug);
+                    const title = item?.title || slug;
+                    return (
+                      <span
+                        key={slug}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue/30 bg-blue/10 px-2.5 py-1 text-xs font-medium text-blue"
+                      >
+                        <span className="max-w-[160px] truncate" title={title}>
+                          {title}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeRelatedPost(slug)}
+                          className="text-blue hover:text-red-500 font-bold transition-colors"
+                          title="حذف"
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <p className="text-[11px] text-muted leading-relaxed">
+                مقاله‌ای انتخاب نشده است (در این حالت مقالات بر اساس برچسب‌ها خودکار نمایش داده می‌شوند).
+              </p>
+            )}
+
+            {/* Search filter */}
+            <div>
+              <label className="block text-xs font-bold text-muted mb-1.5">
+                جستجو و انتخاب از مقالات موجود
+              </label>
+              <input
+                type="text"
+                value={relatedSearch}
+                onChange={(e) => setRelatedSearch(e.target.value)}
+                placeholder="جستجو در بین مقالات..."
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs text-text focus:border-blue focus:outline-none"
+              />
+            </div>
+
+            {/* Available Posts list with quick toggle */}
+            <div className="max-h-52 overflow-y-auto space-y-1 rounded-xl border border-line bg-bg/50 p-2">
+              {filteredAvailablePosts.length === 0 ? (
+                <p className="p-3 text-center text-xs text-muted">مقاله‌ای یافت نشد.</p>
+              ) : (
+                filteredAvailablePosts.map((post) => {
+                  const isSelected = formData.relatedPosts.includes(post.slug);
+                  return (
+                    <button
+                      type="button"
+                      key={post.slug}
+                      onClick={() => toggleRelatedPost(post.slug)}
+                      className={cn(
+                        "w-full flex items-center justify-between gap-2 p-2 rounded-lg text-start transition-colors text-xs",
+                        isSelected
+                          ? "bg-blue/10 border border-blue/30 text-blue font-bold"
+                          : "hover:bg-panel border border-transparent text-text",
+                      )}
+                    >
+                      <span className="truncate">{post.title}</span>
+                      <span
+                        className={cn(
+                          "shrink-0 px-2 py-0.5 rounded text-[10px] font-bold transition-colors",
+                          isSelected
+                            ? "bg-blue text-white"
+                            : "bg-panel border border-line text-muted",
+                        )}
+                      >
+                        {isSelected ? "انتخاب‌شده ✓" : "افزودن +"}
+                      </span>
+                    </button>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>

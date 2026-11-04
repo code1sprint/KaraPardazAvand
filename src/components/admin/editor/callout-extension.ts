@@ -23,7 +23,17 @@ export const CalloutExtension = Node.create({
     return {
       type: {
         default: "note",
-        parseHTML: (element) => element.getAttribute("data-callout-type") || "note",
+        parseHTML: (element) => {
+          const typeAttr = element.getAttribute("data-callout-type");
+          if (typeAttr && ["note", "warning", "success", "tip"].includes(typeAttr)) {
+            return typeAttr;
+          }
+          if (element.classList.contains("callout-warning")) return "warning";
+          if (element.classList.contains("callout-success")) return "success";
+          if (element.classList.contains("callout-tip")) return "tip";
+          if (element.classList.contains("callout-note")) return "note";
+          return "note";
+        },
         renderHTML: (attributes) => ({
           "data-callout-type": attributes.type,
           class: `callout callout-${attributes.type} rounded-2xl border p-4 my-4 leading-relaxed`,
@@ -36,6 +46,12 @@ export const CalloutExtension = Node.create({
     return [
       {
         tag: "div[data-callout-type]",
+      },
+      {
+        tag: "div.callout",
+      },
+      {
+        tag: "div[data-card-box]",
       },
     ];
   },

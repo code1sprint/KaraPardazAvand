@@ -48,7 +48,7 @@ export function ServiceSystemMap({
             layout={map.layout ?? "hub"}
           />
         </div>
-        <p className="min-h-[3.4em] px-[22px] pb-3 text-start text-sm leading-[var(--leading-body)] text-win-desc">
+        <p className="px-[22px] pb-3 text-start text-sm leading-[var(--leading-body)] text-win-desc">
           <b className="font-bold text-win-text">{descriptionLead}</b>{" "}
           {description}
         </p>

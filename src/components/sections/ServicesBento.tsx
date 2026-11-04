@@ -49,7 +49,7 @@ export async function ServicesBento({ locale }: ServicesBentoProps) {
               visual={isWideDark ? undefined : visual}
               className={
                 isWideDark
-                  ? "min-h-[280px] md:grid md:grid-cols-[1fr_1.2fr] md:items-center md:gap-7"
+                  ? "md:grid md:grid-cols-[1fr_1.2fr] md:items-center md:gap-7"
                   : undefined
               }
             >

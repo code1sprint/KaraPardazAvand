@@ -7,13 +7,11 @@ import { ProjectCover } from "@/components/portfolio/ProjectCover";
 import { ProjectGallery } from "@/components/portfolio/ProjectGallery";
 import { ProjectSystemMap } from "@/components/portfolio/ProjectSystemMap";
 import {
-  ButtonLink,
   Chip,
   Container,
   Heading,
   Link,
   Prose,
-  Text,
 } from "@/components/ui";
 import {
   getAdjacentProjects,
@@ -106,7 +104,7 @@ async function CaseStudyContent({ params }: Props) {
   });
 
   return (
-    <div className="py-12 sm:py-16">
+    <div className="pt-[length:var(--hero-top)]">
       <Container>
         <Breadcrumbs
           label={breadcrumbT("label")}
@@ -117,7 +115,7 @@ async function CaseStudyContent({ params }: Props) {
           ]}
         />
 
-        <Heading as={1} className="max-w-[18ch]">
+        <Heading as={1} inner className="max-w-none">
           {project.meta.title}
         </Heading>
 
@@ -151,21 +149,21 @@ async function CaseStudyContent({ params }: Props) {
           />
         </div>
 
-        <section className="mt-12" aria-labelledby="case-problem">
+        <section className="mt-12 w-full" aria-labelledby="case-problem">
           <Heading as={2} id="case-problem" className="text-2xl sm:text-3xl">
             {t("detail.problem")}
           </Heading>
-          <Prose className="mt-3">
-            <p>{project.meta.problem}</p>
+          <Prose className="mt-3 w-full max-w-none">
+            <p className="text-base sm:text-lg leading-relaxed text-muted">{project.meta.problem}</p>
           </Prose>
         </section>
 
-        <section className="mt-10" aria-labelledby="case-solution">
+        <section className="mt-10 w-full" aria-labelledby="case-solution">
           <Heading as={2} id="case-solution" className="text-2xl sm:text-3xl">
             {t("detail.solution")}
           </Heading>
-          <Prose className="mt-3">
-            <p>{project.meta.solution}</p>
+          <Prose className="mt-3 w-full max-w-none">
+            <p className="text-base sm:text-lg leading-relaxed text-muted">{project.meta.solution}</p>
           </Prose>
         </section>
 
@@ -242,18 +240,18 @@ async function CaseStudyContent({ params }: Props) {
         ) : null}
 
         {project.contentHtml ? (
-          <section className="mt-10" aria-label={t("detail.notes")}>
-            <Prose>
+          <section className="mt-10 w-full" aria-label={t("detail.notes")}>
+            <Prose className="w-full max-w-none">
               <div
-                className="min-w-0 text-start"
+                className="w-full min-w-0 text-start"
                 dangerouslySetInnerHTML={{ __html: project.contentHtml }}
               />
             </Prose>
           </section>
         ) : mdxResult.content ? (
-          <section className="mt-10" aria-label={t("detail.notes")}>
-            <Prose>
-              <article className="min-w-0 text-start">{mdxResult.content}</article>
+          <section className="mt-10 w-full" aria-label={t("detail.notes")}>
+            <Prose className="w-full max-w-none">
+              <article className="w-full min-w-0 text-start">{mdxResult.content}</article>
             </Prose>
           </section>
         ) : null}
@@ -295,23 +293,6 @@ async function CaseStudyContent({ params }: Props) {
             ) : null}
           </nav>
         ) : null}
-
-        <section
-          className="mt-14 border-t border-line pt-10"
-          aria-labelledby="case-cta"
-        >
-          <Heading as={2} id="case-cta" className="text-2xl sm:text-3xl">
-            {t("detail.ctaTitle")}
-          </Heading>
-          <Text variant="muted" className="mt-3 max-w-xl">
-            {t("detail.ctaLead")}
-          </Text>
-          <div className="mt-6">
-            <ButtonLink href="/contact" variant="primary">
-              {t("detail.ctaButton")}
-            </ButtonLink>
-          </div>
-        </section>
       </Container>
     </div>
   );

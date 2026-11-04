@@ -74,6 +74,7 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
               { fa: "پایپ‌لاین آماده پاسخگویی است", en: "Pipeline ready" },
             ],
           },
+          deepDiveHtml: "<p>تحلیل عمیق معماری، نیازمندی‌های عملیاتی و جریان داده‌های سیستم سازمانی در ادیتور Tiptap.</p>",
         },
       },
       {
@@ -89,6 +90,7 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         description: "به‌روزرسانی فیلدهای خدمت با شناسه یا اسلاگ",
         sampleBody: {
           title: { fa: "هوش مصنوعی سازمانی پیشرفته", en: "Advanced Enterprise AI" },
+          deepDiveHtml: "<p>به‌روزرسانی مستندات فنی و راهنمای پیاده‌سازی سرویس در ویرایشگر اداری.</p>",
           status: "published",
         },
       },
@@ -125,13 +127,15 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         description: "ایجاد نمونه‌کار با مشخصات مقیاس، صنعت و استک فنی",
         sampleBody: {
           slug: "logistics-erp",
-          title: { fa: "سامانه یکپارچه لجستیک و انبار", en: "Integrated Logistics ERP" },
-          summary: { fa: "مدیریت هوشمند ناوگان و انبارداری مرکزی", en: "Smart fleet management and warehouse tracking" },
-          client: "شرکت لجستیک پیشرو",
-          industry: "لجستیک و حمل‌ونقل",
-          status: "published",
-          metrics: [{ value: "۴۰٪", label: { fa: "کاهش زمان پردازش سفارش‌ها", en: "Order processing time reduction" } }],
+          title: "سامانه یکپارچه لجستیک و انبار",
+          sector: "لجستیک و حمل‌ونقل",
+          role: "طراحی و توسعه معماری سیستم",
+          problem: "عدم یکپارچگی داده‌های شعب و تاخیر در رهگیری سفارش‌های کلان سازمانی.",
+          solution: "معماری رویدادمحور توزیع‌شده با پایگاه داده بلادرنگ و داشبورد عملیات مرکزی.",
+          results: [{ value: "۴۰٪", label: "کاهش زمان پردازش سفارش‌ها" }],
           stack: ["Next.js", "Go", "PostgreSQL", "Kafka"],
+          contentHtml: "<p>شرح کامل فرایند معماری، زیرساخت پردازشی و نتایج استقرار سامانه در ویرایشگر Tiptap.</p>",
+          status: "published",
         },
       },
       {
@@ -146,7 +150,8 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         title: "ویرایش پروژه (PATCH/PUT)",
         description: "به‌روزرسانی داده‌های پروژه",
         sampleBody: {
-          title: { fa: "سامانه یکپارچه لجستیک هوشمند", en: "Smart Logistics ERP" },
+          title: "سامانه یکپارچه لجستیک هوشمند",
+          contentHtml: "<p>به‌روزرسانی روایت فنی و ویژگی‌های اجرایی پروژه از طریق API.</p>",
           status: "published",
         },
       },
@@ -184,12 +189,12 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         sampleBody: {
           slug: "enterprise-rag-architecture",
           title: "معماری سیستم‌های بازیابی پیشرفته اطلاعات (RAG)",
-          excerpt: "بررسی الگوهای صنعتی پیاده‌سازی سیستم‌های RAG و مدیریت مرزهای امنیتی داده.",
+          summary: "بررسی الگوهای صنعتی پیاده‌سازی سیستم‌های RAG و مدیریت مرزهای امنیتی داده.",
           author: { name: "تیم مهندسی کارا پرداز", role: "معماری سیستم" },
           tags: ["هوش مصنوعی", "RAG", "معماری"],
           status: "published",
           publishedAt: new Date().toISOString(),
-          tiptapBody: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "مقدمه‌ای بر RAG..." }] }] },
+          contentHtml: "<h2>مقدمه‌ای بر RAG سازمانی</h2><p>سیستم‌های بازیابی تقویت‌شده با تولید (RAG) پلی میان مدل‌های زبانی بزرگ و داده‌های اختصاصی سازمان‌ها ایجاد می‌کنند.</p><p>این متن مستقیماً در ادیتور Tiptap بارگذاری و نمایش داده می‌شود.</p>",
         },
       },
       {
@@ -205,6 +210,7 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         description: "به‌روزرسانی متن و متا دیتای مقاله",
         sampleBody: {
           title: "معماری سیستم‌های پیشرفته RAG در محیط‌های سازمانی",
+          contentHtml: "<h2>به‌روزرسانی محتوا از طریق API</h2><p>متن ویرایش‌شده مقاله با موفقیت از طریق درخواست API دریافت شده و در ادیتور به صورت زنده نمایش داده می‌شود.</p>",
           status: "published",
         },
       },
@@ -291,11 +297,16 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         method: "PATCH",
         path: "/api/admin/about",
         title: "به‌روزرسانی اطلاعات درباره ما (PATCH/PUT)",
-        description: "ذخیره تغییرات بخش درباره ما",
+        description: "ذخیره تغییرات بخش درباره ما و داستان شکل‌گیری",
         sampleBody: {
-          manifesto: {
-            headline: { fa: "مهندسی دقیق نرم‌افزار برای چالش‌های واقعی", en: "Precision Software Engineering" },
-            lead: { fa: "ما سیستم‌های حیاتی سازمان‌ها را طراحی و پیاده‌سازی می‌کنیم.", en: "We engineer mission-critical systems." },
+          story: {
+            title: { fa: "داستان کارا پرداز اوند", en: "The Story of Kara Pardaz" },
+            tiptapBody: {
+              fa: {
+                html: "<h2>مهندسی نرم‌افزار سازمانی با تمرکز بر شفافیت</h2><p>کارا پرداز اوند با هدف حل مسائل بنیادین سیستم‌های بزرگ‌مقیاس فعالیت می‌کند.</p><p>این متن مستقیماً در ادیتور Tiptap صفحه درباره ما بارگذاری می‌شود.</p>",
+                json: null,
+              },
+            },
           },
         },
       },
@@ -319,10 +330,16 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         method: "PATCH",
         path: "/api/admin/process",
         title: "به‌روزرسانی فرایند همکاری (PATCH/PUT)",
-        description: "به‌روزرسانی متدولوژی و تعهدات کاری کارا پرداز",
+        description: "به‌روزرسانی متدولوژی، تعهدات کاری و راهنمای تحویل",
         sampleBody: {
-          hero: {
-            title: { fa: "مسیر گام‌به‌گام و شفاف از ایده تا تحویل", en: "Transparent Step-by-Step Delivery" },
+          guide: {
+            title: { fa: "راهنمای فرایند و استانداردهای تحویل", en: "Delivery Guidelines" },
+            tiptapBody: {
+              fa: {
+                html: "<h2>استانداردهای شفافیت در تحویل فازها</h2><p>در هر اسپرینت، کدهای منبع، لاگ‌های آزمایش و مستندات معماری در اختیار کارفرما قرار می‌گیرد.</p>",
+                json: null,
+              },
+            },
           },
         },
       },
@@ -349,9 +366,19 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         description: "ایجاد یک سند حقوقی یا توافق‌نامه جدید",
         sampleBody: {
           slug: "sla-agreement",
-          title: "توافق‌نامه سطح خدمات (SLA)",
+          title: { fa: "توافق‌نامه سطح خدمات (SLA)", en: "Service Level Agreement (SLA)" },
+          summary: { fa: "تعهدات پایداری، آپ‌تایم و زمان پاسخگویی سامانه‌ها", en: "System uptime and response time commitments" },
           status: "published",
-          tiptapBody: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "تعهدات آپ‌تایم و زمان پاسخگویی..." }] }] },
+          tiptapBody: {
+            fa: {
+              html: "<h2>تعهدات پایداری و زمان پاسخگویی</h2><p>کارا پرداز اوند پایداری ۹۹.۹٪ را برای کلیه زیرساخت‌های ابری و سازمانی متعهد می‌شود.</p>",
+              json: null,
+            },
+            en: {
+              html: "<h2>Uptime and Service Guarantees</h2><p>Kara Pardaz commits to a 99.9% uptime for cloud infrastructure.</p>",
+              json: null,
+            },
+          },
         },
       },
       {
@@ -366,7 +393,13 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
         title: "به‌روزرسانی سند حقوقی (PATCH/PUT)",
         description: "به‌روزرسانی بندها و قوانین سند حقوقی",
         sampleBody: {
-          title: "شرایط و ضوابط عمومی استفاده از خدمات",
+          title: { fa: "شرایط و ضوابط عمومی استفاده از خدمات", en: "General Terms of Service" },
+          tiptapBody: {
+            fa: {
+              html: "<h2>به‌روزرسانی مواد و شرایط حقوقی</h2><p>کلیه تعهدات طرفین مطابق با نسخه جدید قرارداد حقوقی کارا پرداز اوند اجرا خواهد شد.</p>",
+              json: null,
+            },
+          },
           status: "published",
         },
       },

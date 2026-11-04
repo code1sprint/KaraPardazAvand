@@ -22,6 +22,7 @@ export interface IPost extends Document {
   readingTime: number;
   publishedAt: Date;
   toc: ITocItem[];
+  relatedPosts: string[];
   contentJson: Record<string, unknown>;
   contentHtml: string;
   createdAt: Date;
@@ -100,6 +101,10 @@ const PostSchema = new Schema<IPost, PostModel>(
     },
     toc: {
       type: [TocSchema],
+      default: [],
+    },
+    relatedPosts: {
+      type: [String],
       default: [],
     },
     contentJson: {

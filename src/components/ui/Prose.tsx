@@ -10,8 +10,8 @@ export function Prose({ children, className, ...props }: ProseProps) {
   return (
     <div
       className={cn(
-        "prose max-w-[65ch] text-start text-base leading-[var(--leading-body)] text-text",
-        "[&_a]:text-blue [&_a]:underline-offset-4 hover:[&_a]:underline",
+        "prose max-w-none w-full text-start text-base leading-[var(--leading-body)] text-text",
+        "[&_a:not([data-inline-cta]_a):not([data-cta-variant]):not(.cta-btn):not(.not-prose)]:text-blue [&_a:not([data-inline-cta]_a):not([data-cta-variant]):not(.cta-btn):not(.not-prose)]:underline-offset-4 hover:[&_a:not([data-inline-cta]_a):not([data-cta-variant]):not(.cta-btn):not(.not-prose)]:underline",
         "[&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-[length:var(--h2-size)] [&_h2]:font-black [&_h2]:tracking-[var(--h2-tracking)] [&_h2]:leading-[var(--leading-h2)]",
         "[&_h3]:mt-8 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-extrabold",
         "[&_p]:my-4 [&_p]:text-muted",

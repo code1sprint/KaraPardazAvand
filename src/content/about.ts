@@ -71,7 +71,7 @@ export const aboutIntro = parseContent(
     },
     lead: {
       fa: "کارا پرداز اوند سامانه‌های سفارشی، وب، CRM، ERP، RAG و داشبورد داده را با تمرکز بر نتیجهٔ عملیاتی طراحی و تحویل می‌دهد.",
-      en: "Kara Pardaz Oond designs and delivers custom systems, web, CRM, ERP, RAG, and data dashboards—focused on operational outcomes.",
+      en: "Kara Pardaz Avand designs and delivers custom systems, web, CRM, ERP, RAG, and data dashboards—focused on operational outcomes.",
     },
   },
   "aboutIntro",
@@ -164,7 +164,7 @@ const brandNodesRaw = [
     id: "kara" as const,
     name: {
       fa: "کارا پرداز اوند",
-      en: "Kara Pardaz Oond",
+      en: "Kara Pardaz Avand",
     },
     focus: {
       fa: "تحویل نرم‌افزار سازمانی برای کسب‌وکارهای ایرانی",

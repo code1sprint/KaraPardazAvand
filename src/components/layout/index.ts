@@ -12,7 +12,9 @@ export { MobileNav } from "./MobileNav";
 export { NavLinks } from "./NavLinks";
 export { Reveal, type RevealProps } from "./Reveal";
 export { RouteTransition } from "./RouteTransition";
+export { SmoothScroll } from "./SmoothScroll";
 
+export { PageHero, type PageHeroProps } from "./PageHero";
 export { Section, type SectionProps } from "./Section";
 export { ServicesMenu } from "./ServicesMenu";
 export { SiteFooter } from "./SiteFooter";

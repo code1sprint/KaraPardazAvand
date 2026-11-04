@@ -58,6 +58,7 @@ async function EditPostContent({ params }: EditPostPageProps) {
       : new Date().toISOString().slice(0, 10),
     contentJson: (post.contentJson as Record<string, unknown>) || { type: "doc", content: [] },
     contentHtml: post.contentHtml || "",
+    relatedPosts: post.relatedPosts || [],
   };
 
   return (

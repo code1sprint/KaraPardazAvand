@@ -16,7 +16,7 @@ export async function CommunicationRows() {
 
   return (
     <Section id="communication" aria-labelledby="communication-heading">
-      <Container narrow>
+      <Container>
         <Reveal>
           <div className="mb-8 max-w-2xl">
             <Eyebrow>{t("communication.eyebrow")}</Eyebrow>

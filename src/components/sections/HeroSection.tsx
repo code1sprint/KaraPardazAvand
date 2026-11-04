@@ -19,11 +19,11 @@ export async function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden pb-10 pt-[length:var(--nav-block-height)]"
+      className="relative overflow-hidden -mt-[length:var(--nav-block-height)] pt-[calc(var(--nav-block-height)+1.75rem)]"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-[120px] h-[760px] bg-[radial-gradient(40%_50%_at_50%_0,var(--hero-glow-sky),transparent),radial-gradient(30%_40%_at_12%_30%,var(--hero-glow-blue),transparent),radial-gradient(28%_36%_at_85%_20%,var(--hero-glow-orange),transparent)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[860px] bg-[radial-gradient(40%_50%_at_50%_0,var(--hero-glow-sky),transparent),radial-gradient(30%_40%_at_12%_30%,var(--hero-glow-blue),transparent),radial-gradient(28%_36%_at_85%_20%,var(--hero-glow-orange),transparent)]"
       />
 
       <FloatingShapes />

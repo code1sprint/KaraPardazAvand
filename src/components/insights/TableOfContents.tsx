@@ -8,9 +8,10 @@ import { cn } from "@/lib/cn";
 export type TableOfContentsProps = {
   items: TocItem[];
   label: string;
+  className?: string;
 };
 
-export function TableOfContents({ items, label }: TableOfContentsProps) {
+export function TableOfContents({ items, label, className }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export function TableOfContents({ items, label }: TableOfContentsProps) {
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label={label} className="text-start">
+    <nav aria-label={label} className={cn("text-start", className)}>
       <Text variant="caption" as="p" className="mb-3 font-medium text-text">
         {label}
       </Text>

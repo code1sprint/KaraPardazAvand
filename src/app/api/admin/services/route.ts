@@ -52,7 +52,45 @@ export const POST = withAuth(
       );
     }
 
-    const parseResult = serviceCreateSchema.safeParse(body);
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = { ...raw };
+
+    if (!normalized.deepDiveHtml) {
+      if (typeof normalized.deepDive === "string") {
+        normalized.deepDiveHtml = normalized.deepDive;
+      } else if (typeof normalized.contentHtml === "string") {
+        normalized.deepDiveHtml = normalized.contentHtml;
+      } else if (typeof normalized.content === "string") {
+        normalized.deepDiveHtml = normalized.content;
+      } else if (typeof normalized.body === "string") {
+        normalized.deepDiveHtml = normalized.body;
+      } else if (typeof normalized.html === "string") {
+        normalized.deepDiveHtml = normalized.html;
+      }
+    }
+    if (!normalized.deepDiveJson) {
+      if (
+        normalized.deepDive &&
+        typeof normalized.deepDive === "object" &&
+        (normalized.deepDive as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.deepDiveJson = normalized.deepDive;
+      } else if (
+        normalized.contentJson &&
+        typeof normalized.contentJson === "object" &&
+        (normalized.contentJson as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.deepDiveJson = normalized.contentJson;
+      } else if (
+        normalized.tiptapBody &&
+        typeof normalized.tiptapBody === "object" &&
+        (normalized.tiptapBody as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.deepDiveJson = normalized.tiptapBody;
+      }
+    }
+
+    const parseResult = serviceCreateSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

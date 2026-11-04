@@ -40,7 +40,7 @@ export async function AboutBrandDiagram() {
           aria-label={t("brands.diagramLabel")}
         >
           {parent ? (
-            <div className="flex min-h-[140px] flex-1 flex-col justify-center rounded-[var(--radius-node)] border border-line bg-panel p-5 sm:max-w-sm">
+            <div className="flex flex-1 flex-col justify-center rounded-[var(--radius-node)] border border-line bg-panel p-5 sm:max-w-sm">
               <p className="m-0 font-mono text-xs text-muted">
                 {t("brands.parentLabel")}
               </p>
@@ -65,7 +65,7 @@ export async function AboutBrandDiagram() {
           </div>
 
           {kara ? (
-            <div className="flex min-h-[140px] flex-1 flex-col justify-center rounded-[var(--radius-node)] border border-line bg-panel p-5 sm:max-w-sm">
+            <div className="flex flex-1 flex-col justify-center rounded-[var(--radius-node)] border border-line bg-panel p-5 sm:max-w-sm">
               <p className="m-0 font-mono text-xs text-muted">
                 {t("brands.sisterLabel")}
               </p>

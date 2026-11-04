@@ -10,7 +10,7 @@
    - Render the pre-footer CTA as an elevated floating Bento card within a `Container` instead of a plain edge-to-edge band.
    - Add the live system status indicator with pulsing emerald indicator next to the brand info.
    - Refine the social/contact links into clean, accessible interactive badges with inline SVGs.
-   - Render the subtle background typographic watermark (`KARA PARDAZ OOND`).
+   - Render the subtle background typographic watermark (`KARA PARDAZ AVAND`).
 3. Run verification with `npm run typecheck`, `npm run lint`, and `npm run build`.
 
 **Tech Stack:** Next.js (App Router), TypeScript, Tailwind CSS, next-intl.
@@ -89,7 +89,7 @@ Add inline SVGs for Telegram, LinkedIn, GitHub, Email, Phone, rendering clean, c
 
 - [ ] **Step 4: Add the subtle typographic watermark**
 At the bottom of the footer, add an `aria-hidden` large text container:
-`"KARA PARDAZ OOND"` in wide tracking, bold sans/mono, `opacity-[0.03] select-none pointer-events-none`.
+`"KARA PARDAZ AVAND"` in wide tracking, bold sans/mono, `opacity-[0.03] select-none pointer-events-none`.
 
 - [ ] **Step 5: Verify typecheck and lint**
 Run: `npm run typecheck && npm run lint`

@@ -172,12 +172,12 @@ export async function getResolvedHomeData(
       socials: {},
     },
     seo: {
-      siteName: isEn ? "Kara Pardaz Oond" : "کارا پرداز اوند",
-      homeTitle: isEn ? "Kara Pardaz Oond" : "کارا پرداز اوند",
+      siteName: isEn ? "Kara Pardaz Avand" : "کارا پرداز اوند",
+      homeTitle: isEn ? "Kara Pardaz Avand" : "کارا پرداز اوند",
       homeDescription: isEn
         ? "Custom software design and development"
         : "طراحی و توسعه نرم‌افزار سفارشی، CRM، ERP، هوش مصنوعی سازمانی و داشبورد داده.",
-      ogImageAlt: isEn ? "Kara Pardaz Oond card" : "تصویر اشتراک‌گذاری کارا پرداز اوند",
+      ogImageAlt: isEn ? "Kara Pardaz Avand card" : "تصویر اشتراک‌گذاری کارا پرداز اوند",
     },
   };
 }

@@ -150,11 +150,11 @@ async function seed() {
     seo: {
       siteName: {
         fa: "کارا پرداز اوند",
-        en: "Kara Pardaz Oond",
+        en: "Kara Pardaz Avand",
       },
       homeTitle: {
         fa: "کارا پرداز اوند | توسعه نرم‌افزار و سامانه‌های سازمانی",
-        en: "Kara Pardaz Oond | Enterprise Software & Platform Development",
+        en: "Kara Pardaz Avand | Enterprise Software & Platform Development",
       },
       homeDescription: {
         fa: "طراحی و توسعه نرم‌افزار سفارشی، وب‌سایت، CRM، ERP، هوش مصنوعی سازمانی و داشبورد داده برای کسب‌وکارها و سازمان‌ها.",
@@ -162,7 +162,7 @@ async function seed() {
       },
       ogImageAlt: {
         fa: "تصویر اشتراک‌گذاری کارا پرداز اوند",
-        en: "Kara Pardaz Oond preview card",
+        en: "Kara Pardaz Avand preview card",
       },
     },
   });

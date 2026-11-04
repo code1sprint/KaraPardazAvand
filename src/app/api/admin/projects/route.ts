@@ -57,7 +57,76 @@ export const POST = withAuth(
       );
     }
 
-    const parseResult = projectCreateSchema.safeParse(body);
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = { ...raw };
+
+    if (raw.title && typeof raw.title === "object") {
+      normalized.title = (raw.title as { fa?: string; en?: string }).fa || (raw.title as { fa?: string; en?: string }).en || "";
+    }
+    if (!normalized.sector && typeof raw.industry === "string") {
+      normalized.sector = raw.industry;
+    }
+    if (!normalized.problem && typeof raw.summary === "string") {
+      normalized.problem = raw.summary;
+    } else if (!normalized.problem && raw.summary && typeof raw.summary === "object") {
+      normalized.problem = (raw.summary as { fa?: string }).fa || "";
+    }
+    if (!normalized.solution && normalized.problem) {
+      normalized.solution = String(normalized.problem);
+    }
+    if (!normalized.role) {
+      normalized.role = "طراحی و توسعه نرم‌افزار";
+    }
+    if (!normalized.results && Array.isArray(raw.metrics)) {
+      normalized.results = raw.metrics.map((m: { value?: string; label?: string | { fa?: string } }) => ({
+        value: m.value || "",
+        label: typeof m.label === "object" ? m.label?.fa || "" : m.label || "",
+      }));
+    }
+    if (!normalized.systemMap) {
+      normalized.systemMap = {
+        windowTitle: "kara://system",
+        layout: "hub",
+        descriptionLead: "معماری سیستم و جریان داده",
+        description: "یکپارچگی سرویس‌ها و ماژول‌های پردازشی",
+        nodes: {
+          inputTop: "دریافت ورودی",
+          inputBottom: "پایگاه داده",
+          core: "هسته پردازش",
+          outputTop: "خروجی وب",
+          outputBottom: "وب‌هوک و API",
+        },
+        logs: ["init", "sync", "ready"],
+      };
+    }
+
+    // Normalize editor content
+    if (!normalized.contentHtml) {
+      if (typeof normalized.content === "string") {
+        normalized.contentHtml = normalized.content;
+      } else if (typeof normalized.body === "string") {
+        normalized.contentHtml = normalized.body;
+      } else if (typeof normalized.html === "string") {
+        normalized.contentHtml = normalized.html;
+      }
+    }
+    if (!normalized.contentJson) {
+      if (
+        normalized.tiptapBody &&
+        typeof normalized.tiptapBody === "object" &&
+        (normalized.tiptapBody as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.tiptapBody;
+      } else if (
+        normalized.content &&
+        typeof normalized.content === "object" &&
+        (normalized.content as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.content;
+      }
+    }
+
+    const parseResult = projectCreateSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

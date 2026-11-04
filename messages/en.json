@@ -1,24 +1,24 @@
 {
   "Meta": {
-    "title": "Kara Pardaz Oond",
+    "title": "Kara Pardaz Avand",
     "description": "Custom software, CRM, ERP, enterprise AI, and data dashboards.",
-    "titleTemplate": "%s | Kara Pardaz Oond",
-    "siteName": "Kara Pardaz Oond",
-    "organizationName": "Kara Pardaz Oond",
+    "titleTemplate": "%s | Kara Pardaz Avand",
+    "siteName": "Kara Pardaz Avand",
+    "organizationName": "Kara Pardaz Avand",
     "organizationAlternateName": "کارا پرداز اوند",
-    "ogImageAlt": "Kara Pardaz Oond share image",
+    "ogImageAlt": "Kara Pardaz Avand share image",
     "pages": {
       "home": {
-        "title": "Kara Pardaz Oond",
+        "title": "Kara Pardaz Avand",
         "description": "Custom software, websites, CRM, ERP, enterprise AI, and data dashboards for businesses and organizations."
       },
       "services": {
-        "title": "Kara Pardaz Oond services",
+        "title": "Kara Pardaz Avand services",
         "description": "Six collaboration areas—custom software, web, CRM, ERP, enterprise AI, and data—each with a clear outcome."
       },
       "about": {
         "title": "About",
-        "description": "Kara Pardaz Oond’s story, working principles, and relationship to parent brand Code1Sprint."
+        "description": "Kara Pardaz Avand’s story, working principles, and relationship to parent brand Code1Sprint."
       },
       "contact": {
         "title": "Contact",
@@ -34,15 +34,15 @@
       },
       "privacy": {
         "title": "Privacy",
-        "description": "Privacy information and how data is handled on the Kara Pardaz Oond website."
+        "description": "Privacy information and how data is handled on the Kara Pardaz Avand website."
       },
       "terms": {
         "title": "Terms",
-        "description": "Terms of use for the Kara Pardaz Oond website and services."
+        "description": "Terms of use for the Kara Pardaz Avand website and services."
       },
       "faq": {
         "title": "FAQ",
-        "description": "Short answers to common questions about working with Kara Pardaz Oond."
+        "description": "Short answers to common questions about working with Kara Pardaz Avand."
       },
       "process": {
         "title": "Process",
@@ -59,10 +59,10 @@
   },
   "Layout": {
     "brand": {
-      "name": "Kara Pardaz Oond",
+      "name": "Kara Pardaz Avand",
       "family": "Part of the Code1Sprint family",
       "familyPrefix": "Parent brand:",
-      "homeAria": "Kara Pardaz Oond — home"
+      "homeAria": "Kara Pardaz Avand — home"
     },
     "nav": {
       "primaryLabel": "Primary",
@@ -104,7 +104,7 @@
         "privacy": "Privacy",
         "terms": "Terms"
       },
-      "copyright": "© 2026 Kara Pardaz Oond",
+      "copyright": "© 2026 Kara Pardaz Avand",
       "status": "All systems operational",
       "cta": {
         "eyebrow": "Ready for your next system?",
@@ -121,7 +121,7 @@
     }
   },
   "HomePage": {
-    "title": "Kara Pardaz Oond",
+    "title": "Kara Pardaz Avand",
     "lead": "Project scaffold is ready. Later phases will build the site sections.",
     "localeLabel": "Language",
     "direction": "Left to right"
@@ -169,7 +169,7 @@
     "stack": "Typical stack",
     "detailLink": "Service details",
     "page": {
-      "title": "Kara Pardaz Oond services",
+      "title": "Kara Pardaz Avand services",
       "lead": "Six primary engagement areas—each with an outcome, deliverables, and a clear path."
     },
     "detail": {
@@ -224,7 +224,7 @@
   },
   "About": {
     "breadcrumb": "About",
-    "eyebrow": "About Kara Pardaz Oond",
+    "eyebrow": "About Kara Pardaz Avand",
     "title": "About",
     "parentLink": "Code1Sprint website",
     "principles": {
@@ -235,7 +235,7 @@
     "brands": {
       "eyebrow": "Brand family",
       "title": "Two brands, one team",
-      "lead": "Kara Pardaz Oond is a sister brand of Code1Sprint; each has a clear focus.",
+      "lead": "Kara Pardaz Avand is a sister brand of Code1Sprint; each has a clear focus.",
       "diagramLabel": "Relationship between the two brands",
       "parentLabel": "Parent brand",
       "sisterLabel": "Sister brand",
@@ -313,7 +313,7 @@
     "industries": "Industries served"
   },
   "Why": {
-    "eyebrow": "Why Kara Pardaz Oond",
+    "eyebrow": "Why Kara Pardaz Avand",
     "title": "Three principles that keep the path clear",
     "lead": "These three commitments are drafts and need confirmation before launch."
   },
@@ -500,9 +500,12 @@
     "detail": {
       "back": "Back to insights",
       "toc": "On this page",
+      "articlesList": "Articles List",
+      "allArticles": "View All Articles",
+      "currentArticle": "Currently Reading",
       "author": "Author",
       "related": "Related posts",
-      "relatedLead": "Based on shared tags.",
+      "relatedLead": "Recommended reading and related insights.",
       "updated": "Updated: {date}",
       "readingProgress": "Reading progress"
     },

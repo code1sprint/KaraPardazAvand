@@ -1,4 +1,4 @@
-# Launch checklist — Kara Pardaz Oond (`kara-web`)
+# Launch checklist — Kara Pardaz Avand (`kara-web`)
 
 Owner columns: **Dev** = engineering, **Biz** = business / legal owner.
 

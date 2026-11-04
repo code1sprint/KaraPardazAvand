@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a complete, multilingual admin CMS for Posts (Insights) in Kara Pardaz Oond, featuring a customized Persian-first Tiptap rich-text editor, automated normalization & TOC extraction, MongoDB persistence, and frontend public blog integration.
+**Goal:** Build a complete, multilingual admin CMS for Posts (Insights) in Kara Pardaz Avand, featuring a customized Persian-first Tiptap rich-text editor, automated normalization & TOC extraction, MongoDB persistence, and frontend public blog integration.
 
 **Architecture:** Mongoose `Post` schema with dual content storage (`contentJson` for editor state, `contentHtml` for public SSR), auto-generating slugified heading IDs and precomputed `toc` on save. Admin UI provides structured fields for metadata alongside the Tiptap canvas. Public insights routes fetch directly from MongoDB with graceful build-time handling.
 

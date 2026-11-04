@@ -1,17 +1,9 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { Breadcrumbs } from "@/components/layout";
+import { Breadcrumbs, Container, PageHero, Section } from "@/components/layout";
 import { FaqIndex } from "@/components/faq/FaqIndex";
-import { PageSoftCta } from "@/components/sections/PageSoftCta";
 import { JsonLd } from "@/components/seo/JsonLd";
-import {
-  Container,
-  Eyebrow,
-  Heading,
-  Section,
-  Text,
-} from "@/components/ui";
 import { resolveFaqItems, resolveFaqTopics } from "@/content/faq";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
@@ -75,11 +67,10 @@ async function FaqContent({ params }: Props) {
 
   return (
     <>
-      <Section
-        aria-labelledby="faq-hero-heading"
-        className="pb-0 pt-12 sm:pt-16"
-      >
-        <Container>
+      <PageHero
+        id="faq-hero"
+        headingId="faq-hero-heading"
+        breadcrumbs={
           <Breadcrumbs
             label={breadcrumbT("label")}
             items={[
@@ -87,25 +78,21 @@ async function FaqContent({ params }: Props) {
               { label: t("page.breadcrumb") },
             ]}
           />
-          <Eyebrow className="mt-6">{t("page.eyebrow")}</Eyebrow>
-          <Heading
-            as={1}
-            id="faq-hero-heading"
-            className="mt-3 max-w-[18ch] text-[clamp(2rem,4.5vw,3rem)]"
-          >
+        }
+        eyebrow={t("page.eyebrow")}
+        title={
+          <>
             {t("page.titleBefore")}
             <em className="text-gradient-brand not-italic">
               {t("page.titleGradient")}
             </em>
             {t("page.titleAfter")}
-          </Heading>
-          <Text variant="muted" className="mt-4 max-w-2xl">
-            {t("page.lead")}
-          </Text>
-        </Container>
-      </Section>
+          </>
+        }
+        lead={t("page.lead")}
+      />
 
-      <Section aria-labelledby="faq-list-heading" className="pt-10 sm:pt-12">
+      <Section aria-labelledby="faq-list-heading">
         <Container>
           <h2 id="faq-list-heading" className="sr-only">
             {t("page.listHeading")}
@@ -113,13 +100,6 @@ async function FaqContent({ params }: Props) {
           <FaqIndex topics={topics} />
         </Container>
       </Section>
-
-      <PageSoftCta
-        headingId="faq-soft-cta"
-        title={t("page.ctaTitle")}
-        lead={t("page.ctaLead")}
-        buttonLabel={t("page.ctaButton")}
-      />
 
       {allItems.length > 0 ? <JsonLd data={jsonLd} /> : null}
     </>

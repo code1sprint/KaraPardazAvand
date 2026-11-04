@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/layout";
 import { Reveal } from "@/components/layout/Reveal";
 import { Section } from "@/components/layout/Section";
-import { ServiceClosingCta } from "@/components/sections/ServiceClosingCta";
 import { ServiceSteps } from "@/components/sections/ServiceSteps";
 import { ServiceSystemMap } from "@/components/sections/ServiceSystemMap";
 import { RelatedProjects } from "@/components/sections/RelatedProjects";
@@ -143,9 +142,9 @@ async function ServiceDetailContent({ params }: Props) {
   }
 
   return (
-    <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
+    <>
       <JsonLd data={serviceJsonLd} />
-      <Section aria-labelledby="service-hero-heading" className="pt-12 sm:pt-16">
+      <header aria-labelledby="service-hero-heading" className="w-full pt-[length:var(--hero-top)]">
         <Container className="flex flex-col gap-10">
           <div className="flex max-w-2xl flex-col gap-4">
             <Breadcrumbs
@@ -156,10 +155,10 @@ async function ServiceDetailContent({ params }: Props) {
                 { label: title },
               ]}
             />
-            <Heading as={1} id="service-hero-heading">
+            <Heading as={1} id="service-hero-heading" inner>
               {title}
             </Heading>
-            <Text variant="muted" className="max-w-2xl text-[clamp(16px,1.5vw,18px)]">
+            <Text variant="muted" className="max-w-[var(--lead-max,60ch)] text-[clamp(16px,1.5vw,18px)]">
               {outcome}
             </Text>
             <div className="flex flex-wrap gap-3">
@@ -182,7 +181,7 @@ async function ServiceDetailContent({ params }: Props) {
             animationKey={service.slug}
           />
         </Container>
-      </Section>
+      </header>
 
       <Section aria-labelledby="service-audience-heading">
         <Container>
@@ -276,7 +275,7 @@ async function ServiceDetailContent({ params }: Props) {
 
       {service.deepDiveHtml && (
         <Section id="service-deep-dive" aria-labelledby="service-deep-dive-heading">
-          <Container narrow>
+          <Container>
             <Reveal>
               <Eyebrow>{appLocale === "fa" ? "تحلیل فنی و معماری" : "Technical Deep-Dive"}</Eyebrow>
               <Heading as={2} id="service-deep-dive-heading" className="mt-2">
@@ -294,7 +293,7 @@ async function ServiceDetailContent({ params }: Props) {
       )}
 
       <Section id="service-faq" aria-labelledby="service-faq-heading">
-        <Container narrow>
+        <Container>
           <Reveal>
             <Eyebrow>{t("detail.faqEyebrow")}</Eyebrow>
             <Heading as={2} id="service-faq-heading" className="mt-2">
@@ -307,9 +306,7 @@ async function ServiceDetailContent({ params }: Props) {
         </Container>
         <JsonLd data={faqJsonLd} />
       </Section>
-
-      <ServiceClosingCta serviceSlug={service.slug} serviceTitle={title} />
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
@@ -32,6 +32,45 @@ export function LegalForm({ initialData, isNew = false }: LegalFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    if (isNew || !formData.slug) return;
+
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{ resource?: string; path?: string }>;
+      const isLegalResource =
+        customEvent.detail?.resource === "legal" || customEvent.detail?.path?.includes("/legal");
+      const pathMatches = customEvent.detail?.path?.includes(formData.slug);
+
+      if (isLegalResource && (pathMatches || !isNew)) {
+        try {
+          const res = await fetch(`/api/admin/legal/${formData.slug}`);
+          const json = await res.json();
+          if (json.ok && json.doc) {
+            const d = json.doc;
+            setFormData((prev) => ({
+              ...prev,
+              slug: d.slug ?? prev.slug,
+              title: d.title ?? prev.title,
+              summary: d.summary ?? prev.summary,
+              updatedIso: d.updatedIso ?? prev.updatedIso,
+              tiptapBody: d.tiptapBody ?? prev.tiptapBody,
+              status: d.status ?? prev.status,
+            }));
+            setSuccessMessage("محتوای سند حقوقی از طریق API به‌روزرسانی و در ادیتور همگام شد.");
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, [formData.slug, isNew]);
 
   const isCoreDoc = !isNew && (formData.slug === "terms" || formData.slug === "privacy");
 

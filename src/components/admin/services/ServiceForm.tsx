@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
@@ -220,6 +220,56 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
     deepDiveHtml: initialData?.deepDiveHtml || "",
     status: initialData?.status || "published",
   });
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    const serviceTarget = initialData?._id || formData.slug;
+    if (!serviceTarget || isNew) return;
+
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{ resource?: string; path?: string }>;
+      const isServiceResource =
+        customEvent.detail?.resource === "services" || customEvent.detail?.path?.includes("/services");
+      const pathMatches =
+        customEvent.detail?.path?.includes(String(initialData?._id)) ||
+        customEvent.detail?.path?.includes(formData.slug);
+
+      if (isServiceResource && (pathMatches || !isNew)) {
+        try {
+          const res = await fetch(`/api/admin/services/${serviceTarget}`);
+          const json = await res.json();
+          if (json.ok && json.service) {
+            const s = json.service;
+            setFormData((prev) => ({
+              ...prev,
+              slug: s.slug ?? prev.slug,
+              title: s.title ?? prev.title,
+              outcome: s.outcome ?? prev.outcome,
+              audience: s.audience ?? prev.audience,
+              deliverables: s.deliverables ?? prev.deliverables,
+              steps: s.steps ?? prev.steps,
+              stack: s.stack ?? prev.stack,
+              systemMap: s.systemMap ?? prev.systemMap,
+              faqs: s.faqs ?? prev.faqs,
+              relatedProjects: s.relatedProjects ?? prev.relatedProjects,
+              bento: s.bento ?? prev.bento,
+              deepDiveJson: s.deepDiveJson ?? prev.deepDiveJson,
+              deepDiveHtml: s.deepDiveHtml ?? prev.deepDiveHtml,
+              status: s.status ?? prev.status,
+            }));
+            setSuccessMsg("محتوای خدمت و ادیتور از طریق API به‌روزرسانی شد.");
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, [initialData?._id, formData.slug, isNew]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

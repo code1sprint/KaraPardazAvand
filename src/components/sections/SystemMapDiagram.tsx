@@ -15,13 +15,66 @@ export type SystemMapNodes = Record<SystemNodeRole, LocalizedString>;
 
 export type { SystemMapLayout };
 
-const NODE_W = 130;
-const NODE_H = 44;
-const CORE_W = 150;
-const CORE_H = 60;
+const NODE_W = 136;
+const NODE_H = 46;
+const CORE_W = 154;
+const CORE_H = 62;
 const NODE_R = 10;
 /** Slightly narrower satellites for dense linear layouts. */
-const NODE_W_DENSE = 112;
+const NODE_W_DENSE = 118;
+
+function splitIntoLines(text: string, maxCharsPerLine = 14): string[] {
+  if (!text) return [""];
+  const trimmed = text.trim();
+  if (trimmed.length <= maxCharsPerLine) return [trimmed];
+
+  const words = trimmed.split(/\s+/);
+  if (words.length <= 1) return [trimmed];
+
+  if (words.length === 2) {
+    return words;
+  }
+
+  const lines: string[] = [];
+  let currentLine = "";
+
+  for (const word of words) {
+    if (!currentLine) {
+      currentLine = word;
+    } else if ((currentLine + " " + word).length <= maxCharsPerLine) {
+      currentLine += " " + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  if (lines.length > 2) {
+    const half = Math.ceil(words.length / 2);
+    return [words.slice(0, half).join(" "), words.slice(half).join(" ")];
+  }
+
+  return lines;
+}
+
+function getFontSize(label: string, isCore: boolean, isDense: boolean): number {
+  if (isCore) {
+    if (label.length > 22) return 11;
+    if (label.length > 15) return 12;
+    return 13;
+  }
+  if (isDense) {
+    if (label.length > 18) return 10;
+    if (label.length > 12) return 10.5;
+    return 11.5;
+  }
+  if (label.length > 22) return 10.5;
+  if (label.length > 14) return 11.5;
+  return 12.5;
+}
 
 type Point = { x: number; y: number };
 
@@ -251,21 +304,52 @@ export function SystemMapDiagram({
               strokeWidth={isCore ? 1.6 : 1}
             />
 
-            <text
-              x={center.x}
-              y={center.y}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fill="var(--win-text)"
-              style={{
-                fontSize: isCore ? 12.5 : geometry.nodeWidth ? 11.5 : 12.5,
-                fontWeight: isCore ? 700 : 500,
-                fontFamily:
-                  "var(--font-vazirmatn), ui-sans-serif, sans-serif",
-              }}
-            >
-              {label}
-            </text>
+            {(() => {
+              const fontSize = getFontSize(label, isCore, Boolean(geometry.nodeWidth));
+              const maxChars = isCore ? 16 : geometry.nodeWidth ? 12 : 14;
+              const lines = splitIntoLines(label, maxChars);
+
+              if (lines.length === 1) {
+                return (
+                  <text
+                    x={center.x}
+                    y={center.y}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fill="var(--win-text)"
+                    style={{
+                      fontSize,
+                      fontWeight: isCore ? 700 : 500,
+                      fontFamily: "var(--font-vazirmatn), ui-sans-serif, sans-serif",
+                    }}
+                  >
+                    {lines[0]}
+                  </text>
+                );
+              }
+
+              return (
+                <text
+                  x={center.x}
+                  y={center.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fill="var(--win-text)"
+                  style={{
+                    fontSize,
+                    fontWeight: isCore ? 700 : 500,
+                    fontFamily: "var(--font-vazirmatn), ui-sans-serif, sans-serif",
+                  }}
+                >
+                  <tspan x={center.x} dy="-0.65em">
+                    {lines[0]}
+                  </tspan>
+                  <tspan x={center.x} dy="1.3em">
+                    {lines[1]}
+                  </tspan>
+                </text>
+              );
+            })()}
           </motion.g>
         );
       })}

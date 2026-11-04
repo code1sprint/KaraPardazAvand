@@ -148,14 +148,22 @@ export function CtaNodeView({
             e.preventDefault();
           }}
           className={cn(
-            "inline-flex items-center gap-2.5 rounded-2xl px-6 py-3.5 font-bold text-sm shadow-sm cursor-pointer transition-all",
+            "inline-flex items-center gap-2.5 rounded-2xl px-6 py-3.5 font-bold text-sm shadow-sm cursor-pointer transition-all select-none no-underline",
             align === "full" && "w-full justify-center text-center",
-            variant === "primary" && "bg-blue text-white shadow hover:bg-navy-2",
-            variant === "secondary" && "bg-panel text-text border border-line hover:border-blue",
+            variant === "primary" && "bg-blue text-on-brand shadow hover:bg-navy-2",
+            variant === "secondary" && "bg-panel text-text border border-line hover:border-blue hover:text-blue",
             variant === "outline" && "border-2 border-blue text-blue bg-transparent hover:bg-blue/10",
           )}
         >
-          <span>{label}</span>
+          <span
+            className={cn(
+              variant === "primary" && "text-on-brand font-bold",
+              variant === "secondary" && "text-text font-bold",
+              variant === "outline" && "text-blue font-bold",
+            )}
+          >
+            {label}
+          </span>
           {/* Orange triangle from the logo as small signature marker */}
           <TriMarker className="-rotate-90 size-2" />
         </div>

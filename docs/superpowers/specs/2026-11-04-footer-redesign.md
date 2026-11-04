@@ -1,13 +1,13 @@
 # Site Footer Redesign Design Document (Approach 1: The Modern Tech Monolith)
 
 ## Intent & Why
-The current footer uses a basic band CTA and plain link columns. While functional, it does not match the elevated, world-class tech feel of Kara Pardaz Oond (sister brand of Code1Sprint). The redesign transforms the footer into an impressive, modern tech monolith inspired by modern leaders (Linear, Supabase, Raycast), making it a memorable closing statement on every page.
+The current footer uses a basic band CTA and plain link columns. While functional, it does not match the elevated, world-class tech feel of Kara Pardaz Avand (sister brand of Code1Sprint). The redesign transforms the footer into an impressive, modern tech monolith inspired by modern leaders (Linear, Supabase, Raycast), making it a memorable closing statement on every page.
 
 ## Goals
 - **Elevate CTA:** Replace the flat band with an elevated, floating Bento launchpad with ambient lighting, eyebrow badge, and dual actions (primary consultation button + secondary explore link).
 - **High-tech Brand Presence:** Introduce a live engineering status indicator (`● کلیه سیستم‌ها فعال است` / `All systems operational`) with a pulsing green indicator.
 - **Refined Social & Contact Channels:** Modernize contact channels with crisp interactive pills/badges.
-- **Subtle Massive Typographic Watermark:** Add an ultra-subtle, bold geometric brand mark (`KARA PARDAZ OOND`) in the background layer at low opacity (3-4%) without obstructing readable text.
+- **Subtle Massive Typographic Watermark:** Add an ultra-subtle, bold geometric brand mark (`KARA PARDAZ AVAND`) in the background layer at low opacity (3-4%) without obstructing readable text.
 - **Full A11y & RTL:** Keep AA color contrast, logical CSS properties (`ms-`, `me-`, `ps-`, `pe-`, `text-start`), and full screen-reader semantic structure.
 
 ## Non-Goals & Anti-Goals

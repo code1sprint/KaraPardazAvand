@@ -8,7 +8,6 @@ import { AuthorBox } from "@/components/insights/AuthorBox";
 import { ReadingProgress } from "@/components/insights/ReadingProgress";
 import { RelatedPosts } from "@/components/insights/RelatedPosts";
 import { TableOfContents } from "@/components/insights/TableOfContents";
-import { PageSoftCta } from "@/components/sections/PageSoftCta";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
   Chip,
@@ -96,9 +95,12 @@ function InsightPostFallback() {
   return (
     <div className="py-12 sm:py-16">
       <Container>
-        <div className="h-8 w-40 animate-pulse rounded-pill bg-blue-soft" />
-        <div className="mt-6 h-12 max-w-2xl animate-pulse rounded-pill bg-blue-soft" />
-        <div className="mt-4 h-20 max-w-xl animate-pulse rounded-pill bg-blue-soft" />
+        <div className="flex flex-col items-start">
+          <div className="h-8 w-40 animate-pulse rounded-pill bg-blue-soft" />
+          <div className="mt-6 h-12 w-full max-w-2xl animate-pulse rounded-pill bg-blue-soft" />
+          <div className="mt-4 h-20 w-full max-w-xl animate-pulse rounded-pill bg-blue-soft" />
+        </div>
+        <div className="mt-8 aspect-[16/9] w-full animate-pulse rounded-tile bg-blue-soft" />
       </Container>
     </div>
   );
@@ -179,65 +181,74 @@ async function InsightPostContent({ params }: Props) {
       <ReadingProgress label={t("detail.readingProgress")} />
       <JsonLd data={articleJsonLd} />
 
-      <div className="py-12 sm:py-16">
+      <div className="pt-[length:var(--hero-top)] pb-12 sm:pb-16">
         <Container>
-          <Breadcrumbs
-            label={breadcrumbT("label")}
-            items={[
-              { label: breadcrumbT("home"), href: "/" },
-              { label: t("list.title"), href: "/insights" },
-              { label: post.meta.title },
-            ]}
-          />
+          <div className="flex flex-col items-start text-start w-full">
+            <Breadcrumbs
+              label={breadcrumbT("label")}
+              items={[
+                { label: breadcrumbT("home"), href: "/" },
+                { label: t("list.title"), href: "/insights" },
+                { label: post.meta.title },
+              ]}
+            />
 
-          <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <time dateTime={post.meta.dateIso} className="text-sm text-muted">
-              {post.meta.dateIso}
-            </time>
-            {post.meta.updatedIso &&
-            post.meta.updatedIso !== post.meta.dateIso ? (
+            <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-start">
+              <time dateTime={post.meta.dateIso} className="text-sm text-muted">
+                {post.meta.dateIso}
+              </time>
+              {post.meta.updatedIso &&
+              post.meta.updatedIso !== post.meta.dateIso ? (
+                <Text variant="caption" as="span">
+                  {t("detail.updated", { date: post.meta.updatedIso })}
+                </Text>
+              ) : null}
               <Text variant="caption" as="span">
-                {t("detail.updated", { date: post.meta.updatedIso })}
+                {post.meta.readingTime}
               </Text>
-            ) : null}
-            <Text variant="caption" as="span">
-              {post.meta.readingTime}
+            </div>
+
+            <Heading
+              as={1}
+              inner
+              className="mt-4 max-w-4xl text-start text-2xl sm:text-3xl lg:text-4xl font-black leading-snug sm:leading-[1.35] tracking-normal [text-wrap:balance]"
+            >
+              {post.meta.title}
+            </Heading>
+            <Text variant="muted" className="mt-4 max-w-3xl text-start text-base sm:text-lg leading-relaxed">
+              {post.meta.summary}
             </Text>
+
+            {post.meta.tags.length > 0 ? (
+              <ul className="mt-5 flex list-none flex-wrap gap-2 p-0 justify-start">
+                {post.meta.tags.map((tag) => (
+                  <li key={tag}>
+                    <Chip tone="panel">{tag}</Chip>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
 
-          <Heading as={1} className="mt-3 max-w-[20ch]">
-            {post.meta.title}
-          </Heading>
-          <Text variant="muted" className="mt-4 max-w-2xl">
-            {post.meta.summary}
-          </Text>
-
-          {post.meta.tags.length > 0 ? (
-            <ul className="mt-4 flex list-none flex-wrap gap-2 p-0">
-              {post.meta.tags.map((tag) => (
-                <li key={tag}>
-                  <Chip tone="panel">{tag}</Chip>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-
           {post.meta.cover ? (
-            <div className="relative mt-8 aspect-[16/9] max-w-3xl overflow-hidden rounded-tile border border-line bg-panel">
+            <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-tile border border-line bg-panel shadow-sm">
               <Image
                 src={post.meta.cover}
                 alt=""
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 48rem"
+                sizes="(max-width: 1200px) 100vw, 1200px"
                 priority
               />
             </div>
           ) : null}
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_14rem]">
-            <article id="insight-article" className="min-w-0">
-              <Prose>{articleContent}</Prose>
+          {/* Main content grid: Article on right, Articles Sidebar on left (in RTL) */}
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
+            <article id="insight-article" className="lg:col-span-8 min-w-0 w-full">
+              <Prose className="w-full max-w-none text-start text-justify leading-relaxed sm:text-lg">
+                {articleContent}
+              </Prose>
               <AuthorBox
                 author={post.meta.author}
                 label={t("detail.author")}
@@ -248,19 +259,13 @@ async function InsightPostContent({ params }: Props) {
                 lead={t("detail.relatedLead")}
               />
             </article>
-            <aside className="lg:sticky lg:top-24 lg:self-start">
+
+            <aside className="lg:col-span-4 min-w-0 w-full lg:sticky lg:top-28 space-y-6">
               <TableOfContents items={effectiveToc} label={t("detail.toc")} />
             </aside>
           </div>
         </Container>
       </div>
-
-      <PageSoftCta
-        headingId="insights-soft-cta"
-        title={t("ctaTitle")}
-        lead={t("ctaLead")}
-        buttonLabel={t("ctaButton")}
-      />
     </>
   );
 }

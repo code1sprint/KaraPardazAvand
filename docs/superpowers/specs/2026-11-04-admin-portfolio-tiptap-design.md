@@ -1,7 +1,7 @@
 # Design Spec: Admin Portfolio & Case Studies Management (Hybrid Tiptap + Structured Fields)
 
 **Date:** 2026-11-04  
-**Author:** Kara Pardaz Oond Engineering  
+**Author:** Kara Pardaz Avand Engineering  
 **Branch:** `feature/admin-portfolio-tiptap`  
 **Status:** In Progress
 
@@ -9,7 +9,7 @@
 
 ## 1. Overview & Business Objectives
 
-Portfolio and Case Studies (`/portfolio` and `/portfolio/[slug]`) demonstrate Kara Pardaz Oond's real-world software engineering capabilities.
+Portfolio and Case Studies (`/portfolio` and `/portfolio/[slug]`) demonstrate Kara Pardaz Avand's real-world software engineering capabilities.
 
 Current projects:
 1. `ops-crm-pilot`: پایلوت CRM عملیات فروش (B2B Distribution & Sales)

@@ -7,204 +7,257 @@ export const customSoftwareService = {
     en: "Custom software design",
   },
   outcome: {
-    fa: "سامانه‌ای متناسب با فرایند واقعی سازمان شما، نه قالب آماده.",
-    en: "A system shaped around your real workflows—not a generic template.",
+    fa: "توسعه نرم‌افزارهای سازمانی دقیق، چابک و با مقیاس‌پذیری بالا؛ متناسب با منطق واقعی بیزینس شما و با تضمین ۱۰۰٪ مالکیت سورس‌کد و داده‌ها.",
+    en: "Enterprise-grade custom software engineered around your real business logic, with guaranteed 100% source code ownership and architectural resilience.",
   },
   audience: [
     {
-      fa: "سازمان‌هایی که فرایندشان در نرم‌افزارهای عمومی جا نمی‌گیرد.",
-      en: "Organizations whose processes do not fit off-the-shelf tools.",
+      fa: "سازمان‌هایی که فرایندهای اختصاصی، مدل قیمت‌گذاری یا زنجیره تأمین منحصربه‌فرد دارند و در محصولات آماده دچار محدودیت و قفل‌شدگی می‌شوند.",
+      en: "Organizations with proprietary workflows or pricing models that cannot fit into rigid commercial software templates.",
     },
     {
-      fa: "تیم‌های عملیات و فناوری که به مالکیت کد و معماری شفاف نیاز دارند.",
-      en: "Operations and technology teams that need code ownership and clear architecture.",
+      fa: "مدیران ارشد فناوری (CTO) و عملیات که به کدنویسی تمیز، معماری شفاف، پایگاه داده بهینه‌شده و رفع بدهی‌های فنی قبلی نیاز دارند.",
+      en: "CTOs and operations leads seeking clean maintainable code, transparent architecture, and freedom from legacy tech debt.",
     },
     {
-      fa: "کسب‌وکارهایی که می‌خواهند چند سیستم جزیره‌ای را در یک جریان واحد جمع کنند.",
-      en: "Businesses that want to unify siloed systems into one coherent flow.",
+      fa: "کسب‌وکارهایی که می‌خواهند چندین پایگاه داده و نرم‌افزار جزیره‌ای را در یک پلتفرم متمرکز، امن و یکپارچه تجمیع کنند.",
+      en: "Enterprises aiming to consolidate siloed databases and disjointed internal tools into one robust unified system.",
+    },
+    {
+      fa: "شرکت‌هایی که نگران امنیت، محرمانگی داده‌های حیاتی مشتریان و خطرات تحریم یا قطعی سرویس‌های خارجی هستند.",
+      en: "Businesses requiring complete data sovereignty, strict privacy controls, and resilience against external provider lock-ins.",
     },
   ],
   deliverables: [
     {
       title: {
-        fa: "تحلیل نیاز و مدل دامنه",
-        en: "Requirements analysis and domain model",
+        fa: "مدل‌سازی دامنه و شفاف‌سازی قوانین کسب‌وکار",
+        en: "Domain-Driven Modeling & Business Logic",
       },
       description: {
-        fa: "نقشهٔ موجودیت‌ها، قوانین کسب‌وکار و مرز سیستم با اولویت‌های روشن.",
-        en: "Entity map, business rules, and system boundaries with clear priorities.",
+        fa: "ترسیم دقیق نمودار موجودیت‌ها، قواعد تصمیم‌گیری و مرزهای سرویس بدون هیچ‌گونه ابهام پیش از آغاز کدنویسی.",
+        en: "Precise entity mapping, decision matrices, and service boundaries eliminating guesswork before coding.",
       },
     },
     {
       title: {
-        fa: "معماری قابل نگهداری",
-        en: "Maintainable architecture",
+        fa: "معماری مقیاس‌پذیر و پایدار (Clean Architecture)",
+        en: "Scalable Clean Architecture",
       },
       description: {
-        fa: "ساختار ماژول‌ها، قراردادهای API و انتخاب استک متناسب با مقیاس.",
-        en: "Module structure, API contracts, and a stack suited to scale.",
+        fa: "طراحی ماژولار با قابلیت تحمل ترافیک بالا، جداسازی لایه‌ها، قراردادهای شفاف API و امکان توسعه نامحدود در آینده.",
+        en: "Modular high-concurrency design, clean layering, strict API contracts, and limitless future maintainability.",
       },
     },
     {
       title: {
-        fa: "پیاده‌سازی مرحله‌ای",
-        en: "Staged implementation",
+        fa: "رابط کاربری مدرن، فوق‌سریع و ارگونومیک (UI/UX)",
+        en: "Ergonomic & Blazing-Fast UI/UX",
       },
       description: {
-        fa: "تحویل نسخهٔ قابل استفاده در هر مرحله، با بازخورد واقعی کاربران.",
-        en: "A usable release at each stage, with real user feedback.",
+        fa: "طراحی اختصاصی صفحات بر اساس اصول دسترسی‌پذیری و ارگونومی کاربری با هدف کاهش زمان انجام وظایف اپراتورها.",
+        en: "Tailored interfaces adhering to accessibility and ergonomics to minimize operator task completion times.",
+      },
+    },
+    {
+      title: {
+        fa: "تحویل مرحله‌ای با نسخه‌های عملیاتی منظم",
+        en: "Iterative Delivery & Milestone Demos",
+      },
+      description: {
+        fa: "تحویل نسخه‌های قابل تست در پایان هر اسپرینت، دریافت بازخورد سریع از کاربران واقعی و جلوگیری از انحراف پروژه.",
+        en: "Shippable working software at every sprint, enabling rapid real-world validation and mitigating project risk.",
       },
       needs_business_confirmation: true,
     },
     {
       title: {
-        fa: "آزمون و کنترل کیفیت",
-        en: "Testing and quality control",
+        fa: "تست‌های خودکار و تضمین کیفیت همه‌جانبه (QA)",
+        en: "Automated Testing & End-to-End QA",
       },
       description: {
-        fa: "پوشش مسیرهای اصلی، سناریوهای خطا و چک‌لیست پذیرش.",
-        en: "Coverage of core paths, failure scenarios, and an acceptance checklist.",
+        fa: "پوشش تست‌های واحد، یکپارچه‌سازی و سناریوهای بحرانی جهت اطمینان از عملکرد بدون باگ و پایداری زیر بار سنگین.",
+        en: "Unit, integration, and stress tests ensuring bulletproof reliability and flawless performance under peak load.",
       },
     },
     {
       title: {
-        fa: "مستندات عملیاتی",
-        en: "Operational documentation",
+        fa: "مستندسازی جامع، پایپ‌لاین CI/CD و انتقال دانش",
+        en: "Comprehensive Docs, CI/CD & Knowledge Handoff",
       },
       description: {
-        fa: "راهنمای استقرار، اجرا و نگهداری برای تیم داخلی شما.",
-        en: "Deploy, run, and maintain guides for your internal team.",
+        fa: "مستندات کامل معماری و APIها، استقرار خودکار و جلسات انتقال دانش فنی به تیم مهندسی سازمان شما.",
+        en: "Full architectural docs, automated deployment pipelines, and thorough knowledge transfer to your in-house engineers.",
       },
     },
   ],
   steps: [
     {
-      title: { fa: "کشف و دامنه", en: "Discovery and scope" },
+      title: { fa: "کشف، مدل دامنه و تعیین حدود سیستم", en: "Discovery, Domain & Scoping" },
       description: {
-        fa: "فرایند فعلی، محدودیت‌ها و معیار موفقیت را با ذی‌نفعان قفل می‌کنیم.",
-        en: "We lock current processes, constraints, and success criteria with stakeholders.",
+        fa: "فرایندهای واقعی، گلوگاه‌ها و شاخص‌های دقیق موفقیت را در جلسات فشرده با ذی‌نفعان قفل می‌کنیم.",
+        en: "We map real workflows, pinpoint friction, and lock explicit success metrics with core stakeholders.",
       },
     },
     {
-      title: { fa: "معماری و نمونهٔ اولیه", en: "Architecture and prototype" },
+      title: { fa: "معماری فنی و نمونه اولیه تعاملی", en: "Architecture & Interactive Prototype" },
       description: {
-        fa: "اسکلت سیستم و یک جریان کلیدی را برای اعتبارسنجی زودهنگام می‌سازیم.",
-        en: "We build the system skeleton and one key flow for early validation.",
+        fa: "اسکلت دیتابیس، ساختار سرویس‌ها و جریان‌های اصلی UX را پیش از توسعه تست و تایید می‌کنیم.",
+        en: "We validate the database schema, service contracts, and key UI flows before full-scale build.",
       },
     },
     {
-      title: { fa: "تحویل تکراری", en: "Iterative delivery" },
+      title: { fa: "توسعه چابک و تحویل‌های فازبندی‌شده", en: "Agile Build & Iterative Releases" },
       description: {
-        fa: "ماژول‌ها را با بازبینی منظم و معیار پذیرش مشخص تحویل می‌دهیم.",
-        en: "We ship modules with regular reviews and explicit acceptance criteria.",
+        fa: "پیاده‌سازی ماژول‌ها در بازه‌های دوهفته‌ای با دموهای عملیاتی و معیارهای پذیرش شفاف انجام می‌شود.",
+        en: "Modules are engineered in rapid 2-week iterations backed by working demos and strict acceptance tests.",
       },
-      needs_business_confirmation: true,
     },
     {
-      title: { fa: "استقرار و انتقال", en: "Launch and handoff" },
+      title: { fa: "استقرار صنعتی، تست بار و پشتیبانی پایدار", en: "Production Rollout & Long-Term SLA" },
       description: {
-        fa: "استقرار کنترل‌شده، آموزش تیم و مسیر پشتیبانی پس از تحویل.",
-        en: "Controlled deployment, team training, and a post-delivery support path.",
+        fa: "پایش عملکرد زیر بار ترافیک واقعی، آموزش عملی پرسنل و ارائه خدمات نگهداری بر اساس SLA دقیق.",
+        en: "Stress testing in production, structured team onboarding, and continuous SLA-backed maintenance.",
       },
       needs_business_confirmation: true,
     },
   ],
   stack: [
     {
-      label: { fa: "فرانت و تجربه", en: "Front end & experience" },
-      items: ["TypeScript", "Next.js", "React"],
+      label: { fa: "فریم‌ورک و زبان", en: "Framework & Language" },
+      items: ["TypeScript", "Next.js", "Node.js", "Python"],
     },
     {
-      label: { fa: "بک‌اند و داده", en: "Backend & data" },
-      items: ["Node.js", "PostgreSQL", "REST / GraphQL"],
+      label: { fa: "پایگاه داده و صف پردازش", en: "Database & Queue" },
+      items: ["PostgreSQL", "MongoDB", "Redis", "RabbitMQ"],
     },
     {
-      label: { fa: "اجرا و تحویل", en: "Runtime & delivery" },
-      items: ["Docker", "CI/CD", "Observability"],
+      label: { fa: "زیرساخت و امنیت", en: "DevOps & Security" },
+      items: ["Docker", "Kubernetes", "CI/CD Pipeline", "JWT / RBAC"],
     },
   ],
   systemMap: {
-    windowTitle: "kara://custom-software",
-    layout: "hub",
+    windowTitle: "kara://custom-core",
+    layout: "modules",
     descriptionLead: {
-      fa: "نرم‌افزار روی فرایند شما.",
-      en: "Software on your process.",
+      fa: "معماری یکپارچه برای پردازش‌های حیاتی سازمان.",
+      en: "Unified architecture for mission-critical operations.",
     },
     description: {
-      fa: "از نیاز تا استقرار، با مالکیت شفاف کد.",
-      en: "From need to deploy, with clear code ownership.",
+      fa: "جداسازی دامنه‌ها، سرعت پردازش بی‌وقفه و همگام‌سازی تضمین‌شده داده‌ها.",
+      en: "Decoupled domains, ultra-low latency execution, and guaranteed consistency.",
     },
     nodes: {
-      inputTop: { fa: "نیاز و فرایند", en: "Needs & process" },
-      inputBottom: { fa: "سیستم‌های موجود", en: "Existing systems" },
-      core: { fa: "سامانهٔ سفارشی", en: "Custom system" },
-      outputTop: { fa: "جریان کار عملیاتی", en: "Operational workflow" },
-      outputBottom: { fa: "API و گزارش", en: "API & reports" },
+      inputTop: { fa: "درگاه‌های سازمانی و وب", en: "Enterprise Web & Portals" },
+      inputBottom: { fa: "اتصال به سرویس‌ها و API", en: "APIs & Legacy Services" },
+      core: { fa: "هستهٔ نرم‌افزار سفارشی", en: "Custom Core Engine" },
+      outputTop: { fa: "پردازش رویدادها و صف", en: "Event Queues & Workers" },
+      outputBottom: { fa: "پایگاه داده و انبار داده", en: "Transactional Database" },
     },
     logs: [
-      { fa: "domain.modeled  entities=18", en: "domain.modeled  entities=18" },
-      { fa: "module.shipped  name=orders", en: "module.shipped  name=orders" },
-      { fa: "release.staged  env=staging", en: "release.staged  env=staging" },
+      {
+        fa: "event.dispatched  domain=orders  id=ORD-9021",
+        en: "event.dispatched  domain=orders  id=ORD-9021",
+      },
+      {
+        fa: "worker.processed  latency=14ms  status=committed",
+        en: "worker.processed  latency=14ms  status=committed",
+      },
+      {
+        fa: "audit.logged  actor=admin/ops  action=state_change",
+        en: "audit.logged  actor=admin/ops  action=state_change",
+      },
     ],
   },
   faqs: [
     {
-      id: "cs-fit",
+      id: "custom-timeline",
       question: {
-        fa: "چه زمانی نرم‌افزار سفارشی بهتر از محصول آماده است؟",
-        en: "When is custom software better than an off-the-shelf product?",
+        fa: "یک پروژه نرم‌افزار سفارشی معمولاً چقدر زمان می‌برد؟",
+        en: "How long does a custom software build typically take?",
       },
       answer: {
-        fa: "وقتی فرایند شما مزیت رقابتی است یا یکپارچگی عمیق با سیستم‌های داخلی لازم است. اگر نیاز عمومی است، ابتدا محصول آماده را بررسی می‌کنیم.",
-        en: "When your process is a competitive edge or deep internal integration is required. For generic needs, we review off-the-shelf options first.",
+        fa: "بسته به پیچیدگی و وسعت دامنه، نسخه اولیه قابل استفاده (MVP) معمولاً بین ۶ تا ۱۰ هفته آماده می‌شود. ما پروژه را فازبندی می‌کنیم تا سازمان شما در همان ماه‌های ابتدایی ارزش عملیاتی آن را لمس کند.",
+        en: "Depending on scope, a production-grade MVP is typically delivered within 6 to 10 weeks. Staged rollouts ensure you capture operational value early.",
       },
     },
     {
-      id: "cs-ownership",
+      id: "custom-ownership",
       question: {
-        fa: "مالکیت کد و مستندات چگونه است؟",
-        en: "How do code and documentation ownership work?",
+        fa: "آیا مالکیت سورس‌کد و دیتابیس به صورت کامل به ما واگذار می‌شود؟",
+        en: "Do we get 100% ownership of source code and databases?",
       },
       answer: {
-        fa: "خروجی پروژه شامل کد منبع، مستندات استقرار و راهنمای نگهداری است. جزئیات حقوقی مالکیت در قرارداد مشخص می‌شود.",
-        en: "Project output includes source code, deploy docs, and maintenance guides. Legal ownership details are set in the contract.",
+        fa: "بله، ۱۰۰٪ مالکیت حقوقی و فنی سورس‌کد، ساختار دیتابیس و مستندات معماری متعلق به کارفرماست و هیچ‌گونه وابستگی انحصاری برای شما ایجاد نمی‌شود.",
+        en: "Yes. 100% of the intellectual property, source repository, schema, and docs belong entirely to you with zero proprietary lock-in.",
       },
-      needs_business_confirmation: true,
     },
     {
-      id: "cs-duration",
+      id: "custom-tech-stack",
       question: {
-        fa: "بازهٔ زمانی معمول چقدر است؟",
-        en: "What is a typical timeline?",
+        fa: "تکنولوژی‌ها و استک فنی بر چه اساسی انتخاب می‌شوند؟",
+        en: "How is the technical stack selected?",
       },
       answer: {
-        fa: "بسته به دامنه، از چند هفته برای یک ماژول محدود تا چند ماه برای سامانهٔ چندماژوله. بازهٔ دقیق پس از کشف اعلام می‌شود.",
-        en: "Depending on scope, from a few weeks for a bounded module to several months for a multi-module system. Exact range follows discovery.",
+        fa: "بر اساس بار پردازشی، نیازمندی‌های مقیاس‌پذیری و ظرفیت تیم فنی سازمان شما؛ ما استانداردترین تکنولوژی‌های مدرن جهان با جامعه توسعه‌دهندگان بزرگ را انتخاب می‌کنیم تا نگهداری آن در آینده آسان باشد.",
+        en: "Selection is driven by concurrency, scalability profiles, and your internal engineering capacity, prioritizing battle-tested modern standards.",
       },
-      needs_business_confirmation: true,
     },
     {
-      id: "cs-team",
+      id: "custom-legacy-migration",
       question: {
-        fa: "نقش تیم شما در طول پروژه چیست؟",
-        en: "What is your team's role during the project?",
+        fa: "تکلیف سیستم‌های قدیمی و دیتای قبلی ما چه خواهد شد؟",
+        en: "What happens to our legacy data and existing systems?",
       },
       answer: {
-        fa: "تصمیم‌گیر دامنه، بازبینی نسخه‌ها و دسترسی به داده و سیستم‌های موجود. بدون این همکاری، کیفیت تحویل افت می‌کند.",
-        en: "Scope decisions, release reviews, and access to data and existing systems. Without that collaboration, delivery quality drops.",
+        fa: "طراحی رابط‌های واسط (API Adapter) و سناریوهای مهاجرت داده بخشی از تعهد ماست. ما فرایند را طوری برنامه‌ریزی می‌کنیم که تغییر سیستم بدون حتی یک دقیقه توقف در کار جاری سازمان انجام شود.",
+        en: "We design robust API adapters and zero-downtime data migration pipelines to ensure business continuity without disruption.",
       },
     },
   ],
-  relatedProjects: [],
+  relatedProjects: ["ops-crm-pilot", "telecom-bi-platform"],
   bento: {
     order: 5,
     span: 6,
     dark: true,
     image: "/brand/bento/custom-software.svg",
     shortTitle: {
-      fa: "نرم‌افزار سفارشی",
-      en: "Custom software",
-    },
+        fa: "نرم‌افزار سفارشی",
+        en: "Custom software"
+    }
   },
-  needs_business_confirmation: true,
+  deepDiveHtml: `<div data-callout-type="note" class="callout callout-note rounded-2xl border p-4 my-4 leading-relaxed">
+      <p class="font-bold text-text mb-1">چرا نرم‌افزار سفارشی سرمایه‌گذاری استراتژیک است، نه هزینه؟</p>
+      <p class="text-sm text-muted m-0 leading-relaxed">نرم‌افزارهای تجاری عمومی برای پاسخ به میانگین بازار ساخته شده‌اند و به همین دلیل در گلوگاه‌های خاص کسب‌وکار شما ناکارآمدند. یک نرم‌افزار سفارشی با طراحی متمرکز بر مزیت رقابتی شما، سرعت و بهره‌وری فرایندها را تا چندین برابر ارتقا می‌دهد.</p>
+    </div>
+
+    <h3 class="text-xl font-bold text-text mt-8 mb-4">اصول مهندسی کارا پرداز اوند در توسعه نرم‌افزار</h3>
+    
+    <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
+      
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+        <p class="font-bold text-text mb-2 text-base text-blue">۱. معماری تمیز و بدون بدهی فنی</p>
+        <p class="text-sm text-muted leading-relaxed m-0">طراحی ماژولار و رعایت استانداردهای Clean Code و SOLID تا در آینده هر تغییری بدون ترس از شکستن بخش‌های دیگر به راحتی اعمال شود.</p>
+      </div>
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+        <p class="font-bold text-text mb-2 text-base text-blue">۲. تست‌های خودکار و تضمین پایداری</p>
+        <p class="text-sm text-muted leading-relaxed m-0">پوشش مداوم تست‌های خودکار از روز اول، مانع بروز باگ در محیط عملیاتی و حفظ کیفیت سامانه تحت بارهای تراکنشی سنگین می‌شود.</p>
+      </div>
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+        <p class="font-bold text-text mb-2 text-base text-blue">۳. تحویل ملموس و بدون غافلگیری</p>
+        <p class="text-sm text-muted leading-relaxed m-0">کارفرما هر دو هفته یک‌بار محصول را در حال کار مشاهده و تست می‌کند؛ بنابراین پروژه هرگز از زمان‌بندی و انتظارات واقعی منحرف نخواهد شد.</p>
+      </div>
+    </div>
+
+    <div data-callout-type="warning" class="callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed">
+      <p class="font-bold text-text mb-1">مشاوره فنی و نیازسنجی معماری</p>
+      <p class="text-sm text-muted m-0 leading-relaxed">در یک جلسه تحلیل فنی، ابعاد معماری، چالش‌های زیرساختی و راهکارهای مهندسی پروژه شما را ارزیابی می‌کنیم.</p>
+    </div>
+
+    <div data-inline-cta="" data-cta-label="درخواست ارزیابی معماری و پروپوزال فنی" data-cta-url="/contact?service=custom-software" data-cta-variant="primary" data-cta-align="center">
+      <a href="/contact?service=custom-software" data-cta-variant="primary" class="cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline">
+        <span class="text-on-brand">درخواست ارزیابی معماری و پروپوزال فنی</span>
+        <span class="text-orange text-xs">◀</span>
+      </a>
+    </div>`,
 } as const satisfies Service;

@@ -18,6 +18,7 @@ import { createLowlight, common } from "lowlight";
 import { ZwnjExtension } from "./zwnj-extension";
 import { CalloutExtension } from "./callout-extension";
 import { InlineCtaExtension } from "./cta-extension";
+import { CardGridExtension, CardItemExtension } from "./card-grid-extension";
 import { VideoExtension } from "./video-extension";
 import { CustomImageExtension } from "./image-extension";
 import { SlashCommandExtension } from "./slash-command";
@@ -54,6 +55,48 @@ const InteractiveCodeBlock = CodeBlockLowlight.extend({
   },
 });
 
+export function isDocEmpty(json?: Record<string, unknown> | null): boolean {
+  if (!json || typeof json !== "object") return true;
+  if (json.type !== "doc") return true;
+  const content = json.content;
+  if (!Array.isArray(content) || content.length === 0) return true;
+  if (content.length === 1) {
+    const first = content[0] as { type?: string; content?: unknown[] } | undefined;
+    if (
+      first?.type === "paragraph" &&
+      (!first.content || (Array.isArray(first.content) && first.content.length === 0))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function resolveInitialContent(
+  contentJson?: Record<string, unknown> | null,
+  contentHtml?: string,
+): string | Record<string, unknown> {
+  const hasJson = !isDocEmpty(contentJson);
+  const trimmedHtml = (contentHtml || "").trim();
+  const hasHtml = Boolean(
+    trimmedHtml &&
+      trimmedHtml !== "<p></p>" &&
+      trimmedHtml !== "<p><br></p>" &&
+      trimmedHtml !== "<p><br/></p>",
+  );
+
+  if (hasJson) {
+    return contentJson as Record<string, unknown>;
+  }
+  if (hasHtml) {
+    return trimmedHtml;
+  }
+  if (contentJson && contentJson.type === "doc") {
+    return contentJson;
+  }
+  return "<p></p>";
+}
+
 interface TiptapEditorProps {
   contentJson?: Record<string, unknown>;
   contentHtml?: string;
@@ -77,10 +120,7 @@ export function TiptapEditor({
   const [linkModalOpen, setLinkModalOpen] = useState(false);
   const [linkModalParams, setLinkModalParams] = useState<Partial<LinkModalParams>>({});
 
-  const initialContent =
-    contentJson && Object.keys(contentJson).length > 0 && contentJson.type === "doc"
-      ? contentJson
-      : contentHtml || "<p></p>";
+  const initialContent = resolveInitialContent(contentJson, contentHtml);
 
   const editor = useEditor({
     extensions: [
@@ -127,6 +167,8 @@ export function TiptapEditor({
       }),
       ZwnjExtension,
       CalloutExtension,
+      CardGridExtension,
+      CardItemExtension,
       InlineCtaExtension,
       SlashCommandExtension,
     ],
@@ -147,17 +189,40 @@ export function TiptapEditor({
     },
   });
 
-  // Keep editor content synchronized if contentJson changes externally
+  // Keep editor content synchronized if contentJson or contentHtml changes externally
   useEffect(() => {
-    if (!editor) return;
-    if (contentJson && Object.keys(contentJson).length > 0 && contentJson.type === "doc") {
+    if (!editor || editor.isDestroyed) return;
+
+    const hasJson = !isDocEmpty(contentJson);
+    const trimmedHtml = (contentHtml || "").trim();
+    const hasHtml = Boolean(
+      trimmedHtml &&
+        trimmedHtml !== "<p></p>" &&
+        trimmedHtml !== "<p><br></p>" &&
+        trimmedHtml !== "<p><br/></p>",
+    );
+
+    if (hasJson) {
       const currentJson = JSON.stringify(editor.getJSON());
       const nextJson = JSON.stringify(contentJson);
       if (currentJson !== nextJson) {
-        editor.commands.setContent(contentJson);
+        editor.commands.setContent(contentJson as Record<string, unknown>);
       }
+      return;
     }
-  }, [contentJson, editor]);
+
+    if (hasHtml) {
+      const currentHtml = editor.getHTML().trim();
+      if (currentHtml !== trimmedHtml) {
+        editor.commands.setContent(trimmedHtml);
+      }
+      return;
+    }
+
+    if (!hasJson && !hasHtml && !editor.isEmpty) {
+      editor.commands.setContent("<p></p>");
+    }
+  }, [contentJson, contentHtml, editor]);
 
   // Listen for Slash Command media requests
   useEffect(() => {

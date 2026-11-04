@@ -38,7 +38,6 @@ export async function EngagementModels() {
               dark={index === 1}
               title={model.title}
               description={model.description}
-              className="min-h-[220px]"
             />
           ))}
         </div>

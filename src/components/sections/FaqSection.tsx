@@ -69,7 +69,7 @@ export async function FaqSection({
 
   return (
     <Section id={id} aria-labelledby={`${id}-heading`}>
-      <Container narrow>
+      <Container>
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="max-w-xl">

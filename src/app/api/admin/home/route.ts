@@ -39,10 +39,10 @@ export const GET = withAuth(
           socials: {},
         },
         seo: {
-          siteName: { fa: "کارا پرداز اوند", en: "Kara Pardaz Oond" },
-          homeTitle: { fa: "کارا پرداز اوند", en: "Kara Pardaz Oond" },
+          siteName: { fa: "کارا پرداز اوند", en: "Kara Pardaz Avand" },
+          homeTitle: { fa: "کارا پرداز اوند", en: "Kara Pardaz Avand" },
           homeDescription: { fa: "توسعه نرم‌افزار سازمانی", en: "Enterprise Software" },
-          ogImageAlt: { fa: "کارا پرداز اوند", en: "Kara Pardaz Oond" },
+          ogImageAlt: { fa: "کارا پرداز اوند", en: "Kara Pardaz Avand" },
         },
       });
     }

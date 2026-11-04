@@ -90,9 +90,9 @@ export async function GET(request: Request) {
 
   const title =
     searchParams.get("title")?.trim() ||
-    (isFa ? "کارا پرداز اوند" : "Kara Pardaz Oond");
+    (isFa ? "کارا پرداز اوند" : "Kara Pardaz Avand");
 
-  const brand = isFa ? "کارا پرداز اوند" : "Kara Pardaz Oond";
+  const brand = isFa ? "کارا پرداز اوند" : "Kara Pardaz Avand";
   const family = isFa ? "از خانواده Code1Sprint" : "Part of Code1Sprint";
 
   const [fonts, iconBuffer] = await Promise.all([

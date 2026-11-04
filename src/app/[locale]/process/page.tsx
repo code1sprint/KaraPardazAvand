@@ -1,19 +1,16 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { Breadcrumbs } from "@/components/layout";
+import { Breadcrumbs, PageHero } from "@/components/layout";
 import { Reveal } from "@/components/layout/Reveal";
 import { Section } from "@/components/layout/Section";
 import { CommunicationRows } from "@/components/sections/CommunicationRows";
 import { EngagementModels } from "@/components/sections/EngagementModels";
 import { FaqSection } from "@/components/sections/FaqSection";
-import { PageSoftCta } from "@/components/sections/PageSoftCta";
 import { ProcessVerticalTrack } from "@/components/sections/ProcessVerticalTrack";
 import {
   Container,
-  Eyebrow,
   Heading,
-  Text,
 } from "@/components/ui";
 import { getResolvedProcessData } from "@/lib/process-data";
 import type { AppLocale } from "@/i18n/routing";
@@ -67,12 +64,11 @@ async function ProcessContent({ params }: Props) {
   const guide = processData.guide;
 
   return (
-    <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
-      <Section
-        aria-labelledby="process-hero-heading"
-        className="pt-12 sm:pt-16"
-      >
-        <Container>
+    <>
+      <PageHero
+        id="process-hero"
+        headingId="process-hero-heading"
+        breadcrumbs={
           <Breadcrumbs
             label={breadcrumbT("label")}
             items={[
@@ -80,36 +76,28 @@ async function ProcessContent({ params }: Props) {
               { label: pageT("breadcrumb") },
             ]}
           />
-          <Eyebrow className="mt-6">{pageT("eyebrow")}</Eyebrow>
-          <Heading
-            as={1}
-            id="process-hero-heading"
-            className="mt-3 max-w-[15ch]"
-          >
+        }
+        eyebrow={pageT("eyebrow")}
+        title={
+          <>
             {hero?.titleBefore || pageT("titleBefore")}
             <em className="text-gradient-brand not-italic">
               {hero?.titleGradient || pageT("titleGradient")}
             </em>
             {hero?.titleAfter || pageT("titleAfter")}
-          </Heading>
-          <Text variant="muted" className="mt-4 max-w-2xl">
-            {hero?.lead || pageT("lead")}
-          </Text>
-        </Container>
-      </Section>
+          </>
+        }
+        lead={hero?.lead || pageT("lead")}
+      />
 
       {steps.length > 0 ? (
         <Section id="steps" aria-labelledby="process-steps-heading">
           <Container>
             <Reveal>
               <div className="mb-8 max-w-2xl md:mb-10">
-                <Eyebrow>{t("eyebrow")}</Eyebrow>
                 <Heading as={2} id="process-steps-heading">
                   {pageT("stepsTitle")}
                 </Heading>
-                <Text variant="muted" className="mt-3">
-                  {pageT("stepsLead")}
-                </Text>
               </div>
             </Reveal>
             <ProcessVerticalTrack
@@ -144,7 +132,7 @@ async function ProcessContent({ params }: Props) {
                   {guide.title}
                 </Heading>
                 <div
-                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
+                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black [&>*:last-child]:!mb-0"
                   dangerouslySetInnerHTML={{ __html: guide.html }}
                 />
               </div>
@@ -159,14 +147,7 @@ async function ProcessContent({ params }: Props) {
         emitJsonLd={false}
         showViewAll
       />
-
-      <PageSoftCta
-        headingId="process-soft-cta"
-        title={pageT("ctaTitle")}
-        lead={pageT("ctaLead")}
-        buttonLabel={pageT("ctaButton")}
-      />
-    </div>
+    </>
   );
 }
 

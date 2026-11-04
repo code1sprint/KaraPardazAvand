@@ -12,7 +12,7 @@ export async function ContactSection() {
 
   return (
     <Section id="contact" aria-labelledby="contact-heading">
-      <Container narrow>
+      <Container>
         <Heading as={2} id="contact-heading">
           {t("section.title")}
         </Heading>

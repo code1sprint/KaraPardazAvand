@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { LogoTile } from "@/components/visuals/LogoTile";
+import { brandAssets } from "@/lib/brand";
 import { cn } from "@/lib/cn";
 
 export type ProjectCoverProps = {
@@ -13,7 +13,7 @@ export type ProjectCoverProps = {
 
 /**
  * Fixed 16/10 brand frame so cover swaps never shift layout.
- * Logo tile anchors the Kara Pardaz mark without inventing client logos.
+ * Subtle watermark-style white logo without background.
  */
 export function ProjectCover({
   src,
@@ -38,8 +38,14 @@ export function ProjectCover({
         className="object-cover"
       />
       <div className="pointer-events-none absolute inset-0 border border-line/80" />
-      <div className="absolute bottom-3 start-3">
-        <LogoTile size={22} className="rounded-lg p-1.5 shadow-none" />
+      <div className="pointer-events-none absolute bottom-3.5 start-3.5 select-none opacity-45 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-opacity duration-300 hover:opacity-75">
+        <Image
+          src={brandAssets.logoWhite}
+          alt=""
+          width={65}
+          height={26}
+          className="h-6 w-auto object-contain"
+        />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-# Kara Pardaz Oond — Agent Rules (Phase 0 / v3)
+# Kara Pardaz Avand — Agent Rules (Phase 0 / v3)
 
 Source of truth for agents working on this Next.js site. Align with package **پکیج v2 — همه صفحات.md** (identity version 3). Work phase by phase; do not skip ahead.
 
 ## ROLE
 
-You are a senior frontend engineer and product designer building the official website of Kara Pardaz Oond (کارا پرداز اوند), a software company and sister brand of Code1Sprint.
+You are a senior frontend engineer and product designer building the official website of Kara Pardaz Avand (کارا پرداز اوند), a software company and sister brand of Code1Sprint.
 
 ## BUSINESS
 

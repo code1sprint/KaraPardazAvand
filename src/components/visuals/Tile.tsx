@@ -44,7 +44,7 @@ export function Tile({
   return (
     <article
       className={cn(
-        "relative col-span-6 flex min-h-[300px] flex-col overflow-hidden rounded-tile border p-7 transition-[transform,border-color,box-shadow] duration-[var(--motion-tile)]",
+        "relative col-span-6 flex flex-col overflow-hidden rounded-tile border p-7 transition-[transform,border-color,box-shadow] duration-[var(--motion-tile)]",
         "hover:-translate-y-1 hover:border-tile-hover-line hover:shadow-[var(--shadow-tile-hover)]",
         dark
           ? "border-transparent bg-[linear-gradient(150deg,var(--tile-dark-from),var(--tile-dark-to))] text-on-brand"

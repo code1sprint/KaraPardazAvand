@@ -61,7 +61,40 @@ export const PUT = withAuth(
       );
     }
 
-    const parseResult = projectUpdateSchema.safeParse(body);
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = { ...raw };
+
+    if (raw.title && typeof raw.title === "object") {
+      normalized.title = (raw.title as { fa?: string; en?: string }).fa || (raw.title as { fa?: string; en?: string }).en || "";
+    }
+
+    // Normalize editor content
+    if (!normalized.contentHtml) {
+      if (typeof normalized.content === "string") {
+        normalized.contentHtml = normalized.content;
+      } else if (typeof normalized.body === "string") {
+        normalized.contentHtml = normalized.body;
+      } else if (typeof normalized.html === "string") {
+        normalized.contentHtml = normalized.html;
+      }
+    }
+    if (!normalized.contentJson) {
+      if (
+        normalized.tiptapBody &&
+        typeof normalized.tiptapBody === "object" &&
+        (normalized.tiptapBody as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.tiptapBody;
+      } else if (
+        normalized.content &&
+        typeof normalized.content === "object" &&
+        (normalized.content as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.content;
+      }
+    }
+
+    const parseResult = projectUpdateSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

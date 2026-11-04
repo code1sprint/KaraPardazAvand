@@ -1,16 +1,10 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Breadcrumbs } from "@/components/layout";
+import { Breadcrumbs, Container, PageHero } from "@/components/layout";
 import { InsightsFilter } from "@/components/insights/InsightsFilter";
 import { collectPostTags, getAllPosts } from "@/content/posts";
 import { getSiteUrl } from "@/content/site";
-import {
-  Container,
-  Eyebrow,
-  Heading,
-  Text,
-} from "@/components/ui";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -67,8 +61,8 @@ async function InsightsIndexContent({ params }: Props) {
   const tags = collectPostTags(posts);
 
   return (
-    <div className="py-12 sm:py-16">
-      <Container>
+    <PageHero
+      breadcrumbs={
         <Breadcrumbs
           label={breadcrumbT("label")}
           items={[
@@ -76,32 +70,26 @@ async function InsightsIndexContent({ params }: Props) {
             { label: t("list.title") },
           ]}
         />
-        <Eyebrow className="mt-6">{t("list.eyebrow")}</Eyebrow>
-        <Heading as={1} className="mt-3 max-w-[15ch]">
-          {t("list.title")}
-        </Heading>
-        <Text variant="muted" className="mt-3 max-w-2xl">
-          {t("list.lead")}
-        </Text>
-
-        <div className="mt-10">
-          <InsightsFilter
-            posts={posts}
-            tags={tags}
-            labels={{
-              all: t("filter.all"),
-              tagsLabel: t("filter.tags"),
-              searchLabel: t("filter.search"),
-              searchPlaceholder: t("filter.searchPlaceholder"),
-              empty: t("empty"),
-              emptyFiltered: t("emptyFiltered"),
-              loadMore: t("loadMore"),
-              featured: t("featured"),
-            }}
-          />
-        </div>
-      </Container>
-    </div>
+      }
+      eyebrow={t("list.eyebrow")}
+      title={t("list.title")}
+      lead={t("list.lead")}
+    >
+      <InsightsFilter
+        posts={posts}
+        tags={tags}
+        labels={{
+          all: t("filter.all"),
+          tagsLabel: t("filter.tags"),
+          searchLabel: t("filter.search"),
+          searchPlaceholder: t("filter.searchPlaceholder"),
+          empty: t("empty"),
+          emptyFiltered: t("emptyFiltered"),
+          loadMore: t("loadMore"),
+          featured: t("featured"),
+        }}
+      />
+    </PageHero>
   );
 }
 

@@ -64,11 +64,14 @@ export function NavLinks({
               href={item.href}
               variant="nav"
               className={cn(
-                "inline-flex items-center gap-2 whitespace-nowrap rounded-pill text-sm font-medium no-underline hover:no-underline",
+                "inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium no-underline hover:no-underline transition-colors",
                 orientation === "horizontal"
-                  ? "text-muted hover:text-text"
-                  : "w-full justify-start px-3 py-3 text-base text-text",
-                active && "text-text",
+                  ? "rounded-pill text-muted hover:text-text"
+                  : "w-full justify-start rounded-[var(--radius-control)] px-3 py-3 text-base text-text hover:bg-blue-soft",
+                active &&
+                  (orientation === "vertical"
+                    ? "bg-blue-soft font-semibold text-text"
+                    : "text-text"),
                 linkClassName,
               )}
               aria-current={active ? "page" : undefined}

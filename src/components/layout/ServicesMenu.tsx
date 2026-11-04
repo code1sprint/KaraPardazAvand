@@ -124,8 +124,11 @@ export function ServicesMenu({
           "inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-pill text-sm font-medium transition-colors",
           density === "nav"
             ? "px-2 py-2 text-muted hover:text-text"
-            : "w-full justify-start px-3 py-3 text-base text-text",
-          active && "text-text",
+            : "w-full justify-start rounded-[var(--radius-control)] px-3 py-3 text-base text-text hover:bg-blue-soft",
+          active &&
+            (density === "drawer"
+              ? "bg-blue-soft font-semibold text-text"
+              : "text-text"),
         )}
         aria-expanded={open}
         aria-controls={menuId}
@@ -158,10 +161,10 @@ export function ServicesMenu({
           aria-label={t("servicesMenu")}
           onKeyDown={onMenuKeyDown}
           className={cn(
-            "z-[calc(var(--header-z)+1)] min-w-[14rem] rounded-[var(--radius-tile)] border border-line bg-panel p-2 shadow-[var(--shadow-nav)]",
+            "rounded-[var(--radius-tile)] border border-line bg-panel p-2 shadow-[var(--shadow-nav)]",
             density === "nav"
-              ? "absolute start-0 top-[calc(100%+0.5rem)]"
-              : "relative mt-1",
+              ? "absolute start-0 top-[calc(100%+0.5rem)] z-[calc(var(--header-z)+1)] min-w-[14rem]"
+              : "relative mt-1 ms-2 w-[calc(100%-0.5rem)]",
           )}
         >
           <MenuLink href="/services" onNavigate={onNavigate} close={close}>

@@ -69,10 +69,12 @@ export function FloatingNav() {
         "sticky z-[var(--header-z)] h-[length:var(--nav-block-height)] px-3",
         "top-[max(0px,env(safe-area-inset-top))]",
         "pt-[length:var(--nav-offset-top)]",
+        "pointer-events-none",
       )}
     >
       <div
         className={cn(
+          "pointer-events-auto",
           "mx-auto flex h-[length:var(--nav-pill-height)] max-w-[length:var(--nav-max)] items-center gap-3",
           "rounded-pill border bg-[var(--nav-glass)]",
           "py-[length:var(--nav-pad-y)] ps-[length:var(--nav-pad-inline-start)] pe-[length:var(--nav-pad-inline-end)]",

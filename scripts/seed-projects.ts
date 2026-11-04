@@ -8,6 +8,72 @@ import matter from "gray-matter";
 import { connectToDatabase } from "../src/lib/db/mongodb";
 import { getProjectModel } from "../src/lib/db/models/Project";
 
+function formatInline(str: string): string {
+  return str
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/`(.*?)`/g, "<code>$1</code>");
+}
+
+function markdownToHtml(md: string): string {
+  if (!md.trim()) return "";
+
+  const lines = md.trim().split("\n");
+  const htmlParts: string[] = [];
+  let inList = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (!line) {
+      if (inList) {
+        htmlParts.push("</ul>");
+        inList = false;
+      }
+      continue;
+    }
+
+    if (line.startsWith("### ")) {
+      if (inList) {
+        htmlParts.push("</ul>");
+        inList = false;
+      }
+      htmlParts.push(`<h3>${formatInline(line.slice(4))}</h3>`);
+      continue;
+    }
+    if (line.startsWith("## ")) {
+      if (inList) {
+        htmlParts.push("</ul>");
+        inList = false;
+      }
+      htmlParts.push(`<h2>${formatInline(line.slice(3))}</h2>`);
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      if (!inList) {
+        htmlParts.push("<ul>");
+        inList = true;
+      }
+      htmlParts.push(`<li>${formatInline(line.slice(2))}</li>`);
+      continue;
+    }
+
+    if (inList) {
+      htmlParts.push("</ul>");
+      inList = false;
+    }
+
+    htmlParts.push(`<p>${formatInline(line)}</p>`);
+  }
+
+  if (inList) {
+    htmlParts.push("</ul>");
+  }
+
+  return htmlParts.join("\n");
+}
+
 async function seed() {
   console.log("Seeding existing pilot projects into MongoDB...");
   await connectToDatabase();
@@ -49,11 +115,9 @@ async function seed() {
         },
         logs: ["init.ok", "sync.done", "ready.ok"],
       },
-      featured: data.featured ?? true,
-      status: data.status || "published", // Make visible for reviewing
-      contentHtml: content.trim()
-        ? `<p>${content.trim()}</p>`
-        : "",
+      featured: data.featured ?? false,
+      status: data.status || "published",
+      contentHtml: markdownToHtml(content),
       contentJson: { type: "doc", content: [] },
     };
 

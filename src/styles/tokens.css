@@ -81,15 +81,29 @@
 
   /* Layout */
   --container-max: 1180px;
-  --container-narrow: 48rem;
-  --section-pad-y: 72px;
-  --section-pad-y-lg: 110px;
-  /* Denser rhythm for multi-section content pages (process, service detail). */
-  --section-pad-y-dense: 24px;
-  --section-pad-y-dense-lg: 32px;
+  --container-narrow: 760px;
+  --container-prose: 760px;
+  --container-pad: 24px;
+
+  /* Vertical Rhythm Tokens (v3 single source of truth) */
+  --gap-section: 96px;
+  --gap-band-edge: 72px;
+  --pad-band: 120px;
+  --gap-header: 12px;
+  --gap-content: 44px;
+  --gap-grid-tiles: 16px;
+  --gap-grid-rows: 24px;
+  --gap-grid-cols: 40px;
+  --hero-top: 72px;
+
+  /* Legacy layout aliases deprecated in favor of main flex gap */
+  --section-pad-y: 0px;
+  --section-pad-y-lg: 0px;
+  --section-pad-y-dense: 0px;
+  --section-pad-y-dense-lg: 0px;
   --band-slant: 56px;
-  --band-pad-y: 120px;
-  --band-pad-y-lg: 170px;
+  --band-pad-y: var(--pad-band);
+  --band-pad-y-lg: var(--pad-band);
 
   /* Typography */
   --text-body: 1rem;
@@ -97,10 +111,16 @@
   --leading-body: 1.8;
   --leading-heading: 1.15;
   --leading-h2: 1.25;
+  --lh-h1: 1.25;
+  --lh-h2: 1.35;
+  --lh-h3: 1.4;
   --h1-size: clamp(40px, 7.4vw, 96px);
+  --h1-inner-size: clamp(32px, 4.6vw, 56px);
   --h2-size: clamp(30px, 4.4vw, 54px);
   --h1-tracking: -0.025em;
   --h2-tracking: -0.015em;
+  --lead-max: 60ch;
+  --cta-heading-max: 20ch;
 
   /* Focus */
   --focus-ring-width: 2px;
@@ -151,9 +171,32 @@
   --shadow-nav: 0 10px 30px -18px rgba(6, 29, 68, 0.4);
 }
 
-@media (min-width: 900px) {
+/* Responsive vertical rhythm: desktop >=1024 / tablet 768 / mobile 390 */
+@media (max-width: 1023px) {
   :root {
-    --section-pad-y: var(--section-pad-y-lg);
-    --band-pad-y: var(--band-pad-y-lg);
+    --gap-section: 72px;
+    --gap-band-edge: 56px;
+    --pad-band: 96px;
+    --gap-content: 36px;
+    --hero-top: 56px;
   }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gap-section: 56px;
+    --gap-band-edge: 40px;
+    --pad-band: 72px;
+    --gap-content: 32px;
+    --hero-top: 40px;
+  }
+}
+
+/* Typography rhythm overrides by locale */
+:root[lang="en"],
+[dir="ltr"] {
+  --lh-h1: 1.08;
+  --lh-h2: 1.15;
+  --lh-h3: 1.25;
+  --cta-heading-max: 24ch;
 }

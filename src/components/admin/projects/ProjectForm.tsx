@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
@@ -127,6 +127,59 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
     },
     contentHtml: initialData?.contentHtml || "",
   });
+
+  // Synchronize form if updated via API Drawer or background event
+  useEffect(() => {
+    const projectTarget = initialData?._id || formData.slug;
+    if (!projectTarget || isNew) return;
+
+    const handleRemoteUpdate = async (e: Event) => {
+      const customEvent = e as CustomEvent<{ resource?: string; path?: string }>;
+      const isProjectResource =
+        customEvent.detail?.resource === "projects" || customEvent.detail?.path?.includes("/projects");
+      const pathMatches =
+        customEvent.detail?.path?.includes(String(initialData?._id)) ||
+        customEvent.detail?.path?.includes(formData.slug);
+
+      if (isProjectResource && (pathMatches || !isNew)) {
+        try {
+          const res = await fetch(`/api/admin/projects/${projectTarget}`);
+          const json = await res.json();
+          if (json.ok && json.project) {
+            const p = json.project;
+            setFormData((prev) => ({
+              ...prev,
+              slug: p.slug ?? prev.slug,
+              title: p.title ?? prev.title,
+              sector: p.sector ?? prev.sector,
+              year: p.year ?? prev.year,
+              services: p.services ?? prev.services,
+              role: p.role ?? prev.role,
+              problem: p.problem ?? prev.problem,
+              solution: p.solution ?? prev.solution,
+              results: p.results ?? prev.results,
+              stack: p.stack ?? prev.stack,
+              cover: p.cover ?? prev.cover,
+              gallery: p.gallery ?? prev.gallery,
+              systemMap: p.systemMap ?? prev.systemMap,
+              featured: p.featured ?? prev.featured,
+              status: p.status ?? prev.status,
+              contentJson: p.contentJson ?? prev.contentJson,
+              contentHtml: p.contentHtml ?? prev.contentHtml,
+            }));
+            setSuccessMsg("محتوای پروژه و ادیتور با موفقیت از طریق API به‌روزرسانی شد.");
+          }
+        } catch {
+          // Ignore
+        }
+      }
+    };
+
+    window.addEventListener("kara-content-updated", handleRemoteUpdate);
+    return () => {
+      window.removeEventListener("kara-content-updated", handleRemoteUpdate);
+    };
+  }, [initialData?._id, formData.slug, isNew]);
 
   const toggleService = (slug: string) => {
     setFormData((prev) => {

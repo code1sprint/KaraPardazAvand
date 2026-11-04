@@ -3,6 +3,8 @@
 export const brandAssets = {
   /** Canonical SVG mark. Prefer this path in new UI. */
   logo: "/brand/logo.svg",
+  /** Pure white SVG mark for overlays and dark product media. */
+  logoWhite: "/brand/logo-white.svg",
   /** Blue/orange mark — use on light backgrounds. */
   markOnLight: "/brand/mark-on-light.png",
   /** White/orange mark — use on dark backgrounds. */

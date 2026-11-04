@@ -14,6 +14,7 @@ import {
   IconInfo,
   IconAlertTriangle,
   IconLayers,
+  IconCards,
   IconTable,
   IconLink,
   IconImage,
@@ -251,6 +252,38 @@ export function TiptapToolbar({
       >
         <IconLayers className="size-3.5" />
         <span>کادر تو در تو</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .insertCardGrid({ layout: "grid", columns: 3 })
+            .run()
+        }
+        className={btnClass(editor.isActive("cardGrid"))}
+        title="ایجاد شبکه کارت‌های سفید یکنواخت (Grid)"
+      >
+        <IconCards className="size-3.5 text-blue" />
+        <span>شبکه کارت‌ها</span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .insertBentoGrid("feature")
+            .run()
+        }
+        className={btnClass(false)}
+        title="ایجاد چیدمان مدرن بنتو گرید با کارت‌های کوچک و بزرگ (Bento Grid)"
+      >
+        <IconLayers className="size-3.5 text-amber" />
+        <span>بنتو گرید</span>
       </button>
 
       <div className="h-4 w-px bg-line mx-1" />

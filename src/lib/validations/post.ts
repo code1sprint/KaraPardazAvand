@@ -17,10 +17,22 @@ export const postInputSchema = z.object({
     avatar: z.string().optional(),
   }),
   cover: z.string().optional(),
+  relatedPosts: z.array(z.string().trim()).default([]),
   status: z.enum(["draft", "published"]).default("draft"),
   publishedAt: z.coerce.date().default(() => new Date()),
   contentJson: z.record(z.string(), z.any()).default({ type: "doc", content: [] }),
   contentHtml: z.string().default(""),
 });
 
+export const postUpdateSchema = postInputSchema.partial().extend({
+  slug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .min(2, "اسلاگ باید حداقل ۲ کاراکتر باشد.")
+    .regex(/^[a-z0-9-]+$/, "اسلاگ فقط می‌تواند شامل حروف کوچک انگلیسی، ارقام و خط تیره (-) باشد.")
+    .optional(),
+});
+
 export type PostInput = z.infer<typeof postInputSchema>;
+export type PostUpdateInput = z.infer<typeof postUpdateSchema>;

@@ -31,7 +31,7 @@ export function LegalDocument({
   children,
 }: LegalDocumentProps) {
   return (
-    <div className="py-12 sm:py-16">
+    <div className="pt-[length:var(--hero-top)]">
       <Container>
         <Breadcrumbs
           label={breadcrumbLabel}
@@ -40,7 +40,7 @@ export function LegalDocument({
             { label: crumbLabel },
           ]}
         />
-        <Heading as={1} className="mt-2 max-w-[20ch]">
+        <Heading as={1} inner className="mt-2 max-w-[20ch]">
           {title}
         </Heading>
         {summary ? (

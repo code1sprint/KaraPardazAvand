@@ -1,17 +1,14 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Breadcrumbs } from "@/components/layout";
+import { Breadcrumbs, Container, PageHero, Section } from "@/components/layout";
 import {
   ContactDetails,
   getAlternateContactChannel,
 } from "@/components/contact/ContactDetails";
 import { ContactForm } from "@/components/contact/ContactForm";
 import {
-  Container,
-  Eyebrow,
   Heading,
-  Section,
   Text,
 } from "@/components/ui";
 import { routing } from "@/i18n/routing";
@@ -63,11 +60,10 @@ async function ContactContent({ params }: Props) {
 
   return (
     <>
-      <Section
-        aria-labelledby="contact-hero-heading"
-        className="pb-0 pt-12 sm:pt-16"
-      >
-        <Container>
+      <PageHero
+        id="contact-hero"
+        headingId="contact-hero-heading"
+        breadcrumbs={
           <Breadcrumbs
             label={breadcrumbT("label")}
             items={[
@@ -75,25 +71,21 @@ async function ContactContent({ params }: Props) {
               { label: t("page.title") },
             ]}
           />
-          <Eyebrow className="mt-6">{t("page.eyebrow")}</Eyebrow>
-          <Heading
-            as={1}
-            id="contact-hero-heading"
-            className="mt-3 max-w-[16ch] text-[clamp(2rem,4.5vw,3rem)]"
-          >
+        }
+        eyebrow={t("page.eyebrow")}
+        title={
+          <>
             {t("page.titleBefore")}
             <em className="text-gradient-brand not-italic">
               {t("page.titleGradient")}
             </em>
             {t("page.titleAfter")}
-          </Heading>
-          <Text variant="muted" className="mt-4 max-w-2xl">
-            {t("page.lead")}
-          </Text>
-        </Container>
-      </Section>
+          </>
+        }
+        lead={t("page.lead")}
+      />
 
-      <Section aria-labelledby="contact-form-heading" className="pt-10 sm:pt-12">
+      <Section aria-labelledby="contact-form-heading">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">

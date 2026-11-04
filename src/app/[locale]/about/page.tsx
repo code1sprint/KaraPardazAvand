@@ -1,16 +1,12 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { Breadcrumbs } from "@/components/layout";
-import { Section } from "@/components/layout/Section";
+import { Breadcrumbs, Container, PageHero } from "@/components/layout";
 import { AboutBrandDiagram } from "@/components/sections/AboutBrandDiagram";
 import { AboutCulture } from "@/components/sections/AboutCulture";
 import { AboutPrinciplesBand } from "@/components/sections/AboutPrinciplesBand";
 import { AboutTeam } from "@/components/sections/AboutTeam";
-import { PageSoftCta } from "@/components/sections/PageSoftCta";
 import {
-  Container,
-  Eyebrow,
   Heading,
   Text,
 } from "@/components/ui";
@@ -65,11 +61,10 @@ async function AboutContent({ params }: Props) {
 
   return (
     <>
-      <Section
-        aria-labelledby="about-hero-heading"
-        className="pb-0 pt-12 sm:pt-16"
-      >
-        <Container>
+      <PageHero
+        id="about-hero"
+        headingId="about-hero-heading"
+        breadcrumbs={
           <Breadcrumbs
             label={breadcrumbT("label")}
             items={[
@@ -77,47 +72,32 @@ async function AboutContent({ params }: Props) {
               { label: t("breadcrumb") },
             ]}
           />
-          <Eyebrow className="mt-6">{t("eyebrow")}</Eyebrow>
-          <Heading
-            as={1}
-            id="about-hero-heading"
-            className="mt-3 max-w-[18ch]"
-          >
-            {intro.title}
-          </Heading>
-          <Text variant="muted" className="mt-4 max-w-2xl">
-            {intro.lead}
-          </Text>
-
-          {story ? (
-            <section className="mt-12 max-w-3xl" aria-labelledby="about-story">
-              <Heading as={2} id="about-story" className="text-2xl sm:text-3xl">
-                {story.title}
-              </Heading>
-              {story.html ? (
-                <div
-                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
-                  dangerouslySetInnerHTML={{ __html: story.html }}
-                />
-              ) : (
-                <Text className="mt-4">{story.body}</Text>
-              )}
-            </section>
-          ) : null}
-        </Container>
-      </Section>
+        }
+        eyebrow={t("eyebrow")}
+        title={intro.title}
+        lead={intro.lead}
+      >
+        {story ? (
+          <section className="max-w-3xl" aria-labelledby="about-story">
+            <Heading as={2} id="about-story" className="text-2xl sm:text-3xl">
+              {story.title}
+            </Heading>
+            {story.html ? (
+              <div
+                className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black [&>*:last-child]:!mb-0"
+                dangerouslySetInnerHTML={{ __html: story.html }}
+              />
+            ) : (
+              <Text className="mt-4">{story.body}</Text>
+            )}
+          </section>
+        ) : null}
+      </PageHero>
 
       <AboutPrinciplesBand />
       <AboutBrandDiagram />
       <AboutTeam />
       <AboutCulture />
-
-      <PageSoftCta
-        headingId="about-soft-cta"
-        title={t("ctaTitle")}
-        lead={t("ctaLead")}
-        buttonLabel={t("ctaButton")}
-      />
     </>
   );
 }

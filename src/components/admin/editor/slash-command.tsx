@@ -13,6 +13,7 @@ import {
   IconInfo,
   IconAlertTriangle,
   IconLayers,
+  IconCards,
   IconImage,
   IconVideo,
   IconBulletList,
@@ -103,6 +104,32 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
             },
           ],
         })
+        .run();
+    },
+  },
+  {
+    title: "شبکه کارت‌ها (Card Grid)",
+    description: "چیدمان کارت‌های سفید در ۲، ۳ یا ۴ ستون یکنواخت",
+    icon: <IconCards className="size-4 text-blue" />,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertCardGrid({ layout: "grid", columns: 3 })
+        .run();
+    },
+  },
+  {
+    title: "بنتو گرید (Bento Grid)",
+    description: "چیدمان مدرن بنتو با اندازه‌های متنوع (۱/۳، ۱/۲، ۲/۳ و تمام‌عرض)",
+    icon: <IconLayers className="size-4 text-amber" />,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .insertBentoGrid("feature")
         .run();
     },
   },

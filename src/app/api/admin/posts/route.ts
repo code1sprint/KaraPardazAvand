@@ -55,7 +55,53 @@ export const POST = withAuth(
       );
     }
 
-    const parseResult = postInputSchema.safeParse(body);
+    const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
+    const normalized: Record<string, unknown> = { ...raw };
+
+    if (!normalized.summary && typeof normalized.excerpt === "string") {
+      normalized.summary = normalized.excerpt;
+    }
+    if (!normalized.locale) {
+      normalized.locale = "fa";
+    }
+    if (!normalized.author) {
+      normalized.author = { name: "کارا پرداز اوند", role: "تیم فنی کارا پرداز" };
+    }
+
+    // Normalize editor content
+    if (!normalized.contentHtml) {
+      if (typeof normalized.content === "string") {
+        normalized.contentHtml = normalized.content;
+      } else if (typeof normalized.body === "string") {
+        normalized.contentHtml = normalized.body;
+      } else if (typeof normalized.html === "string") {
+        normalized.contentHtml = normalized.html;
+      } else if (
+        normalized.tiptapBody &&
+        typeof normalized.tiptapBody === "object" &&
+        (normalized.tiptapBody as Record<string, unknown>).html
+      ) {
+        normalized.contentHtml = (normalized.tiptapBody as Record<string, unknown>).html;
+      }
+    }
+
+    if (!normalized.contentJson) {
+      if (
+        normalized.tiptapBody &&
+        typeof normalized.tiptapBody === "object" &&
+        (normalized.tiptapBody as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.tiptapBody;
+      } else if (
+        normalized.content &&
+        typeof normalized.content === "object" &&
+        (normalized.content as Record<string, unknown>).type === "doc"
+      ) {
+        normalized.contentJson = normalized.content;
+      }
+    }
+
+    const parseResult = postInputSchema.safeParse(normalized);
     if (!parseResult.success) {
       return NextResponse.json(
         {

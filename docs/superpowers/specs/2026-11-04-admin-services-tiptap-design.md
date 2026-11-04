@@ -1,7 +1,7 @@
 # Design Spec: Admin Services Management with Hybrid Tiptap + Structured Fields
 
 **Date:** 2026-11-04  
-**Author:** Kara Pardaz Oond Engineering  
+**Author:** Kara Pardaz Avand Engineering  
 **Branch:** `feature/admin-services-tiptap`  
 **Status:** In Progress
 
@@ -9,7 +9,7 @@
 
 ## 1. Overview & Business Objectives
 
-Kara Pardaz Oond provides 6 high-value software services:
+Kara Pardaz Avand provides 6 high-value software services:
 1. `crm`: سیستم‌های سازمانی و CRM سفارشی (Enterprise Systems & Custom CRM)
 2. `rag-ai`: سامانه‌های هوش مصنوعی و RAG (Enterprise AI & RAG)
 3. `data-science`: علم داده و داشبوردهای تحلیلی (Data Science & Analytics)

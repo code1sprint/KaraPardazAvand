@@ -44,8 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function LegalFallback() {
   return (
-    <div className="py-12 sm:py-16">
-      <Container narrow>
+    <div className="pt-[length:var(--hero-top)]">
+      <Container prose>
         <div className="h-10 w-48 animate-pulse rounded-pill bg-blue-soft" />
         <div className="mt-4 h-5 max-w-md animate-pulse rounded-pill bg-blue-soft" />
       </Container>
@@ -88,7 +88,7 @@ async function LegalContent({ params }: Props) {
         crumbLabel={crumbLabel}
       >
         <div
-          className="prose prose-slate max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-semibold [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1.5"
+          className="prose prose-slate max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:scroll-mt-24 [&_h3]:text-xl [&_h3]:font-semibold [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1.5 [&>*:last-child]:!mb-0"
           dangerouslySetInnerHTML={{ __html: doc.html }}
         />
       </LegalDocument>
