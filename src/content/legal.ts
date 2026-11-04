@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { loadMdxBySlug, loadMdxCollection } from "@/lib/mdx";
+import { loadMdxBySlug, loadMdxCollection } from "@/lib/mdx/load-mdx";
 import { parseContent } from "@/lib/content";
 
 export const legalFrontmatterSchema = z.object({
