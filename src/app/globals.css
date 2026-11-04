@@ -134,9 +134,14 @@
   .bg-band-stripe {
     background-image: repeating-linear-gradient(
       135deg,
-      transparent 0 90px,
-      var(--stripe) 90px 170px
+      transparent 0 60px,
+      rgba(46, 143, 240, 0.04) 60px 120px
     );
+  }
+
+  .bg-band-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 
   .animate-route-fade {
