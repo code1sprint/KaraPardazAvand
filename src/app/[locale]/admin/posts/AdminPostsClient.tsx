@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { IconAlertTriangle, IconPlus } from "@/components/admin/editor/EditorIcons";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 
 interface PostItem {
   _id: string;
@@ -58,8 +60,14 @@ export function AdminPostsClient() {
 
     void load();
 
+    const handleRefresh = () => {
+      void load();
+    };
+    window.addEventListener("kara-content-updated", handleRefresh);
+
     return () => {
       ignore = true;
+      window.removeEventListener("kara-content-updated", handleRefresh);
     };
   }, [localeFilter, statusFilter, searchQuery]);
 
@@ -92,6 +100,7 @@ export function AdminPostsClient() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <ApiButton variant="secondary" label="API مقالات" />
           <Link
             href="/insights"
             target="_blank"
@@ -116,14 +125,16 @@ export function AdminPostsClient() {
             href="/admin/posts/new"
             className="inline-flex items-center gap-1.5 rounded-2xl bg-blue px-4 py-2.5 text-xs font-bold text-white transition hover:bg-navy-2 shadow-sm"
           >
-            <span>+ مقاله جدید</span>
+            <IconPlus className="size-4" />
+            <span>مقاله جدید</span>
           </Link>
         </div>
       </div>
 
       {actionError && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20">
-          ⚠️ {actionError}
+        <div className="flex items-center gap-2 rounded-2xl border border-red-200 bg-red-50 p-4 text-xs font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{actionError}</span>
         </div>
       )}
 

@@ -117,6 +117,8 @@ export const PUT = withAuth(
   { roles: ["admin", "editor"] },
 );
 
+export const PATCH = PUT;
+
 export const DELETE = withAuth(
   async (_request: Request, context: unknown) => {
     const { id } = await (context as RouteContext).params;

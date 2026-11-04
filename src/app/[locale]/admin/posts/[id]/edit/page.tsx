@@ -1,8 +1,19 @@
+import { Suspense } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel } from "@/lib/db/models/Post";
 import { EditPostClient } from "./EditPostClient";
 import { DynamicMarker } from "../../../DynamicMarker";
+
+export const metadata: Metadata = {
+  title: "ویرایش نوشته | مدیریت کارا پرداز اوند",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface EditPostPageProps {
   params: Promise<{
@@ -11,7 +22,8 @@ interface EditPostPageProps {
   }>;
 }
 
-export default async function EditPostPage({ params }: EditPostPageProps) {
+async function EditPostContent({ params }: EditPostPageProps) {
+  await connection();
   const { id } = await params;
 
   await connectToDatabase();
@@ -49,14 +61,22 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   };
 
   return (
+    <EditPostClient
+      initialData={initialData}
+      postId={id}
+      slug={post.slug}
+      title={post.title}
+    />
+  );
+}
+
+export default function EditPostPage({ params }: EditPostPageProps) {
+  return (
     <>
       <DynamicMarker />
-      <EditPostClient
-        initialData={initialData}
-        postId={id}
-        slug={post.slug}
-        title={post.title}
-      />
+      <Suspense fallback={null}>
+        <EditPostContent params={params} />
+      </Suspense>
     </>
   );
 }

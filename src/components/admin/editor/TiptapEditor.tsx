@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react";
+import { mergeAttributes } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -22,9 +23,10 @@ import { CustomImageExtension } from "./image-extension";
 import { SlashCommandExtension } from "./slash-command";
 import { CodeBlockNodeView } from "./CodeBlockNodeView";
 import { TiptapToolbar } from "./TiptapToolbar";
-import { IconEraser, IconLightbulb } from "./EditorIcons";
+import { IconEraser, IconLightbulb, IconLink } from "./EditorIcons";
 import { MediaModal, type MediaInsertParams } from "./MediaModal";
 import { CtaModal, type CtaModalParams } from "./CtaModal";
+import { LinkModal, type LinkModalParams } from "./LinkModal";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -32,6 +34,23 @@ const lowlight = createLowlight(common);
 const InteractiveCodeBlock = CodeBlockLowlight.extend({
   addNodeView() {
     return ReactNodeViewRenderer(CodeBlockNodeView);
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const lang = (node.attrs.language as string) || "typescript";
+    return [
+      "pre",
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+        "data-language": lang,
+        dir: "ltr",
+      }),
+      [
+        "code",
+        {
+          class: lang ? `${this.options.languageClassPrefix || "language-"}${lang}` : null,
+        },
+        0,
+      ],
+    ];
   },
 });
 
@@ -55,6 +74,8 @@ export function TiptapEditor({
   const [ctaModalOpen, setCtaModalOpen] = useState(false);
   const [ctaModalParams, setCtaModalParams] = useState<Partial<CtaModalParams> | undefined>(undefined);
   const activeCtaUpdateRef = useRef<((params: CtaModalParams) => void) | null>(null);
+  const [linkModalOpen, setLinkModalOpen] = useState(false);
+  const [linkModalParams, setLinkModalParams] = useState<Partial<LinkModalParams>>({});
 
   const initialContent =
     contentJson && Object.keys(contentJson).length > 0 && contentJson.type === "doc"
@@ -229,6 +250,101 @@ export function TiptapEditor({
       .run();
   };
 
+  const openLinkModal = useCallback(() => {
+    if (!editor) return;
+    const previousUrl = (editor.getAttributes("link").href as string) || "";
+    const target = editor.getAttributes("link").target as string | undefined;
+    const { from, to } = editor.state.selection;
+    const selectedText = from !== to ? editor.state.doc.textBetween(from, to) : "";
+
+    setLinkModalParams({
+      url: previousUrl,
+      text: selectedText,
+      openInNewTab: target === "_blank",
+    });
+    setLinkModalOpen(true);
+  }, [editor]);
+
+  // Listen for Slash Command link requests
+  useEffect(() => {
+    const handleSlashLink = () => {
+      openLinkModal();
+    };
+
+    window.addEventListener("kara-open-link-modal", handleSlashLink);
+    return () => {
+      window.removeEventListener("kara-open-link-modal", handleSlashLink);
+    };
+  }, [openLinkModal]);
+
+  const handleConfirmLink = (params: LinkModalParams) => {
+    if (!editor) return;
+
+    const { url, text, openInNewTab } = params;
+    if (!url.trim()) {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      setLinkModalOpen(false);
+      return;
+    }
+
+    const target = openInNewTab ? "_blank" : null;
+    const { from, to } = editor.state.selection;
+    const isSelectionEmpty = from === to;
+
+    if (text && isSelectionEmpty) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "text",
+          text,
+          marks: [
+            {
+              type: "link",
+              attrs: {
+                href: url,
+                target,
+              },
+            },
+          ],
+        })
+        .run();
+    } else if (text && !isSelectionEmpty && text !== editor.state.doc.textBetween(from, to)) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "text",
+          text,
+          marks: [
+            {
+              type: "link",
+              attrs: {
+                href: url,
+                target,
+              },
+            },
+          ],
+        })
+        .run();
+    } else {
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: url, target })
+        .run();
+    }
+
+    setLinkModalOpen(false);
+  };
+
+  const handleUnlink = () => {
+    if (!editor) return;
+    editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    setLinkModalOpen(false);
+  };
+
   const words = editor?.storage.characterCount?.words() ?? 0;
   const characters = editor?.storage.characterCount?.characters() ?? 0;
   const readingTime = Math.max(1, Math.ceil(words / 200));
@@ -271,6 +387,18 @@ export function TiptapEditor({
           >
             `کد`
           </button>
+          <button
+            type="button"
+            onClick={openLinkModal}
+            className={cn(
+              "px-2 py-1 rounded text-xs font-semibold flex items-center gap-1 transition-colors",
+              editor.isActive("link") ? "bg-blue/15 text-blue" : "text-muted hover:text-text",
+            )}
+            title="پیوند / لینک"
+          >
+            <IconLink className="size-3.5" />
+            <span>لینک</span>
+          </button>
           {locale === "fa" && (
             <button
               type="button"
@@ -295,6 +423,7 @@ export function TiptapEditor({
       <TiptapToolbar
         editor={editor}
         locale={locale}
+        onOpenLinkModal={openLinkModal}
         onOpenMediaModal={(type) => {
           setMediaModalType(type);
           setMediaModalOpen(true);
@@ -350,6 +479,17 @@ export function TiptapEditor({
         }}
         onConfirm={handleConfirmCta}
         initialParams={ctaModalParams}
+      />
+
+      {/* Dedicated Custom Link Modal (No window.prompt!) */}
+      <LinkModal
+        key={linkModalOpen ? `link-${linkModalParams?.url || "new"}` : "link-closed"}
+        isOpen={linkModalOpen}
+        onClose={() => setLinkModalOpen(false)}
+        onConfirm={handleConfirmLink}
+        onUnlink={handleUnlink}
+        initialParams={linkModalParams}
+        hasExistingLink={editor?.isActive("link") ?? false}
       />
     </div>
   );

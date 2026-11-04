@@ -97,7 +97,7 @@ export function CodeBlockNodeView({
       </div>
 
       {/* Code Editor Content */}
-      <pre className="p-4 font-mono text-xs text-win-text leading-relaxed overflow-x-auto text-left bg-transparent m-0 focus:outline-none" dir="ltr">
+      <pre className="p-4 font-mono text-xs text-win-text leading-relaxed overflow-x-auto text-left bg-transparent m-0 focus:outline-none min-h-[2.5rem]" dir="ltr">
         <NodeViewContent className={`language-${currentLang}`} />
       </pre>
     </NodeViewWrapper>

@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
+import {
+  IconExternalLink,
+  IconTrash,
+  IconCheck,
+  IconPlus,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 
 interface ServiceItem {
@@ -66,8 +73,15 @@ export function AdminServicesClient() {
       }
     };
     void load();
+
+    const handleRefresh = () => {
+      void fetchServices();
+    };
+    window.addEventListener("kara-content-updated", handleRefresh);
+
     return () => {
       ignore = true;
+      window.removeEventListener("kara-content-updated", handleRefresh);
     };
   }, []);
 
@@ -123,19 +137,21 @@ export function AdminServicesClient() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <ApiButton variant="secondary" label="API خدمات" />
           <Link
             href="/services"
             target="_blank"
             className="inline-flex items-center gap-1.5 rounded-2xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text shadow-sm transition-colors hover:border-blue"
           >
             <span>مشاهده کاتالوگ در سایت</span>
-            <span className="text-muted">↗</span>
+            <IconExternalLink className="size-3.5 text-muted" />
           </Link>
           <Link
             href="/admin/services/new"
             className="inline-flex items-center gap-1.5 rounded-2xl bg-blue text-white px-5 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all"
           >
-            <span>+ تعریف خدمت جدید</span>
+            <IconPlus className="size-4" />
+            <span>تعریف خدمت جدید</span>
           </Link>
         </div>
       </div>
@@ -271,7 +287,7 @@ export function AdminServicesClient() {
                       <td className="px-6 py-4 text-center">
                         {hasDeepDive ? (
                           <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue bg-blue/10 px-2 py-0.5 rounded-full">
-                            <span>✓</span>
+                            <IconCheck className="size-3 text-blue" />
                             <span>فعال (Tiptap)</span>
                           </span>
                         ) : (
@@ -305,19 +321,23 @@ export function AdminServicesClient() {
                           <Link
                             href={`/services/${service.slug}`}
                             target="_blank"
-                            className="rounded-xl border border-line bg-panel p-1.5 text-xs text-muted hover:text-text hover:border-line transition-colors"
+                            className="rounded-xl border border-line bg-panel p-1.5 text-xs text-muted hover:text-text hover:border-line transition-colors inline-flex items-center justify-center"
                             title="مشاهده زنده در سایت"
                           >
-                            ↗
+                            <IconExternalLink className="size-3.5" />
                           </Link>
                           <button
                             type="button"
                             onClick={() => handleDelete(service._id, service.title.fa)}
                             disabled={deletingId === service._id}
-                            className="rounded-xl border border-transparent p-1.5 text-xs text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                            className="rounded-xl border border-transparent p-1.5 text-xs text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50 inline-flex items-center justify-center"
                             title="حذف خدمت"
                           >
-                            {deletingId === service._id ? "..." : "🗑"}
+                            {deletingId === service._id ? (
+                              "..."
+                            ) : (
+                              <IconTrash className="size-3.5" />
+                            )}
                           </button>
                         </div>
                       </td>

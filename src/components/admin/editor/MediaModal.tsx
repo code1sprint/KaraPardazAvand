@@ -386,13 +386,13 @@ export function MediaModal({
             </div>
 
             {/* Layout & Text Wrapping Controls */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-line/60 pb-3">
+            <div className="space-y-3.5 border-b border-line/60 pb-3">
               {/* Alignment / Wrap */}
               <div>
                 <label className="block text-xs font-bold text-muted mb-1.5">
                   تراز و پیچش متن (Text Wrapping)
                 </label>
-                <div className="flex items-center gap-1 bg-panel p-1 rounded-xl border border-line text-xs">
+                <div className="grid grid-cols-3 gap-1 bg-panel p-1 rounded-xl border border-line text-[11px] sm:text-xs">
                   <button
                     type="button"
                     onClick={() => {
@@ -400,27 +400,27 @@ export function MediaModal({
                       if (selectedWidth === "100%") setSelectedWidth("50%");
                     }}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
+                      "py-1.5 px-1 sm:px-2 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap",
                       selectedAlign === "left"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    <IconAlignLeft className="size-3" />
-                    <span>چپ (متن راست)</span>
+                    <IconAlignLeft className="size-3.5 shrink-0" />
+                    <span className="whitespace-nowrap">چپ (متن راست)</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setSelectedAlign("center")}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
+                      "py-1.5 px-1 sm:px-2 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap",
                       selectedAlign === "center"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    <IconAlignCenter className="size-3" />
-                    <span>وسط‌چین</span>
+                    <IconAlignCenter className="size-3.5 shrink-0" />
+                    <span className="whitespace-nowrap">وسط‌چین</span>
                   </button>
                   <button
                     type="button"
@@ -429,14 +429,14 @@ export function MediaModal({
                       if (selectedWidth === "100%") setSelectedWidth("50%");
                     }}
                     className={cn(
-                      "flex-1 py-1 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1",
+                      "py-1.5 px-1 sm:px-2 rounded-lg font-bold transition-colors inline-flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap",
                       selectedAlign === "right"
                         ? "bg-blue/15 text-blue"
                         : "text-muted hover:text-text",
                     )}
                   >
-                    <IconAlignRight className="size-3" />
-                    <span>راست (متن چپ)</span>
+                    <IconAlignRight className="size-3.5 shrink-0" />
+                    <span className="whitespace-nowrap">راست (متن چپ)</span>
                   </button>
                 </div>
               </div>
@@ -446,16 +446,16 @@ export function MediaModal({
                 <label className="block text-xs font-bold text-muted mb-1.5">
                   سایز و عرض رسانه (Width)
                 </label>
-                <div className="flex items-center gap-1 bg-panel p-1 rounded-xl border border-line text-xs font-mono">
+                <div className="grid grid-cols-4 gap-1 bg-panel p-1 rounded-xl border border-line text-xs font-mono">
                   {(["25%", "50%", "75%", "100%"] as const).map((w) => (
                     <button
                       key={w}
                       type="button"
                       onClick={() => setSelectedWidth(w)}
                       className={cn(
-                        "flex-1 py-1 rounded-lg transition-colors text-center",
+                        "py-1.5 rounded-lg transition-colors text-center font-bold whitespace-nowrap",
                         selectedWidth === w
-                          ? "bg-blue text-white font-bold"
+                          ? "bg-blue text-white"
                           : "text-muted hover:text-text",
                       )}
                     >

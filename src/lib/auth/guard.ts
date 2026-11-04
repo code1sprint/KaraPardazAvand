@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyAuthToken, AuthTokenPayload } from "./jwt";
 import { AUTH_COOKIE_NAME } from "./session";
-import { DatabaseError } from "@/lib/db/mongodb";
-import { UserRole } from "@/lib/db/models/User";
+import { connectToDatabase, DatabaseError } from "@/lib/db/mongodb";
+import { User, UserRole } from "@/lib/db/models/User";
 
 export type AuthenticatedHandler<T = unknown> = (
   request: Request,
@@ -11,13 +11,49 @@ export type AuthenticatedHandler<T = unknown> = (
 ) => Promise<NextResponse> | NextResponse;
 
 /**
- * Extracts and verifies token from Bearer header or HTTP-only cookie.
+ * Extracts and verifies token from Bearer header, API key (Payload-style), or HTTP-only cookie.
  */
 export async function authenticateRequest(
   request: Request,
 ): Promise<AuthTokenPayload | null> {
-  // 1. Try Bearer header
   const authHeader = request.headers.get("authorization");
+  const xApiKey = request.headers.get("x-api-key");
+
+  // 1. Check for API key (via x-api-key header or Authorization: Api-Key / users API-Key)
+  let extractedApiKey: string | null = null;
+  if (xApiKey && xApiKey.trim().length > 0) {
+    extractedApiKey = xApiKey.trim();
+  } else if (authHeader) {
+    if (authHeader.startsWith("Api-Key ")) {
+      extractedApiKey = authHeader.substring(8).trim();
+    } else if (authHeader.toLowerCase().startsWith("users api-key ")) {
+      // Payload CMS standard API key format: "Authorization: users API-Key <key>"
+      extractedApiKey = authHeader.substring(14).trim();
+    }
+  }
+
+  if (extractedApiKey) {
+    try {
+      await connectToDatabase();
+      const apiKeyUser = await User.findOne({
+        apiKey: extractedApiKey,
+        isActive: true,
+      }).select("_id email name role");
+
+      if (apiKeyUser) {
+        return {
+          sub: apiKeyUser._id.toString(),
+          email: apiKeyUser.email,
+          name: apiKeyUser.name,
+          role: apiKeyUser.role,
+        };
+      }
+    } catch (err) {
+      console.error("[AUTH_API_KEY_ERROR]", err);
+    }
+  }
+
+  // 2. Try Bearer header
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const bearerToken = authHeader.substring(7).trim();
     if (bearerToken) {
@@ -26,7 +62,7 @@ export async function authenticateRequest(
     }
   }
 
-  // 2. Try HTTP-only cookie via next/headers
+  // 3. Try HTTP-only cookie via next/headers
   try {
     const cookieStore = await cookies();
     const cookieToken = cookieStore.get(AUTH_COOKIE_NAME)?.value;
@@ -38,7 +74,7 @@ export async function authenticateRequest(
     // Ignore cookie store errors in unsupported contexts
   }
 
-  // 3. Fallback: manual cookie header parsing from request
+  // 4. Fallback: manual cookie header parsing from request
   const cookieHeader = request.headers.get("cookie");
   if (cookieHeader) {
     const match = cookieHeader.match(

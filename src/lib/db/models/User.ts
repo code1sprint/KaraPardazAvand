@@ -9,6 +9,8 @@ export interface IUser extends Document {
   password?: string;
   role: UserRole;
   isActive: boolean;
+  apiKey?: string;
+  apiKeyCreatedAt?: Date;
   lastLoginAt?: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -57,6 +59,15 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    apiKey: {
+      type: String,
+      unique: true,
+      sparse: true,
+      select: false,
+    },
+    apiKeyCreatedAt: {
+      type: Date,
     },
     lastLoginAt: {
       type: Date,

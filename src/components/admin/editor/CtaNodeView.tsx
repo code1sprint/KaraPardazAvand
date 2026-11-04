@@ -3,6 +3,7 @@
 import { NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { cn } from "@/lib/cn";
+import { TriMarker } from "@/components/ui/TriMarker";
 import {
   IconAlignRight,
   IconAlignCenter,
@@ -55,7 +56,12 @@ export function CtaNodeView({
       <div
         contentEditable={false}
         className={cn(
-          "absolute -top-11 start-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 bg-panel border border-line shadow-xl rounded-xl p-1 text-xs select-none transition-all",
+          "absolute -top-11 z-30 flex items-center gap-1.5 bg-panel border border-line shadow-xl rounded-xl p-1 text-xs select-none transition-all whitespace-nowrap",
+          align === "left"
+            ? "left-0"
+            : align === "right"
+              ? "right-0"
+              : "left-1/2 -translate-x-1/2",
           selected ? "opacity-100 visible" : "opacity-0 group-hover:opacity-100 group-hover:visible",
         )}
       >
@@ -151,7 +157,7 @@ export function CtaNodeView({
         >
           <span>{label}</span>
           {/* Orange triangle from the logo as small signature marker */}
-          <span className="text-orange text-xs">◀</span>
+          <TriMarker className="-rotate-90 size-2" />
         </div>
       </div>
     </NodeViewWrapper>

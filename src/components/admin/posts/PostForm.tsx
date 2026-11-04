@@ -9,7 +9,9 @@ import {
   IconSparkles,
 } from "@/components/admin/editor/EditorIcons";
 import { slugifyHeading } from "@/lib/editor/normalizer";
+import { highlightHtmlCodeBlocks } from "@/lib/syntax-highlight";
 import { cn } from "@/lib/cn";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 
 export interface PostFormData {
   slug: string;
@@ -251,10 +253,12 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
               />
             ) : (
               <div
-                className="prose prose-slate max-w-none p-5 rounded-2xl border border-line bg-bg/30 min-h-[360px] font-vazirmatn text-text"
+                className="prose prose-slate max-w-none p-6 rounded-2xl border border-line bg-panel min-h-[360px] font-vazirmatn text-text"
                 dir={formData.locale === "fa" ? "rtl" : "ltr"}
                 dangerouslySetInnerHTML={{
-                  __html: formData.contentHtml || "<p className='text-muted'>متنی وجود ندارد.</p>",
+                  __html:
+                    highlightHtmlCodeBlocks(formData.contentHtml) ||
+                    "<p class='text-muted'>متنی وجود ندارد.</p>",
                 }}
               />
             )}
@@ -324,7 +328,12 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
               />
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 space-y-2">
+              <ApiButton
+                variant="secondary"
+                label="مدیریت API این مقاله"
+                className="w-full justify-center py-2"
+              />
               <button
                 type="submit"
                 disabled={loading}

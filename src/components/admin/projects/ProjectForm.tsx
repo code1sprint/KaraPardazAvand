@@ -3,9 +3,24 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
+import {
+  IconFileText,
+  IconLightbulb,
+  IconBarChart,
+  IconImage,
+  IconPencil,
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconExternalLink,
+  IconArrowRight,
+  IconCheck,
+  IconPlus,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 import type { IProject } from "@/lib/db/models/Project";
+import { ProjectCoverPicker } from "./ProjectCoverPicker";
 
 type ProjectFormData = {
   slug: string;
@@ -78,7 +93,7 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
       source: r.source || "",
     })),
     stack: initialData?.stack || ["TypeScript", "PostgreSQL", "Next.js"],
-    cover: initialData?.cover || "/projects/ops-crm-cover.svg",
+    cover: initialData?.cover || "",
     gallery: (initialData?.gallery || []).map((g) => ({
       src: g.src,
       caption: g.caption,
@@ -127,9 +142,15 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setErrorMsg(null);
     setSuccessMsg(null);
+
+    if (!formData.cover?.trim()) {
+      setErrorMsg("لطفاً تصویر کاور اصلی پروژه را از مرورگر انتخاب و بارگذاری کنید.");
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
       const url = isNew
@@ -172,9 +193,10 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/projects"
-              className="text-xs text-muted hover:text-blue transition-colors font-medium"
+              className="text-xs text-muted hover:text-blue transition-colors font-medium inline-flex items-center gap-1"
             >
-              ← بازگشت به لیست پروژه‌ها
+              <IconArrowRight className="size-3.5" />
+              <span>بازگشت به لیست پروژه‌ها</span>
             </Link>
             <span className="text-muted">/</span>
             <span className="text-xs font-bold text-text">
@@ -187,6 +209,7 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <ApiButton variant="secondary" label="API این سند" />
           {!isNew && (
             <Link
               href={`/portfolio/${formData.slug}`}
@@ -194,7 +217,7 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
               className="rounded-xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text hover:border-blue transition-colors inline-flex items-center gap-1.5 shadow-sm"
             >
               <span>مشاهده زنده در سایت</span>
-              <span className="text-muted">↗</span>
+              <IconExternalLink className="size-3.5 text-muted" />
             </Link>
           )}
 
@@ -213,27 +236,29 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
 
       {/* Notifications */}
       {errorMsg && (
-        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
-          ⚠️ {errorMsg}
+        <div className="flex items-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{errorMsg}</span>
         </div>
       )}
       {successMsg && (
-        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
-          ✓ {successMsg}
+        <div className="flex items-center gap-2 rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
+          <IconCheckCircle className="size-4 shrink-0 text-ok" />
+          <span>{successMsg}</span>
         </div>
       )}
 
       {/* Tabs */}
       <div className="flex flex-wrap items-center gap-2 border-b border-line pb-2">
         {[
-          { id: "general", label: "۱. مشخصات و دسته‌بندی", icon: "📋" },
-          { id: "problem", label: "۲. صورت مسئله و راهکار", icon: "💡" },
-          { id: "results", label: "۳. دستاوردهای عددی و استک", icon: "📊" },
-          { id: "systemMap", label: "۴. گالری و نقشه سیستم", icon: "🖼️" },
+          { id: "general", label: "۱. مشخصات و دسته‌بندی", icon: <IconFileText className="size-4" /> },
+          { id: "problem", label: "۲. صورت مسئله و راهکار", icon: <IconLightbulb className="size-4" /> },
+          { id: "results", label: "۳. دستاوردهای عددی و استک", icon: <IconBarChart className="size-4" /> },
+          { id: "systemMap", label: "۴. گالری و نقشه سیستم", icon: <IconImage className="size-4" /> },
           {
             id: "narrative",
             label: "۵. روایت تفصیلی پروژه (Tiptap)",
-            icon: "✍️",
+            icon: <IconPencil className="size-4" />,
             badge: "ادیتور آزاد",
           },
         ].map((tab) => (
@@ -375,7 +400,11 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
                         : "bg-bg border-line text-muted hover:text-text",
                     )}
                   >
-                    <span>{checked ? "✓" : "+"}</span>
+                    {checked ? (
+                      <IconCheck className="size-3.5 shrink-0" />
+                    ) : (
+                      <IconPlus className="size-3.5 shrink-0" />
+                    )}
                     <span>{svc.label}</span>
                   </button>
                 );
@@ -384,55 +413,48 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
           </div>
 
           {/* Cover & Status */}
-          <div className="md:col-span-2 border-t border-line pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-text mb-1.5">
-                تصویر کاور اصلی پروژه
-              </label>
-              <input
-                type="text"
-                dir="ltr"
-                value={formData.cover}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, cover: e.target.value }))
-                }
-                placeholder="/projects/ops-crm-cover.svg"
-                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2 text-xs font-mono text-text"
-              />
-            </div>
+          <div className="md:col-span-2 border-t border-line pt-5 space-y-4">
+            <ProjectCoverPicker
+              value={formData.cover}
+              onChange={(url) => setFormData((prev) => ({ ...prev, cover: url }))}
+              label="تصویر کاور اصلی پروژه"
+              required
+            />
 
-            <div>
-              <label className="block text-xs font-bold text-text mb-1.5">
-                وضعیت انتشار
-              </label>
-              <select
-                value={formData.status}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    status: e.target.value as "published" | "draft",
-                  }))
-                }
-                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs text-text font-bold"
-              >
-                <option value="published">منتشرشده (فعال در سایت)</option>
-                <option value="draft">پیش‌نویس (غیرفعال)</option>
-              </select>
-            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div>
+                <label className="block text-xs font-bold text-text mb-1.5">
+                  وضعیت انتشار
+                </label>
+                <select
+                  value={formData.status}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      status: e.target.value as "published" | "draft",
+                    }))
+                  }
+                  className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs text-text font-bold"
+                >
+                  <option value="published">منتشرشده (فعال در سایت)</option>
+                  <option value="draft">پیش‌نویس (غیرفعال)</option>
+                </select>
+              </div>
 
-            <div className="sm:col-span-3 flex items-center gap-2 mt-1">
-              <input
-                type="checkbox"
-                id="featured"
-                checked={formData.featured}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, featured: e.target.checked }))
-                }
-                className="h-4 w-4 rounded border-line text-blue focus:ring-blue"
-              />
-              <label htmlFor="featured" className="text-xs font-bold text-text cursor-pointer">
-                نمایش به عنوان پروژه برگزیده در صفحه اصلی و پیشخوان (Featured Case Study)
-              </label>
+              <div className="flex items-center gap-2 sm:pt-6">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  checked={formData.featured}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, featured: e.target.checked }))
+                  }
+                  className="h-4 w-4 rounded border-line text-blue focus:ring-blue"
+                />
+                <label htmlFor="featured" className="text-xs font-bold text-text cursor-pointer">
+                  نمایش به عنوان پروژه برگزیده در صفحه اصلی و پیشخوان
+                </label>
+              </div>
             </div>
           </div>
         </div>

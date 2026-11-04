@@ -100,6 +100,8 @@ export const PUT = withAuth<RouteParams>(
   { roles: ["admin", "editor"] },
 );
 
+export const PATCH = PUT;
+
 export const DELETE = withAuth<RouteParams>(
   async (_request: Request, { params }) => {
     if (!params?.id) {

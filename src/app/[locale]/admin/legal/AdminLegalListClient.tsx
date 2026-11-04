@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { IconExternalLink } from "@/components/admin/editor/EditorIcons";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { cn } from "@/lib/cn";
 import type { ILegalDoc } from "@/lib/db/models/LegalDoc";
 
@@ -36,8 +38,14 @@ export function AdminLegalListClient() {
 
     loadDocs();
 
+    const handleRefresh = () => {
+      void loadDocs();
+    };
+    window.addEventListener("kara-content-updated", handleRefresh);
+
     return () => {
       mounted = false;
+      window.removeEventListener("kara-content-updated", handleRefresh);
     };
   }, []);
 
@@ -86,12 +94,15 @@ export function AdminLegalListClient() {
           </p>
         </div>
 
-        <Link
-          href="/admin/legal/new"
-          className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky"
-        >
-          <span>+ ایجاد سند حقوقی جدید</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <ApiButton variant="secondary" label="API اسناد حقوقی" />
+          <Link
+            href="/admin/legal/new"
+            className="inline-flex items-center gap-2 rounded-full bg-blue px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky"
+          >
+            <span>+ ایجاد سند حقوقی جدید</span>
+          </Link>
+        </div>
       </div>
 
       {error && (
@@ -166,10 +177,10 @@ export function AdminLegalListClient() {
                     <Link
                       href={publicUrl}
                       target="_blank"
-                      className="rounded-xl border border-line px-2.5 py-1.5 text-xs text-muted transition hover:text-text"
+                      className="rounded-xl border border-line px-2.5 py-1.5 text-xs text-muted transition hover:text-text inline-flex items-center justify-center"
                       title="مشاهده زنده"
                     >
-                      ↗
+                      <IconExternalLink className="size-3.5" />
                     </Link>
                   </div>
 

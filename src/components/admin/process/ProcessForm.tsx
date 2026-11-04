@@ -1,8 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
+import {
+  IconFileText,
+  IconPackage,
+  IconHandshake,
+  IconPencil,
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconExternalLink,
+  IconArrowRight,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 import type { ProcessFormData } from "@/lib/validations/process";
 
@@ -53,25 +64,25 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
   const tabs: Array<{
     id: "hero" | "steps" | "engagement" | "guide";
     label: string;
-    icon: string;
+    icon: ReactNode;
     badge?: string;
   }> = [
-    { id: "hero", label: "۱. مشخصات و سربرگ", icon: "📋" },
+    { id: "hero", label: "۱. مشخصات و سربرگ", icon: <IconFileText className="size-4" /> },
     {
       id: "steps",
       label: "۲. گام‌های متدولوژی مهندسی",
-      icon: "📦",
+      icon: <IconPackage className="size-4" />,
       badge: `${formData.steps.length} گام`,
     },
     {
       id: "engagement",
       label: "۳. الگوهای همکاری و تعهدات ارتباطی",
-      icon: "🤝",
+      icon: <IconHandshake className="size-4" />,
     },
     {
       id: "guide",
       label: "۴. راهنمای تفصیلی تحویل (Tiptap Rich-Text)",
-      icon: "✍️",
+      icon: <IconPencil className="size-4" />,
       badge: "ادیتور آزاد",
     },
   ];
@@ -84,9 +95,10 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
           <div className="flex items-center gap-2">
             <Link
               href="/admin"
-              className="text-xs text-muted hover:text-blue transition-colors font-medium"
+              className="text-xs text-muted hover:text-blue transition-colors font-medium inline-flex items-center gap-1"
             >
-              ← بازگشت به پیشخوان
+              <IconArrowRight className="size-3.5" />
+              <span>بازگشت به پیشخوان</span>
             </Link>
             <span className="text-muted">/</span>
             <span className="text-xs font-bold text-text">
@@ -102,13 +114,14 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <ApiButton variant="secondary" label="API این بخش" />
           <Link
             href="/process"
             target="_blank"
             className="rounded-xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text hover:border-blue transition-colors inline-flex items-center gap-1.5 shadow-sm"
           >
             <span>مشاهده زنده در سایت</span>
-            <span className="text-muted">↗</span>
+            <IconExternalLink className="size-3.5 text-muted" />
           </Link>
 
           <button
@@ -126,13 +139,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
 
       {/* Notifications */}
       {errorMessage && (
-        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
-          ⚠️ {errorMessage}
+        <div className="flex items-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{errorMessage}</span>
         </div>
       )}
       {successMessage && (
-        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
-          ✓ {successMessage}
+        <div className="flex items-center gap-2 rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
+          <IconCheckCircle className="size-4 shrink-0 text-ok" />
+          <span>{successMessage}</span>
         </div>
       )}
 

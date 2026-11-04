@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/context";
 import { cn } from "@/lib/cn";
+import { ApiDrawer } from "@/components/admin/api-drawer/ApiDrawer";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 
 interface AdminShellProps {
   children: ReactNode;
@@ -21,6 +23,14 @@ export function AdminShell({ children }: AdminShellProps) {
     connected: false,
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [apiDrawerOpen, setApiDrawerOpen] = useState(false);
+
+  // Listen for programmatic open-api-drawer events
+  useEffect(() => {
+    const handleOpen = () => setApiDrawerOpen(true);
+    window.addEventListener("open-api-drawer", handleOpen);
+    return () => window.removeEventListener("open-api-drawer", handleOpen);
+  }, []);
 
   const isLoginPage = pathname === "/admin/login";
 
@@ -106,7 +116,7 @@ export function AdminShell({ children }: AdminShellProps) {
     },
     {
       href: "/admin/inquiries",
-      label: "پیام‌های تماس و درخواست‌ها",
+      label: "تیکت‌ها",
       badge: "جدید",
       icon: (
         <svg
@@ -305,10 +315,10 @@ export function AdminShell({ children }: AdminShellProps) {
             </div>
             <div>
               <span className="block text-sm font-black text-text">
-                پیشخوان کارا پرداز
+                کارا پرداز اوند
               </span>
               <span className="block text-[11px] text-muted">
-                مدیریت سامانه سازمانی
+                کنسول مدیریت سازمانی
               </span>
             </div>
           </Link>
@@ -456,6 +466,12 @@ export function AdminShell({ children }: AdminShellProps) {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Payload-style API management trigger */}
+            <ApiButton
+              onClick={() => setApiDrawerOpen(true)}
+              label="مدیریت API"
+            />
+
             {/* Live Database status pill */}
             <div className="hidden sm:flex items-center gap-2 rounded-full border border-line bg-bg px-3 py-1 text-xs">
               <span
@@ -531,6 +547,12 @@ export function AdminShell({ children }: AdminShellProps) {
 
         {/* Dynamic Page Content */}
         <main className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-8">{children}</main>
+
+        {/* Global Payload-style API Drawer */}
+        <ApiDrawer
+          isOpen={apiDrawerOpen}
+          onClose={() => setApiDrawerOpen(false)}
+        />
       </div>
     </div>
   );

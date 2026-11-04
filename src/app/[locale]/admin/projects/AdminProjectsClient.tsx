@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
+import {
+  IconExternalLink,
+  IconStar,
+  IconTrash,
+  IconPlus,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 
 interface ProjectItem {
@@ -49,8 +56,15 @@ export function AdminProjectsClient() {
       }
     };
     void load();
+
+    const handleRefresh = () => {
+      void load();
+    };
+    window.addEventListener("kara-content-updated", handleRefresh);
+
     return () => {
       ignore = true;
+      window.removeEventListener("kara-content-updated", handleRefresh);
     };
   }, []);
 
@@ -110,19 +124,21 @@ export function AdminProjectsClient() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <ApiButton variant="secondary" label="API پروژه‌ها" />
           <Link
             href="/portfolio"
             target="_blank"
             className="inline-flex items-center gap-1.5 rounded-2xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text shadow-sm transition-colors hover:border-blue"
           >
             <span>مشاهده نمونه‌کارها در سایت</span>
-            <span className="text-muted">↗</span>
+            <IconExternalLink className="size-3.5 text-muted" />
           </Link>
           <Link
             href="/admin/projects/new"
             className="inline-flex items-center gap-1.5 rounded-2xl bg-blue text-white px-5 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all"
           >
-            <span>+ ثبت پروژه جدید</span>
+            <IconPlus className="size-4" />
+            <span>ثبت پروژه جدید</span>
           </Link>
         </div>
       </div>
@@ -280,8 +296,8 @@ export function AdminProjectsClient() {
                     {/* Featured */}
                     <td className="px-6 py-4 text-center">
                       {project.featured ? (
-                        <span className="text-orange text-sm font-bold" title="پروژه ویژه در صفحه اصلی">
-                          ★
+                        <span className="inline-flex items-center justify-center text-orange" title="پروژه ویژه در صفحه اصلی">
+                          <IconStar className="size-4" />
                         </span>
                       ) : (
                         <span className="text-muted text-xs">—</span>
@@ -314,19 +330,23 @@ export function AdminProjectsClient() {
                         <Link
                           href={`/portfolio/${project.slug}`}
                           target="_blank"
-                          className="rounded-xl border border-line bg-panel p-1.5 text-xs text-muted hover:text-text hover:border-line transition-colors"
+                          className="rounded-xl border border-line bg-panel p-1.5 text-xs text-muted hover:text-text hover:border-line transition-colors inline-flex items-center justify-center"
                           title="مشاهده زنده در سایت"
                         >
-                          ↗
+                          <IconExternalLink className="size-3.5" />
                         </Link>
                         <button
                           type="button"
                           onClick={() => handleDelete(project._id, project.title)}
                           disabled={deletingId === project._id}
-                          className="rounded-xl border border-transparent p-1.5 text-xs text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                          className="rounded-xl border border-transparent p-1.5 text-xs text-muted hover:text-red-500 hover:bg-red-500/10 transition-colors disabled:opacity-50 inline-flex items-center justify-center"
                           title="حذف پروژه"
                         >
-                          {deletingId === project._id ? "..." : "🗑"}
+                          {deletingId === project._id ? (
+                            "..."
+                          ) : (
+                            <IconTrash className="size-3.5" />
+                          )}
                         </button>
                       </div>
                     </td>

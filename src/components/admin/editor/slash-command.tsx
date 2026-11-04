@@ -20,6 +20,7 @@ import {
   IconQuote,
   IconMinus,
   IconCta,
+  IconLink,
 } from "./EditorIcons";
 
 export interface CommandItem {
@@ -153,6 +154,17 @@ export const SUGGESTION_ITEMS: CommandItem[] = [
     icon: <IconQuote className="size-4" />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+    },
+  },
+  {
+    title: "پیوند و لینک (Link)",
+    description: "درج یا ویرایش لینک به همراه کاتالوگ صفحات سایت",
+    icon: <IconLink className="size-4 text-blue" />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("kara-open-link-modal"));
+      }
     },
   },
   {

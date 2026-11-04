@@ -5,6 +5,11 @@ import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/lib/auth/context";
 import { Button } from "@/components/ui/Button";
+import {
+  IconAlertTriangle,
+  IconClose,
+  IconCheck,
+} from "@/components/admin/editor/EditorIcons";
 
 export function AdminLoginForm() {
   const router = useRouter();
@@ -126,8 +131,9 @@ export function AdminLoginForm() {
         {/* First time setup banner */}
         {isInitialized === false && !setupMode && (
           <div className="mb-6 rounded-2xl border border-amber/30 bg-amber/10 p-4 text-sm text-text">
-            <p className="font-bold text-amber">
-              ⚠️ سیستم هنوز کاربر مدیری ندارد!
+            <p className="font-bold text-amber inline-flex items-center gap-1.5">
+              <IconAlertTriangle className="size-4 shrink-0" />
+              <span>سیستم هنوز کاربر مدیری ندارد!</span>
             </p>
             <p className="mt-1 text-xs text-muted">
               جهت شروع به کار، ابتدا حساب مدیر اولیه را ثبت نمایید.
@@ -149,7 +155,7 @@ export function AdminLoginForm() {
               role="alert"
               className="mb-6 flex items-start gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-700 dark:text-red-400"
             >
-              <span className="shrink-0 text-base font-bold">✕</span>
+              <IconClose className="shrink-0 size-4 text-red-700 dark:text-red-400 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -159,7 +165,7 @@ export function AdminLoginForm() {
               role="status"
               className="mb-6 flex items-start gap-3 rounded-2xl border border-ok/30 bg-ok/10 p-4 text-sm text-ok"
             >
-              <span className="shrink-0 text-base font-bold">✓</span>
+              <IconCheck className="shrink-0 size-4 text-ok mt-0.5" />
               <span>{setupSuccess}</span>
             </div>
           )}

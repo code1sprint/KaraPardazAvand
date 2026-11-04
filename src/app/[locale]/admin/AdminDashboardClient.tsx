@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/lib/auth/context";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/cn";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 
 interface DbHealth {
   connected: boolean;
@@ -146,7 +147,8 @@ export function AdminDashboardClient() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <ApiButton label="کنسول مدیریت API" />
           <button
             type="button"
             onClick={checkDb}

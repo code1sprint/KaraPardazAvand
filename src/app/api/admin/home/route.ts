@@ -116,3 +116,5 @@ export const PUT = withAuth(
   },
   { roles: ["admin", "editor"] },
 );
+
+export const PATCH = PUT;

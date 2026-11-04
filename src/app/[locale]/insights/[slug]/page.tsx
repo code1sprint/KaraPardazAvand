@@ -27,6 +27,7 @@ import { brandAssets } from "@/lib/brand";
 import { compileMdxSource } from "@/lib/mdx";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { highlightHtmlCodeBlocks } from "@/lib/syntax-highlight";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -121,7 +122,7 @@ async function InsightPostContent({ params }: Props) {
 
   if (post.contentHtml) {
     articleContent = (
-      <div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: highlightHtmlCodeBlocks(post.contentHtml) }} />
     );
     effectiveToc = (post.toc || []).map((item) => ({
       id: item.id,

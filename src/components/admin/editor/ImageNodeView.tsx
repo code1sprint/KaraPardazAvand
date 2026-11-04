@@ -46,7 +46,12 @@ export function ImageNodeView({
       <div
         contentEditable={false}
         className={cn(
-          "absolute -top-10 start-1/2 -translate-x-1/2 z-30 flex items-center gap-1 bg-panel border border-line shadow-xl rounded-xl p-1 text-xs select-none transition-all",
+          "absolute -top-10 z-30 flex items-center gap-1 bg-panel border border-line shadow-xl rounded-xl p-1 text-xs select-none transition-all whitespace-nowrap",
+          align === "left" && width !== "100%"
+            ? "left-0"
+            : align === "right" && width !== "100%"
+              ? "right-0"
+              : "left-1/2 -translate-x-1/2",
           selected ? "opacity-100 visible" : "opacity-0 group-hover:opacity-100 group-hover:visible",
         )}
       >

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { Editor } from "@tiptap/react";
 import { cn } from "@/lib/cn";
 import {
@@ -32,6 +33,7 @@ interface TiptapToolbarProps {
   locale: "fa" | "en";
   onOpenMediaModal?: (type: "image" | "video") => void;
   onOpenCtaModal?: () => void;
+  onOpenLinkModal?: () => void;
 }
 
 export function TiptapToolbar({
@@ -39,10 +41,29 @@ export function TiptapToolbar({
   locale,
   onOpenMediaModal,
   onOpenCtaModal,
+  onOpenLinkModal,
 }: TiptapToolbarProps) {
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    if (!editor) return;
+    const update = () => setTick((t) => t + 1);
+    editor.on("transaction", update);
+    editor.on("selectionUpdate", update);
+    return () => {
+      editor.off("transaction", update);
+      editor.off("selectionUpdate", update);
+    };
+  }, [editor]);
+
   if (!editor) return null;
 
   const setLink = () => {
+    if (onOpenLinkModal) {
+      onOpenLinkModal();
+      return;
+    }
+
     const previousUrl = editor.getAttributes("link").href;
     const url = window.prompt("آدرس لینک را وارد کنید (URL):", previousUrl);
 

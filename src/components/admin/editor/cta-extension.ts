@@ -109,12 +109,14 @@ export const InlineCtaExtension = Node.create({
           label,
         ],
         [
-          "span",
+          "svg",
           {
-            class: "text-orange text-xs",
+            class: "size-2.5 text-orange shrink-0",
+            viewBox: "0 0 24 24",
+            fill: "currentColor",
             "aria-hidden": "true",
           },
-          "◀",
+          ["polygon", { points: "18,4 6,12 18,20" }],
         ],
       ],
     ];

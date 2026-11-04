@@ -3,12 +3,14 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { STATIC_SITE_LINKS, type SiteLinkItem } from "@/lib/site-links";
 import { cn } from "@/lib/cn";
+import { TriMarker } from "@/components/ui/TriMarker";
 import {
   IconClose,
   IconAlignRight,
   IconAlignCenter,
   IconAlignLeft,
   IconFullWidth,
+  IconChevronDown,
 } from "./EditorIcons";
 
 export interface CtaModalParams {
@@ -288,7 +290,7 @@ export function CtaModal({
                       </span>
                     )}
                   </div>
-                  <span className="text-muted text-xs ms-2">▼</span>
+                  <IconChevronDown className="size-3.5 text-muted ms-2 shrink-0" />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -455,7 +457,7 @@ export function CtaModal({
               >
                 <span>{label || "عنوان دکمه"}</span>
                 {/* Signature Brand Triangle Accent */}
-                <span className="text-orange text-[10px]">◀</span>
+                <TriMarker className="-rotate-90 size-2" />
               </div>
             </div>
           </div>

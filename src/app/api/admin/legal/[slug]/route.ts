@@ -102,6 +102,8 @@ export const PUT = withAuth(
   { roles: ["admin", "editor"] },
 );
 
+export const PATCH = PUT;
+
 export const DELETE = withAuth(
   async (_req: Request, context: unknown) => {
     await connectToDatabase();

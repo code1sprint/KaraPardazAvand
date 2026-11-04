@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
 import { cn } from "@/lib/cn";
 import type { LegalDocFormData } from "@/lib/validations/legal";
@@ -106,6 +107,7 @@ export function LegalForm({ initialData, isNew = false }: LegalFormProps) {
         </div>
 
         <div className="flex items-center gap-3">
+          <ApiButton variant="secondary" label="API این سند" />
           {!isNew && (
             <Link
               href={formData.slug === "terms" || formData.slug === "privacy" ? `/${formData.slug}` : `/legal/${formData.slug}`}

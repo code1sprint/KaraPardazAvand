@@ -3,7 +3,19 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { TiptapEditor } from "@/components/admin/editor/TiptapEditor";
+import {
+  IconBuilding,
+  IconPackage,
+  IconMap,
+  IconHelpCircle,
+  IconPencil,
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconExternalLink,
+  IconArrowRight,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 import type { IService } from "@/lib/db/models/Service";
 
@@ -256,9 +268,10 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/services"
-              className="text-xs text-muted hover:text-blue transition-colors font-medium"
+              className="text-xs text-muted hover:text-blue transition-colors font-medium inline-flex items-center gap-1"
             >
-              ← بازگشت به لیست خدمات
+              <IconArrowRight className="size-3.5" />
+              <span>بازگشت به لیست خدمات</span>
             </Link>
             <span className="text-muted">/</span>
             <span className="text-xs font-bold text-text">
@@ -271,6 +284,7 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <ApiButton variant="secondary" label="API این سند" />
           {!isNew && (
             <Link
               href={`/services/${formData.slug}`}
@@ -278,7 +292,7 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
               className="rounded-xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text hover:border-blue transition-colors inline-flex items-center gap-1.5 shadow-sm"
             >
               <span>مشاهده زنده در سایت</span>
-              <span className="text-muted">↗</span>
+              <IconExternalLink className="size-3.5 text-muted" />
             </Link>
           )}
 
@@ -297,27 +311,29 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
 
       {/* Notifications */}
       {errorMsg && (
-        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
-          ⚠️ {errorMsg}
+        <div className="flex items-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{errorMsg}</span>
         </div>
       )}
       {successMsg && (
-        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
-          ✓ {successMsg}
+        <div className="flex items-center gap-2 rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
+          <IconCheckCircle className="size-4 shrink-0 text-ok" />
+          <span>{successMsg}</span>
         </div>
       )}
 
       {/* Tab Navigation */}
       <div className="flex flex-wrap items-center gap-2 border-b border-line pb-2">
         {[
-          { id: "basics", label: "۱. اطلاعات پایه و هیرو", icon: "🏢" },
-          { id: "deliverables", label: "۲. خروجی‌ها و مراحل تحویل", icon: "📦" },
-          { id: "architecture", label: "۳. استک فنی و نقشه سیستم", icon: "🗺️" },
-          { id: "faqs", label: "۴. سوالات متداول و پروژه‌ها", icon: "❓" },
+          { id: "basics", label: "۱. اطلاعات پایه و هیرو", icon: <IconBuilding className="size-4" /> },
+          { id: "deliverables", label: "۲. خروجی‌ها و مراحل تحویل", icon: <IconPackage className="size-4" /> },
+          { id: "architecture", label: "۳. استک فنی و نقشه سیستم", icon: <IconMap className="size-4" /> },
+          { id: "faqs", label: "۴. سوالات متداول و پروژه‌ها", icon: <IconHelpCircle className="size-4" /> },
           {
             id: "deepdive",
             label: "۵. جزییات عمیق معماری (Tiptap Rich-Text)",
-            icon: "✍️",
+            icon: <IconPencil className="size-4" />,
             badge: "ادیتور آزاد",
           },
         ].map((tab) => (

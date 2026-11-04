@@ -1,9 +1,20 @@
+import { Suspense } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import mongoose from "mongoose";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getProjectModel } from "@/lib/db/models/Project";
 import { EditProjectClient } from "./EditProjectClient";
 import { DynamicMarker } from "../../../DynamicMarker";
+
+export const metadata: Metadata = {
+  title: "ویرایش پروژه | مدیریت کارا پرداز اوند",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 interface EditProjectPageProps {
   params: Promise<{
@@ -12,7 +23,8 @@ interface EditProjectPageProps {
   }>;
 }
 
-export default async function EditProjectPage({ params }: EditProjectPageProps) {
+async function EditProjectContent({ params }: EditProjectPageProps) {
+  await connection();
   const { id } = await params;
 
   await connectToDatabase();
@@ -34,10 +46,16 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
 
   const initialData = JSON.parse(JSON.stringify(project));
 
+  return <EditProjectClient initialData={initialData} />;
+}
+
+export default function EditProjectPage({ params }: EditProjectPageProps) {
   return (
     <>
       <DynamicMarker />
-      <EditProjectClient initialData={initialData} />
+      <Suspense fallback={null}>
+        <EditProjectContent params={params} />
+      </Suspense>
     </>
   );
 }

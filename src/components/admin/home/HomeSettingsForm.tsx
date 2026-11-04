@@ -2,6 +2,18 @@
 
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
+import {
+  IconHome,
+  IconLightbulb,
+  IconBarChart,
+  IconMail,
+  IconGlobe,
+  IconAlertTriangle,
+  IconCheckCircle,
+  IconExternalLink,
+  IconArrowRight,
+} from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 import type { SiteSettingsFormData } from "@/lib/validations/site-settings";
 
@@ -56,9 +68,10 @@ export function HomeSettingsForm({ initialData }: HomeSettingsFormProps) {
           <div className="flex items-center gap-2">
             <Link
               href="/admin"
-              className="text-xs font-bold text-muted hover:text-blue transition"
+              className="text-xs font-bold text-muted hover:text-blue transition inline-flex items-center gap-1"
             >
-              پیشخوان
+              <IconArrowRight className="size-3.5" />
+              <span>پیشخوان</span>
             </Link>
             <span className="text-xs text-muted">/</span>
             <span className="text-xs font-bold text-text">صفحه اصلی و تنظیمات هویت</span>
@@ -72,12 +85,14 @@ export function HomeSettingsForm({ initialData }: HomeSettingsFormProps) {
         </div>
 
         <div className="flex items-center gap-3">
+          <ApiButton variant="secondary" label="API صفحه اصلی" />
           <Link
             href="/"
             target="_blank"
-            className="rounded-full border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue"
+            className="rounded-full border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue inline-flex items-center gap-1.5 shadow-sm"
           >
-            مشاهده صفحه اصلی زنده
+            <span>مشاهده صفحه اصلی زنده</span>
+            <IconExternalLink className="size-3.5 text-muted" />
           </Link>
           <button
             type="submit"
@@ -98,14 +113,16 @@ export function HomeSettingsForm({ initialData }: HomeSettingsFormProps) {
 
       {/* Messages */}
       {errorMessage && (
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600">
-          {errorMessage}
+        <div className="flex items-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600">
+          <IconAlertTriangle className="size-4 shrink-0 text-red-600" />
+          <span>{errorMessage}</span>
         </div>
       )}
 
       {successMessage && (
-        <div className="rounded-2xl border border-ok/20 bg-ok/10 p-4 text-xs font-bold text-ok">
-          {successMessage}
+        <div className="flex items-center gap-2 rounded-2xl border border-ok/20 bg-ok/10 p-4 text-xs font-bold text-ok">
+          <IconCheckCircle className="size-4 shrink-0 text-ok" />
+          <span>{successMessage}</span>
         </div>
       )}
 
@@ -115,61 +132,72 @@ export function HomeSettingsForm({ initialData }: HomeSettingsFormProps) {
           type="button"
           onClick={() => setActiveTab("hero")}
           className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
+            "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition border",
             activeTab === "hero"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
+              ? "bg-blue/15 border-blue text-blue shadow-sm"
+              : "bg-panel border-line text-muted hover:text-text hover:border-blue/40",
           )}
         >
-          ۱. سربرگ هیرو و تیتر اصلی
+          <IconHome className="size-4" />
+          <span>۱. سربرگ هیرو و تیتر اصلی</span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("why")}
           className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
+            "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition border",
             activeTab === "why"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
+              ? "bg-blue/15 border-blue text-blue shadow-sm"
+              : "bg-panel border-line text-muted hover:text-text hover:border-blue/40",
           )}
         >
-          ۲. چرا کارا پرداز اوند؟ ({formData.whyStatements.length})
+          <IconLightbulb className="size-4" />
+          <span>۲. چرا کارا پرداز اوند؟</span>
+          <span className="bg-orange/15 text-orange px-1.5 py-0.5 rounded text-[10px] font-bold">
+            {formData.whyStatements.length} اصل
+          </span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("stats")}
           className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
+            "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition border",
             activeTab === "stats"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
+              ? "bg-blue/15 border-blue text-blue shadow-sm"
+              : "bg-panel border-line text-muted hover:text-text hover:border-blue/40",
           )}
         >
-          ۳. آمار و شواهد عملکرد ({formData.stats.length})
+          <IconBarChart className="size-4" />
+          <span>۳. آمار و شواهد عملکرد</span>
+          <span className="bg-orange/15 text-orange px-1.5 py-0.5 rounded text-[10px] font-bold">
+            {formData.stats.length} شاخص
+          </span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("contact")}
           className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
+            "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition border",
             activeTab === "contact"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
+              ? "bg-blue/15 border-blue text-blue shadow-sm"
+              : "bg-panel border-line text-muted hover:text-text hover:border-blue/40",
           )}
         >
-          ۴. اطلاعات تماس و شبکه‌ها
+          <IconMail className="size-4" />
+          <span>۴. اطلاعات تماس و شبکه‌ها</span>
         </button>
         <button
           type="button"
           onClick={() => setActiveTab("seo")}
           className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
+            "flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition border",
             activeTab === "seo"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
+              ? "bg-blue/15 border-blue text-blue shadow-sm"
+              : "bg-panel border-line text-muted hover:text-text hover:border-blue/40",
           )}
         >
-          ۵. سئو و هویت کلان
+          <IconGlobe className="size-4" />
+          <span>۵. سئو و هویت کلان</span>
         </button>
       </div>
 

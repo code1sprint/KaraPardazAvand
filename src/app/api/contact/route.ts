@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { contactApiSchema } from "@/lib/contact-schema";
 import { takeRateLimit } from "@/lib/rate-limit";
+import { connectToDatabase } from "@/lib/db/mongodb";
+import { Inquiry } from "@/lib/db/models/Inquiry";
 
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_REQUESTS = 5;
@@ -65,59 +67,50 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, code: "accepted" });
   }
 
-  const webhookUrl = process.env.CONTACT_WEBHOOK_URL?.trim();
-  if (!webhookUrl) {
-    return NextResponse.json(
-      {
-        ok: false,
-        code: "misconfigured",
-        message: "webhook_missing",
-      },
-      { status: 503 },
-    );
+  // Persist inquiry to MongoDB
+  try {
+    await connectToDatabase();
+    await Inquiry.create({
+      name: payload.name.trim(),
+      email: payload.email.trim(),
+      phone: payload.phone.trim(),
+      service: payload.service,
+      stage: payload.stage,
+      message: payload.message.trim(),
+      consent: payload.consent,
+      source: "website/contact",
+      status: "new",
+    });
+  } catch (dbErr) {
+    console.error("[CONTACT_DB_SAVE_ERROR]", dbErr);
   }
 
-  const contact =
-    [payload.email.trim(), payload.phone.trim()].filter(Boolean).join(" · ") ||
-    "";
+  const webhookUrl = process.env.CONTACT_WEBHOOK_URL?.trim();
+  if (webhookUrl) {
+    const contact =
+      [payload.email.trim(), payload.phone.trim()].filter(Boolean).join(" · ") ||
+      "";
 
-  try {
-    const upstream = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: payload.name,
-        phone: payload.phone.trim() || null,
-        email: payload.email.trim() || null,
-        contact,
-        service: payload.service,
-        stage: payload.stage,
-        message: payload.message,
-        consent: payload.consent,
-        submittedAt: new Date().toISOString(),
-        source: "kara-web/contact",
-      }),
-    });
-
-    if (!upstream.ok) {
-      return NextResponse.json(
-        {
-          ok: false,
-          code: "upstream_error",
-          message: "upstream_error",
-        },
-        { status: 502 },
-      );
+    try {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: payload.name,
+          phone: payload.phone.trim() || null,
+          email: payload.email.trim() || null,
+          contact,
+          service: payload.service,
+          stage: payload.stage,
+          message: payload.message,
+          consent: payload.consent,
+          submittedAt: new Date().toISOString(),
+          source: "kara-web/contact",
+        }),
+      });
+    } catch (whErr) {
+      console.error("[CONTACT_WEBHOOK_ERROR]", whErr);
     }
-  } catch {
-    return NextResponse.json(
-      {
-        ok: false,
-        code: "upstream_unreachable",
-        message: "upstream_unreachable",
-      },
-      { status: 502 },
-    );
   }
 
   return NextResponse.json({ ok: true, code: "accepted" });

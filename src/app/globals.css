@@ -319,6 +319,217 @@ body:has(.admin-root) [data-skip-link] {
   font-weight: bold;
 }
 
+/* Dark Code Surface for Prose & Tiptap CodeBlocks (v3 Dark Window Surface) */
+.prose pre {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 1rem;
+  border: 1px solid var(--win-line);
+  background-color: var(--win-bg);
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: var(--win-text);
+  direction: ltr !important;
+  text-align: left !important;
+  overflow-x: auto;
+  box-shadow: 0 4px 20px -2px rgba(8, 17, 42, 0.4);
+}
+
+.prose pre::before {
+  content: "● ● ●   console.code";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--win-muted);
+  border-bottom: 1px solid var(--win-line);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.prose pre[data-language]::before {
+  content: "● ● ●   console." attr(data-language);
+}
+
+/* Inside the live interactive Tiptap editor, CodeBlockNodeView already renders the full interactive terminal window */
+.tiptap [data-node-view-wrapper] pre,
+.tiptap pre {
+  position: static !important;
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+  border-radius: 0 !important;
+}
+
+.tiptap [data-node-view-wrapper] pre::before,
+.tiptap pre::before {
+  content: none !important;
+  display: none !important;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  direction: ltr !important;
+  text-align: left !important;
+  display: block;
+  white-space: pre;
+}
+
+/* Core Prose Typography Styles for Editor & Readers */
+.prose {
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.prose h2 {
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h2:first-child {
+  margin-top: 0.5rem;
+}
+
+.prose h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h3:first-child {
+  margin-top: 0.5rem;
+}
+
+.prose p {
+  margin-block: 0.5rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.prose p:empty,
+.tiptap p.is-empty {
+  margin-block: 0.25rem;
+}
+
+.prose ul {
+  list-style-type: disc !important;
+  padding-inline-start: 1.75rem !important;
+  margin-block: 0.75rem;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  padding-inline-start: 1.75rem !important;
+  margin-block: 0.75rem;
+}
+
+.prose ul ul,
+.prose ol ul {
+  list-style-type: circle !important;
+  margin-block: 0.25rem;
+  padding-inline-start: 1.25rem !important;
+}
+
+.prose ol ol,
+.prose ul ol {
+  list-style-type: lower-alpha !important;
+  margin-block: 0.25rem;
+  padding-inline-start: 1.25rem !important;
+}
+
+.prose li {
+  margin-block: 0.35rem;
+  line-height: 1.75;
+}
+
+.prose li > p {
+  margin-block: 0.15rem;
+}
+
+.prose blockquote {
+  border-inline-start: 4px solid var(--sky);
+  padding-inline-start: 1.25rem;
+  padding-block: 0.35rem;
+  margin-block: 0.85rem;
+  color: var(--muted);
+  background-color: rgba(46, 143, 240, 0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+[dir="rtl"] .prose blockquote,
+.prose[dir="rtl"] blockquote {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.prose blockquote > p {
+  margin-block: 0.25rem;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin-block: 2rem;
+}
+
+.prose strong,
+.prose b {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.prose em,
+.prose i {
+  font-style: italic;
+}
+
+.prose a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: rgba(29, 109, 209, 0.4);
+  text-underline-offset: 4px;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--blue);
+}
+
+/* Tiptap Placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--muted);
+  content: attr(data-placeholder);
+  float: right;
+  height: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+[dir="ltr"] .tiptap p.is-editor-empty:first-child::before,
+.tiptap[dir="ltr"] p.is-editor-empty:first-child::before {
+  float: left;
+}
+
 /* Enhanced Prose Tables */
 .prose table {
   width: 100%;
