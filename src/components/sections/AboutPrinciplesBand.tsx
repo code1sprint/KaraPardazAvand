@@ -30,21 +30,33 @@ export async function AboutPrinciplesBand() {
             </Text>
           </div>
 
-          <ul className="m-0 grid list-none gap-8 p-0 sm:grid-cols-2 lg:grid-cols-4">
-            {principles.map((item) => (
-              <li key={item.id} className="flex flex-col gap-2 text-start">
-                <div className="flex items-start gap-2.5">
-                  <TriMarker className="mt-1.5" />
-                  <Heading
-                    as={3}
-                    className="text-lg font-semibold text-on-brand sm:text-xl"
-                  >
+          <ul className="m-0 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-4">
+            {principles.map((item, idx) => (
+              <li
+                key={item.id}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] p-6 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-all duration-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-safe:hover:-translate-y-1 motion-safe:hover:border-white/20 motion-safe:hover:bg-white/[0.07] motion-safe:hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.5)]"
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-semibold tracking-wider text-sky-300/80">
+                      0{idx + 1}
+                    </span>
+                    <TriMarker />
+                  </div>
+                  <Heading as={3} className="text-lg font-bold text-on-brand">
                     {item.title}
                   </Heading>
+                  <Text
+                    variant="muted"
+                    className="text-sm leading-relaxed text-band-muted"
+                  >
+                    {item.body}
+                  </Text>
                 </div>
-                <Text variant="muted" className="ps-[22px] text-band-muted">
-                  {item.body}
-                </Text>
               </li>
             ))}
           </ul>
