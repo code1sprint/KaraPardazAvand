@@ -67,10 +67,10 @@ async function ProcessContent({ params }: Props) {
   const guide = processData.guide;
 
   return (
-    <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
+    <>
       <Section
         aria-labelledby="process-hero-heading"
-        className="pt-12 sm:pt-16"
+        className="pb-0 pt-12 sm:pt-16"
       >
         <Container>
           <Breadcrumbs
@@ -84,7 +84,7 @@ async function ProcessContent({ params }: Props) {
           <Heading
             as={1}
             id="process-hero-heading"
-            className="mt-3 max-w-[15ch]"
+            className="mt-3 max-w-[18ch]"
           >
             {hero?.titleBefore || pageT("titleBefore")}
             <em className="text-gradient-brand not-italic">
@@ -95,6 +95,25 @@ async function ProcessContent({ params }: Props) {
           <Text variant="muted" className="mt-4 max-w-2xl">
             {hero?.lead || pageT("lead")}
           </Text>
+
+          {guide && guide.html ? (
+            <section
+              className="mt-12 max-w-3xl"
+              aria-labelledby="process-guide-heading"
+            >
+              <Heading
+                as={2}
+                id="process-guide-heading"
+                className="text-2xl sm:text-3xl"
+              >
+                {guide.title}
+              </Heading>
+              <div
+                className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
+                dangerouslySetInnerHTML={{ __html: guide.html }}
+              />
+            </section>
+          ) : null}
         </Container>
       </Section>
 
@@ -131,28 +150,6 @@ async function ProcessContent({ params }: Props) {
       <EngagementModels />
       <CommunicationRows />
 
-      {guide && guide.html ? (
-        <Section id="process-guide" aria-labelledby="process-guide-heading">
-          <Container>
-            <Reveal>
-              <div className="rounded-2xl border border-line bg-panel p-6 sm:p-10">
-                <Heading
-                  as={2}
-                  id="process-guide-heading"
-                  className="text-2xl sm:text-3xl"
-                >
-                  {guide.title}
-                </Heading>
-                <div
-                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
-                  dangerouslySetInnerHTML={{ __html: guide.html }}
-                />
-              </div>
-            </Reveal>
-          </Container>
-        </Section>
-      ) : null}
-
       <FaqSection
         id="process-faq"
         itemIds={["duration", "process", "support", "modernize"]}
@@ -166,7 +163,7 @@ async function ProcessContent({ params }: Props) {
         lead={pageT("ctaLead")}
         buttonLabel={pageT("ctaButton")}
       />
-    </div>
+    </>
   );
 }
 

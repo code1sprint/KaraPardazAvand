@@ -50,129 +50,98 @@ export function AboutForm({ initialData }: AboutFormProps) {
     }
   };
 
+  const tabs = [
+    { id: "intro", label: "۱. سربرگ و معرفی", icon: "📋" },
+    {
+      id: "principles",
+      label: `۲. اصول ۴‌گانه برند (${formData.principles.length})`,
+      icon: "💎",
+    },
+    { id: "brand", label: "۳. گره‌های هویتی و فرهنگ", icon: "🏛️" },
+    {
+      id: "team",
+      label: `۴. اعضای تیم فنی (${formData.team.length})`,
+      icon: "👥",
+    },
+    { id: "story", label: "۵. داستان برند و مانیفست (Tiptap)", icon: "✍️" },
+  ] as const;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 pb-20">
-      {/* Top Header & Actions */}
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Header Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-line pb-6">
         <div>
           <div className="flex items-center gap-2">
             <Link
               href="/admin"
-              className="text-xs font-bold text-muted hover:text-blue transition"
+              className="text-xs text-muted hover:text-blue transition-colors font-medium"
             >
-              پیشخوان
+              ← بازگشت به پیشخوان
             </Link>
-            <span className="text-xs text-muted">/</span>
-            <span className="text-xs font-bold text-text">مدیریت درباره ما</span>
+            <span className="text-muted">/</span>
+            <span className="text-xs font-bold text-text">مدیریت درباره ما و اصول برند</span>
           </div>
-          <h1 className="mt-2 text-2xl font-black text-text">
+          <h1 className="text-xl font-black text-text sm:text-2xl mt-1">
             تنظیمات صفحه «درباره ما»
           </h1>
-          <p className="mt-1 text-xs text-muted">
+          <p className="text-xs text-muted mt-1 leading-relaxed">
             مدیریت اصول برند، معماری هویتی، تیم و روایت مانیفست سازمانی در قالب ادیتور پیشرفته
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/about"
             target="_blank"
-            className="rounded-full border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue"
+            className="rounded-xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text hover:border-blue transition-colors inline-flex items-center gap-1.5 shadow-sm"
           >
-            مشاهده صفحه زنده
+            <span>مشاهده زنده در سایت</span>
+            <span className="text-muted">↗</span>
           </Link>
+
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded-full bg-blue px-6 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky disabled:opacity-50"
+            className="rounded-xl bg-blue text-white px-6 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all disabled:opacity-50 inline-flex items-center gap-2"
           >
-            {isSubmitting ? (
-              <>
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                <span>در حال ذخیره...</span>
-              </>
-            ) : (
-              <span>ذخیره تغییرات</span>
+            {isSubmitting && (
+              <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
             )}
+            <span>ذخیره تغییرات درباره ما</span>
           </button>
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Notifications */}
       {errorMessage && (
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600">
-          {errorMessage}
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
+          ⚠️ {errorMessage}
         </div>
       )}
-
       {successMessage && (
-        <div className="rounded-2xl border border-ok/20 bg-ok/10 p-4 text-xs font-bold text-ok">
-          {successMessage}
+        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
+          ✓ {successMessage}
         </div>
       )}
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-line pb-2">
-        <button
-          type="button"
-          onClick={() => setActiveTab("intro")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "intro"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۱. سربرگ و معرفی
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("principles")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "principles"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۲. اصول ۴‌گانه برند ({formData.principles.length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("brand")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "brand"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۳. گره‌های هویتی و فرهنگ
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("team")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "team"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۴. تیم و افراد ({formData.team.length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("story")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "story"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۵. داستان برند و مانیفست فنی (Tiptap)
-        </button>
+      <div className="flex flex-wrap items-center gap-2 border-b border-line pb-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              "rounded-xl px-4 py-2.5 text-xs font-bold transition-all flex items-center gap-2",
+              activeTab === tab.id
+                ? "bg-navy text-white shadow-sm"
+                : "bg-panel text-muted hover:bg-bg hover:text-text border border-line/60",
+            )}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.label}</span>
+          </button>
+        ))}
       </div>
 
       {/* Tab 1: Intro */}
@@ -907,24 +876,20 @@ export function AboutForm({ initialData }: AboutFormProps) {
         </div>
       )}
 
-      {/* Floating Save Bar on Bottom */}
-      <div className="sticky bottom-4 z-20 flex items-center justify-between rounded-2xl border border-line bg-panel/90 p-4 shadow-lg backdrop-blur-md">
-        <span className="text-xs font-bold text-muted">
-          تغییرات پس از ذخیره مستقیماً در صفحه عمومی اعمال می‌شوند.
+      {/* Form Bottom Actions */}
+      <div className="flex items-center justify-between border-t border-line pt-6">
+        <span className="text-xs text-muted">
+          تغییرات پس از ذخیره مستقیماً در صفحه عمومی «درباره ما» اعمال خواهند شد.
         </span>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 rounded-full bg-blue px-6 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky disabled:opacity-50"
+          className="rounded-xl bg-blue text-white px-6 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all disabled:opacity-50 inline-flex items-center gap-2"
         >
-          {isSubmitting ? (
-            <>
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              <span>در حال ذخیره...</span>
-            </>
-          ) : (
-            <span>ذخیره تغییرات درباره ما</span>
+          {isSubmitting && (
+            <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
           )}
+          <span>ذخیره تغییرات درباره ما</span>
         </button>
       </div>
     </form>

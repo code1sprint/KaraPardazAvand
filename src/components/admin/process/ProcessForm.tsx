@@ -50,129 +50,107 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
     }
   };
 
+  const tabs = [
+    { id: "hero", label: "۱. مشخصات و سربرگ", icon: "📋" },
+    { id: "steps", label: `۲. گام‌های متدولوژی مهندسی (${formData.steps.length})`, icon: "🛤️" },
+    { id: "engagement", label: "۳. مدل‌های همکاری و ارتباطات", icon: "🤝" },
+    { id: "guide", label: "۴. راهنمای تفصیلی تحویل (Tiptap)", icon: "✍️" },
+  ] as const;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 pb-20">
-      {/* Top Header & Actions */}
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Header Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-line pb-6">
         <div>
           <div className="flex items-center gap-2">
             <Link
               href="/admin"
-              className="text-xs font-bold text-muted hover:text-blue transition"
+              className="text-xs text-muted hover:text-blue transition-colors font-medium"
             >
-              پیشخوان
+              ← بازگشت به پیشخوان
             </Link>
-            <span className="text-xs text-muted">/</span>
-            <span className="text-xs font-bold text-text">مدیریت فرایند همکاری</span>
+            <span className="text-muted">/</span>
+            <span className="text-xs font-bold text-text">مدیریت فرایند همکاری و متدولوژی</span>
           </div>
-          <h1 className="mt-2 text-2xl font-black text-text">
+          <h1 className="text-xl font-black text-text sm:text-2xl mt-1">
             تنظیمات صفحه «فرایند همکاری»
           </h1>
-          <p className="mt-1 text-xs text-muted">
-            مدیریت گام‌های متدولوژی مهندسی، خروجی‌های ملموس، الگوهای تعامل و راهنمای تفصیلی تحویل در ادیتور پیشرفته
+          <p className="text-xs text-muted mt-1 leading-relaxed">
+            مدیریت گام‌های متدولوژی مهندسی، خروجی‌های ملموس (Deliverables)، الگوهای قرارداد و راهنمای تحویل نرم‌افزار
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/process"
             target="_blank"
-            className="rounded-full border border-line bg-panel px-4 py-2 text-xs font-bold text-text transition hover:border-blue"
+            className="rounded-xl border border-line bg-panel px-4 py-2.5 text-xs font-bold text-text hover:border-blue transition-colors inline-flex items-center gap-1.5 shadow-sm"
           >
-            مشاهده صفحه زنده
+            <span>مشاهده زنده در سایت</span>
+            <span className="text-muted">↗</span>
           </Link>
+
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded-full bg-blue px-6 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky disabled:opacity-50"
+            className="rounded-xl bg-blue text-white px-6 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all disabled:opacity-50 inline-flex items-center gap-2"
           >
-            {isSubmitting ? (
-              <>
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                <span>در حال ذخیره...</span>
-              </>
-            ) : (
-              <span>ذخیره تغییرات فرایند</span>
+            {isSubmitting && (
+              <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
             )}
+            <span>ذخیره تغییرات فرایند همکاری</span>
           </button>
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Notifications */}
       {errorMessage && (
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600">
-          {errorMessage}
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-semibold text-red-600">
+          ⚠️ {errorMessage}
         </div>
       )}
-
       {successMessage && (
-        <div className="rounded-2xl border border-ok/20 bg-ok/10 p-4 text-xs font-bold text-ok">
-          {successMessage}
+        <div className="rounded-2xl border border-ok/30 bg-ok/10 p-4 text-xs font-semibold text-ok">
+          ✓ {successMessage}
         </div>
       )}
 
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-line pb-2">
-        <button
-          type="button"
-          onClick={() => setActiveTab("hero")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "hero"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۱. سربرگ و تیتر اصلی
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("steps")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "steps"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۲. گام‌های متدولوژی ({formData.steps.length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("engagement")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "engagement"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۳. مدل‌های همکاری و تعهدات ارتباطی
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveTab("guide")}
-          className={cn(
-            "rounded-xl px-4 py-2 text-xs font-black transition",
-            activeTab === "guide"
-              ? "bg-navy text-white shadow-sm"
-              : "bg-panel text-muted hover:bg-bg hover:text-text",
-          )}
-        >
-          ۴. راهنمای تفصیلی تحویل (Tiptap)
-        </button>
+      {/* Tabs */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-line pb-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              "rounded-xl px-4 py-2.5 text-xs font-bold transition-all flex items-center gap-2",
+              activeTab === tab.id
+                ? "bg-navy text-white shadow-sm"
+                : "bg-panel text-muted hover:bg-bg hover:text-text border border-line/60",
+            )}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.label}</span>
+          </button>
+        ))}
       </div>
 
       {/* Tab 1: Hero */}
       {activeTab === "hero" && (
-        <div className="rounded-2xl border border-line bg-panel p-6 space-y-6">
-          <h2 className="text-base font-black text-text">
-            سربرگ صفحه فرایند همکاری (Process Hero)
-          </h2>
+        <div className="rounded-2xl border border-line bg-panel p-6 sm:p-8 space-y-6 shadow-sm">
+          <div>
+            <h2 className="text-base font-bold text-text flex items-center gap-2">
+              <span>📋</span>
+              <span>سربرگ و تیتر صفحه فرایند همکاری</span>
+            </h2>
+            <p className="text-xs text-muted mt-1 leading-relaxed">
+              متن عنوان اصلی به صورت ۳ بخشی طراحی شده که بخش میانی با افکت گرادیان امضای برند نمایش داده می‌شود.
+            </p>
+          </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-3">
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
+              <label className="block text-xs font-bold text-text mb-2">
                 بخش اول تیتر (فارسی)
               </label>
               <input
@@ -190,13 +168,14 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                placeholder="فرایند همکاری؛ از تحلیل نیاز تا "
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text focus:border-blue focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
-                بخش گرادیان (فارسی) *
+              <label className="block text-xs font-bold text-text mb-2">
+                بخش میانی (گرادیان برند) *
               </label>
               <input
                 type="text"
@@ -213,12 +192,13 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text font-bold text-blue focus:border-blue focus:outline-none"
+                placeholder="تحویل پایدار"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text font-bold text-blue focus:border-blue focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
+              <label className="block text-xs font-bold text-text mb-2">
                 بخش پایانی تیتر (فارسی)
               </label>
               <input
@@ -236,15 +216,16 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                placeholder=" نرم‌افزار"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text focus:border-blue focus:outline-none transition-colors"
               />
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
-                لید معرفی (فارسی)
+              <label className="block text-xs font-bold text-text mb-2">
+                لید معرفی فرایند (فارسی) *
               </label>
               <textarea
                 rows={3}
@@ -261,13 +242,13 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none transition-colors"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
-                Hero Lead (English)
+              <label className="block text-xs font-bold text-text mb-2">
+                Process Lead (English)
               </label>
               <textarea
                 rows={3}
@@ -285,7 +266,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -294,14 +275,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
 
       {/* Tab 2: Steps */}
       {activeTab === "steps" && (
-        <div className="rounded-2xl border border-line bg-panel p-6 space-y-6">
-          <div className="flex items-center justify-between">
+        <div className="rounded-2xl border border-line bg-panel p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-base font-black text-text">
-                گام‌های متدولوژی مهندسی (Process Steps Track)
+              <h2 className="text-base font-bold text-text flex items-center gap-2">
+                <span>🛤️</span>
+                <span>گام‌های متدولوژی مهندسی (Process Steps Track)</span>
               </h2>
-              <p className="text-xs text-muted">
-                هر گام شامل هدف شفاف، خروجی‌های ملموس (Deliverables) و میزان مشارکت کارفرما است.
+              <p className="text-xs text-muted mt-1 leading-relaxed">
+                هر گام در قالب ترک عمودی تعاملی نمایش داده می‌شود و شامل هدف شفاف، خروجی‌های ملموس و نقش کارفرما است.
               </p>
             </div>
             <button
@@ -314,7 +296,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     {
                       id: `step-${Date.now()}`,
                       number: prev.steps.length + 1,
-                      title: { fa: `گام ${prev.steps.length + 1}`, en: `Step ${prev.steps.length + 1}` },
+                      title: { fa: `گام جدید`, en: `New Step` },
                       purpose: { fa: "هدف این مرحله...", en: "Purpose..." },
                       deliverables: [{ fa: "خروجی اول", en: "First deliverable" }],
                       clientInvolvement: { fa: "نقش و مشارکت کارفرما...", en: "Client involvement..." },
@@ -323,9 +305,9 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                   ],
                 }))
               }
-              className="rounded-full border border-blue bg-blue/10 px-4 py-1.5 text-xs font-bold text-blue hover:bg-blue hover:text-white transition"
+              className="rounded-xl border border-blue bg-blue/10 px-4 py-2 text-xs font-bold text-blue hover:bg-blue hover:text-white transition-all shadow-sm"
             >
-              + افزودن گام متدولوژی
+              + افزودن گام جدید
             </button>
           </div>
 
@@ -333,15 +315,18 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
             {formData.steps.map((step, index) => (
               <div
                 key={step.id || index}
-                className="rounded-xl border border-line bg-bg p-5 space-y-4"
+                className="rounded-xl border border-line bg-bg p-5 space-y-5 shadow-sm"
               >
                 <div className="flex items-center justify-between border-b border-line pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-navy text-xs font-bold text-white">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-navy text-xs font-black text-white">
                       {step.number}
                     </span>
-                    <span className="text-xs font-black text-text">
-                      گام: {step.title.fa} ({step.id})
+                    <span className="text-sm font-bold text-text">
+                      گام #{step.number}: {step.title.fa}
+                    </span>
+                    <span className="text-[11px] font-mono text-muted">
+                      ({step.id})
                     </span>
                   </div>
                   <button
@@ -352,15 +337,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         steps: prev.steps.filter((_, i) => i !== index),
                       }))
                     }
-                    className="text-xs font-bold text-red-500 hover:text-red-700"
+                    className="text-xs font-bold text-red-500 hover:text-red-700 transition-colors"
                   >
-                    حذف گام
+                    حذف این گام
                   </button>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-3">
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
+                    <label className="block text-xs font-bold text-text mb-1.5">
                       شماره ترتیب
                     </label>
                     <input
@@ -371,12 +356,12 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].number = Number(e.target.value);
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
-                      عنوان گام (فارسی)
+                    <label className="block text-xs font-bold text-text mb-1.5">
+                      عنوان گام (فارسی) *
                     </label>
                     <input
                       type="text"
@@ -386,11 +371,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].title.fa = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
+                    <label className="block text-xs font-bold text-text mb-1.5">
                       Step Title (English)
                     </label>
                     <input
@@ -402,15 +387,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].title.en = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
-                      هدف مرحله (فارسی)
+                    <label className="block text-xs font-bold text-text mb-1.5">
+                      هدف مرحله (فارسی) *
                     </label>
                     <textarea
                       rows={2}
@@ -420,11 +405,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].purpose.fa = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
+                    <label className="block text-xs font-bold text-text mb-1.5">
                       Step Purpose (English)
                     </label>
                     <textarea
@@ -436,17 +421,22 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].purpose.en = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                 </div>
 
-                {/* Deliverables */}
-                <div className="rounded-xl border border-line/60 bg-panel/50 p-3 space-y-2">
+                {/* Deliverables section inside card */}
+                <div className="rounded-xl border border-line/80 bg-panel p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-text">
-                      خروجی‌های ملموس این گام (Deliverables)
-                    </span>
+                    <div>
+                      <span className="text-xs font-bold text-text">
+                        خروجی‌های ملموس این گام (Deliverables)
+                      </span>
+                      <p className="text-[11px] text-muted">
+                        آیتم‌های مشخصی که در پایان این مرحله به کارفرما تحویل داده می‌شود.
+                      </p>
+                    </div>
                     <button
                       type="button"
                       onClick={() => {
@@ -457,57 +447,60 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         });
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="text-xs font-bold text-blue hover:underline"
+                      className="text-xs font-bold text-blue hover:text-navy-2 transition-colors"
                     >
                       + افزودن خروجی
                     </button>
                   </div>
 
-                  {step.deliverables.map((del, dIdx) => (
-                    <div key={dIdx} className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        value={del.fa}
-                        placeholder="خروجی به فارسی..."
-                        onChange={(e) => {
-                          const updated = [...formData.steps];
-                          updated[index].deliverables[dIdx].fa = e.target.value;
-                          setFormData((prev) => ({ ...prev, steps: updated }));
-                        }}
-                        className="flex-1 rounded-lg border border-line bg-bg px-3 py-1 text-xs text-text"
-                      />
-                      <input
-                        type="text"
-                        dir="ltr"
-                        value={del.en || ""}
-                        placeholder="Deliverable in English..."
-                        onChange={(e) => {
-                          const updated = [...formData.steps];
-                          updated[index].deliverables[dIdx].en = e.target.value;
-                          setFormData((prev) => ({ ...prev, steps: updated }));
-                        }}
-                        className="flex-1 rounded-lg border border-line bg-bg px-3 py-1 text-xs text-text"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = [...formData.steps];
-                          updated[index].deliverables = updated[index].deliverables.filter(
-                            (_, i) => i !== dIdx,
-                          );
-                          setFormData((prev) => ({ ...prev, steps: updated }));
-                        }}
-                        className="text-xs font-bold text-red-500 hover:text-red-700 px-1"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
+                  <div className="space-y-2">
+                    {step.deliverables.map((del, dIdx) => (
+                      <div key={dIdx} className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={del.fa}
+                          placeholder="عنوان خروجی (فارسی)..."
+                          onChange={(e) => {
+                            const updated = [...formData.steps];
+                            updated[index].deliverables[dIdx].fa = e.target.value;
+                            setFormData((prev) => ({ ...prev, steps: updated }));
+                          }}
+                          className="flex-1 rounded-lg border border-line bg-bg px-3 py-1.5 text-xs text-text focus:border-blue focus:outline-none"
+                        />
+                        <input
+                          type="text"
+                          dir="ltr"
+                          value={del.en || ""}
+                          placeholder="Deliverable in English..."
+                          onChange={(e) => {
+                            const updated = [...formData.steps];
+                            updated[index].deliverables[dIdx].en = e.target.value;
+                            setFormData((prev) => ({ ...prev, steps: updated }));
+                          }}
+                          className="flex-1 rounded-lg border border-line bg-bg px-3 py-1.5 text-xs text-text focus:border-blue focus:outline-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...formData.steps];
+                            updated[index].deliverables = updated[index].deliverables.filter(
+                              (_, i) => i !== dIdx,
+                            );
+                            setFormData((prev) => ({ ...prev, steps: updated }));
+                          }}
+                          className="h-8 w-8 flex items-center justify-center rounded-lg border border-line text-xs font-bold text-red-500 hover:bg-red-50 hover:border-red-300 transition-colors"
+                          title="حذف خروجی"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
+                    <label className="block text-xs font-bold text-text mb-1.5">
                       نقش و مشارکت کارفرما (فارسی)
                     </label>
                     <textarea
@@ -518,11 +511,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].clientInvolvement.fa = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-text">
+                    <label className="block text-xs font-bold text-text mb-1.5">
                       Client Involvement (English)
                     </label>
                     <textarea
@@ -534,7 +527,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                         updated[index].clientInvolvement.en = e.target.value;
                         setFormData((prev) => ({ ...prev, steps: updated }));
                       }}
-                      className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                      className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                     />
                   </div>
                 </div>
@@ -546,15 +539,16 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
 
       {/* Tab 3: Engagement & Communication */}
       {activeTab === "engagement" && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Engagement Models */}
-          <div className="rounded-2xl border border-line bg-panel p-6 space-y-6">
-            <div className="flex items-center justify-between">
+          <div className="rounded-2xl border border-line bg-panel p-6 sm:p-8 space-y-6 shadow-sm">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-base font-black text-text">
-                  الگوهای همکاری تجاری (Engagement Models)
+                <h2 className="text-base font-bold text-text flex items-center gap-2">
+                  <span>🤝</span>
+                  <span>الگوهای همکاری تجاری (Engagement Models)</span>
                 </h2>
-                <p className="text-xs text-muted">
+                <p className="text-xs text-muted mt-1 leading-relaxed">
                   مدل‌های تعریف قرارداد (پروژه‌ای با دامنه مشخص، تیم اختصاصی، پشتیبانی ماهانه)
                 </p>
               </div>
@@ -574,7 +568,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     ],
                   }))
                 }
-                className="rounded-full border border-blue bg-blue/10 px-4 py-1.5 text-xs font-bold text-blue hover:bg-blue hover:text-white transition"
+                className="rounded-xl border border-blue bg-blue/10 px-4 py-2 text-xs font-bold text-blue hover:bg-blue hover:text-white transition-all shadow-sm"
               >
                 + افزودن مدل همکاری
               </button>
@@ -584,11 +578,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
               {formData.engagementModels.map((model, index) => (
                 <div
                   key={model.id || index}
-                  className="rounded-xl border border-line bg-bg p-4 space-y-3"
+                  className="rounded-xl border border-line bg-bg p-5 space-y-4 shadow-sm"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-muted">
-                      مدل #{index + 1} ({model.id})
+                  <div className="flex items-center justify-between border-b border-line pb-2.5">
+                    <span className="text-xs font-bold text-text">
+                      مدل همکاری #{index + 1}: {model.title.fa}
                     </span>
                     <button
                       type="button"
@@ -600,15 +594,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                           ),
                         }))
                       }
-                      className="text-xs font-bold text-red-500 hover:text-red-700"
+                      className="text-xs font-bold text-red-500 hover:text-red-700 transition-colors"
                     >
-                      حذف
+                      حذف مدل
                     </button>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         عنوان مدل (فارسی)
                       </label>
                       <input
@@ -622,11 +616,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             engagementModels: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         Model Title (English)
                       </label>
                       <input
@@ -641,14 +635,14 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             engagementModels: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         توضیحات مدل (فارسی)
                       </label>
                       <textarea
@@ -662,11 +656,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             engagementModels: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         Model Description (English)
                       </label>
                       <textarea
@@ -681,7 +675,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             engagementModels: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                   </div>
@@ -691,14 +685,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
           </div>
 
           {/* Communication Rows */}
-          <div className="rounded-2xl border border-line bg-panel p-6 space-y-6">
-            <div className="flex items-center justify-between">
+          <div className="rounded-2xl border border-line bg-panel p-6 sm:p-8 space-y-6 shadow-sm">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-base font-black text-text">
-                  ردیف‌های تعامل و کانال‌های ارتباطی (Communication SLAs)
+                <h2 className="text-base font-bold text-text flex items-center gap-2">
+                  <span>📡</span>
+                  <span>کانال‌ها و تعهدات ارتباطی (Communication SLAs)</span>
                 </h2>
-                <p className="text-xs text-muted">
-                  شفاف‌سازی نحوه ارتباط، جلسات دمو، گزارش‌دهی و ابزارهای مورد استفاده
+                <p className="text-xs text-muted mt-1 leading-relaxed">
+                  شفاف‌سازی نحوه ارتباط، جلسات دمو، گزارش‌دهی دوره‌ای و ابزارهای مورد استفاده
                 </p>
               </div>
               <button
@@ -717,7 +712,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     ],
                   }))
                 }
-                className="rounded-full border border-blue bg-blue/10 px-4 py-1.5 text-xs font-bold text-blue hover:bg-blue hover:text-white transition"
+                className="rounded-xl border border-blue bg-blue/10 px-4 py-2 text-xs font-bold text-blue hover:bg-blue hover:text-white transition-all shadow-sm"
               >
                 + افزودن کانال ارتباطی
               </button>
@@ -727,11 +722,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
               {formData.communicationRows.map((row, index) => (
                 <div
                   key={row.id || index}
-                  className="rounded-xl border border-line bg-bg p-4 space-y-3"
+                  className="rounded-xl border border-line bg-bg p-5 space-y-4 shadow-sm"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-muted">
-                      مورد #{index + 1} ({row.id})
+                  <div className="flex items-center justify-between border-b border-line pb-2.5">
+                    <span className="text-xs font-bold text-text">
+                      تعهد ارتباطی #{index + 1}: {row.label.fa}
                     </span>
                     <button
                       type="button"
@@ -743,15 +738,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                           ),
                         }))
                       }
-                      className="text-xs font-bold text-red-500 hover:text-red-700"
+                      className="text-xs font-bold text-red-500 hover:text-red-700 transition-colors"
                     >
                       حذف
                     </button>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         عنوان تعهد (فارسی)
                       </label>
                       <input
@@ -765,11 +760,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             communicationRows: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         Label (English)
                       </label>
                       <input
@@ -784,14 +779,14 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             communicationRows: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         نحوه اجرا و تعهد (فارسی)
                       </label>
                       <textarea
@@ -808,11 +803,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             communicationRows: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-text">
+                      <label className="block text-xs font-bold text-text mb-1.5">
                         Execution & Commitment (English)
                       </label>
                       <textarea
@@ -830,7 +825,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                             communicationRows: updated,
                           }));
                         }}
-                        className="w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-xs text-text"
+                        className="w-full rounded-xl border border-line bg-panel px-3.5 py-2 text-xs text-text focus:border-blue focus:outline-none"
                       />
                     </div>
                   </div>
@@ -843,14 +838,15 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
 
       {/* Tab 4: Guide with Tiptap */}
       {activeTab === "guide" && (
-        <div className="rounded-2xl border border-line bg-panel p-6 space-y-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="rounded-2xl border border-line bg-panel p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-base font-black text-text">
-                راهنمای تفصیلی تعامل و استانداردهای تحویل (Tiptap Guide)
+              <h2 className="text-base font-bold text-text flex items-center gap-2">
+                <span>✍️</span>
+                <span>راهنمای تفصیلی تعامل و استانداردهای تحویل (Tiptap Guide)</span>
               </h2>
-              <p className="text-xs text-muted">
-                نگارش شفاف استانداردهای کدنویسی، مالکیت سورس‌ها و متدولوژی پیاده‌سازی
+              <p className="text-xs text-muted mt-1 leading-relaxed">
+                نگارش شفاف استانداردهای مهندسی، متدولوژی کدنویسی، پایپ‌لاین‌های CI/CD و انتقال مالکیت کامل سورس‌ها
               </p>
             </div>
 
@@ -860,7 +856,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                 type="button"
                 onClick={() => setGuideLang("fa")}
                 className={cn(
-                  "rounded-lg px-3 py-1 text-xs font-black transition",
+                  "rounded-lg px-3 py-1.5 text-xs font-bold transition",
                   guideLang === "fa"
                     ? "bg-navy text-white shadow-sm"
                     : "text-muted hover:text-text",
@@ -872,7 +868,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                 type="button"
                 onClick={() => setGuideLang("en")}
                 className={cn(
-                  "rounded-lg px-3 py-1 text-xs font-black transition",
+                  "rounded-lg px-3 py-1.5 text-xs font-bold transition",
                   guideLang === "en"
                     ? "bg-navy text-white shadow-sm"
                     : "text-muted hover:text-text",
@@ -883,9 +879,9 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
+              <label className="block text-xs font-bold text-text mb-2">
                 عنوان بخش راهنما (فارسی)
               </label>
               <input
@@ -903,11 +899,11 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text focus:border-blue focus:outline-none transition-colors"
               />
             </div>
             <div>
-              <label className="mb-2 block text-xs font-bold text-text">
+              <label className="block text-xs font-bold text-text mb-2">
                 Guide Title (English)
               </label>
               <input
@@ -926,7 +922,7 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
                     },
                   }))
                 }
-                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                className="w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-xs text-text focus:border-blue focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -992,24 +988,20 @@ export function ProcessForm({ initialData }: ProcessFormProps) {
         </div>
       )}
 
-      {/* Floating Save Bar on Bottom */}
-      <div className="sticky bottom-4 z-20 flex items-center justify-between rounded-2xl border border-line bg-panel/90 p-4 shadow-lg backdrop-blur-md">
-        <span className="text-xs font-bold text-muted">
-          تغییرات پس از ذخیره مستقیماً در صفحه عمومی اعمال می‌شوند.
+      {/* Form Bottom Actions */}
+      <div className="flex items-center justify-between border-t border-line pt-6">
+        <span className="text-xs text-muted">
+          تغییرات پس از ذخیره مستقیماً در صفحه عمومی «فرایند همکاری» اعمال خواهند شد.
         </span>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 rounded-full bg-blue px-6 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-sky disabled:opacity-50"
+          className="rounded-xl bg-blue text-white px-6 py-2.5 text-xs font-bold shadow hover:bg-navy-2 transition-all disabled:opacity-50 inline-flex items-center gap-2"
         >
-          {isSubmitting ? (
-            <>
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              <span>در حال ذخیره...</span>
-            </>
-          ) : (
-            <span>ذخیره تغییرات فرایند همکاری</span>
+          {isSubmitting && (
+            <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
           )}
+          <span>ذخیره تغییرات فرایند همکاری</span>
         </button>
       </div>
     </form>
