@@ -1,12 +1,15 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Text } from "@/components/ui/Text";
-import { getResolvedStats } from "@/content/stats";
+import { getResolvedHomeData } from "@/lib/home-data";
+import type { AppLocale } from "@/i18n/routing";
 
-/** Real stats only — returns null when every value is still TODO_REAL_DATA. */
+/** Real stats only — returns null when every value is empty. */
 export async function TrustStrip() {
-  const resolved = getResolvedStats();
+  const locale = (await getLocale()) as AppLocale;
+  const homeData = await getResolvedHomeData(locale);
+  const resolved = homeData.stats;
   if (resolved.length === 0) return null;
 
   const t = await getTranslations("Trust");
@@ -27,7 +30,7 @@ export async function TrustStrip() {
                 {stat.value}
               </Text>
               <Text as="span" variant="caption">
-                {t(stat.id)}
+                {stat.label}
               </Text>
             </li>
           ))}

@@ -7,8 +7,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { TriMarker } from "@/components/ui/TriMarker";
-import { pickLocalized } from "@/content/services";
-import { whyStatements } from "@/content/why";
+import { getResolvedHomeData } from "@/lib/home-data";
 import { cn } from "@/lib/cn";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -30,8 +29,10 @@ export async function WhySection({
 }: WhySectionProps = {}) {
   const t = await getTranslations("Why");
   const locale = (await getLocale()) as AppLocale;
+  const homeData = await getResolvedHomeData(locale);
+  const statements = homeData.whyStatements;
 
-  if (whyStatements.length === 0) return null;
+  if (statements.length === 0) return null;
 
   const onBand = surface === "band";
 
@@ -58,7 +59,7 @@ export async function WhySection({
         </div>
 
         <ul className="m-0 grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3">
-          {whyStatements.map((statement, idx) => (
+          {statements.map((statement, idx) => (
             <li
               key={statement.id}
               className={cn(
@@ -96,7 +97,7 @@ export async function WhySection({
                     onBand ? "text-on-brand" : "text-text",
                   )}
                 >
-                  {pickLocalized(statement.title, locale)}
+                  {statement.title}
                 </Heading>
 
                 <Text
@@ -106,7 +107,7 @@ export async function WhySection({
                     onBand ? "text-band-muted" : "text-muted",
                   )}
                 >
-                  {pickLocalized(statement.body, locale)}
+                  {statement.body}
                 </Text>
               </div>
             </li>

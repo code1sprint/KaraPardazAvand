@@ -10,6 +10,8 @@ import {
   TrustStrip,
   WhySection,
 } from "@/components/sections";
+import { getResolvedHomeData } from "@/lib/home-data";
+import type { AppLocale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo";
 
 type Props = {
@@ -19,14 +21,15 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
+  const homeData = await getResolvedHomeData(locale as AppLocale);
 
   return buildPageMetadata({
     locale,
     path: "/",
-    title: t("pages.home.title"),
-    description: t("pages.home.description"),
-    siteName: t("siteName"),
-    imageAlt: t("ogImageAlt"),
+    title: homeData.seo?.homeTitle || t("pages.home.title"),
+    description: homeData.seo?.homeDescription || t("pages.home.description"),
+    siteName: homeData.seo?.siteName || t("siteName"),
+    imageAlt: homeData.seo?.ogImageAlt || t("ogImageAlt"),
     absoluteTitle: true,
   });
 }

@@ -7,12 +7,14 @@ import { Pill } from "@/components/ui/Pill";
 import { Text } from "@/components/ui/Text";
 import { FloatingShapes } from "@/components/visuals/FloatingShapes";
 import { Marquee } from "@/components/visuals/Marquee";
-import { heroTech } from "@/content/systems";
+import { getResolvedHomeData } from "@/lib/home-data";
 import type { AppLocale } from "@/i18n/routing";
 
 export async function HeroSection() {
   const t = await getTranslations("Hero");
   const locale = (await getLocale()) as AppLocale;
+  const homeData = await getResolvedHomeData(locale);
+  const hero = homeData.hero;
 
   return (
     <section
@@ -27,31 +29,33 @@ export async function HeroSection() {
       <FloatingShapes />
 
       <Container className="relative text-center">
-        <Pill className="mb-7">{t("pill")}</Pill>
+        <Pill className="mb-7">{hero.pill || t("pill")}</Pill>
 
         <Heading
           as={1}
           id="hero-heading"
           className="mx-auto mb-6 max-w-[15ch] text-center"
         >
-          {t("titleBefore")}
-          <em className="text-gradient-brand not-italic">{t("titleGradient")}</em>
-          {t("titleAfter")}
+          {hero.titleBefore || t("titleBefore")}
+          <em className="text-gradient-brand not-italic">
+            {hero.titleGradient || t("titleGradient")}
+          </em>
+          {hero.titleAfter || t("titleAfter")}
         </Heading>
 
         <Text
           variant="muted"
           className="mx-auto mb-9 max-w-[56ch] text-center text-[clamp(16px,1.6vw,19px)]"
         >
-          {t("lead")}
+          {hero.lead || t("lead")}
         </Text>
 
         <div className="relative flex flex-wrap items-center justify-center gap-3">
-          <ButtonLink href="/contact" variant="primary">
-            {t("ctaPrimary")}
+          <ButtonLink href={hero.ctaPrimary.href || "/contact"} variant="primary">
+            {hero.ctaPrimary.label || t("ctaPrimary")}
           </ButtonLink>
-          <ButtonLink href="/services" variant="secondary">
-            {t("ctaSecondary")}
+          <ButtonLink href={hero.ctaSecondary.href || "/services"} variant="secondary">
+            {hero.ctaSecondary.label || t("ctaSecondary")}
           </ButtonLink>
         </div>
 
@@ -64,7 +68,7 @@ export async function HeroSection() {
         />
 
         <Marquee caption={t("marqueeCaption")} className="mt-16">
-          {heroTech.map((name) => (
+          {hero.techMarquee.map((name) => (
             <span key={name}>{name}</span>
           ))}
         </Marquee>
