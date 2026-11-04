@@ -1,20 +1,7 @@
-import { Suspense, type ReactNode } from "react";
-import { connection } from "next/server";
+import type { ReactNode } from "react";
 import { AuthProvider } from "@/lib/auth/context";
 import { AdminShell } from "./AdminShell";
-
-const Connection = async () => {
-  await connection();
-  return null;
-};
-
-async function DynamicMarker() {
-  return (
-    <Suspense>
-      <Connection />
-    </Suspense>
-  );
-}
+import { DynamicMarker } from "./DynamicMarker";
 
 export const metadata = {
   title: "پیشخوان مدیریت | کارا پرداز اوند",

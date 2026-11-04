@@ -23,8 +23,8 @@ export function ProjectRow({
     <article
       className={
         large
-          ? "grid items-center gap-6 border-b border-line py-8 last:border-b-0 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-10"
-          : "grid items-start gap-5 border-b border-line py-6 last:border-b-0 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] sm:gap-8"
+          ? "grid items-center gap-6 border-b border-line py-8 last:border-b-0 last:pb-0 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-10"
+          : "grid items-start gap-5 border-b border-line py-6 last:border-b-0 last:pb-0 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] sm:gap-8"
       }
     >
       <ProjectCover

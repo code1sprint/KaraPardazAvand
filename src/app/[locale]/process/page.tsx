@@ -67,7 +67,7 @@ async function ProcessContent({ params }: Props) {
     <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
       <Section
         aria-labelledby="process-hero-heading"
-        className="pb-0 pt-12 sm:pt-16"
+        className="pt-12 sm:pt-16"
       >
         <Container>
           <Breadcrumbs

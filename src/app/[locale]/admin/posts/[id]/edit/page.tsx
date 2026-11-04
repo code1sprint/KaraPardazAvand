@@ -1,22 +1,8 @@
-import { Suspense } from "react";
-import { connection } from "next/server";
 import { notFound } from "next/navigation";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel } from "@/lib/db/models/Post";
 import { EditPostClient } from "./EditPostClient";
-
-const Connection = async () => {
-  await connection();
-  return null;
-};
-
-async function DynamicMarker() {
-  return (
-    <Suspense>
-      <Connection />
-    </Suspense>
-  );
-}
+import { DynamicMarker } from "../../../DynamicMarker";
 
 interface EditPostPageProps {
   params: Promise<{

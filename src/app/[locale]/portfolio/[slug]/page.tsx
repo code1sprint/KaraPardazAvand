@@ -98,7 +98,7 @@ async function CaseStudyContent({ params }: Props) {
   const breadcrumbT = await getTranslations("Breadcrumb");
   const sourcedResults = getSourcedResults(project.meta.results);
   const { previous, next } = await getAdjacentProjects(slug);
-  const { content } = await compileMdxSource(project.content);
+  const mdxResult = project.content ? await compileMdxSource(project.content) : { content: null };
 
   const serviceLabels = project.meta.services.map((serviceSlug) => {
     const service = getServiceBySlug(serviceSlug);
@@ -241,10 +241,19 @@ async function CaseStudyContent({ params }: Props) {
           </section>
         ) : null}
 
-        {project.content.trim() ? (
+        {project.contentHtml ? (
           <section className="mt-10" aria-label={t("detail.notes")}>
             <Prose>
-              <article className="min-w-0 text-start">{content}</article>
+              <div
+                className="min-w-0 text-start"
+                dangerouslySetInnerHTML={{ __html: project.contentHtml }}
+              />
+            </Prose>
+          </section>
+        ) : mdxResult.content ? (
+          <section className="mt-10" aria-label={t("detail.notes")}>
+            <Prose>
+              <article className="min-w-0 text-start">{mdxResult.content}</article>
             </Prose>
           </section>
         ) : null}

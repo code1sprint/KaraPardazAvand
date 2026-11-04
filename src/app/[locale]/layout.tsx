@@ -36,6 +36,7 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  "use cache";
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
 

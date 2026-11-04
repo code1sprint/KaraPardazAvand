@@ -145,7 +145,7 @@ async function ServiceDetailContent({ params }: Props) {
   return (
     <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
       <JsonLd data={serviceJsonLd} />
-      <Section aria-labelledby="service-hero-heading" className="pb-0 pt-12 sm:pt-16">
+      <Section aria-labelledby="service-hero-heading" className="pt-12 sm:pt-16">
         <Container className="flex flex-col gap-10">
           <div className="flex max-w-2xl flex-col gap-4">
             <Breadcrumbs
@@ -198,7 +198,7 @@ async function ServiceDetailContent({ params }: Props) {
               return (
                 <li
                   key={label}
-                  className="border-b border-line py-4 text-base leading-[var(--leading-body)] text-text last:border-b-0"
+                  className="border-b border-line py-4 text-base leading-[var(--leading-body)] text-text last:border-b-0 last:pb-0"
                 >
                   {label}
                 </li>
@@ -286,7 +286,7 @@ async function ServiceDetailContent({ params }: Props) {
               </Heading>
             </Reveal>
             <div
-              className="prose prose-slate max-w-none mt-8 text-text"
+              className="prose prose-slate max-w-none mt-8 text-text [&>*:last-child]:mb-0"
               dangerouslySetInnerHTML={{ __html: service.deepDiveHtml }}
             />
           </Container>

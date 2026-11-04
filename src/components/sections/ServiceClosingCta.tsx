@@ -22,7 +22,7 @@ export async function ServiceClosingCta({
   const t = await getTranslations("Services.detail");
 
   return (
-    <Section aria-labelledby="service-cta-heading" className="pb-[length:var(--section-pad-y)] pt-0">
+    <Section aria-labelledby="service-cta-heading" className="pb-12 sm:pb-16">
       <Container>
         <div className="flex flex-col items-start gap-4 rounded-tile border border-line bg-panel px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div className="max-w-xl">
