@@ -105,9 +105,12 @@
         "terms": "Terms"
       },
       "copyright": "© 2026 Kara Pardaz Oond",
+      "status": "All systems operational",
       "cta": {
+        "eyebrow": "Ready for your next system?",
         "headline": "Let’s build your organization’s next system",
-        "button": "Request a consultation"
+        "button": "Request a consultation",
+        "secondaryButton": "Our Process"
       },
       "resourcesItems": {
         "portfolio": "Work",
