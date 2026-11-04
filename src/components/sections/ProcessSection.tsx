@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getProcessSteps } from "@/content/process";
+import { getResolvedProcessData } from "@/lib/process-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
 import { Container } from "@/components/layout/Container";
@@ -27,7 +27,8 @@ export async function ProcessSection({
 }: ProcessSectionProps = {}) {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("Process");
-  const steps = getProcessSteps(locale);
+  const processData = await getResolvedProcessData(locale);
+  const steps = processData.steps;
 
   if (steps.length === 0) return null;
 

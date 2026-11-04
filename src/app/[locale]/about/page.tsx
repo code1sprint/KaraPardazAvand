@@ -14,7 +14,7 @@ import {
   Heading,
   Text,
 } from "@/components/ui";
-import { getAboutIntro, getAboutStory } from "@/content/about";
+import { getResolvedAboutData } from "@/lib/about-data";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo";
@@ -59,8 +59,9 @@ async function AboutContent({ params }: Props) {
   const appLocale = (await getLocale()) as AppLocale;
   const t = await getTranslations("About");
   const breadcrumbT = await getTranslations("Breadcrumb");
-  const intro = getAboutIntro(appLocale);
-  const story = getAboutStory(appLocale);
+  const aboutData = await getResolvedAboutData(appLocale);
+  const intro = aboutData.intro;
+  const story = aboutData.story;
 
   return (
     <>
@@ -89,11 +90,18 @@ async function AboutContent({ params }: Props) {
           </Text>
 
           {story ? (
-            <section className="mt-12 max-w-2xl" aria-labelledby="about-story">
+            <section className="mt-12 max-w-3xl" aria-labelledby="about-story">
               <Heading as={2} id="about-story" className="text-2xl sm:text-3xl">
                 {story.title}
               </Heading>
-              <Text className="mt-4">{story.body}</Text>
+              {story.html ? (
+                <div
+                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
+                  dangerouslySetInnerHTML={{ __html: story.html }}
+                />
+              ) : (
+                <Text className="mt-4">{story.body}</Text>
+              )}
             </section>
           ) : null}
         </Container>

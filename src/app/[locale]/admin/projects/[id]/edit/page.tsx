@@ -1,23 +1,9 @@
-import { Suspense } from "react";
-import { connection } from "next/server";
 import { notFound } from "next/navigation";
 import mongoose from "mongoose";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getProjectModel } from "@/lib/db/models/Project";
 import { EditProjectClient } from "./EditProjectClient";
-
-const Connection = async () => {
-  await connection();
-  return null;
-};
-
-async function DynamicMarker() {
-  return (
-    <Suspense>
-      <Connection />
-    </Suspense>
-  );
-}
+import { DynamicMarker } from "../../../DynamicMarker";
 
 interface EditProjectPageProps {
   params: Promise<{

@@ -34,7 +34,7 @@ export function ProjectGallery({
                 src={item.src}
                 alt={item.alt ?? item.caption}
                 fill
-                sizes="(max-width: 640px) 100vw, 28rem"
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 560px"
                 className="object-cover"
               />
             </div>

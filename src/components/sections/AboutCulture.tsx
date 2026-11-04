@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getAboutCulture } from "@/content/about";
+import { getResolvedAboutData } from "@/lib/about-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
 import { Container } from "@/components/layout/Container";
@@ -9,7 +9,8 @@ import { Eyebrow, Heading, Text, TriMarker } from "@/components/ui";
 export async function AboutCulture() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("About");
-  const items = getAboutCulture(locale);
+  const aboutData = await getResolvedAboutData(locale);
+  const items = aboutData.culture;
 
   if (items.length === 0) return null;
 

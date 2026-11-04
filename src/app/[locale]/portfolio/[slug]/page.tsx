@@ -107,7 +107,7 @@ async function CaseStudyContent({ params }: Props) {
 
   return (
     <div className="py-12 sm:py-16">
-      <Container narrow>
+      <Container>
         <Breadcrumbs
           label={breadcrumbT("label")}
           items={[
@@ -146,7 +146,7 @@ async function CaseStudyContent({ params }: Props) {
           <ProjectCover
             src={project.meta.cover}
             alt={project.meta.title}
-            sizes="(max-width: 768px) 100vw, 48rem"
+            sizes="(max-width: 1200px) 100vw, 1180px"
             priority
           />
         </div>

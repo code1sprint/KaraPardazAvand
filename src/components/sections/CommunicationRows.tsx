@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getCommunicationRows } from "@/content/process";
+import { getResolvedProcessData } from "@/lib/process-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
 import { Container } from "@/components/layout/Container";
@@ -9,7 +9,8 @@ import { Eyebrow, Heading, Text } from "@/components/ui";
 export async function CommunicationRows() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("ProcessPage");
-  const rows = getCommunicationRows(locale);
+  const processData = await getResolvedProcessData(locale);
+  const rows = processData.communicationRows;
 
   if (rows.length === 0) return null;
 

@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getEngagementModels } from "@/content/process";
+import { getResolvedProcessData } from "@/lib/process-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
 import { Container } from "@/components/layout/Container";
@@ -10,7 +10,8 @@ import { Tile } from "@/components/visuals/Tile";
 export async function EngagementModels() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("ProcessPage");
-  const models = getEngagementModels(locale);
+  const processData = await getResolvedProcessData(locale);
+  const models = processData.engagementModels;
 
   if (models.length === 0) return null;
 

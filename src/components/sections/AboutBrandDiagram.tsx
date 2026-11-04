@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getAboutBrandNodes } from "@/content/about";
+import { getResolvedAboutData } from "@/lib/about-data";
 import { getParentBrandUrl } from "@/content/site";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
@@ -10,7 +10,8 @@ import { Eyebrow, Heading, Text } from "@/components/ui";
 export async function AboutBrandDiagram() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("About");
-  const nodes = getAboutBrandNodes(locale);
+  const aboutData = await getResolvedAboutData(locale);
+  const nodes = aboutData.brandNodes;
   const parentUrl = getParentBrandUrl();
 
   if (nodes.length === 0) return null;

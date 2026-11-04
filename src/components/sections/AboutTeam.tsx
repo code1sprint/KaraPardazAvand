@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
-import { getAboutTeam } from "@/content/about";
+import { getResolvedAboutData } from "@/lib/about-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Reveal } from "@/components/layout/Reveal";
 import { Container } from "@/components/layout/Container";
@@ -10,7 +10,8 @@ import { Eyebrow, Heading, Text } from "@/components/ui";
 export async function AboutTeam() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("About");
-  const team = getAboutTeam(locale);
+  const aboutData = await getResolvedAboutData(locale);
+  const team = aboutData.team;
 
   if (team.length === 0) return null;
 

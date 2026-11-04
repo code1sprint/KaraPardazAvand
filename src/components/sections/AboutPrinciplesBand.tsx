@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { getAboutPrinciples } from "@/content/about";
+import { getResolvedAboutData } from "@/lib/about-data";
 import type { AppLocale } from "@/i18n/routing";
 import { Band } from "@/components/layout/Band";
 import { Reveal } from "@/components/layout/Reveal";
@@ -8,7 +8,8 @@ import { Eyebrow, Heading, Text, TriMarker } from "@/components/ui";
 export async function AboutPrinciplesBand() {
   const locale = (await getLocale()) as AppLocale;
   const t = await getTranslations("About");
-  const principles = getAboutPrinciples(locale);
+  const aboutData = await getResolvedAboutData(locale);
+  const principles = aboutData.principles;
 
   if (principles.length === 0) return null;
 

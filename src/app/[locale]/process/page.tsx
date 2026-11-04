@@ -15,7 +15,7 @@ import {
   Heading,
   Text,
 } from "@/components/ui";
-import { getProcessSteps } from "@/content/process";
+import { getResolvedProcessData } from "@/lib/process-data";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo";
@@ -61,7 +61,10 @@ async function ProcessContent({ params }: Props) {
   const t = await getTranslations("Process");
   const pageT = await getTranslations("ProcessPage");
   const breadcrumbT = await getTranslations("Breadcrumb");
-  const steps = getProcessSteps(appLocale);
+  const processData = await getResolvedProcessData(appLocale);
+  const steps = processData.steps;
+  const hero = processData.hero;
+  const guide = processData.guide;
 
   return (
     <div className="[--section-pad-y:var(--section-pad-y-dense)] min-[900px]:[--section-pad-y:var(--section-pad-y-dense-lg)]">
@@ -83,14 +86,14 @@ async function ProcessContent({ params }: Props) {
             id="process-hero-heading"
             className="mt-3 max-w-[15ch]"
           >
-            {pageT("titleBefore")}
+            {hero?.titleBefore || pageT("titleBefore")}
             <em className="text-gradient-brand not-italic">
-              {pageT("titleGradient")}
+              {hero?.titleGradient || pageT("titleGradient")}
             </em>
-            {pageT("titleAfter")}
+            {hero?.titleAfter || pageT("titleAfter")}
           </Heading>
           <Text variant="muted" className="mt-4 max-w-2xl">
-            {pageT("lead")}
+            {hero?.lead || pageT("lead")}
           </Text>
         </Container>
       </Section>
@@ -127,6 +130,28 @@ async function ProcessContent({ params }: Props) {
 
       <EngagementModels />
       <CommunicationRows />
+
+      {guide && guide.html ? (
+        <Section id="process-guide" aria-labelledby="process-guide-heading">
+          <Container>
+            <Reveal>
+              <div className="rounded-2xl border border-line bg-panel p-6 sm:p-10">
+                <Heading
+                  as={2}
+                  id="process-guide-heading"
+                  className="text-2xl sm:text-3xl"
+                >
+                  {guide.title}
+                </Heading>
+                <div
+                  className="prose prose-slate mt-6 max-w-none text-text text-start leading-relaxed font-normal [&_p]:mb-4 [&_p]:leading-relaxed [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-black"
+                  dangerouslySetInnerHTML={{ __html: guide.html }}
+                />
+              </div>
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
 
       <FaqSection
         id="process-faq"
