@@ -213,7 +213,7 @@ export async function SiteFooter() {
                       href={channel.href}
                       className="inline-flex items-center gap-2 text-sm text-[color:var(--footer-muted)] transition-colors hover:text-on-brand"
                       {...(channel.href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        ? { target: "_blank", rel: "me noopener noreferrer" }
                         : {})}
                     >
                       <span className="text-on-brand/90 font-medium">
@@ -232,23 +232,24 @@ export async function SiteFooter() {
                   </li>
                 ) : null}
               </ul>
-            ) : (
-              <div className="flex flex-col gap-3">
-                <Text
-                  variant="caption"
-                  className="text-xs text-[color:var(--footer-muted)]"
-                >
-                  {t("footer.contactPending")}
-                </Text>
-                <Link
-                  href="/contact"
-                  variant="quiet"
-                  className="w-fit rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-sky-300 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
-                >
-                  {t("nav.consult")} &larr;
-                </Link>
-              </div>
-            )}
+            ) : null}
+
+            <div className="mt-4 flex flex-col gap-3">
+              <Link
+                href="/contact"
+                variant="quiet"
+                className="w-fit rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-sky-300 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              >
+                {t("nav.consult")} &larr;
+              </Link>
+            </div>
+
+            {process.env.NEXT_PUBLIC_TRUST_BADGE_HTML ? (
+              <div
+                className="mt-4 flex items-center gap-2"
+                dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_TRUST_BADGE_HTML }}
+              />
+            ) : null}
           </div>
         </Container>
 

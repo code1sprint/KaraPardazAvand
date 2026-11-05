@@ -72,7 +72,7 @@ export async function ContactDetails({ className }: ContactDetailsProps) {
                 href={channel.href}
                 className="mt-1 inline-block text-base text-blue underline-offset-2 hover:underline"
                 {...(channel.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  ? { target: "_blank", rel: "me noopener noreferrer" }
                   : {})}
               >
                 {channel.value}

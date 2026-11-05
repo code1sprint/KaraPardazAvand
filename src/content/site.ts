@@ -93,13 +93,13 @@ export const contactChannels: ContactChannel[] = [
   },
   {
     id: "github",
-    value: TODO_REAL_DATA,
-    href: TODO_REAL_DATA,
+    value: "github.com/karapardazavand",
+    href: "https://github.com/karapardazavand",
   },
   {
     id: "linkedin",
-    value: TODO_REAL_DATA,
-    href: TODO_REAL_DATA,
+    value: "linkedin.com/company/karapardazavand",
+    href: "https://linkedin.com/company/karapardazavand",
   },
 ];
 
