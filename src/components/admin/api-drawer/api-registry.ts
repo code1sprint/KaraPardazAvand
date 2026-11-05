@@ -458,10 +458,76 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
     ],
   },
 
+  tickets_admin: {
+    id: "tickets-admin",
+    title: "مدیریت تیکت‌ها و پروژه‌ها (پنل کاراپرداز)",
+    titleEn: "KaraPardaz Operator Ticketing Management API",
+    type: "collection",
+    basePath: "/api/admin/tickets",
+    endpoints: [
+      {
+        method: "GET",
+        path: "/api/admin/tickets",
+        title: "فهرست و فیلتر جامع تیکت‌های اپراتور",
+        description: "دریافت تیکت‌ها با فیلتر پروژه (projectId)، وضعیت (status)، دپارتمان، اولویت، جستجوی متنی و آمار تجمیعی",
+        queryParams: [
+          { name: "projectId", type: "string", desc: "شناسه پروژه (مثلاً amlak، shop، یا all)", sample: "amlak" },
+          { name: "status", type: "string", desc: "فیلتر وضعیت (OPEN، IN_PROGRESS، ANSWERED، RESOLVED، CLOSED یا all)", sample: "OPEN" },
+          { name: "priority", type: "string", desc: "فیلتر اولویت (URGENT، HIGH، MEDIUM، LOW یا all)", sample: "URGENT" },
+          { name: "q", type: "string", desc: "جستجو در شماره تیکت، موضوع، نام مشاور، شماره تماس و سازمان", sample: "املاک" },
+          { name: "page", type: "number", desc: "شماره صفحه", sample: "1" },
+          { name: "limit", type: "number", desc: "تعداد در هر صفحه", sample: "20" },
+        ],
+      },
+      {
+        method: "GET",
+        path: "/api/admin/tickets/:id",
+        title: "دریافت جزئیات تیکت و تمام پیام‌ها",
+        description: "مشاهده سوابق کامل پیام‌ها و اطلاعات مشتری بر اساس شناسه ObjectId یا شماره تیکت",
+      },
+      {
+        method: "POST",
+        path: "/api/admin/tickets/:id/reply",
+        title: "ارسال پاسخ رسمی پشتیبانی کاراپرداز",
+        description: "ثبت پاسخ اپراتور با هویت نشست مدیر و تغییر وضعیت تیکت به ANSWERED یا وضعیت دلخواه",
+        sampleBody: {
+          message: "سلام و احترام. مورد گزارش‌شده توسط تیم فنی بررسی و اصلاح گردید.",
+          status: "ANSWERED",
+        },
+      },
+      {
+        method: "PATCH",
+        path: "/api/admin/tickets/:id/status",
+        title: "تغییر سریع وضعیت یا اولویت تیکت",
+        description: "تغییر وضعیت تیکت به IN_PROGRESS، RESOLVED یا CLOSED و تنظیم اولویت",
+        sampleBody: {
+          status: "RESOLVED",
+          priority: "HIGH",
+        },
+      },
+      {
+        method: "GET",
+        path: "/api/admin/tickets/projects",
+        title: "فهرست پروژه‌ها/سامانه‌ها و آمار تیکت‌ها",
+        description: "دریافت لیست تمام سامانه‌های ثبت‌شده همراه با تعداد کل تیکت‌ها و تیکت‌های باز هر سامانه",
+      },
+      {
+        method: "POST",
+        path: "/api/admin/tickets/projects",
+        title: "ثبت سامانه جدید و صدور کلید امنیتی API",
+        description: "تعریف سامانه مشتری جدید (دستی یا از نمونه‌کارها) و صدور کلید API اختصاصی هش‌شده با Bcrypt",
+        sampleBody: {
+          name: "فروشگاه اینترنتی پوشاک",
+          projectId: "shop",
+        },
+      },
+    ],
+  },
+
   tickets: {
     id: "tickets",
-    title: "وب‌سرویس و تیکتینگ مشتریان (چندمستأجری)",
-    titleEn: "Multi-Tenant Support Tickets API",
+    title: "وب‌سرویس و تیکتینگ مشتریان (Client REST API)",
+    titleEn: "Multi-Tenant Client Support Tickets API",
     type: "collection",
     basePath: "/api/v1/tickets",
     endpoints: [
@@ -545,6 +611,9 @@ export function getResourceConfigFromPath(pathname: string): {
   const section = parts[1] || "services";
 
   let config = API_REGISTRY[section];
+  if (section === "tickets") {
+    config = API_REGISTRY.tickets_admin;
+  }
   if (!config) {
     // Fallback if at /admin root
     config = API_REGISTRY.services;
