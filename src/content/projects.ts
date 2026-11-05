@@ -1,6 +1,6 @@
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getProjectModel } from "@/lib/db/models/Project";
-import { loadMdxBySlug, loadMdxCollection } from "@/lib/mdx";
+import { loadMdxBySlug, loadMdxCollection } from "@/lib/mdx/load-mdx";
 import {
   isProjectVisible,
   type ProjectMeta,
