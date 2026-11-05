@@ -13,6 +13,7 @@
     "seed:posts": "tsx scripts/seed-posts.ts",
     "seed:projects": "tsx scripts/seed-projects.ts",
     "seed:all": "tsx scripts/seed-admin.ts && tsx scripts/seed-projects.ts && tsx scripts/seed-posts.ts && tsx scripts/seed-services.ts && tsx scripts/seed-about-process.ts",
+    "seed:tickets": "tsx scripts/seed-tickets.ts",
     "test:backend": "tsx scripts/test-auth-db.ts"
   },
   "dependencies": {
