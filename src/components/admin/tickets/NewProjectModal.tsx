@@ -1,7 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ProjectInfo } from "./ProjectFilterBar";
+
+interface PortfolioProject {
+  _id?: string;
+  slug: string;
+  title: string;
+  sector?: string;
+}
 
 interface NewProjectModalProps {
   isOpen: boolean;
@@ -14,6 +21,10 @@ export function NewProjectModal({
   onClose,
   onCreated,
 }: NewProjectModalProps) {
+  const [sourceMode, setSourceMode] = useState<"portfolio" | "manual">("portfolio");
+  const [portfolioList, setPortfolioList] = useState<PortfolioProject[]>([]);
+  const [loadingPortfolio, setLoadingPortfolio] = useState(false);
+
   const [name, setName] = useState("");
   const [projectId, setProjectId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,12 +39,46 @@ export function NewProjectModal({
   const [copiedKey, setCopiedKey] = useState(false);
   const [copiedEnv, setCopiedEnv] = useState(false);
 
+  // Load portfolio items
+  useEffect(() => {
+    if (!isOpen) return;
+    let mounted = true;
+    async function loadPortfolio() {
+      setLoadingPortfolio(true);
+      try {
+        const res = await fetch("/api/admin/projects");
+        if (res.ok && mounted) {
+          const data = await res.json();
+          if (data.projects) {
+            setPortfolioList(data.projects);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load portfolio items", err);
+      } finally {
+        if (mounted) setLoadingPortfolio(false);
+      }
+    }
+    loadPortfolio();
+    return () => {
+      mounted = false;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const handleSelectPortfolioItem = (slug: string) => {
+    const item = portfolioList.find((p) => p.slug === slug);
+    if (item) {
+      setName(item.title);
+      setProjectId(item.slug.toLowerCase().replace(/[^a-z0-9_-]/g, ""));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !projectId.trim()) {
-      setError("لطفاً نام پروژه و شناسه انگلیسی را وارد کنید.");
+      setError("لطفاً نام سامانه و شناسه انگلیسی را مشخص فرمایید.");
       return;
     }
 
@@ -77,21 +122,28 @@ export function NewProjectModal({
     onClose();
   };
 
+  const handleOpenApiDrawer = () => {
+    handleClose();
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("open-api-drawer"));
+    }, 100);
+  };
+
   const envSnippet = createdData
     ? `KARAPARDAZ_API_URL=https://karapardazavand.ir\nKARAPARDAZ_PROJECT_ID=${createdData.project.projectId}\nKARAPARDAZ_PROJECT_KEY=${createdData.rawApiKey}`
     : "";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/40 backdrop-blur-xs p-4">
-      <div className="w-full max-w-lg rounded-2xl border border-line bg-panel p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/40 backdrop-blur-xs p-4 overflow-y-auto">
+      <div className="w-full max-w-xl rounded-2xl border border-line bg-panel p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         {!createdData ? (
           /* Form View */
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex items-center justify-between border-b border-line pb-3">
               <div>
-                <h3 className="text-base font-bold text-text">ثبت سامانه و پروژه جدید</h3>
+                <h3 className="text-base font-bold text-text">ثبت سامانه و صدور کلید تیکتینگ</h3>
                 <p className="mt-0.5 text-xs text-muted">
-                  اتصال فروشگاه، کلینیک یا هر نرم‌افزار جدید به هسته پشتیبانی کاراپرداز
+                  اتصال فروشگاه، سامانه املاک، کلینیک یا هر نرم‌افزار جدید به هسته پشتیبانی کاراپرداز
                 </p>
               </div>
               <button
@@ -103,16 +155,80 @@ export function NewProjectModal({
               </button>
             </div>
 
+            {/* Source Mode Tabs */}
+            <div className="flex rounded-lg border border-line bg-bg p-1 text-xs">
+              <button
+                type="button"
+                onClick={() => setSourceMode("portfolio")}
+                className={`flex-1 rounded-md py-1.5 font-medium transition-all ${
+                  sourceMode === "portfolio"
+                    ? "bg-panel font-bold text-navy shadow-xs"
+                    : "text-muted hover:text-text"
+                }`}
+              >
+                انتخاب از لیست نمونه‌کارها ({portfolioList.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSourceMode("manual");
+                  setName("");
+                  setProjectId("");
+                }}
+                className={`flex-1 rounded-md py-1.5 font-medium transition-all ${
+                  sourceMode === "manual"
+                    ? "bg-panel font-bold text-navy shadow-xs"
+                    : "text-muted hover:text-text"
+                }`}
+              >
+                تعریف دستی سامانه جدید
+              </button>
+            </div>
+
+            {/* Portfolio Dropdown (if in portfolio mode) */}
+            {sourceMode === "portfolio" && (
+              <div className="space-y-1 rounded-xl border border-blue/20 bg-blue/5 p-3">
+                <label htmlFor="portfolio-project-select" className="block text-xs font-semibold text-text">
+                  انتخاب پروژه از نمونه‌کارهای کاراپرداز:
+                </label>
+                {loadingPortfolio ? (
+                  <p className="text-xs text-muted">در حال بارگذاری نمونه‌کارها...</p>
+                ) : portfolioList.length === 0 ? (
+                  <p className="text-xs text-muted">هیچ پروژه‌ای در بخش نمونه‌کارها یافت نشد.</p>
+                ) : (
+                  <select
+                    id="portfolio-project-select"
+                    onChange={(e) => handleSelectPortfolioItem(e.target.value)}
+                    className="w-full rounded-lg border border-line bg-panel p-2 text-xs text-text focus:border-blue focus:outline-hidden"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      -- لطفاً پروژه مورد نظر را انتخاب کنید --
+                    </option>
+                    {portfolioList.map((p) => (
+                      <option key={p.slug} value={p.slug}>
+                        {p.title} ({p.slug}) {p.sector ? `[${p.sector}]` : ""}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                <span className="block text-[11px] text-muted">
+                  با انتخاب هر نمونه‌کار، نام و شناسه انگلیسی به طور خودکار تنظیم می‌شوند.
+                </span>
+              </div>
+            )}
+
+            {/* Inputs */}
             <div className="space-y-3 pt-1">
               <div>
                 <label className="block text-xs font-semibold text-text mb-1">
-                  نام فارسی سامانه یا پروژه:
+                  نام رسمی سامانه / پروژه (فارسی):
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="مثال: فروشگاه اینترنتی پوشاک یا کلینیک امید"
+                  placeholder="مثال: فروشگاه اینترنتی پوشاک یا سامانه مدیریت املاک"
                   className="w-full rounded-lg border border-line bg-bg px-3 py-2 text-xs text-text focus:border-blue focus:outline-hidden focus:ring-1 focus:ring-blue"
                   required
                 />
@@ -132,7 +248,7 @@ export function NewProjectModal({
                         .replace(/[^a-z0-9_-]/g, ""),
                     )
                   }
-                  placeholder="مثال: shop یا clinic یا crm-portal"
+                  placeholder="مثال: shop یا amlak یا clinic"
                   className="w-full font-mono rounded-lg border border-line bg-bg px-3 py-2 text-xs text-text focus:border-blue focus:outline-hidden focus:ring-1 focus:ring-blue"
                   required
                 />
@@ -167,7 +283,7 @@ export function NewProjectModal({
                     <span>در حال صدور کلید...</span>
                   </>
                 ) : (
-                  <span>ثبت و صدور کلید امنیتی API</span>
+                  <span>ثبت و صدور کلید اختصاصی API</span>
                 )}
               </button>
             </div>
@@ -184,7 +300,7 @@ export function NewProjectModal({
               <div>
                 <h3 className="text-base font-bold text-text">سامانه با موفقیت ثبت شد</h3>
                 <p className="text-xs text-muted">
-                  پروژه «{createdData.project.name}» آماده دریافت تیکت‌های مشتریان است.
+                  پروژه «{createdData.project.name}» آماده دریافت تیکت‌های پشتیبانی است.
                 </p>
               </div>
             </div>
@@ -211,15 +327,15 @@ export function NewProjectModal({
                 </button>
               </div>
               <p className="text-[11px] text-orange">
-                ⚠️ این کلید تنها یک‌بار به صورت کامل نمایش داده می‌شود؛ لطفاً آن را ذخیره کنید.
+                ⚠️ این کلید تنها یک‌بار به صورت کامل نمایش داده می‌شود؛ لطفاً آن را ذخیره فرمایید.
               </p>
             </div>
 
             {/* Config Snippet */}
-            <div className="space-y-1.5 pt-2">
+            <div className="space-y-1.5 pt-1">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-text">
-                  تنظیمات آماده برای فایل <code>.env.local</code> پروژه مقصد:
+                  تنظیمات آماده جهت قرار دادن در <code>.env.local</code> سامانه مشتری:
                 </label>
                 <button
                   type="button"
@@ -236,6 +352,23 @@ export function NewProjectModal({
               <pre className="overflow-x-auto rounded-lg border border-line bg-navy p-3 font-mono text-[11px] text-win-text direction-ltr text-start">
                 {envSnippet}
               </pre>
+            </div>
+
+            {/* Direct Link to API Drawer */}
+            <div className="rounded-xl border border-blue/20 bg-blue/5 p-3 flex items-center justify-between gap-3">
+              <div className="text-xs">
+                <p className="font-bold text-navy">ارائه مستندات وب‌سرویس به توسعه‌دهنده مشتری</p>
+                <p className="text-[11px] text-muted">
+                  مشاهده کدهای cURL، لیست اندپوینت‌های REST و ساختار JSON پاسخ‌ها
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleOpenApiDrawer}
+                className="shrink-0 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue"
+              >
+                مشاهده مستندات API ↗
+              </button>
             </div>
 
             <div className="mt-6 flex justify-end border-t border-line pt-4">

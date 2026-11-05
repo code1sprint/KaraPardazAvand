@@ -457,6 +457,76 @@ export const API_REGISTRY: Record<string, ResourceApiConfig> = {
       },
     ],
   },
+
+  tickets: {
+    id: "tickets",
+    title: "وب‌سرویس و تیکتینگ مشتریان (چندمستأجری)",
+    titleEn: "Multi-Tenant Support Tickets API",
+    type: "collection",
+    basePath: "/api/v1/tickets",
+    endpoints: [
+      {
+        method: "POST",
+        path: "/api/v1/tickets",
+        title: "ثبت تیکت جدید توسط سامانه مشتری",
+        description: "ثبت تیکت پشتیبانی جدید به همراه هویت کاربر، دپارتمان، اولویت و متن پیام اولیه. نیاز به سربرگ‌های x-project-id و x-project-key دارد.",
+        sampleBody: {
+          requester: {
+            userId: "usr_client_101",
+            name: "سهراب مرادی",
+            phone: "09121112233",
+            email: "client@example.com",
+            organization: "فروشگاه مرکزی",
+          },
+          department: "technical",
+          priority: "HIGH",
+          subject: "عدم بارگذاری تصاویر محصولات در پنل کاربری",
+          message: "هنگام ذخیره اطلاعات محصول با خطای شبکه مواجه می‌شویم.",
+        },
+      },
+      {
+        method: "GET",
+        path: "/api/v1/tickets",
+        title: "دریافت فهرست تیکت‌های یک کاربر",
+        description: "دریافت تیکت‌های ثبت‌شده با فیلتر شناسه کاربر (userId) و امکان صفحه‌بندی",
+        queryParams: [
+          { name: "userId", type: "string", desc: "شناسه کاربر در سامانه مشتری (اجباری)", sample: "usr_client_101" },
+          { name: "status", type: "string", desc: "فیلتر بر اساس وضعیت (OPEN, IN_PROGRESS, ANSWERED, RESOLVED, CLOSED)", sample: "OPEN" },
+          { name: "page", type: "number", desc: "شماره صفحه", sample: "1" },
+          { name: "limit", type: "number", desc: "تعداد در هر صفحه", sample: "20" },
+        ],
+      },
+      {
+        method: "GET",
+        path: "/api/v1/tickets/:id",
+        title: "دریافت جزئیات تیکت و رشته پیام‌ها",
+        description: "دریافت اطلاعات تیکت و تاریخچه تمام پیام‌ها و پاسخ‌های ردوبدل شده",
+        queryParams: [
+          { name: "userId", type: "string", desc: "شناسه کاربر (جهت بررسی دسترسی امن)", sample: "usr_client_101" },
+        ],
+      },
+      {
+        method: "POST",
+        path: "/api/v1/tickets/:id/messages",
+        title: "ارسال پیام پیگیری جدید در تیکت",
+        description: "ثبت پاسخ جدید توسط مشتری روی تیکت فعال یا بازگشایی تیکت حل‌شده تا ۷ روز",
+        sampleBody: {
+          userId: "usr_client_101",
+          userName: "سهراب مرادی",
+          message: "مشکل در مرورگر دیگر هم تست شد و اسکرین‌شات ضمیمه گردید.",
+        },
+      },
+      {
+        method: "PATCH",
+        path: "/api/v1/tickets/:id/close",
+        title: "بستن تیکت توسط کاربر",
+        description: "تغییر وضعیت تیکت به CLOSED و پایان چرخه پیگیری",
+        sampleBody: {
+          userId: "usr_client_101",
+        },
+      },
+    ],
+  },
 };
 
 /**

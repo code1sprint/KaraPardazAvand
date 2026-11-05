@@ -6,6 +6,7 @@ import { ProjectFilterBar, ProjectInfo } from "@/components/admin/tickets/Projec
 import { TicketTable, TicketItem } from "@/components/admin/tickets/TicketTable";
 import { TicketDetailDrawer } from "@/components/admin/tickets/TicketDetailDrawer";
 import { NewProjectModal } from "@/components/admin/tickets/NewProjectModal";
+import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 
 export function AdminTicketsClient() {
   const [tickets, setTickets] = useState<TicketItem[]>([]);
@@ -113,24 +114,27 @@ export function AdminTicketsClient() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            setIsLoading(true);
-            setRefreshIndex((r) => r + 1);
-          }}
-          className="flex items-center gap-1.5 self-start rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-medium text-text shadow-2xs hover:bg-bg sm:self-auto"
-        >
-          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            />
-          </svg>
-          <span>بروزرسانی داده‌ها</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <ApiButton label="مستندات و اندپوینت‌های API" />
+          <button
+            type="button"
+            onClick={() => {
+              setIsLoading(true);
+              setRefreshIndex((r) => r + 1);
+            }}
+            className="flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-medium text-text shadow-2xs hover:bg-bg"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+            <span>بروزرسانی داده‌ها</span>
+          </button>
+        </div>
       </div>
 
       {/* Metric Cards */}
