@@ -30,6 +30,8 @@ import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import { absoluteUrl, buildPageMetadata, isAppLocale } from "@/lib/seo";
 
+import { entityConfig } from "@/lib/seo/entity";
+
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
@@ -57,7 +59,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   }
 
-  const title = pickLocalized(service.title, locale);
+  const entityService = entityConfig.services.find((s) => s.slug === slug);
+  const primaryKw =
+    locale === "en"
+      ? entityService?.primaryKeyword.en
+      : entityService?.primaryKeyword.fa;
+
+  const title = primaryKw || pickLocalized(service.title, locale);
   const description = pickLocalized(service.outcome, locale);
 
   return buildPageMetadata({

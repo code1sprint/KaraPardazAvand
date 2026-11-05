@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
 import { getSiteUrl } from "@/content/site";
 import { routing, type AppLocale } from "@/i18n/routing";
+import {
+  createPageMetadata,
+  formatMetaTitle,
+  clampDescription,
+  HOME_METADATA,
+  type CreatePageMetadataOptions,
+} from "./seo/metadata";
+
+export { createPageMetadata, formatMetaTitle, clampDescription, HOME_METADATA };
+export type { CreatePageMetadataOptions };
 
 /** Locale-agnostic app path → absolute URL for a locale (`/fa`, `/en/...`). */
 export function absoluteUrl(locale: string, path = "/"): string {
@@ -26,7 +36,7 @@ export type BuildPageMetadataInput = {
   path?: string;
   title: string;
   description: string;
-  siteName: string;
+  siteName?: string;
   /** Absolute or site-relative OG image URL. Defaults to `/og?...`. */
   imageUrl?: string;
   imageAlt?: string;
@@ -34,11 +44,14 @@ export type BuildPageMetadataInput = {
   type?: "website" | "article";
   /** Skip layout title template (use for home brand title). */
   absoluteTitle?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  authors?: string[];
 };
 
 /**
  * Shared Metadata API builder: canonical, hreflang, Open Graph, Twitter.
- * Use from every route's `generateMetadata`.
+ * Delegates to centralized createPageMetadata.
  */
 export function buildPageMetadata({
   locale,
@@ -51,60 +64,27 @@ export function buildPageMetadata({
   noIndex = false,
   type = "website",
   absoluteTitle = false,
+  publishedTime,
+  modifiedTime,
+  authors,
 }: BuildPageMetadataInput): Metadata {
-  const pathname = normalizePath(path);
-  const canonical = absoluteUrl(locale, pathname);
-
-  const languages: Record<string, string> = {};
-  for (const loc of routing.locales) {
-    languages[loc] = absoluteUrl(loc, pathname);
-  }
-  languages["x-default"] = absoluteUrl(routing.defaultLocale, pathname);
-
-  const ogImagePath =
-    imageUrl ??
-    `/api/og?locale=${encodeURIComponent(locale)}&title=${encodeURIComponent(title)}`;
-
-  const images = [
-    {
-      url: ogImagePath,
-      width: 1200,
-      height: 630,
-      alt: imageAlt ?? title,
-    },
-  ];
-
-  return {
-    title: absoluteTitle ? { absolute: title } : title,
+  return createPageMetadata({
+    locale,
+    path,
+    title,
     description,
-    alternates: {
-      canonical,
-      languages,
-    },
-    openGraph: {
-      type,
-      locale: locale === "fa" ? "fa_IR" : "en_US",
-      alternateLocale: routing.locales
-        .filter((loc) => loc !== locale)
-        .map((loc) => (loc === "fa" ? "fa_IR" : "en_US")),
-      url: canonical,
-      siteName,
-      title,
-      description,
-      images,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImagePath],
-    },
-    robots: noIndex
-      ? { index: false, follow: false }
-      : { index: true, follow: true },
-  };
+    isHome: path === "/" || path === "" || (absoluteTitle && path === "/"),
+    type,
+    imageUrl,
+    imageAlt,
+    noIndex,
+    publishedTime,
+    modifiedTime,
+    authors,
+  });
 }
 
 export function isAppLocale(value: string): value is AppLocale {
   return (routing.locales as readonly string[]).includes(value);
 }
+
