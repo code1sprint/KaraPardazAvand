@@ -4,9 +4,13 @@ import { withAuth } from "@/lib/auth/guard";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { SupportTicket } from "@/lib/db/models/SupportTicket";
 
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
 export const GET = withAuth(
-  async (_request: Request, context: { params: Promise<{ id: string }> }) => {
-    const { id } = await context.params;
+  async (_request: Request, context: unknown) => {
+    const { id } = await (context as RouteContext).params;
     await connectToDatabase();
 
     const isObjectId = mongoose.Types.ObjectId.isValid(id);

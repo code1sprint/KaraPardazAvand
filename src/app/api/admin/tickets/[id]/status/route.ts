@@ -11,9 +11,13 @@ const updateStatusSchema = z.object({
   priority: ticketPriorityEnum.optional(),
 });
 
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
 export const PATCH = withAuth(
-  async (request: Request, context: { params: Promise<{ id: string }> }) => {
-    const { id } = await context.params;
+  async (request: Request, context: unknown) => {
+    const { id } = await (context as RouteContext).params;
 
     let body: unknown;
     try {

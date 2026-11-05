@@ -3,7 +3,7 @@ import type {
   TicketPriorityType,
   TicketStatusType,
   TicketSenderRoleType,
-} from "../validations/ticket";
+} from "../../validations/ticket";
 
 export interface ITicketAttachment {
   name: string;

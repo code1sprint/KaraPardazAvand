@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { TicketStatsCards } from "@/components/admin/tickets/TicketStatsCards";
 import { ProjectFilterBar, ProjectInfo } from "@/components/admin/tickets/ProjectFilterBar";
 import { TicketTable, TicketItem } from "@/components/admin/tickets/TicketTable";
@@ -24,13 +24,15 @@ export function AdminTicketsClient() {
   const [selectedPriority, setSelectedPriority] = useState("all");
   const [selectedTicket, setSelectedTicket] = useState<TicketItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshIndex, setRefreshIndex] = useState(0);
 
   // Load Projects
   useEffect(() => {
+    let mounted = true;
     async function loadProjects() {
       try {
         const res = await fetch("/api/admin/tickets/projects");
-        if (res.ok) {
+        if (res.ok && mounted) {
           const data = await res.json();
           if (data.projects) {
             setProjects(data.projects);
@@ -41,43 +43,53 @@ export function AdminTicketsClient() {
       }
     }
     loadProjects();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // Load Tickets
-  const fetchTickets = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (selectedProject !== "all") params.set("projectId", selectedProject);
-      if (activeStatus !== "all") params.set("status", activeStatus);
-      if (selectedPriority !== "all") params.set("priority", selectedPriority);
-      if (searchQuery.trim()) params.set("q", searchQuery.trim());
+  useEffect(() => {
+    let mounted = true;
 
-      const res = await fetch(`/api/admin/tickets?${params.toString()}`);
-      if (res.ok) {
-        const data = await res.json();
-        setTickets(data.tickets || []);
-        if (data.counts) {
-          setCounts(data.counts);
+    async function loadTickets() {
+      try {
+        const params = new URLSearchParams();
+        if (selectedProject !== "all") params.set("projectId", selectedProject);
+        if (activeStatus !== "all") params.set("status", activeStatus);
+        if (selectedPriority !== "all") params.set("priority", selectedPriority);
+        if (searchQuery.trim()) params.set("q", searchQuery.trim());
+
+        const res = await fetch(`/api/admin/tickets?${params.toString()}`);
+        if (res.ok && mounted) {
+          const data = await res.json();
+          setTickets(data.tickets || []);
+          if (data.counts) {
+            setCounts(data.counts);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch tickets", err);
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
         }
       }
-    } catch (err) {
-      console.error("Failed to fetch tickets", err);
-    } finally {
-      setIsLoading(false);
     }
-  }, [selectedProject, activeStatus, selectedPriority, searchQuery]);
 
-  useEffect(() => {
-    fetchTickets();
-  }, [fetchTickets]);
+    loadTickets();
+
+    return () => {
+      mounted = false;
+    };
+  }, [selectedProject, activeStatus, selectedPriority, searchQuery, refreshIndex]);
 
   const handleTicketUpdated = (updatedTicket: TicketItem) => {
     setSelectedTicket(updatedTicket);
     setTickets((prev) =>
       prev.map((t) => (t._id === updatedTicket._id ? updatedTicket : t)),
     );
-    fetchTickets();
+    setRefreshIndex((prev) => prev + 1);
   };
 
   return (
@@ -95,7 +107,10 @@ export function AdminTicketsClient() {
 
         <button
           type="button"
-          onClick={() => fetchTickets()}
+          onClick={() => {
+            setIsLoading(true);
+            setRefreshIndex((r) => r + 1);
+          }}
           className="flex items-center gap-1.5 self-start rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-medium text-text shadow-2xs hover:bg-bg sm:self-auto"
         >
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,18 +129,29 @@ export function AdminTicketsClient() {
       <TicketStatsCards
         counts={counts}
         activeStatus={activeStatus}
-        onSelectStatus={(status) => setActiveStatus(status)}
+        onSelectStatus={(status) => {
+          setIsLoading(true);
+          setActiveStatus(status);
+        }}
       />
 
       {/* Project & Search Filters */}
       <ProjectFilterBar
         projects={projects}
         selectedProject={selectedProject}
-        onSelectProject={(pid) => setSelectedProject(pid)}
+        onSelectProject={(pid) => {
+          setIsLoading(true);
+          setSelectedProject(pid);
+        }}
         searchQuery={searchQuery}
-        onSearchChange={(q) => setSearchQuery(q)}
+        onSearchChange={(q) => {
+          setSearchQuery(q);
+        }}
         selectedPriority={selectedPriority}
-        onSelectPriority={(p) => setSelectedPriority(p)}
+        onSelectPriority={(p) => {
+          setIsLoading(true);
+          setSelectedPriority(p);
+        }}
       />
 
       {/* Ticket Table */}

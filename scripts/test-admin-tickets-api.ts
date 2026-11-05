@@ -7,7 +7,6 @@ dotenv.config({ path: ".env" });
 
 import { signAuthToken } from "../src/lib/auth/jwt";
 import { connectToDatabase } from "../src/lib/db/mongodb";
-import { SupportTicket } from "../src/lib/db/models/SupportTicket";
 import { GET as getProjectsHandler } from "../src/app/api/admin/tickets/projects/route";
 import { GET as getTicketsHandler } from "../src/app/api/admin/tickets/route";
 import { POST as replyTicketHandler } from "../src/app/api/admin/tickets/[id]/reply/route";
@@ -55,7 +54,7 @@ async function runAdminTicketApiTests() {
   assert.strictEqual(filteredRes.status, 200);
   const filteredData = await filteredRes.json();
   assert(filteredData.ok);
-  assert(filteredData.tickets.every((t: any) => t.projectId === "amlak"));
+  assert(filteredData.tickets.every((t: { projectId: string }) => t.projectId === "amlak"));
   console.log(`   ✅ Retrieved ${filteredData.tickets.length} tickets for project amlak.`);
 
   const testTicket = filteredData.tickets[0];

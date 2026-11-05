@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { verifyTenantRequest } from "@/lib/auth/tenant-auth";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { SupportTicket } from "@/lib/db/models/SupportTicket";
-import { createTicketSchema, ticketStatusEnum } from "@/lib/validations/ticket";
+import { createTicketSchema, ticketStatusEnum, TicketStatusType } from "@/lib/validations/ticket";
 
 export async function GET(request: Request) {
   const auth = await verifyTenantRequest(request);
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     "requester.userId": userId,
   };
 
-  if (status && ticketStatusEnum.options.includes(status as any)) {
+  if (status && ticketStatusEnum.options.includes(status as TicketStatusType)) {
     filter.status = status;
   }
 

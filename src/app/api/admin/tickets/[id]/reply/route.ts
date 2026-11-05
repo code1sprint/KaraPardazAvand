@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { z } from "zod";
 import { withAuth } from "@/lib/auth/guard";
+import { AuthTokenPayload } from "@/lib/auth/jwt";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { SupportTicket } from "@/lib/db/models/SupportTicket";
 import { addMessageSchema } from "@/lib/validations/ticket";
@@ -10,9 +11,15 @@ const adminReplySchema = addMessageSchema.extend({
   status: z.enum(["ANSWERED", "IN_PROGRESS", "RESOLVED", "CLOSED"]).optional().default("ANSWERED"),
 });
 
+type RouteContext = {
+  user: AuthTokenPayload;
+  params: Promise<{ id: string }>;
+};
+
 export const POST = withAuth(
-  async (request: Request, context: { user: { sub: string; name: string }; params: Promise<{ id: string }> }) => {
-    const { id } = await context.params;
+  async (request: Request, context: unknown) => {
+    const { id } = await (context as RouteContext).params;
+    const { user } = context as RouteContext;
 
     let body: unknown;
     try {
@@ -57,8 +64,8 @@ export const POST = withAuth(
     const now = new Date();
     ticket.messages.push({
       senderRole: "SUPPORT_AGENT",
-      senderId: context.user.sub,
-      senderName: context.user.name || "تیم پشتیبانی کاراپرداز",
+      senderId: user.sub,
+      senderName: user.name || "تیم پشتیبانی کاراپرداز",
       message,
       attachments: attachments || [],
       createdAt: now,

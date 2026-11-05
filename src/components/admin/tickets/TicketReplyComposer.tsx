@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import type { TicketItem } from "./TicketTable";
 
 interface TicketReplyComposerProps {
   ticketId: string;
-  onReplySuccess: (updatedTicket: any) => void;
+  onReplySuccess: (updatedTicket: TicketItem) => void;
 }
 
 export function TicketReplyComposer({
@@ -60,7 +61,7 @@ export function TicketReplyComposer({
           <select
             id="reply-status-change"
             value={status}
-            onChange={(e) => setStatus(e.target.value as any)}
+            onChange={(e) => setStatus(e.target.value as "ANSWERED" | "IN_PROGRESS" | "RESOLVED" | "CLOSED")}
             className="rounded-md border border-line bg-bg px-2 py-1 text-xs text-text focus:border-blue focus:outline-hidden"
           >
             <option value="ANSWERED">پاسخ داده شد (منتظر کاربر)</option>
