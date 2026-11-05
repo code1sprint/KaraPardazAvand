@@ -73,3 +73,22 @@ Phase by phase. For each: (1) short plan, (2) implement, (3) run lint, typecheck
 - Light page is the default; no theme toggle in v1 of the site (dark exists only as product surfaces).
 
 Visual reference for phases 2–6: package preview HTML (`کارا پرداز اوند — پیشنمایش نسخه ۳.html` at repo root / attached artifact).
+
+## SEO AND GEO RULES
+
+### CONTEXT
+The site https://karapardazavand.ir is live (Next.js App Router, fa default, en secondary). Goals: (1) rank for the company name in Persian and English; (2) rank for service queries: custom CRM, custom ERP, enterprise RAG, data dashboards, web platforms, custom software; (3) be cited correctly by AI chatbots and search assistants.
+
+### PRINCIPLES
+- One entity. One canonical Persian name and one canonical English name. All other variants appear ONLY in alternateName data, never in visible text or metadata.
+- Every fact must be real and visible on the page. Structured data must mirror visible content. Never invent contacts, dates, ratings, reviews, clients, statistics or awards. When data is missing, omit the field and list it in reports/seo-todo.md.
+- No keyword stuffing, hidden text, doorway pages or fake reviews. Write for people first: specific, quotable sentences.
+- Single source of truth: src/lib/seo/entity.ts (typed, zod-validated). Components never hard-code brand strings.
+- Use whatever content source the site uses today (content files or the admin database). Do not migrate it.
+
+### ENTITY CONFIG (src/lib/seo/entity.ts)
+canonicalName {fa, en}; alternateNames[] (only variants the business confirmed); definition {fa, en} (one factual sentence about the company); url; logo (absolute URL, square and wide variants); parentOrganization {name, url}; sameAs[] (official profile URLs); contact {email, phone, address, hours} with each field optional; foundingDate optional; areaServed; knowsAbout[]; services[] with {slug, name {fa,en}, primaryKeyword {fa,en}}. Values marked TODO_REAL_DATA are treated as absent.
+
+### WORKFLOW
+Phase by phase: short plan, implement, run lint, typecheck and build, then report files changed, how to verify, acceptance results, open questions. Do not start the next phase.
+
