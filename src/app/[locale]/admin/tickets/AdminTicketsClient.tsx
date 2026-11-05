@@ -5,6 +5,7 @@ import { TicketStatsCards } from "@/components/admin/tickets/TicketStatsCards";
 import { ProjectFilterBar, ProjectInfo } from "@/components/admin/tickets/ProjectFilterBar";
 import { TicketTable, TicketItem } from "@/components/admin/tickets/TicketTable";
 import { TicketDetailDrawer } from "@/components/admin/tickets/TicketDetailDrawer";
+import { NewProjectModal } from "@/components/admin/tickets/NewProjectModal";
 
 export function AdminTicketsClient() {
   const [tickets, setTickets] = useState<TicketItem[]>([]);
@@ -25,6 +26,7 @@ export function AdminTicketsClient() {
   const [selectedTicket, setSelectedTicket] = useState<TicketItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshIndex, setRefreshIndex] = useState(0);
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
 
   // Load Projects
   useEffect(() => {
@@ -92,6 +94,12 @@ export function AdminTicketsClient() {
     setRefreshIndex((prev) => prev + 1);
   };
 
+  const handleProjectCreated = (newProject: ProjectInfo) => {
+    setProjects((prev) => [...prev, newProject]);
+    setSelectedProject(newProject.projectId);
+    setRefreshIndex((prev) => prev + 1);
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Header */}
@@ -152,6 +160,7 @@ export function AdminTicketsClient() {
           setIsLoading(true);
           setSelectedPriority(p);
         }}
+        onOpenNewProjectModal={() => setIsNewProjectModalOpen(true)}
       />
 
       {/* Ticket Table */}
@@ -166,6 +175,13 @@ export function AdminTicketsClient() {
         ticket={selectedTicket}
         onClose={() => setSelectedTicket(null)}
         onTicketUpdated={handleTicketUpdated}
+      />
+
+      {/* Register New Project Modal */}
+      <NewProjectModal
+        isOpen={isNewProjectModalOpen}
+        onClose={() => setIsNewProjectModalOpen(false)}
+        onCreated={handleProjectCreated}
       />
     </div>
   );

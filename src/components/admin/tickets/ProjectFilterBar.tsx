@@ -17,6 +17,7 @@ interface ProjectFilterBarProps {
   onSearchChange: (q: string) => void;
   selectedPriority: string;
   onSelectPriority: (p: string) => void;
+  onOpenNewProjectModal?: () => void;
 }
 
 export function ProjectFilterBar({
@@ -27,6 +28,7 @@ export function ProjectFilterBar({
   onSearchChange,
   selectedPriority,
   onSelectPriority,
+  onOpenNewProjectModal,
 }: ProjectFilterBarProps) {
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-line bg-panel p-4 shadow-xs">
@@ -72,6 +74,17 @@ export function ProjectFilterBar({
             </button>
           );
         })}
+
+        {onOpenNewProjectModal && (
+          <button
+            type="button"
+            onClick={onOpenNewProjectModal}
+            className="ms-auto flex items-center gap-1 rounded-lg border border-dashed border-blue/40 bg-blue/5 px-2.5 py-1.5 text-xs font-bold text-blue transition-colors hover:border-blue hover:bg-blue hover:text-white"
+          >
+            <span>+</span>
+            <span>ثبت سامانه جدید</span>
+          </button>
+        )}
       </div>
 
       {/* Search & Filters */}

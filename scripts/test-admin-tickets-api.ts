@@ -105,6 +105,27 @@ async function runAdminTicketApiTests() {
   assert(statusData.ticket.resolvedAt !== null);
   console.log("   ✅ Ticket status updated to RESOLVED.");
 
+  // 6. Test Registering New Project (POST /api/admin/tickets/projects)
+  console.log("6. Testing Dynamic Project Registration...");
+  const { POST: createProjectHandler } = await import("../src/app/api/admin/tickets/projects/route");
+  const createProjReq = new Request("http://localhost/api/admin/tickets/projects", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${adminToken}`,
+    },
+    body: JSON.stringify({
+      name: "فروشگاه آنلاین تستی",
+      projectId: "test_shop_dynamo",
+    }),
+  });
+  const createProjRes = await createProjectHandler(createProjReq);
+  assert.strictEqual(createProjRes.status, 201);
+  const createProjData = await createProjRes.json();
+  assert(createProjData.ok);
+  assert(createProjData.rawApiKey.startsWith("kp_live_test_shop_dynamo_"));
+  console.log(`   ✅ New project created dynamically with key: ${createProjData.rawApiKey}`);
+
   await mongoose.disconnect();
   console.log("\n🎉 All Admin Ticket API Tests Passed Successfully!\n");
 }
