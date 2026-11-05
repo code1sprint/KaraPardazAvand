@@ -1,5 +1,4 @@
 import { entityConfig } from "@/lib/seo/entity";
-import { services } from "@/content/services";
 
 export async function GET() {
   const markdown = `# ${entityConfig.canonicalName.en} (${entityConfig.canonicalName.fa})

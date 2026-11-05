@@ -7,7 +7,7 @@ export interface JsonLdNode {
   "@context"?: string;
   "@type": string;
   "@id"?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function serializeJsonLd(data: unknown): string {
@@ -129,7 +129,6 @@ export interface ServiceJsonLdOptions {
 }
 
 export function buildServiceJsonLd({
-  locale,
   name,
   description,
   url,

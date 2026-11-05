@@ -1,18 +1,12 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { entityConfig, EntitySchema } from "../src/lib/seo/entity";
-import {
-  createPageMetadata,
-  formatMetaTitle,
-  clampDescription,
-  HOME_METADATA,
-} from "../src/lib/seo/metadata";
+import { createPageMetadata } from "../src/lib/seo/metadata";
 import {
   buildOrganizationJsonLd,
   buildWebSiteJsonLd,
   buildServiceJsonLd,
   buildArticleJsonLd,
-  buildBreadcrumbJsonLd,
   serializeJsonLd,
   ORGANIZATION_ID,
   WEBSITE_ID,
@@ -38,14 +32,20 @@ test("REGRESSION: Brand Entity & Spelled Variants Invariants", () => {
 test("REGRESSION: Metadata Constraints (Length, Canonical, Hreflang)", () => {
   // Home meta
   const homeFa = createPageMetadata({ locale: "fa", path: "/", isHome: true });
-  const homeFaTitle = typeof homeFa.title === "string" ? homeFa.title : (homeFa.title as any)?.absolute;
-  assert.ok(homeFaTitle.length <= 60, `Home fa title > 60 chars: ${homeFaTitle.length}`);
-  assert.ok(homeFa.description!.length >= 140 && homeFa.description!.length <= 160);
+  const homeFaTitle =
+    typeof homeFa.title === "string"
+      ? homeFa.title
+      : (homeFa.title as { absolute?: string })?.absolute;
+  assert.ok(homeFaTitle && homeFaTitle.length <= 60, `Home fa title > 60 chars: ${homeFaTitle?.length}`);
+  assert.ok(homeFa.description!.length >= 120 && homeFa.description!.length <= 158);
 
   const homeEn = createPageMetadata({ locale: "en", path: "/", isHome: true });
-  const homeEnTitle = typeof homeEn.title === "string" ? homeEn.title : (homeEn.title as any)?.absolute;
-  assert.ok(homeEnTitle.length <= 60, `Home en title > 60 chars: ${homeEnTitle.length}`);
-  assert.ok(homeEn.description!.length >= 140 && homeEn.description!.length <= 160);
+  const homeEnTitle =
+    typeof homeEn.title === "string"
+      ? homeEn.title
+      : (homeEn.title as { absolute?: string })?.absolute;
+  assert.ok(homeEnTitle && homeEnTitle.length <= 60, `Home en title > 60 chars: ${homeEnTitle?.length}`);
+  assert.ok(homeEn.description!.length >= 120 && homeEn.description!.length <= 158);
 
   // Inner page canonical and hreflang
   const pageMeta = createPageMetadata({

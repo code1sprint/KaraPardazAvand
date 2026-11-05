@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { entityConfig } from "./entity";
+import { getRouteSeoMeta } from "@/content/seo-meta";
 
 export interface CreatePageMetadataOptions {
   locale: string;
@@ -20,12 +21,12 @@ export const HOME_METADATA = {
   fa: {
     title: "کارا پرداز اوند | توسعه نرم‌افزار سازمانی، CRM، ERP و RAG",
     description:
-      "کارا پرداز اوند: طراحی و توسعه نرم‌افزار سفارشی، CRM و ERP اختصاصی، هوش مصنوعی سازمانی (RAG) و داشبورد داده تحلیلی برای کسب‌وکارها و سازمان‌ها.",
+      "کارا پرداز اوند در زمینه توسعه نرم‌افزار سازمانی، سامانه‌های CRM و ERP اختصاصی برای سازمان‌ها فعالیت می‌کند. برای بررسی فرایندها مشاوره دریافت کنید.",
   },
   en: {
-    title: "Kara Pardaz Avand | Custom Software, CRM, ERP & RAG",
+    title: "Kara Pardaz Avand | Enterprise Software, CRM, ERP & RAG",
     description:
-      "Kara Pardaz Avand designs and builds custom software, bespoke CRM and ERP systems, enterprise RAG AI and data dashboards for modern businesses and enterprises.",
+      "Kara Pardaz Avand delivers enterprise software, bespoke CRM platforms, and ERP systems for growing organizations. Request an engineering consultation.",
   },
 } as const;
 
@@ -122,18 +123,37 @@ export function createPageMetadata({
   const brandName = isEn ? entityConfig.canonicalName.en : entityConfig.canonicalName.fa;
   const cleanPath = normalizePath(path);
 
+  // Check precomputed route metadata first
+  const lookupRoute = isHome || cleanPath === "" ? "/" : cleanPath;
+  const precomputed = getRouteSeoMeta(lookupRoute, locale);
+
   let finalTitle: string;
   let finalDescription: string;
+  let ogTitle: string;
+  let ogDescription: string;
+  let effectiveNoIndex = noIndex;
 
-  if (isHome || cleanPath === "") {
+  if (precomputed) {
+    finalTitle = precomputed.title;
+    finalDescription = precomputed.description;
+    ogTitle = precomputed.ogTitle;
+    ogDescription = precomputed.ogDescription;
+    if (precomputed.robots.includes("noindex")) {
+      effectiveNoIndex = true;
+    }
+  } else if (isHome || cleanPath === "") {
     finalTitle = isEn ? HOME_METADATA.en.title : HOME_METADATA.fa.title;
     finalDescription = isEn ? HOME_METADATA.en.description : HOME_METADATA.fa.description;
+    ogTitle = finalTitle;
+    ogDescription = finalDescription;
   } else {
     finalTitle = formatMetaTitle(rawTitle || brandName, locale);
     finalDescription = clampDescription(
       rawDesc,
       isEn ? entityConfig.definition.en : entityConfig.definition.fa,
     );
+    ogTitle = finalTitle;
+    ogDescription = finalDescription;
   }
 
   const canonical = absoluteUrl(locale, cleanPath);
@@ -143,9 +163,10 @@ export function createPageMetadata({
     "x-default": absoluteUrl("fa", cleanPath),
   };
 
+  const ogImageTitleParam = precomputed?.ogImageText?.line1 || finalTitle;
   const ogImagePath =
     imageUrl ||
-    `/api/og?locale=${encodeURIComponent(locale)}&title=${encodeURIComponent(finalTitle)}`;
+    `/api/og?locale=${encodeURIComponent(locale)}&title=${encodeURIComponent(ogImageTitleParam)}`;
 
   const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
   const bingVerification = process.env.BING_SITE_VERIFICATION;
@@ -176,14 +197,14 @@ export function createPageMetadata({
       alternateLocale: isEn ? ["fa_IR"] : ["en_US"],
       url: canonical,
       siteName: brandName,
-      title: finalTitle,
-      description: finalDescription,
+      title: ogTitle,
+      description: ogDescription,
       images: [
         {
           url: ogImagePath,
           width: 1200,
           height: 630,
-          alt: imageAlt || finalTitle,
+          alt: imageAlt || ogTitle,
         },
       ],
       ...(type === "article" && {
@@ -194,11 +215,11 @@ export function createPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: finalTitle,
-      description: finalDescription,
+      title: ogTitle,
+      description: ogDescription,
       images: [ogImagePath],
     },
-    robots: noIndex
+    robots: effectiveNoIndex
       ? { index: false, follow: false }
       : {
           index: true,

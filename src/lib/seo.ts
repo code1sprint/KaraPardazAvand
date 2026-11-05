@@ -58,7 +58,6 @@ export function buildPageMetadata({
   path = "/",
   title,
   description,
-  siteName,
   imageUrl,
   imageAlt,
   noIndex = false,

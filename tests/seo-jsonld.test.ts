@@ -3,7 +3,6 @@ import { test } from "node:test";
 import {
   buildOrganizationJsonLd,
   buildWebSiteJsonLd,
-  buildWebPageJsonLd,
   buildServiceJsonLd,
   buildArticleJsonLd,
   buildBreadcrumbJsonLd,

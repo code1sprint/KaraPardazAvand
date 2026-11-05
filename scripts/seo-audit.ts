@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { services } from "../src/content/services";
-import { entityConfig } from "../src/lib/seo/entity";
 
 function getProjectSlugs(): string[] {
   const dir = path.join(process.cwd(), "src/content/projects");
@@ -166,8 +165,8 @@ async function auditRoute(routePath: string): Promise<RouteAuditResult> {
       const parsed = JSON.parse(script);
       if (parsed["@type"]) jsonLdTypes.push(parsed["@type"]);
       else if (Array.isArray(parsed["@graph"])) {
-        parsed["@graph"].forEach((item: any) => {
-          if (item["@type"]) jsonLdTypes.push(item["@type"]);
+        parsed["@graph"].forEach((item: Record<string, unknown>) => {
+          if (item["@type"] && typeof item["@type"] === "string") jsonLdTypes.push(item["@type"]);
         });
       }
     } catch {
@@ -344,7 +343,7 @@ async function runAudit() {
     ? "# SEO & GEO Post-Implementation Audit Report (Phase S9)"
     : "# SEO & GEO Pre-Change Audit Report (Phase S1)";
 
-  let reportMd = `${reportTitle}
+  const reportMd = `${reportTitle}
 
 **Audit Date:** ${new Date().toISOString()}  
 **Target:** ${BASE_URL}  
@@ -439,7 +438,7 @@ The audit confirmed consistent usage of primary brand names:
   fs.writeFileSync(path.join("reports", reportFilename), reportMd);
 
   // Generate reports/seo-todo.md
-  let todoMd = `# SEO & GEO Business Data Requirements (seo-todo.md)
+  const todoMd = `# SEO & GEO Business Data Requirements (seo-todo.md)
 
 Missing business data items that are omitted from structured data and metadata until confirmed:
 

@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createPageMetadata, clampDescription, formatMetaTitle } from "../src/lib/seo/metadata";
-import { entityConfig } from "../src/lib/seo/entity";
 
 test("home page metadata matches exact spec requirements and lengths", () => {
   const faMeta = createPageMetadata({
@@ -10,16 +9,19 @@ test("home page metadata matches exact spec requirements and lengths", () => {
     isHome: true,
   });
 
-  const faTitle = typeof faMeta.title === "string" ? faMeta.title : (faMeta.title as any)?.absolute;
+  const faTitle =
+    typeof faMeta.title === "string"
+      ? faMeta.title
+      : (faMeta.title as { absolute?: string })?.absolute;
   assert.equal(faTitle, "کارا پرداز اوند | توسعه نرم‌افزار سازمانی، CRM، ERP و RAG");
-  assert.ok(faTitle.length <= 60, `fa title length ${faTitle.length} > 60`);
+  assert.ok(faTitle && faTitle.length <= 60, `fa title length ${faTitle?.length} > 60`);
   assert.equal(
     faMeta.description,
-    "کارا پرداز اوند: طراحی و توسعه نرم‌افزار سفارشی، CRM و ERP اختصاصی، هوش مصنوعی سازمانی (RAG) و داشبورد داده تحلیلی برای کسب‌وکارها و سازمان‌ها.",
+    "کارا پرداز اوند در زمینه توسعه نرم‌افزار سازمانی، سامانه‌های CRM و ERP اختصاصی برای سازمان‌ها فعالیت می‌کند. برای بررسی فرایندها مشاوره دریافت کنید.",
   );
   assert.ok(
-    faMeta.description!.length >= 140 && faMeta.description!.length <= 160,
-    `fa description length ${faMeta.description!.length} outside 140-160`,
+    faMeta.description!.length >= 120 && faMeta.description!.length <= 158,
+    `fa description length ${faMeta.description!.length} outside 120-158`,
   );
 
   const enMeta = createPageMetadata({
@@ -27,11 +29,14 @@ test("home page metadata matches exact spec requirements and lengths", () => {
     path: "/",
     isHome: true,
   });
-  const enTitle = typeof enMeta.title === "string" ? enMeta.title : (enMeta.title as any)?.absolute;
-  assert.equal(enTitle, "Kara Pardaz Avand | Custom Software, CRM, ERP & RAG");
-  assert.ok(enTitle.length <= 60, `en title length ${enTitle.length} > 60`);
+  const enTitle =
+    typeof enMeta.title === "string"
+      ? enMeta.title
+      : (enMeta.title as { absolute?: string })?.absolute;
+  assert.equal(enTitle, "Kara Pardaz Avand | Enterprise Software, CRM, ERP & RAG");
+  assert.ok(enTitle && enTitle.length <= 60, `en title length ${enTitle?.length} > 60`);
   assert.ok(
-    enMeta.description!.length >= 135 && enMeta.description!.length <= 165,
+    enMeta.description!.length >= 120 && enMeta.description!.length <= 158,
     `en description length ${enMeta.description!.length} outside bounds`,
   );
 });

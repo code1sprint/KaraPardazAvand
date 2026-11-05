@@ -17,6 +17,23 @@ async function loadVazirmatn(): Promise<{
     return { regular: vazirmatnRegular, bold: vazirmatnBold };
   }
 
+  // Try loading from local disk cache first
+  try {
+    const regularBuf = await readFile(join(process.cwd(), "public/fonts/vazirmatn-400.woff"));
+    const boldBuf = await readFile(join(process.cwd(), "public/fonts/vazirmatn-700.woff"));
+    vazirmatnRegular = regularBuf.buffer.slice(
+      regularBuf.byteOffset,
+      regularBuf.byteOffset + regularBuf.byteLength,
+    ) as ArrayBuffer;
+    vazirmatnBold = boldBuf.buffer.slice(
+      boldBuf.byteOffset,
+      boldBuf.byteOffset + boldBuf.byteLength,
+    ) as ArrayBuffer;
+    return { regular: vazirmatnRegular, bold: vazirmatnBold };
+  } catch {
+    // Fall back to remote CDN if local files are missing
+  }
+
   const [arabicRegular, arabicBold] = await Promise.all([
     fetch(
       "https://cdn.jsdelivr.net/fontsource/fonts/vazirmatn@5.2.5/arabic-400-normal.woff",
