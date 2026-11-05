@@ -26,7 +26,9 @@ import {
 import type { AppLocale } from "@/i18n/routing";
 import { compileMdxSource } from "@/lib/mdx";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
+import { getSiteUrl } from "@/content/site";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -103,8 +105,24 @@ async function CaseStudyContent({ params }: Props) {
     return service ? pickLocalized(service.title, appLocale) : serviceSlug;
   });
 
+  const siteUrl = getSiteUrl().replace(/\/$/, "");
+  const caseStudyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: project.meta.title,
+    description: project.meta.problem,
+    about: serviceLabels.join(", "),
+    publisher: {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+    },
+    inLanguage: appLocale === "fa" ? "fa-IR" : "en-US",
+    mainEntityOfPage: absoluteUrl(appLocale, `/portfolio/${slug}`),
+  };
+
   return (
     <div className="pt-[length:var(--hero-top)]">
+      <JsonLd data={caseStudyJsonLd} />
       <Container>
         <Breadcrumbs
           label={breadcrumbT("label")}
