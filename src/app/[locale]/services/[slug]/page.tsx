@@ -9,6 +9,7 @@ import { ServiceSteps } from "@/components/sections/ServiceSteps";
 import { ServiceSystemMap } from "@/components/sections/ServiceSystemMap";
 import { RelatedProjects } from "@/components/sections/RelatedProjects";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { AnswerBlock } from "@/components/seo/AnswerBlock";
 import {
   Accordion,
   ButtonLink,
@@ -166,9 +167,11 @@ async function ServiceDetailContent({ params }: Props) {
             <Heading as={1} id="service-hero-heading" inner>
               {title}
             </Heading>
-            <Text variant="muted" className="max-w-[var(--lead-max,60ch)] text-[clamp(16px,1.5vw,18px)]">
-              {outcome}
-            </Text>
+            <AnswerBlock
+              definition={outcome}
+              targetAudience={service.audience[0] ? pickLocalized(service.audience[0], appLocale) : undefined}
+              className="mt-2"
+            />
             <div className="flex flex-wrap gap-3">
               <ButtonLink
                 href={`/contact?service=${encodeURIComponent(service.slug)}`}

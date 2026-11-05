@@ -9,6 +9,7 @@ import { ReadingProgress } from "@/components/insights/ReadingProgress";
 import { RelatedPosts } from "@/components/insights/RelatedPosts";
 import { TableOfContents } from "@/components/insights/TableOfContents";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { AnswerBlock } from "@/components/seo/AnswerBlock";
 import {
   Chip,
   Container,
@@ -246,6 +247,11 @@ async function InsightPostContent({ params }: Props) {
           {/* Main content grid: Article on right, Articles Sidebar on left (in RTL) */}
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
             <article id="insight-article" className="lg:col-span-8 min-w-0 w-full">
+              <AnswerBlock
+                title={locale === "en" ? "Key Takeaways (TL;DR)" : "خلاصه اجرایی (TL;DR)"}
+                definition={post.meta.summary}
+                className="mb-8"
+              />
               <Prose className="w-full max-w-none text-start text-justify leading-relaxed sm:text-lg">
                 {articleContent}
               </Prose>

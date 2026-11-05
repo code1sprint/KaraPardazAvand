@@ -6,6 +6,8 @@ import { AboutBrandDiagram } from "@/components/sections/AboutBrandDiagram";
 import { AboutCulture } from "@/components/sections/AboutCulture";
 import { AboutPrinciplesBand } from "@/components/sections/AboutPrinciplesBand";
 import { AboutTeam } from "@/components/sections/AboutTeam";
+import { AnswerBlock } from "@/components/seo/AnswerBlock";
+import { entityConfig } from "@/lib/seo/entity";
 import {
   Heading,
   Text,
@@ -77,6 +79,10 @@ async function AboutContent({ params }: Props) {
         title={intro.title}
         lead={intro.lead}
       >
+        <AnswerBlock
+          definition={entityConfig.definition[appLocale]}
+          className="mb-8"
+        />
         {story ? (
           <section className="max-w-3xl" aria-labelledby="about-story">
             <Heading as={2} id="about-story" className="text-2xl sm:text-3xl">
