@@ -64,6 +64,7 @@ export async function RelatedProjects({
               key={project.slug}
               project={project}
               viewLabel={portfolioT("viewCaseStudy")}
+              visitLiveLabel={portfolioT("visitLive")}
             />
           ))}
         </div>

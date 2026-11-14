@@ -60,6 +60,7 @@ export async function FeaturedProjects({ limit = 3 }: FeaturedProjectsProps) {
               key={project.slug}
               project={project}
               viewLabel={t("viewCaseStudy")}
+              visitLiveLabel={t("visitLive")}
               large
             />
           ))}

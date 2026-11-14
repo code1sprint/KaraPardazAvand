@@ -114,6 +114,7 @@ async function PortfolioIndexContent({ params }: Props) {
             emptyFiltered: t("emptyFiltered"),
             emptyCta: t("emptyCta"),
             viewCaseStudy: t("viewCaseStudy"),
+            visitLive: t("visitLive"),
           }}
         />
       </Suspense>

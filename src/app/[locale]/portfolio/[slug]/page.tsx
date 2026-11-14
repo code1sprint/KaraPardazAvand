@@ -16,6 +16,7 @@ import {
 import {
   getAdjacentProjects,
   getProjectBySlug,
+  getProjectLiveUrl,
   getProjectSlugs,
   getSourcedResults,
 } from "@/content/projects";
@@ -97,6 +98,7 @@ async function CaseStudyContent({ params }: Props) {
   const t = await getTranslations("Portfolio");
   const breadcrumbT = await getTranslations("Breadcrumb");
   const sourcedResults = getSourcedResults(project.meta.results);
+  const liveUrl = getProjectLiveUrl(project.meta.liveUrl);
   const { previous, next } = await getAdjacentProjects(slug);
   const mdxResult = project.content ? await compileMdxSource(project.content) : { content: null };
 
@@ -157,6 +159,19 @@ async function CaseStudyContent({ params }: Props) {
             </Chip>
           </li>
         </ul>
+
+        {liveUrl ? (
+          <p className="mt-5">
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-pill bg-blue px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+            >
+              {t("detail.visitLive")}
+            </a>
+          </p>
+        ) : null}
 
         <div className="mt-8">
           <ProjectCover

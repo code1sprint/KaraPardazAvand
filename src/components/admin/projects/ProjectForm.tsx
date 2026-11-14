@@ -34,6 +34,7 @@ type ProjectFormData = {
   results: Array<{ label: string; value: string; source: string }>;
   stack: string[];
   cover: string;
+  liveUrl: string;
   gallery: Array<{ src: string; caption: string; alt: string }>;
   systemMap: {
     windowTitle: string;
@@ -94,6 +95,7 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
     })),
     stack: initialData?.stack || ["TypeScript", "PostgreSQL", "Next.js"],
     cover: initialData?.cover || "",
+    liveUrl: initialData?.liveUrl || "",
     gallery: (initialData?.gallery || []).map((g) => ({
       src: g.src,
       caption: g.caption,
@@ -160,6 +162,7 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
               results: p.results ?? prev.results,
               stack: p.stack ?? prev.stack,
               cover: p.cover ?? prev.cover,
+              liveUrl: p.liveUrl ?? prev.liveUrl,
               gallery: p.gallery ?? prev.gallery,
               systemMap: p.systemMap ?? prev.systemMap,
               featured: p.featured ?? prev.featured,
@@ -473,6 +476,26 @@ export function ProjectForm({ initialData, isNew = false }: ProjectFormProps) {
               label="تصویر کاور اصلی پروژه"
               required
             />
+
+            <div>
+              <label className="block text-xs font-bold text-text mb-1.5" htmlFor="liveUrl">
+                لینک زنده پروژه (اختیاری)
+              </label>
+              <input
+                id="liveUrl"
+                type="url"
+                dir="ltr"
+                placeholder="https://…"
+                value={formData.liveUrl}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, liveUrl: e.target.value }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs text-text font-mono"
+              />
+              <p className="mt-1.5 text-[11px] text-muted">
+                اگر خالی باشد، دکمه «مشاهده آنلاین» در سایت نمایش داده نمی‌شود.
+              </p>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>

@@ -1,13 +1,16 @@
 import { Chip, Heading, Link, Text } from "@/components/ui";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
 import {
+  getProjectLiveUrl,
   getSourcedResults,
   type ProjectMeta,
 } from "@/content/project-meta";
+import { cn } from "@/lib/cn";
 
 export type ProjectRowProps = {
   project: ProjectMeta;
   viewLabel: string;
+  visitLiveLabel?: string;
   /** Larger row used on home featured section. */
   large?: boolean;
 };
@@ -15,9 +18,11 @@ export type ProjectRowProps = {
 export function ProjectRow({
   project,
   viewLabel,
+  visitLiveLabel,
   large = false,
 }: ProjectRowProps) {
   const primaryResult = getSourcedResults(project.results)[0];
+  const liveUrl = getProjectLiveUrl(project.liveUrl);
 
   return (
     <article
@@ -76,10 +81,22 @@ export function ProjectRow({
           </ul>
         ) : null}
 
-        <p>
+        <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <Link href={`/portfolio/${project.slug}`} variant="default">
             {viewLabel}
           </Link>
+          {liveUrl && visitLiveLabel ? (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                "inline-flex items-center text-blue underline-offset-4 hover:underline focus-visible:rounded-sm",
+              )}
+            >
+              {visitLiveLabel}
+            </a>
+          ) : null}
         </p>
       </div>
     </article>

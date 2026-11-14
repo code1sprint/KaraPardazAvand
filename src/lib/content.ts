@@ -156,6 +156,10 @@ export const projectSchema = z.object({
   systemMap: projectSystemMapSchema,
   featured: z.boolean().default(false),
   status: z.enum(["published", "draft"]),
+  liveUrl: z
+    .union([z.string().url(), z.literal("")])
+    .optional()
+    .transform((value) => (value && value !== "#" ? value : undefined)),
   needs_business_confirmation: z.literal(true).optional(),
 });
 

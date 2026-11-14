@@ -452,12 +452,14 @@
       "all": "All"
     },
     "viewCaseStudy": "View case study",
+    "visitLive": "View live",
     "empty": "No published case studies yet. When a study is ready, it will appear here.",
     "emptyFiltered": "No case studies match these filters.",
     "emptyCta": "Request a conversation",
     "detail": {
       "back": "Back to work",
       "meta": "Project details",
+      "visitLive": "View live project",
       "year": "Year",
       "role": "Role",
       "problem": "Problem",

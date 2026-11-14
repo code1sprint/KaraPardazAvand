@@ -117,6 +117,12 @@ async function seed() {
       },
       featured: data.featured ?? false,
       status: data.status || "published",
+      liveUrl:
+        typeof data.liveUrl === "string" &&
+        data.liveUrl.trim() &&
+        data.liveUrl.trim() !== "#"
+          ? data.liveUrl.trim()
+          : "",
       contentHtml: markdownToHtml(content),
       contentJson: { type: "doc", content: [] },
     };

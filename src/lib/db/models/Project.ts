@@ -43,6 +43,7 @@ export interface IProject extends Document {
   systemMap: IProjectSystemMap;
   featured: boolean;
   status: "published" | "draft";
+  liveUrl?: string;
   contentJson?: Record<string, unknown>;
   contentHtml?: string;
   createdAt: Date;
@@ -168,6 +169,11 @@ const ProjectSchema = new Schema<IProject, ProjectModel>(
       type: String,
       enum: ["draft", "published"],
       default: "draft",
+    },
+    liveUrl: {
+      type: String,
+      default: "",
+      trim: true,
     },
     contentJson: {
       type: Schema.Types.Mixed,

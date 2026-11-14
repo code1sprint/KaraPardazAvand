@@ -50,6 +50,15 @@ export const projectCreateSchema = z.object({
   systemMap: projectSystemMapInputSchema,
   featured: z.boolean().default(false),
   status: z.enum(["draft", "published"]).default("draft"),
+  liveUrl: z
+    .string()
+    .trim()
+    .optional()
+    .default("")
+    .transform((value) => (value === "#" ? "" : value))
+    .refine((value) => !value || /^https?:\/\//i.test(value), {
+      message: "لینک زنده باید با http:// یا https:// شروع شود",
+    }),
   contentJson: z.record(z.string(), z.unknown()).optional().default({}),
   contentHtml: z.string().optional().default(""),
 });

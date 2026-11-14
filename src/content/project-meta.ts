@@ -51,8 +51,19 @@ export type ProjectMeta = {
   systemMap: ProjectSystemMap;
   featured: boolean;
   status: ProjectStatus;
+  /** Public live demo / product URL. Omit when unavailable. */
+  liveUrl?: string;
   needs_business_confirmation?: true;
 };
+
+/** Normalize optional live URL — empty and `#` placeholders become undefined. */
+export function getProjectLiveUrl(
+  liveUrl: string | null | undefined,
+): string | undefined {
+  const trimmed = typeof liveUrl === "string" ? liveUrl.trim() : "";
+  if (!trimmed || trimmed === "#") return undefined;
+  return trimmed;
+}
 
 /** Results shown publicly must include a non-empty source. */
 export function getSourcedResults(

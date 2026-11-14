@@ -2,6 +2,7 @@ import { connectToDatabase } from "@/lib/db/mongodb";
 import { getProjectModel } from "@/lib/db/models/Project";
 import { loadMdxBySlug, loadMdxCollection } from "@/lib/mdx/load-mdx";
 import {
+  getProjectLiveUrl,
   isProjectVisible,
   type ProjectMeta,
   type ProjectSystemMap,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/content";
 
 export {
+  getProjectLiveUrl,
   getSourcedResults,
   isProjectVisible,
   type ProjectGalleryItem,
@@ -62,6 +64,9 @@ export async function getAllProjects(): Promise<ProjectMeta[]> {
         systemMap: doc.systemMap as ProjectSystemMap,
         featured: doc.featured,
         status: doc.status as ProjectMeta["status"],
+        liveUrl: getProjectLiveUrl(
+          (doc as { liveUrl?: string }).liveUrl,
+        ),
       }))
       .sort((a, b) => a.title.localeCompare(b.title, "fa"));
   } catch {
@@ -115,6 +120,7 @@ export async function getProjectBySlug(slug: string) {
       systemMap: doc.systemMap as ProjectSystemMap,
       featured: doc.featured,
       status: doc.status as ProjectMeta["status"],
+      liveUrl: getProjectLiveUrl((doc as { liveUrl?: string }).liveUrl),
     };
     return {
       meta,

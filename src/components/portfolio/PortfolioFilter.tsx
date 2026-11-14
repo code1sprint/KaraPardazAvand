@@ -25,6 +25,7 @@ export type PortfolioFilterProps = {
     emptyFiltered: string;
     emptyCta: string;
     viewCaseStudy: string;
+    visitLive: string;
   };
 };
 
@@ -161,6 +162,7 @@ export function PortfolioFilter({
               key={project.slug}
               project={project}
               viewLabel={labels.viewCaseStudy}
+              visitLiveLabel={labels.visitLive}
             />
           ))}
         </div>
