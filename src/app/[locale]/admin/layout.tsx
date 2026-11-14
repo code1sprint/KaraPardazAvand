@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { setRequestLocale } from "next-intl/server";
 import { AuthProvider } from "@/lib/auth/context";
 import { AdminShell } from "./AdminShell";
 import { DynamicMarker } from "./DynamicMarker";
@@ -12,7 +13,14 @@ export const metadata = {
   },
 };
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+/** Admin panel is always Persian (RTL), regardless of the public site locale. */
+export default async function AdminLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  setRequestLocale("fa");
+
   return (
     <AuthProvider>
       <DynamicMarker />

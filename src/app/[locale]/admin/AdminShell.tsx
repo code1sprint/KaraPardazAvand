@@ -71,13 +71,21 @@ export function AdminShell({ children }: AdminShellProps) {
 
   // If on login page, just render children cleanly inside admin-root container
   if (isLoginPage) {
-    return <div className="admin-root min-h-screen bg-bg">{children}</div>;
+    return (
+      <div className="admin-root min-h-screen bg-bg" lang="fa" dir="rtl">
+        {children}
+      </div>
+    );
   }
 
   // Show loading state while checking session
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-bg">
+      <div
+        className="admin-root flex min-h-screen items-center justify-center bg-bg"
+        lang="fa"
+        dir="rtl"
+      >
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue border-t-transparent" />
           <p className="text-sm font-medium text-muted">
@@ -318,7 +326,11 @@ export function AdminShell({ children }: AdminShellProps) {
   ];
 
   return (
-    <div className="admin-root flex h-screen h-[100dvh] overflow-hidden bg-bg">
+    <div
+      className="admin-root flex h-screen h-[100dvh] overflow-hidden bg-bg"
+      lang="fa"
+      dir="rtl"
+    >
       {/* Sidebar for Desktop */}
       <aside className="hidden w-72 shrink-0 border-e border-line bg-panel lg:flex lg:flex-col lg:h-full lg:overflow-y-auto">
         {/* Brand header */}
