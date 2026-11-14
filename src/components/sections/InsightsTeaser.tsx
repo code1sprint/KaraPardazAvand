@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getLatestPosts } from "@/content/posts";
 import { PostRow } from "@/components/insights/PostRow";
 import { Reveal } from "@/components/layout/Reveal";
@@ -8,8 +8,9 @@ import { Eyebrow, Heading, Link, Text } from "@/components/ui";
 
 /** Latest 3 posts as rows — hidden entirely when there are no posts. */
 export async function InsightsTeaser() {
+  const locale = await getLocale();
   const t = await getTranslations("Insights");
-  const posts = await getLatestPosts(3);
+  const posts = await getLatestPosts(3, locale);
 
   if (posts.length === 0) {
     return null;

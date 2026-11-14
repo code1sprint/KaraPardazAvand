@@ -1,6 +1,8 @@
+import { cacheTag } from "next/cache";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel, ITocItem } from "@/lib/db/models/Post";
 import { type PostStatus } from "@/lib/content";
+import { postsCacheTag, postsLocaleCacheTag } from "@/lib/posts-cache";
 
 export type { PostStatus };
 
@@ -48,6 +50,10 @@ function toDateIso(value: Date | string | undefined): string {
 
 export async function getAllPosts(locale?: string): Promise<PostMeta[]> {
   "use cache";
+  cacheTag(postsCacheTag);
+  if (locale === "fa" || locale === "en") {
+    cacheTag(postsLocaleCacheTag(locale));
+  }
 
   try {
     await connectToDatabase();
@@ -96,6 +102,10 @@ export async function getFeaturedPost(locale?: string): Promise<PostMeta | null>
 
 export async function getPostBySlug(slug: string, locale?: string): Promise<PostDetail | null> {
   "use cache";
+  cacheTag(postsCacheTag);
+  if (locale === "fa" || locale === "en") {
+    cacheTag(postsLocaleCacheTag(locale));
+  }
 
   try {
     await connectToDatabase();

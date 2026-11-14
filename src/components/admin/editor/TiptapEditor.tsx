@@ -29,6 +29,7 @@ import { MediaModal, type MediaInsertParams } from "./MediaModal";
 import { CtaModal, type CtaModalParams } from "./CtaModal";
 import { LinkModal, type LinkModalParams } from "./LinkModal";
 import { compressImageIfNeeded } from "@/lib/image-compress";
+import { editorChromeForLocale } from "@/lib/editor/locale-chrome";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -110,9 +111,11 @@ export function TiptapEditor({
   contentJson,
   contentHtml,
   locale = "fa",
-  placeholder = "متن مقاله را اینجا بنویسید (برای دستورات سریع / را تایپ کنید)...",
+  placeholder,
   onChange,
 }: TiptapEditorProps) {
+  const chrome = editorChromeForLocale(locale);
+  const resolvedPlaceholder = placeholder ?? chrome.placeholder;
   const [mediaModalOpen, setMediaModalOpen] = useState(false);
   const [mediaModalType, setMediaModalType] = useState<"image" | "video">("image");
   const [ctaModalOpen, setCtaModalOpen] = useState(false);
@@ -164,7 +167,7 @@ export function TiptapEditor({
       VideoExtension,
       CharacterCount,
       Placeholder.configure({
-        placeholder,
+        placeholder: resolvedPlaceholder,
       }),
       ZwnjExtension,
       CalloutExtension,
@@ -177,12 +180,8 @@ export function TiptapEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: cn(
-          "prose prose-slate max-w-none focus:outline-none min-h-[420px] p-6 text-text",
-          locale === "fa" ? "font-vazirmatn text-start" : "text-start",
-          "leading-relaxed",
-        ),
-        dir: locale === "fa" ? "rtl" : "ltr",
+        class: chrome.className,
+        dir: chrome.dir,
       },
       handlePaste: (view, event) => {
         const items = event.clipboardData?.items;

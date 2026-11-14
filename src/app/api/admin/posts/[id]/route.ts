@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel } from "@/lib/db/models/Post";
 import { postUpdateSchema } from "@/lib/validations/post";
 import { processPostContent } from "@/lib/editor/normalizer";
+import { revalidatePostsCache } from "@/lib/posts-cache";
 
 type RouteParams = { id: string };
 
@@ -134,6 +135,8 @@ export const PUT = withAuth<RouteParams>(
       { returnDocument: "after" },
     );
 
+    revalidatePostsCache(targetLocale);
+
     return NextResponse.json({
       ok: true,
       message: "مقاله با موفقیت به‌روزرسانی شد.",
@@ -158,6 +161,8 @@ export const DELETE = withAuth<RouteParams>(
     if (!deleted) {
       return NextResponse.json({ ok: false, message: "مقاله یافت نشد." }, { status: 404 });
     }
+
+    revalidatePostsCache(deleted.locale);
 
     return NextResponse.json({
       ok: true,

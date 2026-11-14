@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/lib/db/mongodb";
 import { getPostModel } from "@/lib/db/models/Post";
 import { postInputSchema } from "@/lib/validations/post";
 import { processPostContent } from "@/lib/editor/normalizer";
+import { revalidatePostsCache } from "@/lib/posts-cache";
 
 export const GET = withAuth(
   async (request: Request) => {
@@ -139,6 +140,8 @@ export const POST = withAuth(
       toc: processed.toc,
       contentHtml: processed.contentHtml,
     });
+
+    revalidatePostsCache(validData.locale);
 
     return NextResponse.json(
       {

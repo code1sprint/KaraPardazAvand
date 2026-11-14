@@ -362,6 +362,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
 
             {activeTab === "editor" ? (
               <TiptapEditor
+                key={formData.locale}
                 contentJson={formData.contentJson}
                 contentHtml={formData.contentHtml}
                 locale={formData.locale}
