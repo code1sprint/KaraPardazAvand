@@ -46,7 +46,7 @@ export function EditPostClient({
       </div>
 
       {/* Form */}
-      <PostForm initialData={initialData} postId={postId} isEdit />
+      <PostForm key={postId} initialData={initialData} postId={postId} isEdit />
     </div>
   );
 }
