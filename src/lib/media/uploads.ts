@@ -1,7 +1,8 @@
 import path from "node:path";
 
 export function getUploadsDir(cwd = process.cwd()): string {
-  return path.join(cwd, "public/uploads");
+  // Statically scoped under public/uploads so Turbopack does not trace the whole tree.
+  return path.join(cwd, "public", "uploads");
 }
 
 /**
@@ -16,9 +17,8 @@ export function resolveUploadFilePath(
     return null;
   }
 
-  const root = path.resolve(uploadsRoot);
-  const candidate = path.resolve(root, ...segments);
-  const relative = path.relative(root, candidate);
+  const candidate = path.join(uploadsRoot, ...segments);
+  const relative = path.relative(uploadsRoot, candidate);
 
   if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
     return null;

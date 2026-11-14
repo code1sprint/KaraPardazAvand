@@ -1,15 +1,12 @@
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 import {
   contentTypeForUpload,
   getUploadsDir,
   resolveUploadFilePath,
 } from "@/lib/media/uploads";
-
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
 
 type RouteContext = {
   params: Promise<{ path: string[] }>;
@@ -19,6 +16,9 @@ async function serveUpload(
   request: Request,
   context: RouteContext,
 ): Promise<Response> {
+  // Request-time only (compatible with cacheComponents).
+  await connection();
+
   const { path: segments } = await context.params;
   const filePath = resolveUploadFilePath(segments, getUploadsDir());
 
