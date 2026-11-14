@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumbs, Container, PageHero } from "@/components/layout";
 import { InsightsFilter } from "@/components/insights/InsightsFilter";
@@ -53,6 +54,8 @@ function InsightsIndexFallback() {
 
 async function InsightsIndexContent({ params }: Props) {
   const { locale } = await params;
+  // Runtime DB read — build has no Mongo, so avoid a frozen empty list.
+  await connection();
   setRequestLocale(locale);
 
   const t = await getTranslations("Insights");

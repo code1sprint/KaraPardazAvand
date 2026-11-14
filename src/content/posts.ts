@@ -48,13 +48,12 @@ function toDateIso(value: Date | string | undefined): string {
   return parsed.toISOString().slice(0, 10);
 }
 
+/**
+ * List queries are not `"use cache"`'d on purpose.
+ * Docker `next build` has no MongoDB, so a cached empty list would stick on
+ * `/insights` until a full redeploy. Detail pages keep tagged cache below.
+ */
 export async function getAllPosts(locale?: string): Promise<PostMeta[]> {
-  "use cache";
-  cacheTag(postsCacheTag);
-  if (locale === "fa" || locale === "en") {
-    cacheTag(postsLocaleCacheTag(locale));
-  }
-
   try {
     await connectToDatabase();
     const Post = await getPostModel();

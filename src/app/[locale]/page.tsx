@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
@@ -46,7 +47,9 @@ export default async function HomePage({ params }: Props) {
       <WhySection />
       <FeaturedProjects />
       <ProcessSection showDetailsLink />
-      <InsightsTeaser />
+      <Suspense fallback={null}>
+        <InsightsTeaser />
+      </Suspense>
       <FaqSection limit={4} showViewAll />
     </>
   );
