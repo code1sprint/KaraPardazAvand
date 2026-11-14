@@ -1,4 +1,3 @@
-import { connection } from "next/server";
 import type { AppLocale } from "@/i18n/routing";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getAboutModel } from "@/lib/db/models/About";
@@ -32,11 +31,11 @@ export type ResolvedAboutData = {
   culture: ResolvedAboutCultureItem[];
 };
 
-/** Uncached meta for generateMetadata — tracks CMS intro/seo. */
+/** Cached meta for generateMetadata — CMS intro/seo with static fallback. */
 export async function getAboutMetadataSource(
   locale: AppLocale,
 ): Promise<{ title: string; description: string }> {
-  await connection();
+  "use cache";
   const fallbackIntro = getAboutIntro(locale);
   try {
     await connectToDatabase();

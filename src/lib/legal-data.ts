@@ -1,4 +1,3 @@
-import { connection } from "next/server";
 import type { AppLocale } from "@/i18n/routing";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getLegalDocModel } from "@/lib/db/models/LegalDoc";
@@ -125,12 +124,12 @@ export async function getAllLegalSlugs(): Promise<string[]> {
   }
 }
 
-/** Uncached meta for generateMetadata — tracks CMS title/summary/seo. */
+/** Cached meta for generateMetadata — CMS title/summary/seo with MDX fallback. */
 export async function getLegalMetadataSource(
   slug: string,
   locale: AppLocale,
 ): Promise<{ title: string; description: string } | null> {
-  await connection();
+  "use cache";
   try {
     await connectToDatabase();
     const LegalDoc = await getLegalDocModel();

@@ -1,4 +1,3 @@
-import { connection } from "next/server";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getServiceModel } from "@/lib/db/models/Service";
 import {
@@ -12,7 +11,7 @@ export type { ServiceDetail };
 export async function getServiceDetail(
   slug: string,
 ): Promise<ServiceDetail | undefined> {
-  await connection();
+  "use cache";
 
   try {
     await connectToDatabase();
