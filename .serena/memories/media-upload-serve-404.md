@@ -1,0 +1,1 @@
+Next.js production indexes public/ once at startup (publicFolderItems Set); runtime uploads are not served as static files and 404. Fix: app route src/app/uploads/[...path]/route.ts streams from getUploadsDir() with path-traversal checks.
