@@ -32,6 +32,18 @@ export const legalDocSchema = z.object({
         .optional(),
     })
     .optional(),
+  seo: z
+    .object({
+      title: z.object({
+        fa: z.string().optional().default(""),
+        en: z.string().optional().default(""),
+      }),
+      description: z.object({
+        fa: z.string().optional().default(""),
+        en: z.string().optional().default(""),
+      }),
+    })
+    .optional(),
   status: z.enum(["published", "draft"]).default("published"),
 });
 

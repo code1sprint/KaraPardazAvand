@@ -1,0 +1,1703 @@
+{
+  "crm": {
+    "slug": "crm",
+    "title": {
+      "fa": "CRM",
+      "en": "CRM"
+    },
+    "outcome": {
+      "fa": "تبدیل سرنخ‌های پراکنده به یک جریان فروش پیش‌بینی‌پذیر؛ معماری اختصاصی متصل به سیستم مالی، تلفن و فرآیند واقعی تیم شما، بدون هزینه‌های لایسنس مداوم.",
+      "en": "Turn scattered leads into a predictable sales engine; custom architecture unified with your ERP, VoIP, and real sales workflow with zero recurring seat licenses."
+    },
+    "audience": [
+      {
+        "fa": "تیم‌های فروشی که به دلیل پراکندگی سرنخ‌ها بین اکسل، پیام‌رسان‌ها و یادداشت‌های شخصی، تا ۳۰٪ از مشتریان بالقوه را در مرحله پیگیری از دست می‌دهند.",
+        "en": "Sales teams whose leads get lost across spreadsheets, messengers, and personal notes, leaking valuable deals."
+      },
+      {
+        "fa": "مدیران عامل و مدیران عملیات که برای ارزیابی عملکرد واقعی کارشناسان، نرخ تبدیل مراحل قیف و ارزش ریالی پایپ‌لاین به گزارش‌های لحظه‌ای و دقیق نیاز دارند.",
+        "en": "Executives and operations managers needing real-time visibility into conversion rates, deal velocity, and team throughput."
+      },
+      {
+        "fa": "شرکت‌هایی که از محدودیت‌ها و هزینه‌های ماهانه لایسنس پلتفرم‌های خارجی یا CRMهای اشتراکی خسته شده‌اند و مالکیت کامل سورس‌کد و داده را می‌خواهند.",
+        "en": "Companies burdened by escalating recurring SaaS seat licenses seeking full ownership of their software assets and customer data."
+      },
+      {
+        "fa": "مجموعه‌هایی که چرخه فروش یا قیمت‌گذاری پیچیده (B2B، پروژه‌ای یا اعتباری) دارند و نیازمند اتصال دوطرفه به نرم‌افزار حسابداری (سپیدار، راهکاران) و مرکز تلفن (VoIP) هستند.",
+        "en": "Enterprises with complex B2B pricing and custom sales flows requiring seamless two-way integration with accounting software and PBX/VoIP."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "پرونده ۳۶۰ درجه مشتری و تاریخچه تعاملات",
+          "en": "360° Customer Profile & Interaction History"
+        },
+        "description": {
+          "fa": "تجمیع تاریخچه تماس‌های صوتی، پیام‌ها، پیش‌فاکتورها و یادداشت‌های پیگیری در یک نمای یکپارچه و سریع بدون نیاز به جابه‌جایی میان نرم‌افزارها.",
+          "en": "Unify voice call logs, messaging, draft invoices, and follow-up notes in a single blazing-fast view with zero app switching."
+        }
+      },
+      {
+        "title": {
+          "fa": "قیف فروش کانبان چندمرحله‌ای با موانع انتقال",
+          "en": "Multi-Stage Kanban Pipeline with Exit Criteria"
+        },
+        "description": {
+          "fa": "پیکربندی مراحل فروش متناسب با کسب‌وکار، تشخیص خودکار فرصت‌های راکد و ثبت الزامات خروج از هر مرحله برای استانداردسازی رفتار کارشناسان.",
+          "en": "Tailor custom deal stages, detect stalled deals automatically, and enforce exit criteria to standardize sales reps' behavior."
+        }
+      },
+      {
+        "title": {
+          "fa": "موتور تخصیص هوشمند سرنخ و اتوماسیون وظایف",
+          "en": "Intelligent Lead Routing & Task Automation"
+        },
+        "description": {
+          "fa": "توزیع عادلانه و تخصصی سرنخ‌ها بین کارشناسان، ایجاد تسک‌های پیگیری خودکار و ارسال نوتیفیکیشن لحظه‌ای به محض ورود لید از وب‌سایت یا شبکه‌ها.",
+          "en": "Distribute incoming leads evenly by expertise, auto-schedule follow-up tasks, and trigger instant alerts across teams."
+        }
+      },
+      {
+        "title": {
+          "fa": "یکپارچه‌سازی با سامانه مالی و مرکز تلفن (VoIP)",
+          "en": "Native ERP, Accounting & VoIP Integration"
+        },
+        "description": {
+          "fa": "پاپ‌آپ مشخصات مشتری هنگام زنگ خوردن تلفن کارشناس، آرشیو مکالمات و صدور مستقیم پیش‌فاکتور بدون دوباره‌کاری در نرم‌افزار حسابداری.",
+          "en": "Caller ID pop-up on incoming calls, automatic audio archiving, and direct quotation generation synced with your accounting books."
+        }
+      },
+      {
+        "title": {
+          "fa": "داشبورد تحلیلی و پیش‌بینی فروش (Sales Analytics)",
+          "en": "Executive Analytics & Revenue Forecasting"
+        },
+        "description": {
+          "fa": "گزارش تصویری از نرخ تبدیل هر مرحله، زمان میانگین پاسخ‌گویی، ارزش وزنی فرصت‌های جاری و پایش KPIهای کارشناسان برای تصمیم‌گیری آگاهانه.",
+          "en": "Visual insights into stage conversion rates, mean response times, weighted pipeline value, and agent KPIs for informed decisions."
+        }
+      },
+      {
+        "title": {
+          "fa": "مرزبندی دسترسی و امنیت حاکمیتی داده‌ها",
+          "en": "Granular RBAC & Data Sovereignty"
+        },
+        "description": {
+          "fa": "تعریف دقیق محدوده دید هر نقش، جلوگیری از سرقت یا دانلود انبوه پایگاه مشتریان و ثبت لاگ امنیتی تمامی تغییرات و دسترسی‌ها.",
+          "en": "Define precise role visibility boundaries, prevent unauthorized bulk data exports, and audit all data mutations."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "کشف فرایند و مدلسازی قیف فروش",
+          "en": "Process Discovery & Funnel Modeling"
+        },
+        "description": {
+          "fa": "برگزاری کارگاه کشف نیاز، شناسایی گلوگاه‌های ریزش مشتری و قفل کردن معیارهای پذیرش فرصت موفق متناسب با منطق تجاری شما.",
+          "en": "Conducting discovery workshops, diagnosing drop-off bottlenecks, and establishing qualification criteria tailored to your business."
+        }
+      },
+      {
+        "title": {
+          "fa": "طراحی میز کار کارشناس و معماری داده (UX)",
+          "en": "Sales Workspace & Data Architecture"
+        },
+        "description": {
+          "fa": "طراحی رابط کاربری چابک و ارگونومیک برای کارشناسان با هدف به حداقل رساندن کلیک‌ها و ساده‌سازی ثبت رویدادها حین مکالمه.",
+          "en": "Designing an ergonomic, fast UI tailored to reduce clicks and make logging interactions effortless during active calls."
+        }
+      },
+      {
+        "title": {
+          "fa": "توسعه ماژولار و پیوند با زیرساخت‌های سازمان",
+          "en": "Modular Development & Integration"
+        },
+        "description": {
+          "fa": "پیاده‌سازی امن بک‌اند و فرانت‌اند، اتصال وب‌هوک‌ها به وب‌سایت و ایجاد ارتباط دوطرفه با پایگاه داده مالی و سانترال.",
+          "en": "Implementing a resilient backend and frontend, wiring webhooks to inbound channels, and bridging bidirectional sync with ERP and PBX."
+        }
+      },
+      {
+        "title": {
+          "fa": "پایلوت میدانی، مهاجرت داده و استقرار نهایی",
+          "en": "Field Pilot, Data Migration & Go-Live"
+        },
+        "description": {
+          "fa": "پاکسازی و انتقال بدون خطای اطلاعات قبلی مشتریان، اجرای آزمایشی در کنار تیم فروش منتخب، آموزش جامع پرسنل و پشتیبانی فنی مداوم.",
+          "en": "Scrubbing and migrating legacy contact data, piloting with key sales champions, full staff training, and continuous operational support."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "معماری برنامه و فرانت‌اند",
+          "en": "Frontend & Architecture"
+        },
+        "items": [
+          "Next.js (App Router)",
+          "TypeScript",
+          "Tailwind CSS",
+          "Framer Motion"
+        ]
+      },
+      {
+        "label": {
+          "fa": "پایگاه داده و بک‌اند",
+          "en": "Database & Backend"
+        },
+        "items": [
+          "PostgreSQL / MongoDB",
+          "Redis Cache",
+          "Node.js Microservices"
+        ]
+      },
+      {
+        "label": {
+          "fa": "یکپارچه‌سازی و پروتکل‌ها",
+          "en": "Integrations & Protocols"
+        },
+        "items": [
+          "VoIP (Asterisk / Issabel)",
+          "Accounting Webhooks (Sepidar / Rahkaran)",
+          "REST / GraphQL",
+          "Role-Based Access Control"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://crm-engine",
+      "layout": "funnel",
+      "descriptionLead": {
+        "fa": "جریان متمرکز جذب تا بستن قرارداد.",
+        "en": "Unified pipeline from capture to deal close."
+      },
+      "description": {
+        "fa": "ثبت بلادرنگ سرنخ‌ها، هدایت به کارشناس مناسب و همگام‌سازی لحظه‌ای با سیستم مالی.",
+        "en": "Real-time lead intake, smart agent routing, and instant sync with accounting."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "ورودی وب‌سایت و فرم‌ها",
+          "en": "Web forms & Inbound"
+        },
+        "inputBottom": {
+          "fa": "تماس تلفنی و سانترال",
+          "en": "VoIP & Call Centers"
+        },
+        "core": {
+          "fa": "موتور مرکزی CRM",
+          "en": "CRM Core Engine"
+        },
+        "outputTop": {
+          "fa": "کارتابل هوشمند کارشناسان",
+          "en": "Agent Workspace & Tasks"
+        },
+        "outputBottom": {
+          "fa": "همگام‌سازی با مالی و انبار",
+          "en": "ERP & Accounting Sync"
+        }
+      },
+      "logs": [
+        {
+          "fa": "lead.ingested  source=landing_page  id=LP-8421  score=high",
+          "en": "lead.ingested  source=landing_page  id=LP-8421  score=high"
+        },
+        {
+          "fa": "agent.assigned  owner=commercial/enterprise  match=industry",
+          "en": "agent.assigned  owner=commercial/enterprise  match=industry"
+        },
+        {
+          "fa": "erp.sync  action=create_customer_draft  status=success",
+          "en": "erp.sync  action=create_customer_draft  status=success"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "crm-vs-ready",
+        "question": {
+          "fa": "چرا به جای پلتفرم‌های عمومی، یک CRM اختصاصی سفارش دهیم؟",
+          "en": "Why choose a custom CRM over generic SaaS platforms?"
+        },
+        "answer": {
+          "fa": "محصولات آماده فرایندهای از پیش تعیین‌شده‌ای دارند که تیم شما را وادار به تغییر روش کار می‌کند. علاوه بر این، هزینه اشتراک ماهانه با رشد سازمان سنگین می‌شود و اتصال آن‌ها به سیستم‌های حسابداری و تلفنی داخلی پر از چالش است. در CRM اختصاصی، نرم‌افزار دقیقاً بر اساس مدل فروش شما شکل می‌گیرد، هیچ هزینه کاربری ماهانه‌ای ندارد و داده‌ها در سرورهای خودتان محافظت می‌شوند.",
+          "en": "Off-the-shelf platforms force your team into rigid templates, accumulate expensive recurring per-seat fees, and struggle to integrate with local ERP/VoIP systems. A custom CRM conforms exactly to your workflow, eliminates seat fees, and gives you total data sovereignty."
+        }
+      },
+      {
+        "id": "crm-migrate",
+        "question": {
+          "fa": "آیا اطلاعات قبلی ما در فایل‌های اکسل یا CRM قبلی قابل انتقال است؟",
+          "en": "Can our existing data in Excel or old CRMs be migrated?"
+        },
+        "answer": {
+          "fa": "بله، در فاز استقرار فرایند پاکسازی، حذف رکوردهای تکراری و نگاشت فیلدهای قدیمی به مدل داده جدید انجام می‌شود تا پرسنل فروش بدون از دست دادن تاریخچه ارتباط با مشتریان، کار را در سیستم جدید ادامه دهند.",
+          "en": "Yes. During the rollout phase, we perform automated deduplication, normalization, and field mapping so your sales reps retain complete historical records without missing a beat."
+        }
+      },
+      {
+        "id": "crm-mobile",
+        "question": {
+          "fa": "اگر کارشناسان فروش در برابر استفاده از سیستم جدید مقاومت کنند چه؟",
+          "en": "What if sales reps resist adopting the new CRM?"
+        },
+        "answer": {
+          "fa": "علت اصلی مقاومت پرسنل در نرم‌افزارهای سنتی، فرم‌های طولانی و پیچیدگی‌های بی‌مورد است. ما رابط کاربری CRM را با رویکرد «حداقل کلیک» و مبتنی بر کار روزمره کارشناسان طراحی می‌کنیم. همچنین حضور در کنار تیم در قالب جلسات آموزشی کاربردی و سنجش بازخوردها در فاز پایلوت، نرخ پذیرش پرسنل را به بالاترین سطح می‌رساند.",
+          "en": "Resistance happens when software introduces clutter and manual busywork. We design lean, low-friction interfaces that automate repetitive data entry, combined with hands-on pilot training to ensure immediate adoption."
+        }
+      },
+      {
+        "id": "crm-support",
+        "question": {
+          "fa": "پشتیبانی، توسعه قابلیت‌های جدید و امنیت نرم‌افزار چگونه تضمین می‌شود؟",
+          "en": "How are ongoing support, security, and future features handled?"
+        },
+        "answer": {
+          "fa": "سامانه با کدنویسی استاندارد، معماری ماژولار و تست‌های خودکار تحویل داده می‌شود. پس از تحویل نهایی، قرارداد پشتیبانی فنی، مانیتورینگ عملکرد و توسعه فازهای تکمیلی طبق توافق‌نامه سطح خدمات (SLA) منعقد می‌گردد.",
+          "en": "The platform is built using modern modular standards with complete documentation. Post-launch, structured SLAs guarantee technical maintenance, performance monitoring, and iterative feature development."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "ops-crm-pilot"
+    ],
+    "bento": {
+      "order": 0,
+      "span": 4,
+      "image": "/brand/bento/crm.svg",
+      "shortTitle": {
+        "fa": "CRM",
+        "en": "CRM"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">چرا توسعه اختصاصی CRM بیشترین بازدهی سرمایه (ROI) را ایجاد می‌کند؟</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">نرم‌افزار مدیریت ارتباط با مشتری اگر با ریتم روزانه تیم فروش و زنجیره داده‌های مالی هم‌خوان نباشد، تبدیل به هزینه سربار می‌شود. توسعه سفارشی یعنی نرم‌افزار خود را با مزیت رقابتی و فرایند اختصاصی شما تطبیق می‌دهد، نه آنکه سازمان شما ناچار به تغییر فرایند خود شود.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">سه برتری حیاتی CRM اختصاصی کارا پرداز اوند</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. مالکیت ۱۰۰٪ و بدون هزینه لایسنس</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">بدون شارژهای ماهانه به ازای هر کاربر. با رشد تیم از ۵ نفر به ۵۰ نفر، هیچ هزینه اضافه‌ای به شرکت تحمیل نمی‌شود و سورس‌کد دارایی قطعی سازمان شماست.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. یکپارچگی بلادرنگ با تلفن و مالی</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">اتصال مستقیم به سانترال/VoIP برای نمایش اطلاعات مشتری حین زنگ خوردن و همگام‌سازی لحظه‌ای با نرم‌افزارهای حسابداری (سپیدار، راهکاران و...) بدون ورود دستی داده.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. ارگونومی و سرعت کاربری بی‌رقیب</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">رابط کاربری فوق‌سریع بدون فیلدهای بیهوده. کارشناس فروش در کمتر از ۵ ثانیه وضعیت تماس یا یادداشت پیگیری را ثبت می‌کند تا پذیرش ابزار به ۱۰۰٪ برسد.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">مشاوره تخصصی و تحلیل فرایند</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در یک جلسه ۳۰ دقیقه‌ای، گلوگاه‌های قیف فروش، نحوه اتصال به سیستم‌های موجود و تخمین شفاف زمان و هزینه را با مهندسان ما بررسی کنید.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست جلسه مشاوره و بررسی فنی\" data-cta-url=\"/contact?service=crm\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=crm\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست جلسه مشاوره و بررسی فنی</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  },
+  "rag-ai": {
+    "slug": "rag-ai",
+    "title": {
+      "fa": "RAG و هوش مصنوعی سازمانی",
+      "en": "RAG and enterprise AI"
+    },
+    "outcome": {
+      "fa": "هوش مصنوعی مستند به دانش سازمانی (RAG)؛ دسترسی آنی به پاسخ‌های دقیق، مستند و محرمانه از میان هزاران سند داخلی، بدون خطای توهم و با کنترل دسترسی پیشرفته.",
+      "en": "Enterprise Grounded RAG & AI; instant, verifiable answers extracted from internal organizational documents with zero hallucinations, strict access controls, and full source citation."
+    },
+    "audience": [
+      {
+        "fa": "سازمان‌ها و نهادهایی که حجم انبوهی از آیین‌نامه‌ها، دستورالعمل‌های فنی، قراردادها یا پرونده‌ها دارند و بازیابی دستی آن‌ها روزانه ساعت‌ها زمان پرسنل را تلف می‌کند.",
+        "en": "Enterprises with extensive repositories of policies, technical manuals, contracts, or case files where manual search wastes hours daily."
+      },
+      {
+        "fa": "تیم‌های پشتیبانی مشتریان و عملیات فنی که به پاسخ‌های فوری، مستند و استاندارد نیاز دارند و نمی‌توانند ریسک پاسخ‌های نادرست چت‌بات‌های عمومی را بپذیرند.",
+        "en": "Support and technical teams requiring instant, grounded, standard responses who cannot afford the hallucinations of public generic chatbots."
+      },
+      {
+        "fa": "مدیران ارشد فناوری (CTO) و امنیت که نیازمند استقرار هوش مصنوعی درون زیرساخت‌های خصوصی سازمان (On-Premise یا Dedicated Cloud) با تفکیک دقیق دسترسی‌ها هستند.",
+        "en": "CTOs and CISOs requiring on-premise or isolated cloud AI deployment with fine-grained role-based document access controls."
+      },
+      {
+        "fa": "شرکت‌هایی که می‌خواهند دانش انباشته کارشناسان ارشد و آرشیو تجربیات شرکت را به یک دستیار هوشمند و همیشه در دسترس برای آموزش و راهنمایی پرسنل جدید تبدیل کنند.",
+        "en": "Organizations aiming to transform senior institutional knowledge and historical archives into an always-available interactive assistant."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "خط لوله پالایش، قطعه‌بندی و ایندکس برداری امن",
+          "en": "Secure Chunking & Vector Indexing Pipeline"
+        },
+        "description": {
+          "fa": "تبدیل فایل‌های PDF، ورد، پایگاه‌های داده و ویکی‌های داخلی به بردار‌های معنایی با برچسب‌گذاری دقیق متادیتا و سطوح محرمانگی.",
+          "en": "Transforming PDFs, documents, databases, and wikis into semantic vector embeddings with strict metadata and confidentiality tags."
+        }
+      },
+      {
+        "title": {
+          "fa": "موتور بازیابی ترکیبی و بازرتبه‌بندی پیشرفته (Hybrid Search & Reranking)",
+          "en": "Hybrid Search & Neural Reranking"
+        },
+        "description": {
+          "fa": "ترکیب جست‌وجوی کلمات کلیدی (BM25) و جست‌وجوی معنایی همراه با مدل‌های Reranker برای استخراج مرتبط‌ترین قطعات مستندات.",
+          "en": "Fusing lexical BM25 and dense semantic search with cross-encoder rerankers to surface exact context chunks."
+        }
+      },
+      {
+        "title": {
+          "fa": "تولید پاسخ مستند به شواهد با ذکر دقیق منبع (Grounded Generation)",
+          "en": "Grounded Generation with Inline Citations"
+        },
+        "description": {
+          "fa": "پاسخ‌دهی مدل بر اساس تنها متون بازیابی‌شده، با درج شماره صفحه، لینک به پاراگراف اصلی و صفر کردن خطای توهم هوش مصنوعی.",
+          "en": "Constraining LLMs strictly to retrieved evidence with deep links and exact page/paragraph citations, eliminating hallucinations."
+        }
+      },
+      {
+        "title": {
+          "fa": "کنترل دسترسی نقش‌محور سازمانی (RBAC for AI)",
+          "en": "Role-Based Access Control for AI"
+        },
+        "description": {
+          "fa": "پرسنل تنها پاسخ‌هایی را دریافت می‌کنند که به اسناد منبع آن دسترسی مجاز دارند؛ تفکیک کامل دسترسی مدیریت، فنی و اداری.",
+          "en": "Users only receive answers derived from documents their specific security clearance permits to view."
+        }
+      },
+      {
+        "title": {
+          "fa": "سامانه ارزیابی کیفیت پاسخ‌ها و فریم‌ورک بنچمارک (Eval Harness)",
+          "en": "Evaluation Harness & Continuous Benchmarking"
+        },
+        "description": {
+          "fa": "تست خودکار و پایش پیوسته صحت، ارتباط معنایی و وفاداری پاسخ‌ها به اسناد با معیارهای استاندارد صنعتی نظیر Ragas.",
+          "en": "Automated regression testing tracking faithfulness, relevance, and semantic precision against standard evaluation metrics."
+        }
+      },
+      {
+        "title": {
+          "fa": "رابط کاربری چت سازمانی و لاگ کامل تصمیمات (Audit Trail)",
+          "en": "Enterprise Chat Interface & Audit Logs"
+        },
+        "description": {
+          "fa": "رابط کاربری مدرن با امکان جست‌وجوی پیشرفته، همراه با ثبت تاریخچه کامل سوالات، متون مبنا و پاسخ‌ها برای ممیزی حراست و مدیریت.",
+          "en": "Clean chat interface and compliance dashboard capturing every prompt, retrieved context, and generated response."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "ممیزی اسناد و تعریف ماتریس محرمانگی",
+          "en": "Data Audit & Security Matrix"
+        },
+        "description": {
+          "fa": "بررسی فرمت اسناد، پاکسازی نویزهای متنی و تعیین دقیق مرزهای دسترسی هر گروه از کاربران به منابع.",
+          "en": "Auditing knowledge formats, cleaning document noise, and drafting access boundaries across teams."
+        }
+      },
+      {
+        "title": {
+          "fa": "معماری خط لوله و بهینه‌سازی بازیابی",
+          "en": "Pipeline Architecture & Retrieval Tuning"
+        },
+        "description": {
+          "fa": "انتخاب مدل Embedding بهینه برای زبان فارسی و تخصصی، پیکربندی Vector DB و تنظیم استراتژی قطعه‌بندی اسناد.",
+          "en": "Selecting optimized Persian embeddings, configuring Vector DB schemas, and fine-tuning chunking strategies."
+        }
+      },
+      {
+        "title": {
+          "fa": "توسعه پروتکل استناد و ارزیابی کیفیت",
+          "en": "Citation Grounding & Quality Evaluation"
+        },
+        "description": {
+          "fa": "تنظیم پرامپت‌های مهندسی‌شده، جلوگیری از توهم و سنجش خروجی روی صدها پرسش واقعی سازمانی.",
+          "en": "Crafting defensive prompt architectures, running benchmark test suites, and tuning threshold scores."
+        }
+      },
+      {
+        "title": {
+          "fa": "استقرار در زیرساخت خصوصی و آموزش پرسنل",
+          "en": "On-Prem / Private Cloud Deploy & Handoff"
+        },
+        "description": {
+          "fa": "راه‌اندازی ایزوله درون سرورهای سازمان، اتصال به سامانه‌های احراز هویت داخلی (SSO) و برگزاری کارگاه کاربری.",
+          "en": "Deploying within isolated infrastructure, integrating enterprise SSO, and holding hands-on operational workshops."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "پایگاه داده برداری و بازیابی",
+          "en": "Vector DB & Search"
+        },
+        "items": [
+          "Qdrant",
+          "pgvector",
+          "BM25 Hybrid",
+          "Cross-Encoder Rerankers"
+        ]
+      },
+      {
+        "label": {
+          "fa": "فریم‌ورک‌های AI و پایپ‌لاین",
+          "en": "AI Frameworks & Pipeline"
+        },
+        "items": [
+          "LangChain",
+          "LlamaIndex",
+          "Python FastAPIs",
+          "Ragas Eval"
+        ]
+      },
+      {
+        "label": {
+          "fa": "مدل‌ها و استقرار",
+          "en": "Models & Deployment"
+        },
+        "items": [
+          "Local LLMs (Ollama / vLLM)",
+          "OpenAI / Claude APIs",
+          "Docker",
+          "GPU Clusters"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://rag-pipeline",
+      "layout": "pipeline",
+      "descriptionLead": {
+        "fa": "بازیابی مستندات و تولید پاسخ با استناد به منبع.",
+        "en": "Document retrieval and answer generation with grounded citations."
+      },
+      "description": {
+        "fa": "جست‌وجوی برداری در پایگاه دانش سازمانی، پالایش نتایج و استخراج پاسخ بدون خطای توهم.",
+        "en": "Vector search over private knowledge bases, context reranking, and zero-hallucination synthesis."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "اسناد و مخازن داده",
+          "en": "Documents & Data Warehouses"
+        },
+        "inputBottom": {
+          "fa": "پرسش کاربر و سطح دسترسی",
+          "en": "User Query & RBAC Scope"
+        },
+        "core": {
+          "fa": "موتور بازیابی و RAG",
+          "en": "RAG Retrieval Core"
+        },
+        "outputTop": {
+          "fa": "پاسخ با استناد و لینک صفحه",
+          "en": "Answer with Inline Citations"
+        },
+        "outputBottom": {
+          "fa": "لاگ ممیزی و ارزیابی کیفیت",
+          "en": "Audit Logs & Eval Metrics"
+        }
+      },
+      "logs": [
+        {
+          "fa": "doc.ingested  file=hr_policy_2026.pdf  chunks=42  status=embedded",
+          "en": "doc.ingested  file=hr_policy_2026.pdf  chunks=42  status=embedded"
+        },
+        {
+          "fa": "query.retrieved  query_hash=9a8f2  top_k=3  rerank_score=0.94",
+          "en": "query.retrieved  query_hash=9a8f2  top_k=3  rerank_score=0.94"
+        },
+        {
+          "fa": "response.generated  citations=[chunk_12,chunk_18]  faithfulness=0.99",
+          "en": "response.generated  citations=[chunk_12,chunk_18]  faithfulness=0.99"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "rag-vs-chatgpt",
+        "question": {
+          "fa": "تفاوت سیستم RAG اختصاصی با چت‌بات‌های عمومی مثل ChatGPT چیست؟",
+          "en": "What is the difference between custom enterprise RAG and public tools like ChatGPT?"
+        },
+        "answer": {
+          "fa": "چت‌بات‌های عمومی از دانش اختصاصی و محرمانه سازمان شما بی‌خبرند و در پاسخ به سوالات تخصصی به آسانی دچار توهم و اشتباه می‌شوند. سیستم RAG منحصراً بر اساس متون اسناد بارگذاری‌شده سازمان شما پاسخ تولید می‌کند، برای تک‌تک جملات مرجع دقیق (صفحه و پاراگراف) ارائه می‌دهد و داده‌های محرمانه سازمان را هرگز به بیرون نشت نمی‌دهد.",
+          "en": "Public models lack access to proprietary enterprise data and frequently hallucinate answers. A custom RAG system synthesizes responses strictly from your internal repositories, provides exact page citations, and guarantees complete data privacy."
+        }
+      },
+      {
+        "id": "rag-security-privacy",
+        "question": {
+          "fa": "آیا اسناد و اطلاعات محرمانه ما به سرورهای خارجی ارسال می‌شود؟",
+          "en": "Are our confidential corporate documents sent to external third-party servers?"
+        },
+        "answer": {
+          "fa": "خیر؛ ما امکان پیاده‌سازی ۱۰۰٪ محلی (On-Premise) را با استفاده از مدل‌های منبع‌باز قدرتمند روی سرورهای سخت‌افزاری اختصاصی خود سازمان شما فراهم می‌کنیم؛ به‌گونه‌ای که هیچ بایت داده‌ای از شبکه داخلی شرکت خارج نمی‌شود.",
+          "en": "Not necessarily. We deploy fully localized (On-Premise) setups utilizing high-performance open-weight LLMs on your own private infrastructure, guaranteeing zero data leaves your local network."
+        }
+      },
+      {
+        "id": "rag-formats-scale",
+        "question": {
+          "fa": "سامانه چه فرمت‌هایی از اسناد را پشتیبانی می‌کند و سقف حجم داده چقدر است؟",
+          "en": "What document formats are supported and what is the data scale ceiling?"
+        },
+        "answer": {
+          "fa": "کلیه فرمت‌های متنی از جمله PDF، اسناد Word، اکسل، صفحات وب، پایگاه‌های داده و حتی رونوشت مکالمات صوتی پشتیبانی می‌شوند. با معماری مقیاس‌پذیر دیتابیس‌های برداری، جست‌وجو در میلیون‌ها صفحه با زمان پاسخ کمتر از یک ثانیه انجام می‌گیرد.",
+          "en": "All enterprise formats including PDF, Word, Excel, raw databases, and audio transcripts are supported. Vector index architectures maintain sub-second queries across millions of pages."
+        }
+      },
+      {
+        "id": "rag-persian-quality",
+        "question": {
+          "fa": "دقت سامانه در درک اصطلاحات تخصصی و زبان فارسی به چه میزان است؟",
+          "en": "How accurate is the system with Persian language nuances and domain jargon?"
+        },
+        "answer": {
+          "fa": "ما از مدل‌های برداری و بازرتبه‌بندی اختصاصی بهینه‌شده برای زبان فارسی استفاده می‌کنیم. همچنین با اعمال گام‌های نرمال‌سازی متن و تنظیم تخصصی برای واژگان صنعت شما، بالاترین سطح دقت معنایی تضمین می‌شود.",
+          "en": "We deploy specialized Persian-tuned embedding and reranking models, combined with sophisticated text normalization to guarantee superior semantic comprehension of domain-specific jargon."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "rag-boundaries",
+      "telecom-bi-platform"
+    ],
+    "bento": {
+      "order": 1,
+      "span": 2,
+      "image": "/brand/bento/rag-ai.svg",
+      "shortTitle": {
+        "fa": "RAG و هوش مصنوعی",
+        "en": "RAG and AI"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">پایان عصر جست‌وجوهای کلافه‌کننده در آرشیو اسناد</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در سازمان‌های سنتی، کارشناسان هر روز ساعت‌ها وقت خود را صرف یافتن یک بخشنامه، تبصره حقوقی یا دستورالعمل فنی می‌کنند. معماری RAG اختصاصی کارا پرداز اوند این زمان را به چند ثانیه کاهش داده و ریسک تفسیر اشتباه قوانین را به صفر می‌رساند.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">ارکان تضمین کیفیت در سامانه‌های RAG سازمانی</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. استناد قطعی و عدم توهم (No Hallucination)</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">مدل ملزم به پاسخ‌گویی منحصراً بر اساس فکت‌های استخراج‌شده است و برای هر ادعا لینک مستقیم به متن و صفحه سند پیوست می‌شود.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. امنیت و حریم خصوصی On-Premise</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">امکان استقرار بر بستر سرورهای داخلی سازمان با کارت‌های گرافیک اختصاصی، بدون نیاز به اینترنت و بدون خروج اطلاعات محرمانه.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. هماهنگی کامل با ماتریس دسترسی پرسنل</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">مدیر مالی اسناد محرمانه را در پاسخ‌ها می‌بیند، اما کارشناس عادی تنها به دستورالعمل‌های عمومی بخش خود دسترسی خواهد داشت.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">دمو عملیاتی روی نمونه اسناد شما</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">یک نمونه از اسناد عمومی سازمان خود را ارسال کنید تا در یک جلسه زنده، سرعت و دقت پاسخ‌گویی موتور هوش مصنوعی ما را مشاهده فرمایید.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست جلسه دمو و بررسی فنی RAG\" data-cta-url=\"/contact?service=rag-ai\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=rag-ai\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست جلسه دمو و بررسی فنی RAG</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  },
+  "data-science": {
+    "slug": "data-science",
+    "title": {
+      "fa": "علم داده و داشبورد",
+      "en": "Data science and dashboards"
+    },
+    "outcome": {
+      "fa": "تبدیل داده‌های پراکنده و خام سازمانی به داشبوردهای مدیریتی زنده و الگوهای پیش‌بینی‌پذیر؛ تصمیم‌گیری‌های استراتژیک بر پایه واقعیت داده‌ها، نه حدس و گمان.",
+      "en": "Transforming fragmented enterprise data into live executive command centers and predictive intelligence; enabling confident data-backed decisions instead of guesswork."
+    },
+    "audience": [
+      {
+        "fa": "مدیران ارشدی که گزارش‌های هفتگی یا ماهانه را با تاخیر چندروزه، پر از مغایرت و به صورت فایل‌های اکسل دستی و ناامن دریافت می‌کنند.",
+        "en": "Executives receiving stale, conflicting monthly reports via fragile spreadsheets, hampering strategic agility."
+      },
+      {
+        "fa": "سازمان‌هایی که با انبوهی از تراکنش‌های مالی، فروش یا زنجیره تأمین روبه‌رو هستند اما نمی‌دانند دقیقاً کدام محصولات سودآور و کدام بخش‌ها هزینه‌سازند.",
+        "en": "Businesses sitting on millions of raw operational records without clear visibility into unit economics or channel profitability."
+      },
+      {
+        "fa": "تیم‌های عملیات و بازاریابی که نیازمند رصد لحظه‌ای نرخ ریزش مشتری (Churn)، طول عمر مشتری (LTV) و پیش‌بینی تقاضای ماه آینده هستند.",
+        "en": "Marketing and operations teams needing real-time churn alerts, customer lifetime value tracking, and predictive demand forecasts."
+      },
+      {
+        "fa": "واحدهای فناوری که می‌خواهند خطوط لوله داده (ETL) پایدار، انبار داده استاندارد و داشبوردهای نقش‌محور بدون بار اضافه روی پایگاه داده اصلی داشته باشند.",
+        "en": "IT teams seeking resilient automated ETL pipelines and decoupled analytical warehouses without stressing production OLTP systems."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "تعریف واژه‌نامه داده و مدل ریاضی KPIها",
+          "en": "Data Dictionary & Mathematical KPI Modeling"
+        },
+        "description": {
+          "fa": "یکسان‌سازی تعاریف شاخص‌های مالی و عملیاتی بین واحدهای مختلف، فرمول‌بندی استاندارد و شناسایی منابع معتبر داده.",
+          "en": "Standardizing metric definitions and formulas across silos, mapping verified data origins."
+        }
+      },
+      {
+        "title": {
+          "fa": "خط لوله مکانیزه استخراج، پالایش و بارگذاری داده (ETL/ELT)",
+          "en": "Automated Resilient ETL / ELT Pipelines"
+        },
+        "description": {
+          "fa": "انتقال خودکار و زمان‌بندی‌شده داده‌ها از دیتابیس‌های عملیاتی، اکسل‌ها و سامانه‌های جانبی به انبار داده تحلیلی.",
+          "en": "Scheduled ingestion from transactional databases, spreadsheets, and APIs into a high-speed analytical data warehouse."
+        }
+      },
+      {
+        "title": {
+          "fa": "داشبوردهای تعاملی و فرماندهی نقش‌محور (Executive Dashboards)",
+          "en": "Role-Based Executive Command Centers"
+        },
+        "description": {
+          "fa": "طراحی نماهای بصری واکنش‌گرا و آنی برای مدیرعامل، مدیر مالی، مدیر فروش و سرپرستان با امکان فیلتر و دریل‌داون عمیق.",
+          "en": "Dynamic interactive dashboards for leadership, finance, and sales with deep-drill analytical filters."
+        }
+      },
+      {
+        "title": {
+          "fa": "مدل‌های تحلیلی پیش‌بینی‌پذیر و یادگیری ماشین (Predictive ML)",
+          "en": "Predictive Analytics & Machine Learning Models"
+        },
+        "description": {
+          "fa": "پیش‌بینی روند فروش، پیش‌بینی کسری موجودی کالا و دسته‌بندی هوشمند مشتریان بر اساس رفتار واقعی خرید (RFM Analysis).",
+          "en": "Forecasting revenue trajectories, stockout probability, and automated RFM customer segmentation."
+        }
+      },
+      {
+        "title": {
+          "fa": "سامانه پایش هوشمند انحرافات و هشدارهای بلادرنگ (Anomaly Alerts)",
+          "en": "Automated Anomaly Detection & Incident Alerts"
+        },
+        "description": {
+          "fa": "ارسال آنی پیامک و نوتیفیکیشن در صورت افت ناگهانی فروش، افزایش مرجوعی یا افت نامتعارف شاخص‌های کلیدی عملکرد.",
+          "en": "Instant alerts triggered upon sudden sales dips, abnormal margin erosion, or metric drift."
+        }
+      },
+      {
+        "title": {
+          "fa": "حاکمیت داده، تفکیک دسترسی‌ها و مستندات فنی (Data Lineage)",
+          "en": "Data Governance, RBAC & Lineage Documentation"
+        },
+        "description": {
+          "fa": "مستندسازی کامل مسیر هر عدد از مبدأ اولیه تا نمودار داشبورد، همراه با اعمال دقیق سطوح محرمانگی برای کاربران.",
+          "en": "Full auditability from raw origin to visual chart, coupled with strict confidentiality scopes."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "کشف سوالات کلیدی کسب‌وکار و نقشه شاخص‌ها",
+          "en": "Business Discovery & Metric Blueprint"
+        },
+        "description": {
+          "fa": "شناسایی تصمیمات حیاتی مدیران، اولویت‌بندی KPIها و تعیین شاخص‌هایی که مستقیماً بر سودآوری اثر دارند.",
+          "en": "Isolating high-stakes executive decisions and mapping actionable KPIs that directly impact bottom-line profit."
+        }
+      },
+      {
+        "title": {
+          "fa": "ممیزی منابع، ارزیابی کیفیت و اتصال خطوط داده",
+          "en": "Source Audit, Data Quality & Pipeline Build"
+        },
+        "description": {
+          "fa": "بررسی فرمت‌ها، پاکسازی داده‌های متناقض و راه‌اندازی فرآیندهای استخراج خودکار بدون افت سرعت سیستم‌های اصلی.",
+          "en": "Clearing conflicting records and spinning up non-intrusive extraction pipelines without degrading production DBs."
+        }
+      },
+      {
+        "title": {
+          "fa": "توسعه انبار داده و طراحی ارگونومیک داشبوردها",
+          "en": "Data Warehouse & Dashboard UX Engineering"
+        },
+        "description": {
+          "fa": "مدلسازی چندبعدی داده‌ها و پیاده‌سازی رابط کاربری داشبوردها با نمودارهای خوانا، تعاملی و بدون ابهام بصری.",
+          "en": "Dimensional modeling and ergonomic frontend implementation delivering instant clarity and zero visual noise."
+        }
+      },
+      {
+        "title": {
+          "fa": "اعتبارسنجی ارقام، آموزش تیم و استقرار پایدار",
+          "en": "Data Audit, Executive Onboarding & Handover"
+        },
+        "description": {
+          "fa": "تطبیق ۱۰۰٪ اعداد داشبورد با دفاتر رسمی مالی، آموزش مدیران و تحویل مستندات خط لوله داده با پشتیبانی پیوسته.",
+          "en": "Reconciling metrics with official books, leadership onboarding, and complete pipeline handoff with ongoing SLA."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "انبار داده و پایگاه تحلیلی",
+          "en": "Data Warehouse & Storage"
+        },
+        "items": [
+          "PostgreSQL (OLAP)",
+          "ClickHouse",
+          "DuckDB",
+          "TimescaleDB"
+        ]
+      },
+      {
+        "label": {
+          "fa": "خط لوله ETL و پردازش",
+          "en": "Pipelines & Analytics Engine"
+        },
+        "items": [
+          "Python (Pandas, Polars)",
+          "Apache Airflow",
+          "dbt",
+          "FastAPI"
+        ]
+      },
+      {
+        "label": {
+          "fa": "فرانت‌اند بصری‌سازی",
+          "en": "Visualization & UI"
+        },
+        "items": [
+          "Next.js (App Router)",
+          "Apache ECharts",
+          "Tailwind CSS",
+          "Recharts"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://data-bi",
+      "layout": "etl",
+      "descriptionLead": {
+        "fa": "از دیتابیس‌های پراکنده تا میز فرماندهی تصمیم‌گیرندگان.",
+        "en": "From scattered databases to the executive cockpit."
+      },
+      "description": {
+        "fa": "پالایش مداوم داده‌ها، محاسبه خودکار شاخص‌ها و ارائه نماهای تحلیلی بلادرنگ.",
+        "en": "Continuous ingestion, automatic metric calculation, and sub-second live reporting."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "داده‌های تراکنشی و فروش",
+          "en": "Transactional Sales & CRM"
+        },
+        "inputBottom": {
+          "fa": "سیستم‌های مالی و انبار",
+          "en": "ERP, Accounting & Inventory"
+        },
+        "core": {
+          "fa": "موتور پردازش داده و ETL",
+          "en": "ETL & Analytics Core"
+        },
+        "outputTop": {
+          "fa": "داشبورد هیئت‌مدیره و KPI",
+          "en": "Executive KPI Dashboard"
+        },
+        "outputBottom": {
+          "fa": "مدل‌های پیش‌بینی و هشدارها",
+          "en": "Predictive Models & Alerts"
+        }
+      },
+      "logs": [
+        {
+          "fa": "etl.ingest  source=postgres_prod  records=148000  status=clean",
+          "en": "etl.ingest  source=postgres_prod  records=148000  status=clean"
+        },
+        {
+          "fa": "kpi.computed  metric=monthly_recurring_revenue  variance=+18.4%",
+          "en": "kpi.computed  metric=monthly_recurring_revenue  variance=+18.4%"
+        },
+        {
+          "fa": "dashboard.streamed  latency=18ms  viewers=executive_board",
+          "en": "dashboard.streamed  latency=18ms  viewers=executive_board"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "ds-powerbi-diff",
+        "question": {
+          "fa": "تفاوت داشبوردهای اختصاصی با ابزارهایی مانند Power BI چیست؟",
+          "en": "How do custom analytical dashboards differ from off-the-shelf Power BI?"
+        },
+        "answer": {
+          "fa": "ابزارهایی مانند Power BI نیازمند لایسنس‌های دلاری، وی‌پی‌ان یا اینترنت پایدار هستند و سفارشی‌سازی ظاهر و سطح دسترسی نقش‌ها در آن‌ها پیچیده و کند است. داشبوردهای بومی ما، کاملاً واکنش‌گرا و فوق‌سریع در بستر وب داخلی سازمان اجرا می‌شوند، نیازمند لایسنس نبوده و امکان تعبیه مستقیم درون سایر پرتال‌های سازمانی را دارند.",
+          "en": "Tools like Power BI require recurring license fees, constant internet connectivity, and present sluggish UX embedding. Our custom web-native dashboards execute with sub-second speeds, zero recurring fees, and seamless white-label integration into existing enterprise portals."
+        }
+      },
+      {
+        "id": "ds-data-messy",
+        "question": {
+          "fa": "داده‌های فعلی سازمان ما بسیار پراکنده و پر از خطا در اکسل است؛ آیا امکان اجرای پروژه وجود دارد؟",
+          "en": "Our current data is fragmented and full of errors across Excel sheets; can this still work?"
+        },
+        "answer": {
+          "fa": "دقیقاً یکی از ماموریت‌های اصلی ما در فاز اول، پاکسازی داده‌ها (Data Cleaning) و تدوین اسکریپت‌های اعتبارسنجی خودکار است. ما ناهماهنگی‌ها را شناسایی کرده و خط لوله‌ای می‌سازیم که داده‌های معیوب را پیش از ورود به داشبورد فیلتر و اصلاح کند.",
+          "en": "Absolutely. One of our core strengths in phase one is automated data cleaning and validation pipeline engineering, purging anomalies before they ever surface in management reports."
+        }
+      },
+      {
+        "id": "ds-refresh-frequency",
+        "question": {
+          "fa": "داشبوردها با چه فاصله‌ای به‌روزرسانی می‌شوند؟",
+          "en": "How frequently do the dashboards refresh?"
+        },
+        "answer": {
+          "fa": "بسته به نیاز کسب‌وکار شما؛ از به‌روزرسانی‌های بلادرنگ (Real-Time در کسری از ثانیه) برای مانیتورینگ خطوط فروش و عملیات، تا همگام‌سازی‌های دوره‌ای ساعتی یا شبانه برای تحلیل‌های جامع مالی.",
+          "en": "Configured strictly to your operational cadence—ranging from real-time streaming updates for transaction desks to automated nightly consolidations for financial ledgers."
+        }
+      },
+      {
+        "id": "ds-security-privacy",
+        "question": {
+          "fa": "امنیت و محرمانگی ارقام حساس مالی شرکت چگونه حفظ می‌شود؟",
+          "en": "How is confidentiality and security maintained for sensitive financial figures?"
+        },
+        "answer": {
+          "fa": "انبار داده و داشبوردها به طور کامل درون شبکه امن یا سرورهای اختصاصی خود شما مستقر می‌شوند و ماتریس دسترسی به تفکیک واحدها و افراد اعمال می‌گردد تا هر مدیر صرفاً اعداد مربوط به حوزه مسئولیت خود را مشاهده نماید.",
+          "en": "The entire analytical pipeline is hosted on your private infrastructure with strict column- and row-level access permissions ensuring executives only access their authorized domain."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "telecom-bi-platform",
+      "ops-crm-pilot"
+    ],
+    "bento": {
+      "order": 2,
+      "span": 2,
+      "image": "/brand/bento/data-science.svg",
+      "shortTitle": {
+        "fa": "علم داده و داشبورد",
+        "en": "Data science and dashboards"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">پایان تصمیم‌گیری بر مبنای حس و گمانه‌زنی</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">سازمان‌هایی که در بحران‌های اقتصادی و نوسانات بازار پیروز می‌شوند، آن‌هایی هستند که زودتر از دیگران تغییرات جریان نقدینگی، سودآوری و رفتار مشتریان را در داده‌های خود رصد می‌کنند. داشبورد اختصاصی هوش تجاری، چشم‌های بیدار اتاق مدیریت شماست.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">سه رکن داشبوردهای تحلیلی کارا پرداز اوند</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. تک‌منبع موثق حقیقت (Single Source of Truth)</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">پایان مناقشات بین مدیر مالی و فروش درباره صحت آمار؛ تمام ارقام مستقیماً و با خط لوله مستند از پایگاه داده اصلی تجمیع می‌شوند.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. سرعت لود آنی و زیر یک ثانیه</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">استفاده از معماری OLAP و ایندکس‌های ستونی مدرن، بررسی میلیون‌ها تراکنش را در کسری از ثانیه و بدون معطلی ممکن می‌سازد.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. هشدارهای هوشمند پیش از وقوع بحران</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">به جای آنکه در انتهای ماه غافلگیر شوید، سیستم به محض افت غیرعادی یک شاخص، به مدیر مربوطه اعلان هوشمند می‌فرستد.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">جلسه ممیزی داده و کشف شاخص</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در یک کارگاه فنی، منابع داده فعلی سازمان و فرمول‌های حیاتی رشد کسب‌وکار خود را با مهندسان داده ما بررسی کنید.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست جلسه مشاوره هوش تجاری و داده\" data-cta-url=\"/contact?service=data-science\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=data-science\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست جلسه مشاوره هوش تجاری و داده</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  },
+  "erp": {
+    "slug": "erp",
+    "title": {
+      "fa": "ERP",
+      "en": "ERP"
+    },
+    "outcome": {
+      "fa": "یکپارچه‌سازی بلادرنگ انبار، تدارکات، فروش و مالی بر پایه فرایند واقعی سازمان؛ حذف خطاهای انسانی، دوباره‌کاری‌های دفتری و تسریع تصمیم‌گیری مدیران.",
+      "en": "Real-time synchronization of inventory, procurement, sales, and finance; eliminating manual human errors, bureaucratic lag, and empowering executive mastery."
+    },
+    "audience": [
+      {
+        "fa": "سازمان‌های تولیدی و بازرگانی که انبار، تدارکات و امور مالی آن‌ها روی سامانه‌های جداگانه کار می‌کنند و همواره با مغایرت موجودی مواجهند.",
+        "en": "Manufacturing and trading companies struggling with inventory discrepancies across disconnected warehouse and accounting silos."
+      },
+      {
+        "fa": "مدیران عملیاتی که گردش کار کاغذی، امضاهای دستی و تأییدهای طولانی باعث کندی زنجیره تأمین و اتلاف فرصت‌های تجاری آن‌ها شده است.",
+        "en": "Operations directors constrained by paper signoffs, manual purchase authorizations, and supply chain friction."
+      },
+      {
+        "fa": "مدیران عاملی که برای تصمیم‌گیری هفتگی و استراتژیک به داده‌های معتبر، شفاف و تجمیع‌شده از عملکرد واقعی خطوط مختلف دسترسی ندارند.",
+        "en": "CEOs and board members requiring reliable, single-source-of-truth business intelligence for strategic cash-flow and operational planning."
+      },
+      {
+        "fa": "شرکت‌هایی که نرم‌افزارهای خارجی (مانند SAP/Oracle) برایشان بیش‌ازحد سنگین و گران است و محصولات بسته‌بندی‌شده داخلی نیز انعطاف کافی ندارند.",
+        "en": "Firms finding global enterprise ERPs bloated and prohibitively expensive, yet unable to fit into rigid domestic off-the-shelf software."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "نقشه‌برداری فرایند عملیات و مرز ماژول‌ها",
+          "en": "Operations Process Mapping & Architecture"
+        },
+        "description": {
+          "fa": "مستندسازی بدون ابهام زنجیره ارزش، نقاط تماس انبار، بازرگانی و مالی و تعیین اولویت استقرار ماژول‌ها.",
+          "en": "Unambiguous documentation of value streams, warehouse-to-finance touchpoints, and phased modular roadmap."
+        }
+      },
+      {
+        "title": {
+          "fa": "مدیریت چندانبار، کاردکس کالا و نقطه سفارش هوشمند",
+          "en": "Multi-Warehouse, Bin Tracking & Reorder Engine"
+        },
+        "description": {
+          "fa": "ردگیری لحظه‌ای موجودی واقعی و رزروشده، هشدارهای کسری کالا و صدور خودکار درخواست خرید بر اساس حداقل نقطه سفارش.",
+          "en": "Real-time ledger of on-hand and reserved inventory, stockout alerts, and automated procurement triggering."
+        }
+      },
+      {
+        "title": {
+          "fa": "موتور گردش کار تأییدات و اسناد (Approval Engine)",
+          "en": "Multi-Tier Approval & Workflow Engine"
+        },
+        "description": {
+          "fa": "اتوماسیون امضاهای دیجیتال، سقف اختیارات مالی و جریان ارجاع تاییدات بین سرپرستان بدون نیاز به کاغذبازی.",
+          "en": "Digital signatures, tiered financial spending caps, and automated multi-step signoffs eliminating paper bureaucracy."
+        }
+      },
+      {
+        "title": {
+          "fa": "ماژول بازرگانی، تدارکات و مدیریت زنجیره تأمین",
+          "en": "Procurement, Vendor Management & SCM"
+        },
+        "description": {
+          "fa": "ثبت استعلام‌ها، ارزیابی کیفی تامین‌کنندگان، تطبیق سه‌طرفه فاکتور-رسید-سفارش و کنترل بهای تمام‌شده خرید.",
+          "en": "RFP tracking, supplier grading, 3-way invoice-PO-receipt matching, and landed-cost calculations."
+        }
+      },
+      {
+        "title": {
+          "fa": "اتصال به سامانه‌های مالی، بانکی و مودیان",
+          "en": "Tax, Banking & Financial Ledger Connectivity"
+        },
+        "description": {
+          "fa": "صدور خودکار اسناد حسابداری، اتصال به سامانه مودیان مالیاتی و همگام‌سازی مانده حساب‌های طرف‌حساب بدون دوباره‌کاری.",
+          "en": "Automated journal entries, direct tax authority portal compliance, and seamless reconciliation."
+        }
+      },
+      {
+        "title": {
+          "fa": "داشبورد هوش عملیاتی و رصد شاخص‌های کلیدی (BI)",
+          "en": "Operational Intelligence & Executive Dashboards"
+        },
+        "description": {
+          "fa": "دید جامع مدیریتی از ارزش موجودی راکد، نقدینگی جاری، سرعت گردش کالا و سودآوری به تفکیک خطوط تولید یا خدمات.",
+          "en": "Unified visibility into dormant inventory valuation, operational runway, turn rates, and line profitability."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "عارضه‌یابی و تدوین نقشه عملیاتی",
+          "en": "Operational Audit & Value Mapping"
+        },
+        "description": {
+          "fa": "تحلیل موشکافانه گردش کالا، اسناد و تاییدات از مبدأ خرید تا مقصد مشتری و استخراج ماتریس گلوگاه‌ها.",
+          "en": "Auditing material flows, documents, and approvals from sourcing to delivery to expose hidden bottlenecks."
+        }
+      },
+      {
+        "title": {
+          "fa": "معماری مدل داده یکپارچه و قوانین دسترسی",
+          "en": "Unified Data Schema & Security Matrix"
+        },
+        "description": {
+          "fa": "تعریف استانداردهای کالا، مراکز هزینه، سطوح دسترسی و سناریوهای تاییدات بر اساس ارگونومی کارکرد تیم‌ها.",
+          "en": "Standardizing SKUs, cost centers, permission tiers, and UX approval flows around operator ergonomics."
+        }
+      },
+      {
+        "title": {
+          "fa": "توسعه و استقرار فازبندی‌شده ماژول‌ها",
+          "en": "Phased Build & Modular Rollout"
+        },
+        "description": {
+          "fa": "استقرار گام‌به‌گام ماژول‌ها با اولویت باز کردن بزرگ‌ترین گلوگاه، همراه با تست‌های دقیق صحت داده‌ها در محیط واقعی.",
+          "en": "Rolling out high-priority modules first to clear acute bottlenecks, verified by live data audits."
+        }
+      },
+      {
+        "title": {
+          "fa": "مهاجرت داده، آموزش عملیاتی و پشتیبانی میدانی",
+          "en": "Data Migration, Onboarding & SLA"
+        },
+        "description": {
+          "fa": "انتقال امن مانده‌ها و اسناد باز، آموزش کارگاهی پرسنل در تمام سطوح و پشتیبانی فنی مداوم جهت تثبیت سیستم.",
+          "en": "Migrating open balances safely, hands-on staff training across departments, and SLA-backed maintenance."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "هسته معماری و وب",
+          "en": "Core Architecture & Web"
+        },
+        "items": [
+          "TypeScript",
+          "Next.js",
+          "Node.js Microservices"
+        ]
+      },
+      {
+        "label": {
+          "fa": "پایگاه داده رابطه‌ای و صف",
+          "en": "Relational DB & Queues"
+        },
+        "items": [
+          "PostgreSQL (ACID-compliant)",
+          "Redis Cache",
+          "RabbitMQ"
+        ]
+      },
+      {
+        "label": {
+          "fa": "یکپارچه‌سازی و امنیت",
+          "en": "Integration & Governance"
+        },
+        "items": [
+          "REST / GraphQL",
+          "Webhooks",
+          "Audit Trail Logging",
+          "Role-Based Access Control"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://erp-core",
+      "layout": "pipeline",
+      "descriptionLead": {
+        "fa": "جریان متصل عملیات از انبار تا تراز مالی.",
+        "en": "Connected operational pipeline from stock to balance sheet."
+      },
+      "description": {
+        "fa": "تطبیق بلادرنگ موجودی، صدور خودکار اسناد مالی و حذف کامل مغایرت‌ها.",
+        "en": "Real-time stock reconciliation, automated ledger posting, and zero discrepancy."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "سفارش‌ها و درخواست خرید",
+          "en": "Orders & Requisitions"
+        },
+        "inputBottom": {
+          "fa": "ورود کالا و باسکول انبار",
+          "en": "Receiving & Warehouse"
+        },
+        "core": {
+          "fa": "موتور مرکزی ERP",
+          "en": "ERP Central Engine"
+        },
+        "outputTop": {
+          "fa": "گردش کار تاییدات و بازرگانی",
+          "en": "Workflow & SCM"
+        },
+        "outputBottom": {
+          "fa": "اسناد مالی و انبارداری",
+          "en": "Financials & Costing"
+        }
+      },
+      "logs": [
+        {
+          "fa": "inventory.reconciled  sku=SKU-1084  discrepancy=0",
+          "en": "inventory.reconciled  sku=SKU-1084  discrepancy=0"
+        },
+        {
+          "fa": "approval.granted  req=PO-4091  approver=finance_head",
+          "en": "approval.granted  req=PO-4091  approver=finance_head"
+        },
+        {
+          "fa": "journal.posted  doc=INV-8120  status=balanced",
+          "en": "journal.posted  doc=INV-8120  status=balanced"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "erp-difference",
+        "question": {
+          "fa": "تفاوت ERP اختصاصی کارا پرداز اوند با نرم‌افزارهای یکپارچه مالی چیست؟",
+          "en": "How does Kara Pardaz custom ERP differ from traditional financial packages?"
+        },
+        "answer": {
+          "fa": "نرم‌افزارهای سنتی معمولاً متمرکز بر سندداری حسابداری هستند و عملیات اجرایی انبار، بازرگانی و تاییدات را پشتیبانی نمی‌کنند. ERP اختصاصی، نرم‌افزار را به عنوان موتور محرک عملیات در خطوط مقدم شرکت می‌نشاند و ثبت‌های مالی را به عنوان خروجی طبیعی و خودکار عملیات استخراج می‌کند.",
+          "en": "Traditional packages are accounting-centric ledgers that fail to model operational shop-floor and procurement realities. Our custom ERP drives daily execution first, generating accounting entries automatically as a byproduct of real operations."
+        }
+      },
+      {
+        "id": "erp-migration-risk",
+        "question": {
+          "fa": "چگونه ریسک توقف سازمان در زمان مهاجرت به ERP جدید کنترل می‌شود؟",
+          "en": "How do we mitigate operational downtime risk during ERP migration?"
+        },
+        "answer": {
+          "fa": "با متدولوژی استقرار مرحله‌ای (Phased Rollout). سیستم جدید به صورت موازی با یک ماژول غیربحرانی آغاز می‌شود و پس از اعتبارسنجی کامل داده‌ها و تطابق ۱۰۰٪ مغایرت‌ها، انتقال بخش‌های دیگر مرحله‌به‌مرحله انجام می‌پذیرد.",
+          "en": "Via phased parallel deployment. We pilot non-critical modules first, verifying data consistency with legacy ledgers before safely cutting over mission-critical modules."
+        }
+      },
+      {
+        "id": "erp-customization-future",
+        "question": {
+          "fa": "اگر چند سال بعد فرایندهای ما تغییر کرد، آیا سیستم قابل توسعه خواهد بود؟",
+          "en": "If our workflows evolve in the future, can the ERP adapt?"
+        },
+        "answer": {
+          "fa": "کاملاً؛ معماری ماژولار و مالکیت کامل سورس‌کد به شما این امکان را می‌دهد که در هر زمان ماژول‌های جدید اضافه کنید، قوانین را اصلاح نمایید یا سیستم را به ابزارهای هوش مصنوعی و اتوماسیون‌های نوین متصل کنید.",
+          "en": "Absolutely. Full source ownership and clean modular architecture allow adding new modules, adjusting validation policies, or plugging into AI tools whenever your business scales."
+        }
+      },
+      {
+        "id": "erp-training-support",
+        "question": {
+          "fa": "برنامه آموزش پرسنل و پشتیبانی پس از استقرار به چه صورت است؟",
+          "en": "What does the onboarding and post-launch support look like?"
+        },
+        "answer": {
+          "fa": "آموزش‌های کاربردی برای هر نقش به‌صورت مجزا برگزار شده و ویدیوها و دستورالعمل‌های گام‌به‌گام تدوین می‌شود. تیم پشتیبانی فنی کارا پرداز اوند تا زمان انطباق کامل و اطمینان از آرامش عملیاتی سازمان در کنار شماست.",
+          "en": "Role-specific training sessions, hands-on playbooks, and video tutorials are provided. Our engineering team remains stationed through stabilization until operational cadence is fully achieved."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "ops-crm-pilot",
+      "telecom-bi-platform"
+    ],
+    "bento": {
+      "order": 3,
+      "span": 2,
+      "image": "/brand/bento/erp.svg",
+      "shortTitle": {
+        "fa": "ERP",
+        "en": "ERP"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">حل ریشه‌ای تعارض بین انبار، بازرگانی و مالی</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در اکثر سازمان‌ها، اطلاعات انبار با حسابداری همخوانی ندارد چون داده‌ها با تاخیر یا به صورت غیرسیستمی منتقل می‌شوند. پیاده‌سازی یک هسته ERP اختصاصی باعث می‌شود هر جابه‌جایی فیزیکی در انبار، بلادرنگ به سند مالی و وضعیت سفارش تبدیل شود.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">مزایای راهبردی استقرار ERP ماژولار</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. انطباق دقیق با ساختار سازمان</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">به جای انطباق سازمان شما با الگوهای خشک محصولات آماده، سیستم بر اساس گردش کار، سقف اختیارات و فرایند واقعی شما توسعه می‌یابد.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. کنترل کامل زنجیره ارزش و هزینه</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">محاسبه دقیق بهای تمام‌شده کالا و خدمات با لحاظ هزینه‌های حمل، استهلاک و سربار جهت توقف نشتی‌های مالی پنهان.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. مالکیت دائمی و استقلال کامل</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">بدون هزینه‌های تمدید لایسنس سالانه و بدون نگرانی از تحریم؛ سورس نرم‌افزار و کلیه داده‌ها در کنترل قطعی شماست.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">جلسه ارزیابی عملیاتی و راهکار</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در یک کارگاه ارزیابی، گردش کار فعلی و سناریوی پیاده‌سازی مرحله‌ای را با متخصصان ارشد معماری سیستم‌های سازمانی بررسی کنید.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست ارزیابی عملیاتی و جلسه مشاوره\" data-cta-url=\"/contact?service=erp\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=erp\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست ارزیابی عملیاتی و جلسه مشاوره</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  },
+  "web-platforms": {
+    "slug": "web-platforms",
+    "title": {
+      "fa": "وب‌سایت و پلتفرم وب",
+      "en": "Websites and web platforms"
+    },
+    "outcome": {
+      "fa": "توسعه وب‌سایت‌ها و پلتفرم‌های اینترپرایز با بالاترین سرعت لود، سئوی فنی بی‌نقص و طراحی در تراز بین‌المللی؛ تبدیل بازدیدکنندگان به مشتریان وفادار.",
+      "en": "Engineering enterprise web platforms with blazingly fast load times, flawless technical SEO, and world-class digital craft that turn visitors into high-value clients."
+    },
+    "audience": [
+      {
+        "fa": "برندها و هلدینگ‌هایی که به وب‌سایت چندزبانه، پرستیژ بصری در سطح شرکت‌های تراز اول جهانی و سئوی فنی پایدار نیاز دارند.",
+        "en": "Enterprise brands and holding groups requiring multilingual web authority, sophisticated design craft, and sustainable organic search dominance."
+      },
+      {
+        "fa": "شرکت‌های فناوری، پلتفرم‌های SaaS و ارائه‌دهندگان خدمات B2B که وب‌سایت را پیشانی برند و ماشین اصلی جذب لید می‌دانند.",
+        "en": "B2B service providers and SaaS platforms treating their web surface as their primary lead-generation engine and brand flagship."
+      },
+      {
+        "fa": "سازمان‌هایی که از سایت‌های کند وردپرسی با پلاگین‌های ناپایدار و امنیتی شکننده خسته شده‌اند و پلتفرمی مدرن و سفارشی می‌خواهند.",
+        "en": "Organizations outgrowing fragile, bloated WordPress sites seeking secure, custom-engineered, sub-second web experiences."
+      },
+      {
+        "fa": "تیم‌های بازاریابی و محتوایی که نیازمند پنل مدیریت محتوای روان، مدرن، بدون خطای فنی و اتصال به درگاه‌های پرداخت و فرم‌های سرنخ هستند.",
+        "en": "Marketing teams demanding an intuitive, error-free content publishing admin seamlessly wired into payment gateways and inbound CRM funnels."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "معماری فرانت‌اند فوق‌سریع و امتیاز ۱۰۰ در Core Web Vitals",
+          "en": "Ultra-Fast Frontend & 100% Core Web Vitals"
+        },
+        "description": {
+          "fa": "پیاده‌سازی با Next.js App Router و Server Components با زمان لود زیر ۱ ثانیه حتی در اینترنت‌های ضعیف.",
+          "en": "Engineered via Next.js App Router and Server Components ensuring sub-second LCP and zero layout shift."
+        }
+      },
+      {
+        "title": {
+          "fa": "سئوی ساختاریافته، اسکیما و ایندکس چندزبانه (Enterprise SEO)",
+          "en": "Structured Enterprise SEO & Multilingual Routing"
+        },
+        "description": {
+          "fa": "نقشه سایت پیشرفته، تگ‌های متا و OpenGraph داینامیک، استانداردهای Schema.org و مسیرهای مجزای محلی‌سازی‌شده (fa/en).",
+          "en": "Automated sitemaps, dynamic OpenGraph cards, rich JSON-LD schema markup, and index-perfect localized routing."
+        }
+      },
+      {
+        "title": {
+          "fa": "طراحی رابط و تجربه کاربری بین‌المللی (UI/UX Design)",
+          "en": "World-Class UI/UX Design System"
+        },
+        "description": {
+          "fa": "طراحی ریسپانسیو و ارگونومیک، انیمیشن‌های روان و مهارشده، تایپوگرافی اصیل فارسی و رعایت استانداردهای دسترس‌پذیری (WCAG AA).",
+          "en": "Pixel-perfect responsive design tokens, subdued motion choreography, rich typography, and full WCAG AA accessibility."
+        }
+      },
+      {
+        "title": {
+          "fa": "سیستم مدیریت محتوای اختصاصی و پنل ادمین مدرن (Headless CMS)",
+          "en": "Modern Headless CMS & Admin Engine"
+        },
+        "description": {
+          "fa": "ادیتور متنی پیشرفته، مدیریت رسانه، انتشار زمان‌بندی‌شده، نسخه‌بندی مقالات و تعریف نقش‌های دبیر، نویسنده و مدیر.",
+          "en": "Rich block editor, media management, scheduled releases, revision history, and granular editorial role permissions."
+        }
+      },
+      {
+        "title": {
+          "fa": "اتصال به درگاه‌های پرداخت، احراز هویت و APIهای داخلی",
+          "en": "Payment Gateways, Auth & API Integrations"
+        },
+        "description": {
+          "fa": "یکپارچگی با درگاه‌های بانکی، احراز هویت پیامکی (OTP)، سرویس‌های ایمیل مارکتینگ و ارتباط مستقیم با CRM سازمانی.",
+          "en": "Direct integrations with bank gateways, SMS OTP providers, marketing automation tools, and CRM pipelines."
+        }
+      },
+      {
+        "title": {
+          "fa": "زیرساخت استقرار مقیاس‌پذیر، امنیت و پشتیبان‌گیری خودکار",
+          "en": "Scalable Deployment, Security & Auto Backups"
+        },
+        "description": {
+          "fa": "خط لوله CI/CD بدون قطعی (Zero-Downtime)، فایروال WAF، گواهی SSL پیشرفته و پشتیبان‌گیری منظم دیتابیس.",
+          "en": "Zero-downtime CI/CD deployment pipelines, automated database snapshots, and enterprise web application firewall hardening."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "تدوین هویت بصری، استراتژی محتوا و نقشه راه",
+          "en": "Design System, Content Strategy & Roadmap"
+        },
+        "description": {
+          "fa": "تعریف ارزش‌های برند، ساختار درخت صفحات، تحلیل کلمات کلیدی سئو و تعیین قیف تبدیل بازدیدکننده به سرنخ.",
+          "en": "Locking brand aesthetic tokens, sitemap hierarchy, technical keyword clusters, and conversion funnel goals."
+        }
+      },
+      {
+        "title": {
+          "fa": "طراحی وایرفریم‌ها و پروتوتایپ تعاملی",
+          "en": "Interactive Prototypes & UX Testing"
+        },
+        "description": {
+          "fa": "طراحی صفحات دسکتاپ و موبایل در فیگما و اعتبارسنجی ارگونومی تعاملات پیش از شروع کدنویسی نهایی.",
+          "en": "Crafting desktop and mobile screens, reviewing edge cases, and validating design with core stakeholders."
+        }
+      },
+      {
+        "title": {
+          "fa": "پیاده‌سازی فرانت‌اند، سئو و سیستم مدیریت",
+          "en": "Component Engineering, SEO & CMS"
+        },
+        "description": {
+          "fa": "کدنویسی تمیز با استانداردهای وب مدرن، پیاده‌سازی دارایی‌های برند و اتصال پنل مدیریت با سرعت و امنیت بالا.",
+          "en": "Engineering performant Server Components, styling semantic tokens, and wiring the admin panel."
+        }
+      },
+      {
+        "title": {
+          "fa": "تست سرعت، آموزش کاربری و انتشار رسمی",
+          "en": "Performance Audits, Training & Go-Live"
+        },
+        "description": {
+          "fa": "ارزیابی لایت‌هاوس، آموزش عملی تیم مارکتینگ جهت کار با پنل محتوا و پشتیبانی فنی و مانیتورینگ بدون وقفه.",
+          "en": "Lighthouse optimization, training marketing teams on CMS workflows, zero-downtime cutover, and continuous monitoring."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "فرانت‌اند و رندرینگ",
+          "en": "Frontend & SSR"
+        },
+        "items": [
+          "Next.js (App Router)",
+          "TypeScript",
+          "Tailwind CSS",
+          "Framer Motion"
+        ]
+      },
+      {
+        "label": {
+          "fa": "بک‌اند و پایگاه محتوا",
+          "en": "Backend & Content Storage"
+        },
+        "items": [
+          "Node.js",
+          "MongoDB / PostgreSQL",
+          "Redis",
+          "MDX / TipTap Editor"
+        ]
+      },
+      {
+        "label": {
+          "fa": "زیرساخت و امنیت وب",
+          "en": "Infra & Edge Security"
+        },
+        "items": [
+          "Docker",
+          "Nginx / Cloudflare",
+          "Automated CI/CD",
+          "Automated Backups"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://web-platform",
+      "layout": "hub",
+      "descriptionLead": {
+        "fa": "سریع‌ترین مسیر اتصال مخاطب به ارزش‌های برند شما.",
+        "en": "The fastest bridge between your audience and your brand value."
+      },
+      "description": {
+        "fa": "رندرینگ آنی سرورساید، سئوی فنی بی‌نقص و اتصال هوشمند فرم‌ها به پایپ‌لاین فروش.",
+        "en": "Instant server-rendered delivery, technical SEO compliance, and direct lead pipeline ingestion."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "ترافیک گوگل و جست‌وجوی ارگانیک",
+          "en": "Organic Search & Google"
+        },
+        "inputBottom": {
+          "fa": "کمپین‌های تبلیغاتی و لینک‌ها",
+          "en": "Ad Campaigns & Referrals"
+        },
+        "core": {
+          "fa": "پلتفرم وب Next.js",
+          "en": "Next.js Web Platform"
+        },
+        "outputTop": {
+          "fa": "ثبت سرنخ و اتصال به CRM",
+          "en": "Lead Ingestion & CRM Sync"
+        },
+        "outputBottom": {
+          "fa": "پنل انتشار محتوا و ادمین",
+          "en": "Headless Content Admin"
+        }
+      },
+      "logs": [
+        {
+          "fa": "http.request  path=/services/crm  ttfb=34ms  cache=HIT",
+          "en": "http.request  path=/services/crm  ttfb=34ms  cache=HIT"
+        },
+        {
+          "fa": "lead.captured  form=enterprise_inquiry  status=dispatched",
+          "en": "lead.captured  form=enterprise_inquiry  status=dispatched"
+        },
+        {
+          "fa": "seo.indexed  sitemap=updated  canonical=valid",
+          "en": "seo.indexed  sitemap=updated  canonical=valid"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "web-vs-wordpress",
+        "question": {
+          "fa": "چرا به جای وردپرس، پلتفرم اختصاصی با Next.js را پیشنهاد می‌کنید؟",
+          "en": "Why choose a custom Next.js platform over WordPress?"
+        },
+        "answer": {
+          "fa": "وردپرس برای وبلاگ‌های ساده مناسب است، اما با اضافه شدن افزونه‌های متعدد، به شدت کند، ناامن و پرهزینه برای نگهداری می‌شود. پلتفرم اختصاصی Next.js زمان لود زیر ۱ ثانیه دارد، از نظر امنیتی در برابر حملات متداول نفوذناپذیر است و در صفحات با ترافیک بالا هرگز با افت سرعت مواجه نمی‌شود.",
+          "en": "WordPress becomes sluggish, fragile, and insecure as plugins accumulate. A custom Next.js architecture delivers sub-second load times, impregnable security surfaces, and rock-solid performance under peak traffic."
+        }
+      },
+      {
+        "id": "web-seo-rankings",
+        "question": {
+          "fa": "آیا معماری این وب‌سایت‌ها از نظر گوگل و سئو کاملاً بهینه است؟",
+          "en": "Is the architecture fully optimized for Google indexing and technical SEO?"
+        },
+        "answer": {
+          "fa": "بله، به کارگیری رندرینگ سمت سرور (SSR)، ساختار داده‌های اسکیما (Schema.org)، رعایت استانداردهای Core Web Vitals و بهینه‌سازی خودکار تصاویر، بهترین بستر فنی ممکن را برای صعود در نتایج گوگل فراهم می‌آورد.",
+          "en": "Yes. Leveraging Server-Side Rendering (SSR), structured JSON-LD schemas, perfect Core Web Vitals scores, and modern asset optimizations ensures the highest possible technical foundation for Google rankings."
+        }
+      },
+      {
+        "id": "web-content-editing",
+        "question": {
+          "fa": "آیا تیم مارکتینگ ما می‌تواند بدون نیاز به برنامه‌نویس، محتوا منتشر کند؟",
+          "en": "Can our marketing team publish content without developer intervention?"
+        },
+        "answer": {
+          "fa": "کاملاً؛ همراه با وب‌سایت یک پنل مدیریت محتوای فارسی، مدرن و سبک تحویل داده می‌شود که به کارشناسان محتوای شما اجازه می‌دهد صفحات، مقالات، خدمات و تصاویر را با یک ویرایشگر بصری منتشر و ویرایش کنند.",
+          "en": "Completely. We provide an intuitive, modern editorial admin dashboard enabling your marketing team to draft, format, and publish articles, services, and media with zero coding required."
+        }
+      },
+      {
+        "id": "web-timeline",
+        "question": {
+          "fa": "طراحی و توسعه پلتفرم وب سازمانی چقدر زمان نیاز دارد؟",
+          "en": "How long does building an enterprise web platform take?"
+        },
+        "answer": {
+          "fa": "پروژه‌های استاندارد وب‌سایت سازمانی معمولاً بین ۴ تا ۸ هفته از فاز طراحی تا رونمایی نهایی زمان می‌برند و در طول این مدت، مراحل پیشرفت کار در جلسات منظم به کارفرما گزارش داده می‌شود.",
+          "en": "A standard corporate web platform typically takes 4 to 8 weeks from initial design tokens to live deployment, with structured weekly demos and stakeholder milestone approvals."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "ops-crm-pilot",
+      "rag-boundaries"
+    ],
+    "bento": {
+      "order": 4,
+      "span": 2,
+      "image": "/brand/bento/web-platforms.svg",
+      "shortTitle": {
+        "fa": "وب‌سایت و پلتفرم",
+        "en": "Websites and platforms"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">سرعت لود وب‌سایت = نرخ تبدیل و درآمد بیشتر</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">بر اساس مطالعات رفتارشناسی وب، هر یک ثانیه تاخیر در باز شدن صفحه وب‌سایت، تا ۲۰٪ نرخ تبدیل بازدیدکنندگان به مشتری را کاهش می‌دهد. وب‌سایت‌های مهندسی‌شده با Next.js در کارا پرداز اوند، تصویری مدرن، باوقار و فوق‌سریع از برند شما به نمایش می‌گذارند.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">سه برتری تکنولوژی مدرن وب در برابر قالب‌های آماده</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. سرعت لود زیر یک ثانیه (TTFB)</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">بهره‌گیری از Server Components و بهینه‌سازی اتوماتیک تصاویر و فونت‌ها، صفحات را حتی روی ضعیف‌ترین اینترنت‌های همراه در یک چشم‌به‌هم‌زدن باز می‌کند.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. امنیت پولادین و بدون باگ افزونه‌ها</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">حذف معماری شکننده افزونه‌های سنتی؛ کدهای بهینه‌شده و تست‌شده مانع از نفوذ بدافزارها و قطعی‌های ناگهانی وب‌سایت می‌شوند.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. تجربه کاربری روان در کلاس جهانی</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">طراحی متناسب با هویت برند، انیمیشن‌های باوقار، تایپوگرافی چشم‌نواز و دسترسی‌پذیری کامل در دسکتاپ و تمامی مدل‌های موبایل.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">جلسه ارزیابی هویت وب و استراتژی رشد</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در یک گفتگوی مشاوره فنی، نقاط ضعف عملکرد فعلی، پتانسیل‌های سئو و نقشه راه حضور مقتدرانه آنلاین سازمان خود را با ما بررسی کنید.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست مشاوره و استعلام پروژه وب‌سایت\" data-cta-url=\"/contact?service=web-platforms\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=web-platforms\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست مشاوره و استعلام پروژه وب‌سایت</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  },
+  "custom-software": {
+    "slug": "custom-software",
+    "title": {
+      "fa": "طراحی نرم‌افزار سفارشی",
+      "en": "Custom software design"
+    },
+    "outcome": {
+      "fa": "توسعه نرم‌افزارهای سازمانی دقیق، چابک و با مقیاس‌پذیری بالا؛ متناسب با منطق واقعی بیزینس شما و با تضمین ۱۰۰٪ مالکیت سورس‌کد و داده‌ها.",
+      "en": "Enterprise-grade custom software engineered around your real business logic, with guaranteed 100% source code ownership and architectural resilience."
+    },
+    "audience": [
+      {
+        "fa": "سازمان‌هایی که فرایندهای اختصاصی، مدل قیمت‌گذاری یا زنجیره تأمین منحصربه‌فرد دارند و در محصولات آماده دچار محدودیت و قفل‌شدگی می‌شوند.",
+        "en": "Organizations with proprietary workflows or pricing models that cannot fit into rigid commercial software templates."
+      },
+      {
+        "fa": "مدیران ارشد فناوری (CTO) و عملیات که به کدنویسی تمیز، معماری شفاف، پایگاه داده بهینه‌شده و رفع بدهی‌های فنی قبلی نیاز دارند.",
+        "en": "CTOs and operations leads seeking clean maintainable code, transparent architecture, and freedom from legacy tech debt."
+      },
+      {
+        "fa": "کسب‌وکارهایی که می‌خواهند چندین پایگاه داده و نرم‌افزار جزیره‌ای را در یک پلتفرم متمرکز، امن و یکپارچه تجمیع کنند.",
+        "en": "Enterprises aiming to consolidate siloed databases and disjointed internal tools into one robust unified system."
+      },
+      {
+        "fa": "شرکت‌هایی که نگران امنیت، محرمانگی داده‌های حیاتی مشتریان و خطرات تحریم یا قطعی سرویس‌های خارجی هستند.",
+        "en": "Businesses requiring complete data sovereignty, strict privacy controls, and resilience against external provider lock-ins."
+      }
+    ],
+    "deliverables": [
+      {
+        "title": {
+          "fa": "مدل‌سازی دامنه و شفاف‌سازی قوانین کسب‌وکار",
+          "en": "Domain-Driven Modeling & Business Logic"
+        },
+        "description": {
+          "fa": "ترسیم دقیق نمودار موجودیت‌ها، قواعد تصمیم‌گیری و مرزهای سرویس بدون هیچ‌گونه ابهام پیش از آغاز کدنویسی.",
+          "en": "Precise entity mapping, decision matrices, and service boundaries eliminating guesswork before coding."
+        }
+      },
+      {
+        "title": {
+          "fa": "معماری مقیاس‌پذیر و پایدار (Clean Architecture)",
+          "en": "Scalable Clean Architecture"
+        },
+        "description": {
+          "fa": "طراحی ماژولار با قابلیت تحمل ترافیک بالا، جداسازی لایه‌ها، قراردادهای شفاف API و امکان توسعه نامحدود در آینده.",
+          "en": "Modular high-concurrency design, clean layering, strict API contracts, and limitless future maintainability."
+        }
+      },
+      {
+        "title": {
+          "fa": "رابط کاربری مدرن، فوق‌سریع و ارگونومیک (UI/UX)",
+          "en": "Ergonomic & Blazing-Fast UI/UX"
+        },
+        "description": {
+          "fa": "طراحی اختصاصی صفحات بر اساس اصول دسترسی‌پذیری و ارگونومی کاربری با هدف کاهش زمان انجام وظایف اپراتورها.",
+          "en": "Tailored interfaces adhering to accessibility and ergonomics to minimize operator task completion times."
+        }
+      },
+      {
+        "title": {
+          "fa": "تحویل مرحله‌ای با نسخه‌های عملیاتی منظم",
+          "en": "Iterative Delivery & Milestone Demos"
+        },
+        "description": {
+          "fa": "تحویل نسخه‌های قابل تست در پایان هر اسپرینت، دریافت بازخورد سریع از کاربران واقعی و جلوگیری از انحراف پروژه.",
+          "en": "Shippable working software at every sprint, enabling rapid real-world validation and mitigating project risk."
+        }
+      },
+      {
+        "title": {
+          "fa": "تست‌های خودکار و تضمین کیفیت همه‌جانبه (QA)",
+          "en": "Automated Testing & End-to-End QA"
+        },
+        "description": {
+          "fa": "پوشش تست‌های واحد، یکپارچه‌سازی و سناریوهای بحرانی جهت اطمینان از عملکرد بدون باگ و پایداری زیر بار سنگین.",
+          "en": "Unit, integration, and stress tests ensuring bulletproof reliability and flawless performance under peak load."
+        }
+      },
+      {
+        "title": {
+          "fa": "مستندسازی جامع، پایپ‌لاین CI/CD و انتقال دانش",
+          "en": "Comprehensive Docs, CI/CD & Knowledge Handoff"
+        },
+        "description": {
+          "fa": "مستندات کامل معماری و APIها، استقرار خودکار و جلسات انتقال دانش فنی به تیم مهندسی سازمان شما.",
+          "en": "Full architectural docs, automated deployment pipelines, and thorough knowledge transfer to your in-house engineers."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "title": {
+          "fa": "کشف، مدل دامنه و تعیین حدود سیستم",
+          "en": "Discovery, Domain & Scoping"
+        },
+        "description": {
+          "fa": "فرایندهای واقعی، گلوگاه‌ها و شاخص‌های دقیق موفقیت را در جلسات فشرده با ذی‌نفعان قفل می‌کنیم.",
+          "en": "We map real workflows, pinpoint friction, and lock explicit success metrics with core stakeholders."
+        }
+      },
+      {
+        "title": {
+          "fa": "معماری فنی و نمونه اولیه تعاملی",
+          "en": "Architecture & Interactive Prototype"
+        },
+        "description": {
+          "fa": "اسکلت دیتابیس، ساختار سرویس‌ها و جریان‌های اصلی UX را پیش از توسعه تست و تایید می‌کنیم.",
+          "en": "We validate the database schema, service contracts, and key UI flows before full-scale build."
+        }
+      },
+      {
+        "title": {
+          "fa": "توسعه چابک و تحویل‌های فازبندی‌شده",
+          "en": "Agile Build & Iterative Releases"
+        },
+        "description": {
+          "fa": "پیاده‌سازی ماژول‌ها در بازه‌های دوهفته‌ای با دموهای عملیاتی و معیارهای پذیرش شفاف انجام می‌شود.",
+          "en": "Modules are engineered in rapid 2-week iterations backed by working demos and strict acceptance tests."
+        }
+      },
+      {
+        "title": {
+          "fa": "استقرار صنعتی، تست بار و پشتیبانی پایدار",
+          "en": "Production Rollout & Long-Term SLA"
+        },
+        "description": {
+          "fa": "پایش عملکرد زیر بار ترافیک واقعی، آموزش عملی پرسنل و ارائه خدمات نگهداری بر اساس SLA دقیق.",
+          "en": "Stress testing in production, structured team onboarding, and continuous SLA-backed maintenance."
+        }
+      }
+    ],
+    "stack": [
+      {
+        "label": {
+          "fa": "فریم‌ورک و زبان",
+          "en": "Framework & Language"
+        },
+        "items": [
+          "TypeScript",
+          "Next.js",
+          "Node.js",
+          "Python"
+        ]
+      },
+      {
+        "label": {
+          "fa": "پایگاه داده و صف پردازش",
+          "en": "Database & Queue"
+        },
+        "items": [
+          "PostgreSQL",
+          "MongoDB",
+          "Redis",
+          "RabbitMQ"
+        ]
+      },
+      {
+        "label": {
+          "fa": "زیرساخت و امنیت",
+          "en": "DevOps & Security"
+        },
+        "items": [
+          "Docker",
+          "Kubernetes",
+          "CI/CD Pipeline",
+          "JWT / RBAC"
+        ]
+      }
+    ],
+    "systemMap": {
+      "windowTitle": "kara://custom-core",
+      "layout": "modules",
+      "descriptionLead": {
+        "fa": "معماری یکپارچه برای پردازش‌های حیاتی سازمان.",
+        "en": "Unified architecture for mission-critical operations."
+      },
+      "description": {
+        "fa": "جداسازی دامنه‌ها، سرعت پردازش بی‌وقفه و همگام‌سازی تضمین‌شده داده‌ها.",
+        "en": "Decoupled domains, ultra-low latency execution, and guaranteed consistency."
+      },
+      "nodes": {
+        "inputTop": {
+          "fa": "درگاه‌های سازمانی و وب",
+          "en": "Enterprise Web & Portals"
+        },
+        "inputBottom": {
+          "fa": "اتصال به سرویس‌ها و API",
+          "en": "APIs & Legacy Services"
+        },
+        "core": {
+          "fa": "هستهٔ نرم‌افزار سفارشی",
+          "en": "Custom Core Engine"
+        },
+        "outputTop": {
+          "fa": "پردازش رویدادها و صف",
+          "en": "Event Queues & Workers"
+        },
+        "outputBottom": {
+          "fa": "پایگاه داده و انبار داده",
+          "en": "Transactional Database"
+        }
+      },
+      "logs": [
+        {
+          "fa": "event.dispatched  domain=orders  id=ORD-9021",
+          "en": "event.dispatched  domain=orders  id=ORD-9021"
+        },
+        {
+          "fa": "worker.processed  latency=14ms  status=committed",
+          "en": "worker.processed  latency=14ms  status=committed"
+        },
+        {
+          "fa": "audit.logged  actor=admin/ops  action=state_change",
+          "en": "audit.logged  actor=admin/ops  action=state_change"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "id": "custom-timeline",
+        "question": {
+          "fa": "یک پروژه نرم‌افزار سفارشی معمولاً چقدر زمان می‌برد؟",
+          "en": "How long does a custom software build typically take?"
+        },
+        "answer": {
+          "fa": "بسته به پیچیدگی و وسعت دامنه، نسخه اولیه قابل استفاده (MVP) معمولاً بین ۶ تا ۱۰ هفته آماده می‌شود. ما پروژه را فازبندی می‌کنیم تا سازمان شما در همان ماه‌های ابتدایی ارزش عملیاتی آن را لمس کند.",
+          "en": "Depending on scope, a production-grade MVP is typically delivered within 6 to 10 weeks. Staged rollouts ensure you capture operational value early."
+        }
+      },
+      {
+        "id": "custom-ownership",
+        "question": {
+          "fa": "آیا مالکیت سورس‌کد و دیتابیس به صورت کامل به ما واگذار می‌شود؟",
+          "en": "Do we get 100% ownership of source code and databases?"
+        },
+        "answer": {
+          "fa": "بله، ۱۰۰٪ مالکیت حقوقی و فنی سورس‌کد، ساختار دیتابیس و مستندات معماری متعلق به کارفرماست و هیچ‌گونه وابستگی انحصاری برای شما ایجاد نمی‌شود.",
+          "en": "Yes. 100% of the intellectual property, source repository, schema, and docs belong entirely to you with zero proprietary lock-in."
+        }
+      },
+      {
+        "id": "custom-tech-stack",
+        "question": {
+          "fa": "تکنولوژی‌ها و استک فنی بر چه اساسی انتخاب می‌شوند؟",
+          "en": "How is the technical stack selected?"
+        },
+        "answer": {
+          "fa": "بر اساس بار پردازشی، نیازمندی‌های مقیاس‌پذیری و ظرفیت تیم فنی سازمان شما؛ ما استانداردترین تکنولوژی‌های مدرن جهان با جامعه توسعه‌دهندگان بزرگ را انتخاب می‌کنیم تا نگهداری آن در آینده آسان باشد.",
+          "en": "Selection is driven by concurrency, scalability profiles, and your internal engineering capacity, prioritizing battle-tested modern standards."
+        }
+      },
+      {
+        "id": "custom-legacy-migration",
+        "question": {
+          "fa": "تکلیف سیستم‌های قدیمی و دیتای قبلی ما چه خواهد شد؟",
+          "en": "What happens to our legacy data and existing systems?"
+        },
+        "answer": {
+          "fa": "طراحی رابط‌های واسط (API Adapter) و سناریوهای مهاجرت داده بخشی از تعهد ماست. ما فرایند را طوری برنامه‌ریزی می‌کنیم که تغییر سیستم بدون حتی یک دقیقه توقف در کار جاری سازمان انجام شود.",
+          "en": "We design robust API adapters and zero-downtime data migration pipelines to ensure business continuity without disruption."
+        }
+      }
+    ],
+    "relatedProjects": [
+      "ops-crm-pilot",
+      "telecom-bi-platform"
+    ],
+    "bento": {
+      "order": 5,
+      "span": 6,
+      "dark": true,
+      "image": "/brand/bento/custom-software.svg",
+      "shortTitle": {
+        "fa": "نرم‌افزار سفارشی",
+        "en": "Custom software"
+      }
+    },
+    "deepDiveHtml": "<div data-callout-type=\"note\" class=\"callout callout-note rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">چرا نرم‌افزار سفارشی سرمایه‌گذاری استراتژیک است، نه هزینه؟</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">نرم‌افزارهای تجاری عمومی برای پاسخ به میانگین بازار ساخته شده‌اند و به همین دلیل در گلوگاه‌های خاص کسب‌وکار شما ناکارآمدند. یک نرم‌افزار سفارشی با طراحی متمرکز بر مزیت رقابتی شما، سرعت و بهره‌وری فرایندها را تا چندین برابر ارتقا می‌دهد.</p>\n    </div>\n\n    <h3 class=\"text-xl font-bold text-text mt-8 mb-4\">اصول مهندسی کارا پرداز اوند در توسعه نرم‌افزار</h3>\n    \n    <div class=\"not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6\" data-card-grid=\"\" data-columns=\"3\">\n      \n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۱. معماری تمیز و بدون بدهی فنی</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">طراحی ماژولار و رعایت استانداردهای Clean Code و SOLID تا در آینده هر تغییری بدون ترس از شکستن بخش‌های دیگر به راحتی اعمال شود.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۲. تست‌های خودکار و تضمین پایداری</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">پوشش مداوم تست‌های خودکار از روز اول، مانع بروز باگ در محیط عملیاتی و حفظ کیفیت سامانه تحت بارهای تراکنشی سنگین می‌شود.</p>\n      </div>\n      <div class=\"rounded-2xl border border-line bg-panel p-6 shadow-sm\" data-card-item=\"\">\n        <p class=\"font-bold text-text mb-2 text-base text-blue\">۳. تحویل ملموس و بدون غافلگیری</p>\n        <p class=\"text-sm text-muted leading-relaxed m-0\">کارفرما هر دو هفته یک‌بار محصول را در حال کار مشاهده و تست می‌کند؛ بنابراین پروژه هرگز از زمان‌بندی و انتظارات واقعی منحرف نخواهد شد.</p>\n      </div>\n    </div>\n\n    <div data-callout-type=\"warning\" class=\"callout callout-warning rounded-2xl border p-4 my-4 leading-relaxed\">\n      <p class=\"font-bold text-text mb-1\">مشاوره فنی و نیازسنجی معماری</p>\n      <p class=\"text-sm text-muted m-0 leading-relaxed\">در یک جلسه تحلیل فنی، ابعاد معماری، چالش‌های زیرساختی و راهکارهای مهندسی پروژه شما را ارزیابی می‌کنیم.</p>\n    </div>\n\n    <div data-inline-cta=\"\" data-cta-label=\"درخواست ارزیابی معماری و پروپوزال فنی\" data-cta-url=\"/contact?service=custom-software\" data-cta-variant=\"primary\" data-cta-align=\"center\">\n      <a href=\"/contact?service=custom-software\" data-cta-variant=\"primary\" class=\"cta-btn cta-btn-primary inline-flex items-center gap-2 rounded-2xl bg-blue text-on-brand px-6 py-3.5 font-bold text-sm shadow hover:bg-navy-2 transition-all not-prose no-underline\">\n        <span class=\"text-on-brand\">درخواست ارزیابی معماری و پروپوزال فنی</span>\n        <span class=\"text-orange text-xs\">◀</span>\n      </a>\n    </div>",
+    "deepDiveJson": {
+      "type": "doc",
+      "content": []
+    },
+    "status": "published"
+  }
+}

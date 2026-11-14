@@ -235,15 +235,15 @@ export const customSoftwareService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. معماری تمیز و بدون بدهی فنی</p>
         <p class="text-sm text-muted leading-relaxed m-0">طراحی ماژولار و رعایت استانداردهای Clean Code و SOLID تا در آینده هر تغییری بدون ترس از شکستن بخش‌های دیگر به راحتی اعمال شود.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. تست‌های خودکار و تضمین پایداری</p>
         <p class="text-sm text-muted leading-relaxed m-0">پوشش مداوم تست‌های خودکار از روز اول، مانع بروز باگ در محیط عملیاتی و حفظ کیفیت سامانه تحت بارهای تراکنشی سنگین می‌شود.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. تحویل ملموس و بدون غافلگیری</p>
         <p class="text-sm text-muted leading-relaxed m-0">کارفرما هر دو هفته یک‌بار محصول را در حال کار مشاهده و تست می‌کند؛ بنابراین پروژه هرگز از زمان‌بندی و انتظارات واقعی منحرف نخواهد شد.</p>
       </div>

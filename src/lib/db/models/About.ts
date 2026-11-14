@@ -31,6 +31,11 @@ export interface IAboutCultureItem {
   needs_business_confirmation?: boolean;
 }
 
+export interface IAboutSeo {
+  title: ILocalizedString;
+  description: ILocalizedString;
+}
+
 export interface IAbout extends Document {
   intro: {
     title: ILocalizedString;
@@ -47,6 +52,8 @@ export interface IAbout extends Document {
   brandNodes: IAboutBrandNode[];
   team: IAboutTeamMember[];
   culture: IAboutCultureItem[];
+  /** Page meta; empty fields fall back to intro on resolve/save. */
+  seo?: IAboutSeo;
   updatedAt: Date;
 }
 
@@ -121,6 +128,10 @@ const AboutSchema = new Schema<IAbout>(
     brandNodes: { type: [AboutBrandNodeSchema], default: [] },
     team: { type: [AboutTeamMemberSchema], default: [] },
     culture: { type: [AboutCultureItemSchema], default: [] },
+    seo: {
+      title: { type: LocalizedStringSchema, required: false },
+      description: { type: LocalizedStringSchema, required: false },
+    },
     updatedAt: { type: Date, default: Date.now },
   },
   {

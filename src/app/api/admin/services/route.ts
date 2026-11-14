@@ -125,6 +125,10 @@ export const POST = withAuth(
     const serviceDoc = await Service.create({
       ...validData,
       deepDiveHtml: normalizedDeepDive,
+      seo: validData.seo ?? {
+        title: { fa: "", en: "" },
+        description: { fa: "", en: "" },
+      },
     });
 
     return NextResponse.json(

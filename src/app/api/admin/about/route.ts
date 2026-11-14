@@ -113,6 +113,10 @@ export const PUT = withAuth(
     }
 
     const validData = parseResult.data;
+    const seoPayload = validData.seo ?? {
+      title: { fa: "", en: "" },
+      description: { fa: "", en: "" },
+    };
 
     if (validData.story?.tiptapBody?.fa?.html) {
       validData.story.tiptapBody.fa.html = normalizePersianText(
@@ -128,10 +132,11 @@ export const PUT = withAuth(
       aboutDoc.brandNodes = validData.brandNodes;
       aboutDoc.team = validData.team;
       aboutDoc.culture = validData.culture;
+      aboutDoc.seo = seoPayload;
       aboutDoc.updatedAt = new Date();
       await aboutDoc.save();
     } else {
-      aboutDoc = await About.create(validData);
+      aboutDoc = await About.create({ ...validData, seo: seoPayload });
     }
 
     return NextResponse.json({

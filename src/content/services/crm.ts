@@ -248,15 +248,15 @@ export const crmService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. مالکیت ۱۰۰٪ و بدون هزینه لایسنس</p>
         <p class="text-sm text-muted leading-relaxed m-0">بدون شارژهای ماهانه به ازای هر کاربر. با رشد تیم از ۵ نفر به ۵۰ نفر، هیچ هزینه اضافه‌ای به شرکت تحمیل نمی‌شود و سورس‌کد دارایی قطعی سازمان شماست.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. یکپارچگی بلادرنگ با تلفن و مالی</p>
         <p class="text-sm text-muted leading-relaxed m-0">اتصال مستقیم به سانترال/VoIP برای نمایش اطلاعات مشتری حین زنگ خوردن و همگام‌سازی لحظه‌ای با نرم‌افزارهای حسابداری (سپیدار، راهکاران و...) بدون ورود دستی داده.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. ارگونومی و سرعت کاربری بی‌رقیب</p>
         <p class="text-sm text-muted leading-relaxed m-0">رابط کاربری فوق‌سریع بدون فیلدهای بیهوده. کارشناس فروش در کمتر از ۵ ثانیه وضعیت تماس یا یادداشت پیگیری را ثبت می‌کند تا پذیرش ابزار به ۱۰۰٪ برسد.</p>
       </div>

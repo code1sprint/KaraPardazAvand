@@ -23,7 +23,7 @@ export async function AboutBrandDiagram() {
     <Section id="brands" aria-labelledby="about-brands-heading">
       <Container>
         <Reveal>
-          <div className="mb-8 max-w-2xl md:mb-10">
+          <div className="mb-8 w-full max-w-none md:mb-10">
             <Eyebrow>{t("brands.eyebrow")}</Eyebrow>
             <Heading as={2} id="about-brands-heading">
               {t("brands.title")}

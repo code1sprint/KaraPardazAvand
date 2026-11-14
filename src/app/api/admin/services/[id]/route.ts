@@ -141,6 +141,9 @@ export const PUT = withAuth(
         $set: {
           ...validData,
           ...(normalizedDeepDive !== undefined ? { deepDiveHtml: normalizedDeepDive } : {}),
+          ...(validData.seo !== undefined
+            ? { seo: validData.seo }
+            : {}),
         },
       },
       { returnDocument: "after" },

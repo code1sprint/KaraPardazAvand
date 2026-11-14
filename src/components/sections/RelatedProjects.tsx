@@ -41,7 +41,7 @@ export async function RelatedProjects({
     <Section id="related-projects" aria-labelledby="related-projects-heading">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-xl">
+          <div className="min-w-0 flex-1">
             <Heading
               as={2}
               id="related-projects-heading"

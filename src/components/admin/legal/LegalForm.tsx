@@ -24,6 +24,10 @@ export function LegalForm({ initialData, isNew = false }: LegalFormProps) {
         fa: { html: "", json: null },
         en: { html: "", json: null },
       },
+      seo: {
+        title: { fa: "", en: "" },
+        description: { fa: "", en: "" },
+      },
       status: "published",
     },
   );
@@ -56,6 +60,7 @@ export function LegalForm({ initialData, isNew = false }: LegalFormProps) {
               summary: d.summary ?? prev.summary,
               updatedIso: d.updatedIso ?? prev.updatedIso,
               tiptapBody: d.tiptapBody ?? prev.tiptapBody,
+              seo: d.seo ?? prev.seo,
               status: d.status ?? prev.status,
             }));
             setSuccessMessage("محتوای سند حقوقی از طریق API به‌روزرسانی و در ادیتور همگام شد.");
@@ -341,6 +346,159 @@ export function LegalForm({ initialData, isNew = false }: LegalFormProps) {
               placeholder="Brief summary for hero and SEO..."
               className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none"
             />
+          </div>
+        </div>
+
+        <div className="space-y-4 border-t border-line pt-6">
+          <div className="rounded-xl border border-line/80 bg-bg/60 p-4 text-xs leading-relaxed text-muted">
+            اگر عنوان و توضیح فارسی SEO هر دو پر باشند، متای صفحه از آن‌ها می‌آید؛
+            وگرنه از عنوان + خلاصه سند پیروی می‌کند.
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: {
+                      fa: prev.title.fa,
+                      en: prev.title.en || "",
+                    },
+                    description: {
+                      fa: prev.summary?.fa || "",
+                      en: prev.summary?.en || "",
+                    },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-text hover:border-blue hover:text-blue transition-colors"
+            >
+              همگام‌سازی از عنوان و خلاصه
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: { fa: "", en: "" },
+                    description: { fa: "", en: "" },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-muted hover:border-red-400 hover:text-red-600 transition-colors"
+            >
+              پاک کردن SEO سفارشی
+            </button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-xs font-bold text-text">
+                عنوان SEO (fa)
+              </label>
+              <input
+                type="text"
+                value={formData.seo?.title?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: e.target.value,
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                placeholder={formData.title.fa}
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-bold text-text">
+                SEO title (en)
+              </label>
+              <input
+                type="text"
+                dir="ltr"
+                value={formData.seo?.title?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: e.target.value,
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text focus:border-blue focus:outline-none"
+                placeholder={formData.title.en || ""}
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-bold text-text">
+                توضیح SEO (fa)
+              </label>
+              <textarea
+                rows={2}
+                value={formData.seo?.description?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: e.target.value,
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none"
+                placeholder={formData.summary?.fa || ""}
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-bold text-text">
+                SEO description (en)
+              </label>
+              <textarea
+                rows={2}
+                dir="ltr"
+                value={formData.seo?.description?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: e.target.value,
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-4 py-2.5 text-xs text-text leading-relaxed focus:border-blue focus:outline-none"
+                placeholder={formData.summary?.en || ""}
+              />
+            </div>
           </div>
         </div>
       </div>

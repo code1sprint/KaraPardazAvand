@@ -94,7 +94,7 @@ async function ProcessContent({ params }: Props) {
         <Section id="steps" aria-labelledby="process-steps-heading">
           <Container>
             <Reveal>
-              <div className="mb-8 max-w-2xl md:mb-10">
+              <div className="mb-8 w-full max-w-none md:mb-10">
                 <Heading as={2} id="process-steps-heading">
                   {pageT("stepsTitle")}
                 </Heading>

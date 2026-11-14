@@ -39,7 +39,7 @@ export async function FeaturedProjects({ limit = 3 }: FeaturedProjectsProps) {
       <Container>
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-xl">
+            <div className="min-w-0 flex-1">
               <Eyebrow>{t("featured.eyebrow")}</Eyebrow>
               <Heading as={2} id="portfolio-heading">
                 {t("featured.title")}

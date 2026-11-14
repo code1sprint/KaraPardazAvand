@@ -82,11 +82,11 @@ export const CardItemExtension = Node.create({
     else if (span === 6) spanClass += " md:col-span-6";
     else spanClass += " md:col-span-2";
 
-    let variantClass = "border-line bg-panel shadow-sm";
+    let variantClass = "border-line/70 bg-panel shadow-none";
     if (variant === "highlight") {
-      variantClass = "border-blue/50 bg-panel shadow-md ring-1 ring-blue/20";
+      variantClass = "border-blue/35 bg-panel shadow-none";
     } else if (variant === "soft") {
-      variantClass = "border-blue/20 bg-blue/[0.04]";
+      variantClass = "border-blue/20 bg-blue/[0.04] shadow-none";
     }
 
     return [

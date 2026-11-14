@@ -13,6 +13,12 @@ export const GET = withAuth(
     const LegalDoc = await getLegalDocModel();
     const { slug } = await (context as RouteParams).params;
 
+    // Core docs may exist only as MDX on the site — create Mongo copies if missing.
+    if (slug === "privacy" || slug === "terms") {
+      const { ensureCoreLegalDocs } = await import("@/lib/legal-ensure");
+      await ensureCoreLegalDocs(LegalDoc);
+    }
+
     const doc = await LegalDoc.findOne({ slug }).lean();
     if (!doc) {
       return NextResponse.json(
@@ -32,14 +38,6 @@ export const PUT = withAuth(
     const LegalDoc = await getLegalDocModel();
     const { slug } = await (context as RouteParams).params;
 
-    const doc = await LegalDoc.findOne({ slug });
-    if (!doc) {
-      return NextResponse.json(
-        { ok: false, message: `سند حقوقی با اسلاگ '${slug}' یافت نشد.` },
-        { status: 404 },
-      );
-    }
-
     let body: unknown;
     try {
       body = await request.json();
@@ -50,39 +48,76 @@ export const PUT = withAuth(
       );
     }
 
+    const existing = await LegalDoc.findOne({ slug });
+
     const raw = (body && typeof body === "object" ? body : {}) as Record<string, unknown>;
     const normalized: Record<string, unknown> = {
       slug,
-      title: doc.title,
-      summary: doc.summary,
-      status: doc.status,
-      tiptapBody: doc.tiptapBody,
+      title: existing?.title || { fa: slug, en: "" },
+      summary: existing?.summary || { fa: "", en: "" },
+      status: existing?.status || "published",
+      tiptapBody: existing?.tiptapBody || {
+        fa: { html: "", json: null },
+        en: { html: "", json: null },
+      },
+      seo: existing?.seo || {
+        title: { fa: "", en: "" },
+        description: { fa: "", en: "" },
+      },
+      updatedIso:
+        existing?.updatedIso || new Date().toISOString().slice(0, 10),
       ...raw,
     };
 
+    // URL slug wins so PATCH /privacy always targets privacy
+    normalized.slug = slug;
+
     if (typeof raw.title === "string") {
-      normalized.title = { fa: raw.title, en: doc.title?.en || "" };
+      normalized.title = {
+        fa: raw.title,
+        en: existing?.title?.en || "",
+      };
     }
     if (typeof raw.summary === "string") {
-      normalized.summary = { fa: raw.summary, en: doc.summary?.en || "" };
+      normalized.summary = {
+        fa: raw.summary,
+        en: existing?.summary?.en || "",
+      };
     }
 
     // Normalize tiptapBody
-    if (raw.tiptapBody && typeof raw.tiptapBody === "object" && (raw.tiptapBody as Record<string, unknown>).type === "doc") {
+    if (
+      raw.tiptapBody &&
+      typeof raw.tiptapBody === "object" &&
+      (raw.tiptapBody as Record<string, unknown>).type === "doc"
+    ) {
       normalized.tiptapBody = {
-        fa: { html: doc.tiptapBody?.fa?.html || "", json: raw.tiptapBody },
-        en: doc.tiptapBody?.en || { html: "", json: null },
+        fa: {
+          html: existing?.tiptapBody?.fa?.html || "",
+          json: raw.tiptapBody,
+        },
+        en: existing?.tiptapBody?.en || { html: "", json: null },
       };
     } else if (typeof raw.tiptapBody === "string") {
       normalized.tiptapBody = {
-        fa: { html: raw.tiptapBody, json: doc.tiptapBody?.fa?.json || null },
-        en: doc.tiptapBody?.en || { html: "", json: null },
+        fa: {
+          html: raw.tiptapBody,
+          json: existing?.tiptapBody?.fa?.json || null,
+        },
+        en: existing?.tiptapBody?.en || { html: "", json: null },
       };
-    } else if (typeof raw.contentHtml === "string" || typeof raw.content === "string" || typeof raw.html === "string") {
+    } else if (
+      typeof raw.contentHtml === "string" ||
+      typeof raw.content === "string" ||
+      typeof raw.html === "string"
+    ) {
       const htmlVal = (raw.contentHtml || raw.content || raw.html) as string;
       normalized.tiptapBody = {
-        fa: { html: htmlVal, json: doc.tiptapBody?.fa?.json || null },
-        en: doc.tiptapBody?.en || { html: "", json: null },
+        fa: {
+          html: htmlVal,
+          json: existing?.tiptapBody?.fa?.json || null,
+        },
+        en: existing?.tiptapBody?.en || { html: "", json: null },
       };
     }
 
@@ -100,7 +135,6 @@ export const PUT = withAuth(
 
     const validData = parseResult.data;
 
-    // Check slug collision if changing
     if (validData.slug !== slug) {
       const collision = await LegalDoc.findOne({ slug: validData.slug });
       if (collision) {
@@ -120,20 +154,40 @@ export const PUT = withAuth(
       );
     }
 
-    doc.slug = validData.slug;
-    doc.title = validData.title;
-    doc.summary = validData.summary;
-    doc.updatedIso = validData.updatedIso;
-    doc.tiptapBody = validData.tiptapBody as unknown as typeof doc.tiptapBody;
-    doc.status = validData.status;
-    doc.updatedAt = new Date();
-    await doc.save();
+    if (existing) {
+      existing.slug = validData.slug;
+      existing.title = validData.title;
+      existing.summary = validData.summary;
+      existing.updatedIso = validData.updatedIso;
+      existing.tiptapBody =
+        validData.tiptapBody as unknown as typeof existing.tiptapBody;
+      if (validData.seo) {
+        existing.seo = validData.seo as unknown as typeof existing.seo;
+      }
+      existing.status = validData.status;
+      existing.updatedAt = new Date();
+      await existing.save();
 
-    return NextResponse.json({
-      ok: true,
-      message: "سند حقوقی با موفقیت به‌روزرسانی شد.",
-      doc,
+      return NextResponse.json({
+        ok: true,
+        message: "سند حقوقی با موفقیت به‌روزرسانی شد.",
+        doc: existing,
+      });
+    }
+
+    const created = await LegalDoc.create({
+      ...validData,
+      slug,
     });
+
+    return NextResponse.json(
+      {
+        ok: true,
+        message: "سند حقوقی با موفقیت ایجاد و ذخیره شد.",
+        doc: created,
+      },
+      { status: 201 },
+    );
   },
   { roles: ["admin", "editor"] },
 );

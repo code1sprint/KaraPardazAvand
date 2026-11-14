@@ -37,7 +37,7 @@ export async function ProcessSection({
       <Container>
         <Reveal>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
-            <div className="flex max-w-2xl flex-col gap-3">
+            <div className="flex w-full max-w-none flex-col gap-3">
               <Eyebrow>{t("eyebrow")}</Eyebrow>
               <Heading as={headingAs} id={`${id}-heading`}>
                 {titleOverride ?? t("title")}

@@ -18,7 +18,7 @@ export async function AboutCulture() {
     <Section id="culture" aria-labelledby="about-culture-heading">
       <Container>
         <Reveal>
-          <div className="mb-8 max-w-2xl md:mb-10">
+          <div className="mb-8 w-full max-w-none md:mb-10">
             <Eyebrow>{t("culture.eyebrow")}</Eyebrow>
             <Heading as={2} id="about-culture-heading">
               {t("culture.title")}

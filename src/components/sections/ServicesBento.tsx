@@ -59,7 +59,7 @@ export async function ServicesBento({ locale }: ServicesBentoProps) {
                     <h3 className="m-0 mb-1.5 text-[21px] font-extrabold">
                       {tile.title}
                     </h3>
-                    <p className="m-0 max-w-[34ch] text-[14.5px] text-band-muted">
+                    <p className="m-0 w-full max-w-none text-[14.5px] text-band-muted">
                       {tile.description}
                     </p>
                   </div>

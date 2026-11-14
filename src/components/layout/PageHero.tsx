@@ -50,14 +50,14 @@ export function PageHero({
           as={1}
           id={finalHeadingId}
           inner
-          className="max-w-4xl"
+          className="w-full max-w-none"
         >
           {title}
         </Heading>
         {lead ? (
           <Text
             variant="muted"
-            className="mt-4 max-w-4xl text-base leading-[var(--leading-body)] sm:text-lg"
+            className="mt-4 w-full max-w-none text-base leading-[var(--leading-body)] sm:text-lg"
           >
             {lead}
           </Text>

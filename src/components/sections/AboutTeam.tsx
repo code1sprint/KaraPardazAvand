@@ -19,7 +19,7 @@ export async function AboutTeam() {
     <Section id="team" aria-labelledby="about-team-heading">
       <Container>
         <Reveal>
-          <div className="mb-8 max-w-2xl md:mb-10">
+          <div className="mb-8 w-full max-w-none md:mb-10">
             <Eyebrow>{t("team.eyebrow")}</Eyebrow>
             <Heading as={2} id="about-team-heading">
               {t("team.title")}

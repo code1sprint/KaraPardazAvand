@@ -234,15 +234,15 @@ export const ragAiService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. استناد قطعی و عدم توهم (No Hallucination)</p>
         <p class="text-sm text-muted leading-relaxed m-0">مدل ملزم به پاسخ‌گویی منحصراً بر اساس فکت‌های استخراج‌شده است و برای هر ادعا لینک مستقیم به متن و صفحه سند پیوست می‌شود.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. امنیت و حریم خصوصی On-Premise</p>
         <p class="text-sm text-muted leading-relaxed m-0">امکان استقرار بر بستر سرورهای داخلی سازمان با کارت‌های گرافیک اختصاصی، بدون نیاز به اینترنت و بدون خروج اطلاعات محرمانه.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. هماهنگی کامل با ماتریس دسترسی پرسنل</p>
         <p class="text-sm text-muted leading-relaxed m-0">مدیر مالی اسناد محرمانه را در پاسخ‌ها می‌بیند، اما کارشناس عادی تنها به دستورالعمل‌های عمومی بخش خود دسترسی خواهد داشت.</p>
       </div>

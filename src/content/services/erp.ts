@@ -234,15 +234,15 @@ export const erpService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. انطباق دقیق با ساختار سازمان</p>
         <p class="text-sm text-muted leading-relaxed m-0">به جای انطباق سازمان شما با الگوهای خشک محصولات آماده، سیستم بر اساس گردش کار، سقف اختیارات و فرایند واقعی شما توسعه می‌یابد.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. کنترل کامل زنجیره ارزش و هزینه</p>
         <p class="text-sm text-muted leading-relaxed m-0">محاسبه دقیق بهای تمام‌شده کالا و خدمات با لحاظ هزینه‌های حمل، استهلاک و سربار جهت توقف نشتی‌های مالی پنهان.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. مالکیت دائمی و استقلال کامل</p>
         <p class="text-sm text-muted leading-relaxed m-0">بدون هزینه‌های تمدید لایسنس سالانه و بدون نگرانی از تحریم؛ سورس نرم‌افزار و کلیه داده‌ها در کنترل قطعی شماست.</p>
       </div>

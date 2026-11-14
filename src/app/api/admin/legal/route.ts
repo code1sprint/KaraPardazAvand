@@ -3,12 +3,16 @@ import { withAuth } from "@/lib/auth/guard";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getLegalDocModel } from "@/lib/db/models/LegalDoc";
 import { legalDocSchema } from "@/lib/validations/legal";
+import { ensureCoreLegalDocs } from "@/lib/legal-ensure";
 import { normalizePersianText } from "@/lib/editor/normalizer";
 
 export const GET = withAuth(
   async () => {
     await connectToDatabase();
     const LegalDoc = await getLegalDocModel();
+
+    // Site can render MDX fallback; panel only sees Mongo — seed core docs if missing.
+    await ensureCoreLegalDocs(LegalDoc);
 
     const docs = await LegalDoc.find()
       .select("-tiptapBody.fa.json -tiptapBody.en.json")

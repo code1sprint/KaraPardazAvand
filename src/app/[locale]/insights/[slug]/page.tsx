@@ -212,11 +212,11 @@ async function InsightPostContent({ params }: Props) {
             <Heading
               as={1}
               inner
-              className="mt-4 max-w-4xl text-start text-2xl sm:text-3xl lg:text-4xl font-black leading-snug sm:leading-[1.35] tracking-normal [text-wrap:balance]"
+              className="mt-4 w-full max-w-none text-start text-2xl sm:text-3xl lg:text-4xl font-black leading-snug sm:leading-[1.35] tracking-normal [text-wrap:balance]"
             >
               {post.meta.title}
             </Heading>
-            <Text variant="muted" className="mt-4 max-w-3xl text-start text-base sm:text-lg leading-relaxed">
+            <Text variant="muted" className="mt-4 w-full max-w-none text-start text-base sm:text-lg leading-relaxed">
               {post.meta.summary}
             </Text>
 

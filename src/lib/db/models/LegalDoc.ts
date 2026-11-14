@@ -5,6 +5,11 @@ export interface ILocalizedString {
   en?: string;
 }
 
+export interface ILegalSeo {
+  title: ILocalizedString;
+  description: ILocalizedString;
+}
+
 export interface ILegalDoc extends Document {
   slug: string;
   title: ILocalizedString;
@@ -14,6 +19,8 @@ export interface ILegalDoc extends Document {
     fa?: { html: string; json?: Record<string, unknown> | null };
     en?: { html: string; json?: Record<string, unknown> | null };
   };
+  /** Page meta; empty → fall back to title/summary. */
+  seo?: ILegalSeo;
   status: "published" | "draft";
   updatedAt: Date;
   createdAt: Date;
@@ -53,6 +60,10 @@ const LegalDocSchema = new Schema<ILegalDoc>(
         type: TiptapBodyLocaleSchema,
         default: () => ({ html: "", json: null }),
       },
+    },
+    seo: {
+      title: { type: LocalizedStringSchema, required: false },
+      description: { type: LocalizedStringSchema, required: false },
     },
     status: {
       type: String,

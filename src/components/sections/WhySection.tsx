@@ -39,7 +39,7 @@ export async function WhySection({
   const body = (
     <Reveal>
       <div className="flex flex-col gap-10 lg:gap-12">
-        <div className="flex max-w-2xl flex-col gap-3">
+        <div className="flex w-full max-w-none flex-col gap-3">
           <Eyebrow className={onBand ? "text-amber" : undefined}>
             {t("eyebrow")}
           </Eyebrow>

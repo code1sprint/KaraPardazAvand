@@ -32,6 +32,18 @@ export async function getServiceDetail(
         relatedProjects: doc.relatedProjects || [],
         bento: doc.bento,
         deepDiveHtml: doc.deepDiveHtml || undefined,
+        seo: doc.seo
+          ? {
+              title: {
+                fa: doc.seo.title?.fa || "",
+                en: doc.seo.title?.en || "",
+              },
+              description: {
+                fa: doc.seo.description?.fa || "",
+                en: doc.seo.description?.en || "",
+              },
+            }
+          : undefined,
       };
     }
   } catch {

@@ -10,7 +10,6 @@ import {
 } from "@/components/admin/editor/EditorIcons";
 import { slugifyHeading } from "@/lib/editor/normalizer";
 import { highlightHtmlCodeBlocks } from "@/lib/syntax-highlight";
-import { buildSiblingCreateDraft } from "@/lib/posts/sibling-draft";
 import { cn } from "@/lib/cn";
 import { ApiButton } from "@/components/admin/api-drawer/ApiButton";
 import { CoverImagePicker } from "@/components/admin/common/CoverImagePicker";
@@ -48,46 +47,6 @@ interface AvailablePostOption {
   status: string;
 }
 
-type ApiPostRecord = {
-  _id?: string;
-  id?: string;
-  slug: string;
-  locale: "fa" | "en";
-  title: string;
-  summary?: string;
-  tags?: string[];
-  author?: PostFormData["author"];
-  cover?: string;
-  relatedPosts?: string[];
-  status?: "draft" | "published";
-  publishedAt?: string | Date;
-  contentJson?: Record<string, unknown>;
-  contentHtml?: string;
-};
-
-function mapApiPostToForm(p: ApiPostRecord): PostFormData {
-  return {
-    slug: p.slug,
-    locale: p.locale,
-    title: p.title || "",
-    summary: p.summary || "",
-    tags: p.tags || [],
-    author: {
-      name: p.author?.name || "کارا پرداز اوند",
-      role: p.author?.role || "تیم فنی کارا پرداز",
-      avatar: p.author?.avatar || "",
-    },
-    cover: p.cover || "",
-    relatedPosts: p.relatedPosts || [],
-    status: p.status || "draft",
-    publishedAt: p.publishedAt
-      ? new Date(p.publishedAt).toISOString().slice(0, 10)
-      : new Date().toISOString().slice(0, 10),
-    contentJson: p.contentJson || { type: "doc", content: [] },
-    contentHtml: p.contentHtml || "",
-  };
-}
-
 export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   const router = useRouter();
 
@@ -123,12 +82,6 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   const [aiLoading, setAiLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-  const [dirty, setDirty] = useState(false);
-  const [createSiblingMode, setCreateSiblingMode] = useState(false);
-  const [activePostId, setActivePostId] = useState<string | undefined>(postId);
-  const [localeBusy, setLocaleBusy] = useState(false);
-
-  const savingAsEdit = Boolean(isEdit && !createSiblingMode && activePostId);
 
   useEffect(() => {
     let ignore = false;
@@ -139,7 +92,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
         if (!ignore && json.ok && Array.isArray(json.posts)) {
           setAvailablePosts(
             json.posts
-              .filter((p: { _id?: string; slug: string }) => p._id !== activePostId && p.slug !== formData.slug)
+              .filter((p: { _id?: string; slug: string }) => p._id !== postId && p.slug !== formData.slug)
               .map((p: { _id?: string; id?: string; slug: string; title: string; cover?: string; status: string }) => ({
                 id: p._id || p.id || p.slug,
                 slug: p.slug,
@@ -157,33 +110,46 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     return () => {
       ignore = true;
     };
-  }, [formData.locale, formData.slug, activePostId]);
+  }, [formData.locale, formData.slug, postId]);
 
   // Synchronize form if updated via API Drawer or background event
   useEffect(() => {
-    if (!activePostId || createSiblingMode) return;
+    if (!postId) return;
     const handleRemoteUpdate = async (e: Event) => {
       const customEvent = e as CustomEvent<{
         resource?: string;
         path?: string;
         data?: { post?: Partial<PostFormData> };
       }>;
-      const pathMatches =
-        customEvent.detail?.path?.includes(activePostId) ||
-        customEvent.detail?.path?.includes(formData.slug);
-      const isPostResource =
-        customEvent.detail?.resource === "posts" ||
-        customEvent.detail?.path?.includes("/posts");
+      const pathMatches = customEvent.detail?.path?.includes(postId) || customEvent.detail?.path?.includes(formData.slug);
+      const isPostResource = customEvent.detail?.resource === "posts" || customEvent.detail?.path?.includes("/posts");
 
       if (isPostResource && (pathMatches || isEdit)) {
         try {
-          const res = await fetch(`/api/admin/posts/${activePostId}`);
+          const res = await fetch(`/api/admin/posts/${postId}`);
           const json = await res.json();
           if (json.ok && json.post) {
-            const mapped = mapApiPostToForm(json.post as ApiPostRecord);
-            setFormData(mapped);
-            setTagsInput(mapped.tags.join("، "));
-            setDirty(false);
+            const p = json.post;
+            setFormData((prev) => ({
+              ...prev,
+              slug: p.slug ?? prev.slug,
+              locale: p.locale ?? prev.locale,
+              title: p.title ?? prev.title,
+              summary: p.summary ?? prev.summary,
+              tags: p.tags ?? prev.tags,
+              author: p.author ?? prev.author,
+              cover: p.cover ?? prev.cover,
+              relatedPosts: p.relatedPosts ?? prev.relatedPosts,
+              status: p.status ?? prev.status,
+              publishedAt: p.publishedAt
+                ? new Date(p.publishedAt).toISOString().slice(0, 10)
+                : prev.publishedAt,
+              contentJson: p.contentJson ?? prev.contentJson,
+              contentHtml: p.contentHtml ?? prev.contentHtml,
+            }));
+            if (p.tags) {
+              setTagsInput(p.tags.join("، "));
+            }
             setSuccessMsg("محتوا با موفقیت از طریق API به‌روزرسانی و در ادیتور همگام شد.");
           }
         } catch {
@@ -196,10 +162,9 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     return () => {
       window.removeEventListener("kara-content-updated", handleRemoteUpdate);
     };
-  }, [activePostId, createSiblingMode, isEdit, formData.slug]);
+  }, [postId, isEdit, formData.slug]);
 
   const toggleRelatedPost = (slug: string) => {
-    setDirty(true);
     setFormData((prev) => {
       const exists = prev.relatedPosts.includes(slug);
       return {
@@ -212,87 +177,10 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   };
 
   const removeRelatedPost = (slug: string) => {
-    setDirty(true);
     setFormData((prev) => ({
       ...prev,
       relatedPosts: prev.relatedPosts.filter((s) => s !== slug),
     }));
-  };
-
-  const handleLocaleSwitch = async (targetLocale: "fa" | "en") => {
-    if (targetLocale === formData.locale || localeBusy) return;
-
-    // Brand-new post (not editing a saved doc): only flip chrome/locale field.
-    if (!isEdit && !createSiblingMode) {
-      setDirty(true);
-      setFormData((prev) => ({ ...prev, locale: targetLocale }));
-      return;
-    }
-
-    if (!formData.slug.trim()) {
-      setErrorMsg("برای سوییچ زبان، ابتدا اسلاگ مقاله را مشخص کنید.");
-      return;
-    }
-
-    if (dirty) {
-      const ok = window.confirm(
-        "تغییرات ذخیره‌نشده از بین می‌رود. ادامه می‌دهید؟",
-      );
-      if (!ok) return;
-    }
-
-    setLocaleBusy(true);
-    setErrorMsg(null);
-    setSuccessMsg(null);
-
-    try {
-      const res = await fetch(
-        `/api/admin/posts?slug=${encodeURIComponent(formData.slug)}&locale=${targetLocale}`,
-      );
-      const json = await res.json();
-      if (!res.ok || !json.ok) {
-        throw new Error(json.message || "خطا در دریافت نسخهٔ زبانی.");
-      }
-
-      if (json.post) {
-        const mapped = mapApiPostToForm(json.post as ApiPostRecord);
-        const nextId = String(
-          (json.post as ApiPostRecord)._id || (json.post as ApiPostRecord).id || "",
-        );
-        setFormData(mapped);
-        setTagsInput(mapped.tags.join("، "));
-        setCreateSiblingMode(false);
-        setActivePostId(nextId || undefined);
-        setDirty(false);
-        if (nextId) {
-          router.replace(`/admin/posts/${nextId}/edit`);
-        }
-        setSuccessMsg(
-          targetLocale === "fa"
-            ? "نسخهٔ فارسی بارگذاری شد."
-            : "English version loaded.",
-        );
-        return;
-      }
-
-      const draft = buildSiblingCreateDraft(formData, targetLocale);
-      setFormData(draft);
-      setTagsInput(draft.tags.join("، "));
-      setCreateSiblingMode(true);
-      setActivePostId(undefined);
-      setDirty(false);
-      setSuccessMsg(
-        targetLocale === "fa"
-          ? "نسخهٔ فارسی هنوز وجود ندارد — پس از ترجمه ذخیره کنید."
-          : "English version does not exist yet — translate and save to create it.",
-      );
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : "خطا در سوییچ زبان مقاله.";
-      setErrorMsg(message);
-    } finally {
-      setLocaleBusy(false);
-    }
   };
 
   const filteredAvailablePosts = useMemo(() => {
@@ -348,11 +236,8 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     setFormData((prev) => ({
       ...prev,
       title: newTitle,
-      // Auto-generate slug on brand-new posts only (not sibling create).
-      slug:
-        !savingAsEdit && !createSiblingMode && !prev.slug
-          ? slugifyHeading(newTitle)
-          : prev.slug,
+      // Auto-generate slug on new posts if user hasn't typed a custom slug
+      slug: !isEdit && !prev.slug ? slugifyHeading(newTitle) : prev.slug,
     }));
   };
 
@@ -367,7 +252,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   };
 
   const handleAutoSlug = () => {
-    if (!formData.title || createSiblingMode) return;
+    if (!formData.title) return;
     setFormData((prev) => ({ ...prev, slug: slugifyHeading(prev.title) }));
   };
 
@@ -378,10 +263,8 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
     setSuccessMsg(null);
 
     try {
-      const url = savingAsEdit
-        ? `/api/admin/posts/${activePostId}`
-        : `/api/admin/posts`;
-      const method = savingAsEdit ? "PUT" : "POST";
+      const url = isEdit ? `/api/admin/posts/${postId}` : `/api/admin/posts`;
+      const method = isEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
         method,
@@ -395,32 +278,12 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
         throw new Error(json.message || "خطا در ذخیره مقاله.");
       }
 
-      setDirty(false);
+      setSuccessMsg(isEdit ? "تغییرات مقاله با موفقیت ذخیره شد." : "مقاله با موفقیت ایجاد شد.");
 
-      if (savingAsEdit) {
-        setSuccessMsg("تغییرات مقاله با موفقیت ذخیره شد.");
-      } else {
-        const created = json.post as ApiPostRecord | undefined;
-        const newId = created
-          ? String(created._id || created.id || "")
-          : "";
-        setSuccessMsg(
-          createSiblingMode
-            ? "نسخهٔ زبانی جدید ایجاد شد."
-            : "مقاله با موفقیت ایجاد شد.",
-        );
-
-        if (newId) {
-          setCreateSiblingMode(false);
-          setActivePostId(newId);
-          setTimeout(() => {
-            router.replace(`/admin/posts/${newId}/edit`);
-          }, 800);
-        } else {
-          setTimeout(() => {
-            router.push("/admin/posts");
-          }, 1200);
-        }
+      if (!isEdit) {
+        setTimeout(() => {
+          router.push("/admin/posts");
+        }, 1200);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "خطای ناشناخته رخ داد.";
@@ -431,11 +294,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onChange={() => setDirty(true)}
-      className="space-y-6"
-    >
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Messages */}
       {errorMsg && (
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-600 dark:border-red-900/40 dark:bg-red-950/20 inline-flex items-center gap-2 w-full">
@@ -508,7 +367,6 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
                 contentHtml={formData.contentHtml}
                 locale={formData.locale}
                 onChange={(json, html) => {
-                  setDirty(true);
                   setFormData((prev) => ({
                     ...prev,
                     contentJson: json,
@@ -558,32 +416,24 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
               </select>
             </div>
 
-            {/* Locale — version switcher for same slug */}
+            {/* Locale */}
             <div>
               <label className="block text-xs font-bold text-muted mb-1.5">
                 زبان مقاله
               </label>
               <select
                 value={formData.locale}
-                disabled={localeBusy}
-                onChange={(e) => {
-                  void handleLocaleSwitch(e.target.value as "fa" | "en");
-                }}
-                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs font-bold text-text focus:border-blue focus:outline-none disabled:opacity-50"
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    locale: e.target.value as "fa" | "en",
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-xs font-bold text-text focus:border-blue focus:outline-none"
               >
                 <option value="fa">فارسی (FA)</option>
                 <option value="en">انگلیسی (EN)</option>
               </select>
-              {createSiblingMode ? (
-                <p className="mt-1.5 text-[11px] text-orange font-bold">
-                  در حال ایجاد نسخهٔ {formData.locale === "fa" ? "فارسی" : "انگلیسی"} برای همین
-                  اسلاگ — هنوز ذخیره نشده است.
-                </p>
-              ) : (
-                <p className="mt-1.5 text-[11px] text-muted">
-                  سوییچ بین نسخهٔ FA/EN با اسلاگ یکسان.
-                </p>
-              )}
             </div>
 
             {/* Published Date */}
@@ -612,13 +462,7 @@ export function PostForm({ initialData, postId, isEdit }: PostFormProps) {
                 disabled={loading}
                 className="w-full py-3 px-4 rounded-xl bg-blue text-white font-bold text-sm shadow hover:bg-navy-2 transition disabled:opacity-50"
               >
-                {loading
-                  ? "در حال ذخیره..."
-                  : savingAsEdit
-                    ? "ذخیره تغییرات"
-                    : createSiblingMode
-                      ? "ایجاد نسخهٔ زبانی"
-                      : "ایجاد و انتشار مقاله"}
+                {loading ? "در حال ذخیره..." : isEdit ? "ذخیره تغییرات" : "ایجاد و انتشار مقاله"}
               </button>
             </div>
           </div>

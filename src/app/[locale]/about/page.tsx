@@ -12,10 +12,10 @@ import {
   Heading,
   Text,
 } from "@/components/ui";
-import { getResolvedAboutData } from "@/lib/about-data";
+import { getAboutMetadataSource, getResolvedAboutData } from "@/lib/about-data";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, isAppLocale } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -28,14 +28,17 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
+  const appLocale = isAppLocale(locale) ? locale : "fa";
+  const cms = await getAboutMetadataSource(appLocale);
 
   return buildPageMetadata({
     locale,
     path: "/about",
-    title: t("pages.about.title"),
-    description: t("pages.about.description"),
+    title: cms.title || t("pages.about.title"),
+    description: cms.description || t("pages.about.description"),
     siteName: t("siteName"),
     imageAlt: t("ogImageAlt"),
+    preferCms: Boolean(cms.title && cms.description),
   });
 }
 
@@ -84,7 +87,7 @@ async function AboutContent({ params }: Props) {
           className="mb-8"
         />
         {story ? (
-          <section className="max-w-3xl" aria-labelledby="about-story">
+          <section className="w-full" aria-labelledby="about-story">
             <Heading as={2} id="about-story" className="text-2xl sm:text-3xl">
               {story.title}
             </Heading>

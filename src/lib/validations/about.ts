@@ -31,6 +31,17 @@ export const aboutCultureItemSchema = z.object({
   needs_business_confirmation: z.boolean().optional().default(true),
 });
 
+export const aboutSeoSchema = z.object({
+  title: z.object({
+    fa: z.string().optional().default(""),
+    en: z.string().optional().default(""),
+  }),
+  description: z.object({
+    fa: z.string().optional().default(""),
+    en: z.string().optional().default(""),
+  }),
+});
+
 export const aboutFormSchema = z.object({
   intro: z.object({
     title: localizedStringSchema,
@@ -59,6 +70,7 @@ export const aboutFormSchema = z.object({
   brandNodes: z.array(aboutBrandNodeSchema).default([]),
   team: z.array(aboutTeamMemberSchema).default([]),
   culture: z.array(aboutCultureItemSchema).default([]),
+  seo: aboutSeoSchema.optional(),
 });
 
 export type AboutFormData = z.infer<typeof aboutFormSchema>;

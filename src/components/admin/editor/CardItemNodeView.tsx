@@ -24,9 +24,9 @@ export function CardItemNodeView({
   };
 
   const variantClasses: Record<"white" | "highlight" | "soft", string> = {
-    white: "border-line bg-panel shadow-sm",
-    highlight: "border-blue/50 bg-panel shadow-md ring-1 ring-blue/20",
-    soft: "border-blue/25 bg-blue/[0.03]",
+    white: "border-line/70 bg-panel shadow-none",
+    highlight: "border-blue/35 bg-panel shadow-none",
+    soft: "border-blue/20 bg-blue/[0.03] shadow-none",
   };
 
   return (

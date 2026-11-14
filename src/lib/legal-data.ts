@@ -1,6 +1,8 @@
+import { connection } from "next/server";
 import type { AppLocale } from "@/i18n/routing";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getLegalDocModel } from "@/lib/db/models/LegalDoc";
+import { resolveLegalPageMeta } from "@/lib/legal-seo";
 import { getLegalDoc as getMdxLegalDoc, getLegalSlugs as getMdxLegalSlugs } from "@/content/legal";
 import { slugifyHeading } from "@/lib/mdx/slugify";
 
@@ -121,4 +123,36 @@ export async function getAllLegalSlugs(): Promise<string[]> {
   } catch {
     return getMdxLegalSlugs();
   }
+}
+
+/** Uncached meta for generateMetadata — tracks CMS title/summary/seo. */
+export async function getLegalMetadataSource(
+  slug: string,
+  locale: AppLocale,
+): Promise<{ title: string; description: string } | null> {
+  await connection();
+  try {
+    await connectToDatabase();
+    const LegalDoc = await getLegalDocModel();
+    const doc = await LegalDoc.findOne({ slug }).lean();
+    if (doc?.title) {
+      return resolveLegalPageMeta(
+        {
+          title: doc.title,
+          summary: doc.summary,
+          seo: doc.seo,
+        },
+        locale,
+      );
+    }
+  } catch {
+    // fall through to MDX
+  }
+
+  const mdxDoc = await getMdxLegalDoc(slug);
+  if (!mdxDoc) return null;
+  return {
+    title: mdxDoc.title,
+    description: mdxDoc.summary || "",
+  };
 }

@@ -69,6 +69,18 @@ export const serviceCreateSchema = z.object({
   bento: serviceBentoInputSchema,
   deepDiveJson: z.record(z.string(), z.unknown()).optional().default({}),
   deepDiveHtml: z.string().optional().default(""),
+  seo: z
+    .object({
+      title: z.object({
+        fa: z.string().optional().default(""),
+        en: z.string().optional().default(""),
+      }),
+      description: z.object({
+        fa: z.string().optional().default(""),
+        en: z.string().optional().default(""),
+      }),
+    })
+    .optional(),
   status: z.enum(["draft", "published"]).default("published"),
 });
 

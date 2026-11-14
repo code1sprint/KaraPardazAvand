@@ -47,6 +47,8 @@ export type BuildPageMetadataInput = {
   publishedTime?: string;
   modifiedTime?: string;
   authors?: string[];
+  /** Prefer CMS title/description over static seo-meta.ts. */
+  preferCms?: boolean;
 };
 
 /**
@@ -66,6 +68,7 @@ export function buildPageMetadata({
   publishedTime,
   modifiedTime,
   authors,
+  preferCms = false,
 }: BuildPageMetadataInput): Metadata {
   return createPageMetadata({
     locale,
@@ -80,6 +83,7 @@ export function buildPageMetadata({
     publishedTime,
     modifiedTime,
     authors,
+    preferCms,
   });
 }
 

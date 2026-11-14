@@ -17,7 +17,7 @@ export async function AboutPrinciplesBand() {
     <Band id="principles" aria-labelledby="about-principles-heading">
       <Reveal>
         <div className="flex flex-col gap-10">
-          <div className="flex max-w-2xl flex-col gap-3">
+          <div className="flex w-full max-w-none flex-col gap-3">
             <Eyebrow className="text-amber">{t("principles.eyebrow")}</Eyebrow>
             <Heading
               as={2}

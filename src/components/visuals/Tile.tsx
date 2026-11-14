@@ -67,7 +67,7 @@ export function Tile({
       {description ? (
         <p
           className={cn(
-            "m-0 max-w-[34ch] text-[14.5px]",
+            "m-0 w-full max-w-none text-[14.5px]",
             dark ? "text-band-muted" : "text-muted",
           )}
         >

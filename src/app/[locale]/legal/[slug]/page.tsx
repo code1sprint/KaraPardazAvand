@@ -9,10 +9,11 @@ import { compileMdxSource } from "@/lib/mdx";
 import {
   getResolvedLegalDoc,
   getAllLegalSlugs,
+  getLegalMetadataSource,
 } from "@/lib/legal-data";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, isAppLocale } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -29,23 +30,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
   const pageKey = slug === "privacy" ? "privacy" : "terms";
-  const doc = await getResolvedLegalDoc(slug, locale as AppLocale);
+  const appLocale = isAppLocale(locale) ? locale : "fa";
+  const cms = await getLegalMetadataSource(slug, appLocale);
 
   return buildPageMetadata({
     locale,
     path: `/${slug}`,
-    title: doc?.title ?? t(`pages.${pageKey}.title`),
-    description: doc?.summary || t(`pages.${pageKey}.description`),
+    title: cms?.title || t(`pages.${pageKey}.title`),
+    description: cms?.description || t(`pages.${pageKey}.description`),
     siteName: t("siteName"),
     imageAlt: t("ogImageAlt"),
     noIndex: true,
+    preferCms: Boolean(cms?.title && cms?.description),
   });
 }
 
 function LegalFallback() {
   return (
     <div className="pt-[length:var(--hero-top)]">
-      <Container prose>
+      <Container>
         <div className="h-10 w-48 animate-pulse rounded-pill bg-blue-soft" />
         <div className="mt-4 h-5 max-w-md animate-pulse rounded-pill bg-blue-soft" />
       </Container>

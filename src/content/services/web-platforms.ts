@@ -234,15 +234,15 @@ export const webPlatformsService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. سرعت لود زیر یک ثانیه (TTFB)</p>
         <p class="text-sm text-muted leading-relaxed m-0">بهره‌گیری از Server Components و بهینه‌سازی اتوماتیک تصاویر و فونت‌ها، صفحات را حتی روی ضعیف‌ترین اینترنت‌های همراه در یک چشم‌به‌هم‌زدن باز می‌کند.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. امنیت پولادین و بدون باگ افزونه‌ها</p>
         <p class="text-sm text-muted leading-relaxed m-0">حذف معماری شکننده افزونه‌های سنتی؛ کدهای بهینه‌شده و تست‌شده مانع از نفوذ بدافزارها و قطعی‌های ناگهانی وب‌سایت می‌شوند.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. تجربه کاربری روان در کلاس جهانی</p>
         <p class="text-sm text-muted leading-relaxed m-0">طراحی متناسب با هویت برند، انیمیشن‌های باوقار، تایپوگرافی چشم‌نواز و دسترسی‌پذیری کامل در دسکتاپ و تمامی مدل‌های موبایل.</p>
       </div>

@@ -76,7 +76,7 @@ export function ServiceSelector() {
       <Heading as={2} id="service-selector-heading" className="mt-2">
         {t("title")}
       </Heading>
-      <Text variant="muted" className="mt-3 max-w-2xl">
+      <Text variant="muted" className="mt-3 w-full max-w-none">
         {t("lead")}
       </Text>
 

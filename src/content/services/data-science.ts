@@ -234,15 +234,15 @@ export const dataScienceService = {
     
     <div class="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 my-6" data-card-grid="" data-columns="3">
       
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۱. تک‌منبع موثق حقیقت (Single Source of Truth)</p>
         <p class="text-sm text-muted leading-relaxed m-0">پایان مناقشات بین مدیر مالی و فروش درباره صحت آمار؛ تمام ارقام مستقیماً و با خط لوله مستند از پایگاه داده اصلی تجمیع می‌شوند.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۲. سرعت لود آنی و زیر یک ثانیه</p>
         <p class="text-sm text-muted leading-relaxed m-0">استفاده از معماری OLAP و ایندکس‌های ستونی مدرن، بررسی میلیون‌ها تراکنش را در کسری از ثانیه و بدون معطلی ممکن می‌سازد.</p>
       </div>
-      <div class="rounded-2xl border border-line bg-panel p-6 shadow-sm" data-card-item="">
+      <div class="rounded-2xl border border-line bg-panel p-6 shadow-none" data-card-item="">
         <p class="font-bold text-text mb-2 text-base text-blue">۳. هشدارهای هوشمند پیش از وقوع بحران</p>
         <p class="text-sm text-muted leading-relaxed m-0">به جای آنکه در انتهای ماه غافلگیر شوید، سیستم به محض افت غیرعادی یک شاخص، به مدیر مربوطه اعلان هوشمند می‌فرستد.</p>
       </div>

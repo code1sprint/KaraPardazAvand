@@ -11,7 +11,7 @@ export async function StackSection() {
   return (
     <Section id="stack" aria-labelledby="stack-heading">
       <Container>
-        <div className="mb-8 flex max-w-2xl flex-col gap-3 md:mb-10">
+        <div className="mb-8 flex w-full max-w-none flex-col gap-3 md:mb-10">
           <p className="text-sm font-medium text-accent">{t("eyebrow")}</p>
           <Heading as={2} id="stack-heading">
             {t("title")}

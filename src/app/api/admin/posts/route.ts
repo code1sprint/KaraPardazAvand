@@ -15,13 +15,6 @@ export const GET = withAuth(
     const locale = searchParams.get("locale");
     const status = searchParams.get("status");
     const query = searchParams.get("q");
-    const slug = searchParams.get("slug");
-
-    // Exact sibling lookup for locale switcher (includes editor content).
-    if (slug && (locale === "fa" || locale === "en")) {
-      const post = await Post.findOne({ slug, locale }).lean();
-      return NextResponse.json({ ok: true, post: post ?? null });
-    }
 
     const filter: Record<string, unknown> = {};
     if (locale && (locale === "fa" || locale === "en")) {

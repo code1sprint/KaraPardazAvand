@@ -70,7 +70,7 @@ async function ServicesIndexContent({ params }: Props) {
         <Container className="flex flex-col gap-12 sm:gap-16">
           <div className="flex flex-col gap-6">
             <Reveal>
-              <div className="flex max-w-2xl flex-col gap-2">
+              <div className="flex w-full max-w-none flex-col gap-2">
                 <Eyebrow>{t("eyebrow")}</Eyebrow>
                 <Heading as={2} id="services-bento-heading">
                   {t("title")}

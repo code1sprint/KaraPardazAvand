@@ -25,7 +25,7 @@ interface AboutFormProps {
 export function AboutForm({ initialData }: AboutFormProps) {
   const [formData, setFormData] = useState<AboutFormData>(initialData);
   const [activeTab, setActiveTab] = useState<
-    "intro" | "principles" | "brand" | "team" | "story"
+    "intro" | "principles" | "brand" | "team" | "story" | "seo"
   >("intro");
   const [storyLang, setStoryLang] = useState<"fa" | "en">("fa");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,6 +53,7 @@ export function AboutForm({ initialData }: AboutFormProps) {
               brandNodes: a.brandNodes ?? prev.brandNodes,
               team: a.team ?? prev.team,
               culture: a.culture ?? prev.culture,
+              seo: a.seo ?? prev.seo,
             }));
             setSuccessMessage("اطلاعات درباره ما از طریق API به‌روزرسانی و در ادیتور همگام شد.");
           }
@@ -99,7 +100,7 @@ export function AboutForm({ initialData }: AboutFormProps) {
   };
 
   const tabs: Array<{
-    id: "intro" | "principles" | "brand" | "team" | "story";
+    id: "intro" | "principles" | "brand" | "team" | "story" | "seo";
     label: string;
     icon: ReactNode;
     badge?: string;
@@ -127,6 +128,12 @@ export function AboutForm({ initialData }: AboutFormProps) {
       label: "۵. داستان برند و مانیفست فنی (Tiptap)",
       icon: <IconPencil className="size-4" />,
       badge: "ادیتور آزاد",
+    },
+    {
+      id: "seo",
+      label: "۶. سئو و متادیتا",
+      icon: <IconCheckCircle className="size-4" />,
+      badge: "meta",
     },
   ];
 
@@ -951,6 +958,156 @@ export function AboutForm({ initialData }: AboutFormProps) {
               />
             </div>
           )}
+        </div>
+      )}
+
+      {activeTab === "seo" && (
+        <div className="space-y-6 rounded-2xl border border-line bg-panel p-6">
+          <div className="rounded-xl border border-line/80 bg-bg/60 p-4 text-xs leading-relaxed text-muted">
+            اگر عنوان و توضیح فارسی SEO هر دو پر باشند، همان‌ها در{" "}
+            <code className="text-text">title</code> و{" "}
+            <code className="text-text">meta description</code> صفحه می‌آیند.
+            در غیر این صورت از سربرگ (عنوان + لید) استفاده می‌شود تا با تغییر
+            محتوا، متادیتا هم به‌روز بماند.
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: {
+                      fa: prev.intro.title.fa,
+                      en: prev.intro.title.en || "",
+                    },
+                    description: {
+                      fa: prev.intro.lead.fa,
+                      en: prev.intro.lead.en || "",
+                    },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-text hover:border-blue hover:text-blue transition-colors"
+            >
+              همگام‌سازی از سربرگ
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: { fa: "", en: "" },
+                    description: { fa: "", en: "" },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-muted hover:border-red-400 hover:text-red-600 transition-colors"
+            >
+              پاک کردن (برگشت به سربرگ)
+            </button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-text">عنوان SEO (fa)</label>
+              <input
+                type="text"
+                value={formData.seo?.title?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: e.target.value,
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm"
+                placeholder={formData.intro.title.fa}
+              />
+            </div>
+            <div className="space-y-2" dir="ltr">
+              <label className="block text-xs font-bold text-text text-start">SEO title (en)</label>
+              <input
+                type="text"
+                value={formData.seo?.title?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: e.target.value,
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm"
+                placeholder={formData.intro.title.en || ""}
+              />
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <label className="block text-xs font-bold text-text">توضیح SEO (fa)</label>
+              <textarea
+                rows={3}
+                value={formData.seo?.description?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: e.target.value,
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm leading-relaxed"
+                placeholder={formData.intro.lead.fa}
+              />
+            </div>
+            <div className="space-y-2 sm:col-span-2" dir="ltr">
+              <label className="block text-xs font-bold text-text text-start">
+                SEO description (en)
+              </label>
+              <textarea
+                rows={3}
+                value={formData.seo?.description?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: e.target.value,
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm leading-relaxed"
+                placeholder={formData.intro.lead.en || ""}
+              />
+            </div>
+          </div>
         </div>
       )}
 

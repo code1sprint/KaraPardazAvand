@@ -707,3 +707,25 @@ body:has(.admin-root) [data-skip-link] {
   }
 }
 
+/* Editor card-grid / bento tiles: no shadow, mild border (covers legacy HTML too) */
+.prose [data-card-item],
+[data-card-item] {
+  box-shadow: none !important;
+  border-width: 1px;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--line) 70%, transparent);
+}
+
+.prose [data-card-item][data-variant="highlight"],
+[data-card-item][data-variant="highlight"] {
+  border-color: color-mix(in srgb, var(--blue) 35%, transparent);
+  --tw-ring-shadow: 0 0 #0000;
+  box-shadow: none !important;
+}
+
+.prose [data-card-item][data-variant="soft"],
+[data-card-item][data-variant="soft"] {
+  border-color: color-mix(in srgb, var(--blue) 20%, transparent);
+  box-shadow: none !important;
+}
+

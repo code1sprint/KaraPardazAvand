@@ -21,7 +21,7 @@ export async function InsightsTeaser() {
       <Container>
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-xl">
+            <div className="min-w-0 flex-1">
               <Eyebrow>{t("teaser.eyebrow")}</Eyebrow>
               <Heading as={2} id="insights-heading">
                 {t("teaser.title")}

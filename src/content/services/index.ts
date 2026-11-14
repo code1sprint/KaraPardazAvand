@@ -24,6 +24,10 @@ export type {
 
 export type ServiceDetail = Service & {
   deepDiveHtml?: string;
+  seo?: {
+    title: { fa: string; en: string };
+    description: { fa: string; en: string };
+  };
 };
 
 /**

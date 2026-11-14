@@ -6,10 +6,13 @@ import { LegalDocument } from "@/components/legal/LegalDocument";
 import { Container } from "@/components/ui";
 import { getLegalDoc as getMdxLegalDoc } from "@/content/legal";
 import { compileMdxSource } from "@/lib/mdx";
-import { getResolvedLegalDoc } from "@/lib/legal-data";
+import {
+  getLegalMetadataSource,
+  getResolvedLegalDoc,
+} from "@/lib/legal-data";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, isAppLocale } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -22,22 +25,24 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
-  const doc = await getResolvedLegalDoc("privacy", locale as AppLocale);
+  const appLocale = isAppLocale(locale) ? locale : "fa";
+  const cms = await getLegalMetadataSource("privacy", appLocale);
 
   return buildPageMetadata({
     locale,
     path: "/privacy",
-    title: doc?.title ?? t("pages.privacy.title"),
-    description: doc?.summary || t("pages.privacy.description"),
+    title: cms?.title || t("pages.privacy.title"),
+    description: cms?.description || t("pages.privacy.description"),
     siteName: t("siteName"),
     imageAlt: t("ogImageAlt"),
+    preferCms: Boolean(cms?.title && cms?.description),
   });
 }
 
 function PrivacyFallback() {
   return (
     <div className="pt-[length:var(--hero-top)]">
-      <Container prose>
+      <Container>
         <div className="h-10 w-48 animate-pulse rounded-pill bg-blue-soft" />
         <div className="mt-4 h-5 max-w-md animate-pulse rounded-pill bg-blue-soft" />
         <div className="mt-10 h-40 animate-pulse rounded-tile bg-blue-soft" />

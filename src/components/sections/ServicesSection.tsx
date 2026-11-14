@@ -22,7 +22,7 @@ export async function ServicesSection({ asPage = false }: ServicesSectionProps) 
     return (
       <Section aria-labelledby="services-heading" className="py-0">
         <Container className="flex flex-col gap-12 sm:gap-16">
-          <div className="flex max-w-2xl flex-col gap-3">
+          <div className="flex w-full max-w-none flex-col gap-3">
             <Heading as={1} id="services-heading">
               {t("page.title")}
             </Heading>
@@ -31,7 +31,7 @@ export async function ServicesSection({ asPage = false }: ServicesSectionProps) 
 
           <div className="flex flex-col gap-6">
             <Reveal>
-              <div className="flex max-w-2xl flex-col gap-2">
+              <div className="flex w-full max-w-none flex-col gap-2">
                 <Eyebrow>{t("eyebrow")}</Eyebrow>
                 <Heading as={2}>{t("title")}</Heading>
               </div>
@@ -49,7 +49,7 @@ export async function ServicesSection({ asPage = false }: ServicesSectionProps) 
     <Section id="services" aria-labelledby="services-heading">
       <Container className="flex flex-col gap-8">
         <Reveal>
-          <div className="flex max-w-2xl flex-col gap-3">
+          <div className="flex w-full max-w-none flex-col gap-3">
             <Eyebrow>{t("eyebrow")}</Eyebrow>
             <Heading as={2} id="services-heading">
               {t("title")}

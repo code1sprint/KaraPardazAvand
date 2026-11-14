@@ -19,7 +19,7 @@ export async function EngagementModels() {
     <Section id="engagement-models" aria-labelledby="engagement-models-heading">
       <Container>
         <Reveal>
-          <div className="mb-8 max-w-2xl md:mb-10">
+          <div className="mb-8 w-full max-w-none md:mb-10">
             <Eyebrow>{t("models.eyebrow")}</Eyebrow>
             <Heading as={2} id="engagement-models-heading">
               {t("models.title")}

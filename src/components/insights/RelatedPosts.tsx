@@ -18,7 +18,7 @@ export function RelatedPosts({ posts, title, lead }: RelatedPostsProps) {
           {title}
         </Heading>
         {lead ? (
-          <Text variant="muted" className="mt-1 max-w-2xl text-base">
+          <Text variant="muted" className="mt-1 w-full max-w-none text-base">
             {lead}
           </Text>
         ) : null}

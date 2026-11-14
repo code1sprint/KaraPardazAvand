@@ -1,6 +1,8 @@
+import { connection } from "next/server";
 import type { AppLocale } from "@/i18n/routing";
 import { connectToDatabase } from "@/lib/db/mongodb";
 import { getAboutModel } from "@/lib/db/models/About";
+import { resolveAboutPageMeta } from "@/lib/about-seo";
 import {
   getAboutIntro,
   getAboutStory,
@@ -29,6 +31,28 @@ export type ResolvedAboutData = {
   team: ResolvedAboutTeamMember[];
   culture: ResolvedAboutCultureItem[];
 };
+
+/** Uncached meta for generateMetadata — tracks CMS intro/seo. */
+export async function getAboutMetadataSource(
+  locale: AppLocale,
+): Promise<{ title: string; description: string }> {
+  await connection();
+  const fallbackIntro = getAboutIntro(locale);
+  try {
+    await connectToDatabase();
+    const AboutModel = await getAboutModel();
+    const doc = await AboutModel.findOne().lean();
+    if (doc?.intro) {
+      return resolveAboutPageMeta(doc.intro, doc.seo, locale);
+    }
+  } catch {
+    // fall through
+  }
+  return {
+    title: fallbackIntro.title,
+    description: fallbackIntro.lead,
+  };
+}
 
 export async function getResolvedAboutData(
   locale: AppLocale,

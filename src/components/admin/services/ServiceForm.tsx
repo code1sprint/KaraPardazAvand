@@ -68,6 +68,10 @@ type ServiceFormData = {
   };
   deepDiveJson?: Record<string, unknown>;
   deepDiveHtml?: string;
+  seo?: {
+    title: { fa: string; en: string };
+    description: { fa: string; en: string };
+  };
   status: "published" | "draft";
 };
 
@@ -135,7 +139,7 @@ const DEFAULT_SYSTEM_MAP: ServiceFormData["systemMap"] = {
 export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
-    "basics" | "deliverables" | "architecture" | "faqs" | "deepdive"
+    "basics" | "deliverables" | "architecture" | "faqs" | "deepdive" | "seo"
   >("basics");
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -218,6 +222,16 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
       content: [],
     },
     deepDiveHtml: initialData?.deepDiveHtml || "",
+    seo: {
+      title: {
+        fa: initialData?.seo?.title?.fa || "",
+        en: initialData?.seo?.title?.en || "",
+      },
+      description: {
+        fa: initialData?.seo?.description?.fa || "",
+        en: initialData?.seo?.description?.en || "",
+      },
+    },
     status: initialData?.status || "published",
   });
 
@@ -255,6 +269,7 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
               bento: s.bento ?? prev.bento,
               deepDiveJson: s.deepDiveJson ?? prev.deepDiveJson,
               deepDiveHtml: s.deepDiveHtml ?? prev.deepDiveHtml,
+              seo: s.seo ?? prev.seo,
               status: s.status ?? prev.status,
             }));
             setSuccessMsg("محتوای خدمت و ادیتور از طریق API به‌روزرسانی شد.");
@@ -385,6 +400,12 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
             label: "۵. جزییات عمیق معماری (Tiptap Rich-Text)",
             icon: <IconPencil className="size-4" />,
             badge: "ادیتور آزاد",
+          },
+          {
+            id: "seo",
+            label: "۶. سئو و متادیتا",
+            icon: <IconCheckCircle className="size-4" />,
+            badge: "meta",
           },
         ].map((tab) => (
           <button
@@ -1199,6 +1220,147 @@ export function ServiceForm({ initialData, isNew = false }: ServiceFormProps) {
                 }));
               }}
             />
+          </div>
+        </div>
+      )}
+
+      {activeTab === "seo" && (
+        <div className="bg-panel p-6 rounded-3xl border border-line shadow-sm space-y-6">
+          <div className="rounded-xl border border-line/80 bg-bg/60 p-4 text-xs leading-relaxed text-muted">
+            اگر عنوان و توضیح فارسی SEO هر دو پر باشند، همان‌ها برای متای صفحه خدمت
+            استفاده می‌شوند. در غیر این صورت از عنوان + outcome هیرو پیروی می‌شود.
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: { ...prev.title },
+                    description: { ...prev.outcome },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-text hover:border-blue hover:text-blue transition-colors"
+            >
+              همگام‌سازی از عنوان و outcome
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  seo: {
+                    title: { fa: "", en: "" },
+                    description: { fa: "", en: "" },
+                  },
+                }))
+              }
+              className="rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-bold text-muted hover:border-red-400 hover:text-red-600 transition-colors"
+            >
+              پاک کردن (برگشت به محتوا)
+            </button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-text">عنوان SEO (fa)</label>
+              <input
+                type="text"
+                value={formData.seo?.title?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: e.target.value,
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm"
+                placeholder={formData.title.fa}
+              />
+            </div>
+            <div className="space-y-2" dir="ltr">
+              <label className="block text-xs font-bold text-text text-start">SEO title (en)</label>
+              <input
+                type="text"
+                value={formData.seo?.title?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: e.target.value,
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm"
+                placeholder={formData.title.en}
+              />
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <label className="block text-xs font-bold text-text">توضیح SEO (fa)</label>
+              <textarea
+                rows={3}
+                value={formData.seo?.description?.fa || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: e.target.value,
+                        en: prev.seo?.description?.en || "",
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm leading-relaxed"
+                placeholder={formData.outcome.fa}
+              />
+            </div>
+            <div className="space-y-2 sm:col-span-2" dir="ltr">
+              <label className="block text-xs font-bold text-text text-start">
+                SEO description (en)
+              </label>
+              <textarea
+                rows={3}
+                value={formData.seo?.description?.en || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    seo: {
+                      title: {
+                        fa: prev.seo?.title?.fa || "",
+                        en: prev.seo?.title?.en || "",
+                      },
+                      description: {
+                        fa: prev.seo?.description?.fa || "",
+                        en: e.target.value,
+                      },
+                    },
+                  }))
+                }
+                className="w-full rounded-xl border border-line bg-bg px-3 py-2 text-sm leading-relaxed"
+                placeholder={formData.outcome.en}
+              />
+            </div>
           </div>
         </div>
       )}

@@ -44,7 +44,7 @@ export function LegalDocument({
           {title}
         </Heading>
         {summary ? (
-          <Text variant="muted" className="mt-3 max-w-2xl">
+          <Text variant="muted" className="mt-3 w-full max-w-none">
             {summary}
           </Text>
         ) : null}

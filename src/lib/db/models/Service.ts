@@ -48,6 +48,11 @@ export interface IServiceBento {
   shortTitle: ILocalizedString;
 }
 
+export interface IServiceSeo {
+  title: ILocalizedString;
+  description: ILocalizedString;
+}
+
 export interface IService extends Document {
   slug: string;
   title: ILocalizedString;
@@ -62,6 +67,8 @@ export interface IService extends Document {
   bento: IServiceBento;
   deepDiveJson?: Record<string, unknown>;
   deepDiveHtml?: string;
+  /** Page meta; empty → fall back to title/outcome. */
+  seo?: IServiceSeo;
   status: "published" | "draft";
   createdAt: Date;
   updatedAt: Date;
@@ -202,6 +209,10 @@ const ServiceSchema = new Schema<IService, ServiceModel>(
     deepDiveHtml: {
       type: String,
       default: "",
+    },
+    seo: {
+      title: { type: LocalizedStringSchema, required: false },
+      description: { type: LocalizedStringSchema, required: false },
     },
     status: {
       type: String,

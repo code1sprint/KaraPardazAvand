@@ -1,0 +1,33 @@
+{
+  "slug": "terms",
+  "title": {
+    "fa": "شرایط استفاده",
+    "en": "Terms of Use"
+  },
+  "summary": {
+    "fa": "ضوابط استفاده از وب‌سایت کارا پرداز اوند، مالکیت محتوا، حدود مسئولیت و تفاوت معرفی خدمات با قرارداد اجرایی.",
+    "en": "Website terms for Kara Pardaz Avand: content ownership, liability limits, and how site use differs from a delivery contract."
+  },
+  "updatedIso": "2026-11-14",
+  "tiptapBody": {
+    "fa": {
+      "html": "<h2>پذیرش شرایط</h2><p>با ورود به وب‌سایت کارا پرداز اوند، مرور صفحات یا ارسال فرم، این شرایط را می‌پذیرید. اگر موافق نیستید، لطفاً از سایت استفاده نکنید.</p><h2>وب‌سایت معرفی است؛ قرارداد جداست</h2><ul><li>محتوای سایت (خدمات، مقالات، نمونه‌کارها) جنبهٔ معرفی و راهنمایی دارد.</li><li>پر کردن فرم، تماس اولیه یا جلسهٔ اکتشافی به‌تنهایی قرارداد یا تعهد تحویل نیست.</li><li>شروع کار اجرایی فقط پس از محدودهٔ کاری مکتوب، زمان‌بندی، شرایط پرداخت و قرارداد دوطرفه است.</li></ul><h2>مالکیت فکری</h2><p>نام تجاری، هویت بصری، متون، تصاویر رابط و سایر دارایی‌های منتشرشده در این سایت متعلق به کارا پرداز اوند (و در موارد مرتبط، خانوادهٔ برند Code1Sprint) است. کپی، بازنشر تجاری یا استفاده بدون اجازهٔ کتبی مجاز نیست. علائم مشتریان در نمونه‌کارها متعلق به صاحبان آن‌هاست.</p><h2>استفاده مجاز</h2><p>سایت را فقط برای اهداف قانونی و حرفه‌ای به کار ببرید. ممنوع است:</p><ul><li>تلاش برای نفوذ، اختلال یا بار مخرب روی سرویس</li><li>استخراج خودکار انبوه محتوا بدون مجوز</li><li>ارسال اطلاعات جعلی یا اسپم در فرم‌ها</li></ul><h2>مسئولیت و دسترسی</h2><p>برای دقت محتوا تلاش می‌کنیم؛ با این حال تصمیم‌گیری تجاری صرفاً بر اساس صفحات عمومی، بدون مشاورهٔ مستقیم، بر عهدهٔ شماست. دسترسی بی‌وقفه به سایت در برابر اختلال‌های خارج از کنترل (شبکه، میزبان بالادستی، حوادث قهری) تضمین نمی‌شود.</p><h2>پیوندهای خارجی</h2><p>پیوند به سایت‌ها یا ابزارهای دیگر به‌معنای تأیید کامل آن‌ها نیست. سیاست حریم خصوصی و امنیت آن مراجع با ما متفاوت است.</p><h2>تغییر شرایط</h2><p>ممکن است این صفحه به‌روز شود. تاریخ آخرین ویرایش در سند درج می‌شود. ادامهٔ استفاده به معنای پذیرش نسخهٔ منتشرشده است.</p><h2>قانون حاکم</h2><p>این شرایط در چارچوب قوانین جمهوری اسلامی ایران تفسیر می‌شود. در اختلاف، ابتدا گفت‌وگو اولویت دارد؛ در غیر این صورت مراجع صالح رسیدگی می‌کنند.</p>",
+      "json": null
+    },
+    "en": {
+      "html": "<h2>Acceptance</h2><p>By entering the Kara Pardaz Avand website, browsing pages, or submitting a form, you accept these terms. If you disagree, please do not use the site.</p><h2>The website introduces; contracts are separate</h2><ul><li>Site content (services, articles, case studies) is informational.</li><li>Filling a form, an initial call, or a discovery meeting alone is not a delivery contract.</li><li>Delivery work starts only after a written scope, schedule, payment terms, and a bilateral contract.</li></ul><h2>Intellectual property</h2><p>Brand name, visual identity, copy, UI assets, and other published materials on this site belong to Kara Pardaz Avand (and where relevant the Code1Sprint brand family). Copying, commercial republication, or use without written permission is not allowed. Client marks in case studies remain their owners' property.</p><h2>Acceptable use</h2><p>Use the site only for lawful, professional purposes. The following are prohibited:</p><ul><li>Attempts to breach, disrupt, or overload the service</li><li>Bulk automated extraction of content without permission</li><li>Fake information or spam in forms</li></ul><h2>Liability and availability</h2><p>We aim for accurate content; commercial decisions based only on public pages, without direct consultation, remain your responsibility. Uninterrupted access is not guaranteed against outages outside our control (network issues, upstream hosts, force majeure).</p><h2>External links</h2><p>Links to other sites or tools do not mean full endorsement. Their privacy and security practices differ from ours.</p><h2>Changes</h2><p>This page may be updated. The last revision date is shown on the document. Continued use means acceptance of the published version.</p><h2>Governing law</h2><p>These terms are interpreted under the laws of the Islamic Republic of Iran. Disputes should first be addressed through discussion; otherwise competent courts apply.</p>",
+      "json": null
+    }
+  },
+  "seo": {
+    "title": {
+      "fa": "",
+      "en": ""
+    },
+    "description": {
+      "fa": "",
+      "en": ""
+    }
+  },
+  "status": "published"
+}

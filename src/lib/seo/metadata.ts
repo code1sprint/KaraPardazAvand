@@ -15,6 +15,11 @@ export interface CreatePageMetadataOptions {
   publishedTime?: string;
   modifiedTime?: string;
   authors?: string[];
+  /**
+   * When true and title/description are provided, use them instead of
+   * static seo-meta.ts entries (CMS-driven pages: about, services, …).
+   */
+  preferCms?: boolean;
 }
 
 export const HOME_METADATA = {
@@ -118,6 +123,7 @@ export function createPageMetadata({
   publishedTime,
   modifiedTime,
   authors,
+  preferCms = false,
 }: CreatePageMetadataOptions): Metadata {
   const isEn = locale === "en";
   const brandName = isEn ? entityConfig.canonicalName.en : entityConfig.canonicalName.fa;
@@ -133,7 +139,20 @@ export function createPageMetadata({
   let ogDescription: string;
   let effectiveNoIndex = noIndex;
 
-  if (precomputed) {
+  const cmsTitle = (rawTitle || "").trim();
+  const cmsDescription = (rawDesc || "").trim();
+  const useCms =
+    preferCms && Boolean(cmsTitle) && Boolean(cmsDescription);
+
+  if (useCms) {
+    finalTitle = formatMetaTitle(cmsTitle, locale);
+    finalDescription = clampDescription(cmsDescription);
+    ogTitle = finalTitle;
+    ogDescription = finalDescription;
+    if (precomputed?.robots.includes("noindex")) {
+      effectiveNoIndex = true;
+    }
+  } else if (precomputed) {
     finalTitle = precomputed.title;
     finalDescription = precomputed.description;
     ogTitle = precomputed.ogTitle;

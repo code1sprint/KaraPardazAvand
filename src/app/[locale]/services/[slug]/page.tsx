@@ -26,6 +26,7 @@ import {
   services,
 } from "@/content/services";
 import { getServiceDetail } from "@/lib/services";
+import { resolveServicePageMeta } from "@/lib/service-seo";
 import { getSiteUrl } from "@/content/site";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
@@ -45,10 +46,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const service = getServiceBySlug(slug);
   const t = await getTranslations({ locale, namespace: "Meta" });
 
-  if (!service || !isAppLocale(locale)) {
+  if (!isAppLocale(locale)) {
     return buildPageMetadata({
       locale,
       path: `/services/${slug}`,
@@ -60,14 +60,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   }
 
+  const service = await getServiceDetail(slug);
+  if (!service) {
+    return buildPageMetadata({
+      locale,
+      path: `/services/${slug}`,
+      title: t("pages.services.title"),
+      description: t("pages.services.description"),
+      siteName: t("siteName"),
+      imageAlt: t("ogImageAlt"),
+      noIndex: true,
+    });
+  }
+
+  const cms = resolveServicePageMeta(
+    {
+      title: service.title,
+      outcome: service.outcome,
+      seo: service.seo,
+    },
+    locale,
+  );
+
   const entityService = entityConfig.services.find((s) => s.slug === slug);
   const primaryKw =
     locale === "en"
       ? entityService?.primaryKeyword.en
       : entityService?.primaryKeyword.fa;
 
-  const title = primaryKw || pickLocalized(service.title, locale);
-  const description = pickLocalized(service.outcome, locale);
+  const title = cms.title || primaryKw || pickLocalized(service.title, locale);
+  const description = cms.description || pickLocalized(service.outcome, locale);
 
   return buildPageMetadata({
     locale,
@@ -76,6 +98,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     siteName: t("siteName"),
     imageAlt: t("ogImageAlt"),
+    preferCms: Boolean(cms.title && cms.description),
   });
 }
 
@@ -155,7 +178,7 @@ async function ServiceDetailContent({ params }: Props) {
       <JsonLd data={serviceJsonLd} />
       <header aria-labelledby="service-hero-heading" className="w-full pt-[length:var(--hero-top)]">
         <Container className="flex flex-col gap-10">
-          <div className="flex max-w-2xl flex-col gap-4">
+          <div className="flex w-full max-w-none flex-col gap-4">
             <Breadcrumbs
               label={breadcrumbT("label")}
               items={[
