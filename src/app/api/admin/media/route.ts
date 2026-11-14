@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "@/lib/auth/guard";
+import { getUploadsDir } from "@/lib/media/uploads";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -16,7 +17,7 @@ const VIDEO_EXTENSIONS = new Set([".mp4", ".webm", ".ogg", ".mov"]);
 export const GET = withAuth(
   async () => {
     try {
-      const uploadsDir = path.join(process.cwd(), "public/uploads");
+      const uploadsDir = getUploadsDir();
       await fs.mkdir(uploadsDir, { recursive: true });
 
       const files = await fs.readdir(uploadsDir);

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "@/lib/auth/guard";
+import { getUploadsDir, mapUploadFsError } from "@/lib/media/uploads";
 import fs from "node:fs/promises";
 import path from "node:path";
+
+export const maxDuration = 60;
 
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -67,7 +70,7 @@ export const POST = withAuth(
         .slice(0, 40);
 
       const uniqueName = `${Date.now()}-${baseName || "media"}${rawExt}`;
-      const uploadsDir = path.join(process.cwd(), "public/uploads");
+      const uploadsDir = getUploadsDir();
 
       await fs.mkdir(uploadsDir, { recursive: true });
       const targetPath = path.join(uploadsDir, uniqueName);
@@ -84,10 +87,15 @@ export const POST = withAuth(
         size: file.size,
       });
     } catch (err: unknown) {
-      console.error("[UPLOAD_ERROR]", err);
+      const code =
+        err && typeof err === "object" && "code" in err
+          ? String((err as { code?: unknown }).code)
+          : undefined;
+      console.error("[UPLOAD_ERROR]", { code, err });
+      const mapped = mapUploadFsError(err);
       return NextResponse.json(
-        { ok: false, message: "خطا در پردازش و ذخیره‌سازی فایل." },
-        { status: 500 },
+        { ok: false, message: mapped.message },
+        { status: mapped.status },
       );
     }
   },

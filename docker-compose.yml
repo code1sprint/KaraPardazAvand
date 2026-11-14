@@ -23,20 +23,26 @@ services:
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://karapardazavand.ir}
+    volumes:
+      - karapardaz_uploads:/app/public/uploads
     networks:
       - amlak-net
     deploy:
       resources:
         limits:
-          cpus: "1.00"
-          memory: 512M
+          cpus: "1.50"
+          memory: 1024M
         reservations:
-          memory: 128M
+          memory: 256M
     logging:
       driver: json-file
       options:
         max-size: "10m"
         max-file: "3"
+
+volumes:
+  karapardaz_uploads:
+    name: ${KARAPARDAZ_UPLOADS_VOLUME:-karapardaz_uploads}
 
 networks:
   amlak-net:

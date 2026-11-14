@@ -43,28 +43,27 @@ export async function getAllProjects(): Promise<ProjectMeta[]> {
     await connectToDatabase();
     const ProjectModel = await getProjectModel();
     const docs = await ProjectModel.find({}).lean();
-    if (docs && docs.length > 0) {
-      return docs
-        .filter((doc) => isProjectVisible(doc.status as ProjectMeta["status"]))
-        .map((doc) => ({
-          slug: doc.slug,
-          title: doc.title,
-          sector: doc.sector,
-          year: String(doc.year),
-          services: doc.services || [],
-          role: doc.role,
-          problem: doc.problem,
-          solution: doc.solution,
-          results: doc.results || [],
-          stack: doc.stack || [],
-          cover: doc.cover,
-          gallery: doc.gallery || [],
-          systemMap: doc.systemMap as ProjectSystemMap,
-          featured: doc.featured,
-          status: doc.status as ProjectMeta["status"],
-        }))
-        .sort((a, b) => a.title.localeCompare(b.title, "fa"));
-    }
+    // DB is authoritative when reachable — even if empty (keeps admin/site in sync).
+    return docs
+      .filter((doc) => isProjectVisible(doc.status as ProjectMeta["status"]))
+      .map((doc) => ({
+        slug: doc.slug,
+        title: doc.title,
+        sector: doc.sector,
+        year: String(doc.year),
+        services: doc.services || [],
+        role: doc.role,
+        problem: doc.problem,
+        solution: doc.solution,
+        results: doc.results || [],
+        stack: doc.stack || [],
+        cover: doc.cover,
+        gallery: doc.gallery || [],
+        systemMap: doc.systemMap as ProjectSystemMap,
+        featured: doc.featured,
+        status: doc.status as ProjectMeta["status"],
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title, "fa"));
   } catch {
     // If DB offline, fall back to MDX collection
   }
@@ -97,33 +96,33 @@ export async function getProjectBySlug(slug: string) {
     await connectToDatabase();
     const ProjectModel = await getProjectModel();
     const doc = await ProjectModel.findOne({ slug }).lean();
-    if (doc) {
-      if (!isProjectVisible(doc.status as ProjectMeta["status"])) return null;
-      const meta: ProjectMeta = {
-        slug: doc.slug,
-        title: doc.title,
-        sector: doc.sector,
-        year: String(doc.year),
-        services: doc.services || [],
-        role: doc.role,
-        problem: doc.problem,
-        solution: doc.solution,
-        results: doc.results || [],
-        stack: doc.stack || [],
-        cover: doc.cover,
-        gallery: doc.gallery || [],
-        systemMap: doc.systemMap as ProjectSystemMap,
-        featured: doc.featured,
-        status: doc.status as ProjectMeta["status"],
-      };
-      return {
-        meta,
-        content: "",
-        contentHtml: doc.contentHtml || "",
-      };
-    }
+    // DB is authoritative when reachable — missing slug means not found (no MDX mix-in).
+    if (!doc) return null;
+    if (!isProjectVisible(doc.status as ProjectMeta["status"])) return null;
+    const meta: ProjectMeta = {
+      slug: doc.slug,
+      title: doc.title,
+      sector: doc.sector,
+      year: String(doc.year),
+      services: doc.services || [],
+      role: doc.role,
+      problem: doc.problem,
+      solution: doc.solution,
+      results: doc.results || [],
+      stack: doc.stack || [],
+      cover: doc.cover,
+      gallery: doc.gallery || [],
+      systemMap: doc.systemMap as ProjectSystemMap,
+      featured: doc.featured,
+      status: doc.status as ProjectMeta["status"],
+    };
+    return {
+      meta,
+      content: "",
+      contentHtml: doc.contentHtml || "",
+    };
   } catch {
-    // Fall back to MDX
+    // Fall back to MDX when DB is offline
   }
 
   const doc = await loadMdxBySlug<unknown>("projects", slug);

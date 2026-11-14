@@ -40,20 +40,26 @@ ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0
 
-RUN apk add --no-cache wget \
+RUN apk add --no-cache wget su-exec \
     && addgroup -S karapardaz \
     && adduser -S karapardaz -G karapardaz
 
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=karapardaz:karapardaz /app/public ./public
 COPY --from=builder --chown=karapardaz:karapardaz /app/.next/standalone ./
 COPY --from=builder --chown=karapardaz:karapardaz /app/.next/static ./.next/static
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-USER karapardaz
+RUN mkdir -p ./public/uploads \
+    && chown -R karapardaz:karapardaz ./public/uploads \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 
+# Entrypoint runs as root only long enough to chown the uploads volume,
+# then drops to karapardaz via su-exec (named volumes overlay image perms).
 EXPOSE 3000
 
 HEALTHCHECK --interval=20s --timeout=5s --start-period=30s --retries=3 \
     CMD wget -q -O /dev/null "http://127.0.0.1:${PORT}/fa" || exit 1
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["node", "server.js"]
 

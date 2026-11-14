@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { MediaItem } from "@/app/api/admin/media/route";
+import { compressImageIfNeeded } from "@/lib/image-compress";
 import { cn } from "@/lib/cn";
 import {
   IconClose,
@@ -98,17 +99,42 @@ export function MediaModal({
     setUploading(true);
     setUploadError(null);
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
+      // Compress raster images if over size threshold
+      const optimizedFile = await compressImageIfNeeded(file);
+
+      const formData = new FormData();
+      formData.append("file", optimizedFile);
+
       const res = await fetch("/api/admin/media/upload", {
         method: "POST",
         body: formData,
       });
 
+      if (!res.ok) {
+        if (res.status === 502) {
+          throw new Error(
+            "خطای 502 (Bad Gateway): ارتباط با سرور قطع شد یا تنظیمات حجم فایل وب‌سرور (Nginx) نیاز به افزایش دارد.",
+          );
+        }
+        if (res.status === 413) {
+          throw new Error(
+            "حجم فایل بیش از سقف مجاز وب‌سرور است (خطای ۴۱۳). لطفاً فایل کم‌حجم‌تری انتخاب کنید.",
+          );
+        }
+
+        let errMsg = `خطای سرور (${res.status})`;
+        try {
+          const errJson = await res.json();
+          if (errJson?.message) errMsg = errJson.message;
+        } catch {
+          // not JSON
+        }
+        throw new Error(errMsg);
+      }
+
       const json = await res.json();
-      if (!res.ok || !json.ok) {
+      if (!json.ok) {
         throw new Error(json.message || "خطا در آپلود فایل.");
       }
 

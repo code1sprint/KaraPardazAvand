@@ -14,6 +14,7 @@ import {
 } from "@/components/admin/editor/EditorIcons";
 import { cn } from "@/lib/cn";
 import type { MediaItem } from "@/app/api/admin/media/route";
+import { compressImageIfNeeded } from "@/lib/image-compress";
 
 export interface CoverImagePickerProps {
   value: string;
@@ -65,17 +66,42 @@ export function CoverImagePicker({
     setUploadError(null);
 
     try {
+      // Automatically optimize/compress large images before sending over the wire
+      const optimizedFile = await compressImageIfNeeded(file);
+
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", optimizedFile);
 
       const res = await fetch("/api/admin/media/upload", {
         method: "POST",
         body: formData,
       });
 
+      if (!res.ok) {
+        if (res.status === 502) {
+          throw new Error(
+            "خطای 502 (Bad Gateway): ارتباط وب‌سرور قطع شد یا حجم فایل بیش از تنظیمات مجاز وب‌سرور (Nginx) است.",
+          );
+        }
+        if (res.status === 413) {
+          throw new Error(
+            "حجم فایل بیش از سقف مجاز سرور است (خطای ۴۱۳). لطفاً فایلی با حجم کمتر انتخاب کنید.",
+          );
+        }
+
+        let errMsg = `خطای سرور (${res.status})`;
+        try {
+          const errJson = await res.json();
+          if (errJson?.message) errMsg = errJson.message;
+        } catch {
+          // not JSON
+        }
+        throw new Error(errMsg);
+      }
+
       const data = await res.json();
 
-      if (!res.ok || !data.ok) {
+      if (!data.ok) {
         throw new Error(data.message || "خطا در آپلود تصویر");
       }
 

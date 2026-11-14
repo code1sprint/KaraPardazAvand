@@ -1,0 +1,1 @@
+Production upload 500: Docker named volume karapardaz_uploads mounts over /app/public/uploads as root while app runs as karapardaz → EACCES on writeFile. Fixed with docker-entrypoint.sh (chown then su-exec). Hotfix without rebuild: docker exec -u root karapardaz-web chown -R karapardaz:karapardaz /app/public/uploads

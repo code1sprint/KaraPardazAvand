@@ -28,6 +28,7 @@ import { IconEraser, IconLightbulb, IconLink } from "./EditorIcons";
 import { MediaModal, type MediaInsertParams } from "./MediaModal";
 import { CtaModal, type CtaModalParams } from "./CtaModal";
 import { LinkModal, type LinkModalParams } from "./LinkModal";
+import { compressImageIfNeeded } from "@/lib/image-compress";
 import { cn } from "@/lib/cn";
 
 const lowlight = createLowlight(common);
@@ -182,6 +183,94 @@ export function TiptapEditor({
           "leading-relaxed",
         ),
         dir: locale === "fa" ? "rtl" : "ltr",
+      },
+      handlePaste: (view, event) => {
+        const items = event.clipboardData?.items;
+        if (!items) return false;
+        for (const item of items) {
+          if (item.type.startsWith("image/")) {
+            const file = item.getAsFile();
+            if (file) {
+              event.preventDefault();
+              void (async () => {
+                try {
+                  const optimized = await compressImageIfNeeded(file);
+                  const fd = new FormData();
+                  fd.append("file", optimized);
+                  const res = await fetch("/api/admin/media/upload", {
+                    method: "POST",
+                    body: fd,
+                  });
+                  if (res.ok) {
+                    const data = await res.json();
+                    if (data.ok && data.url) {
+                      const nodeType = view.state.schema.nodes.customImage || view.state.schema.nodes.image;
+                      if (nodeType) {
+                        view.dispatch(
+                          view.state.tr.replaceSelectionWith(
+                            nodeType.create({
+                              src: data.url,
+                              alt: file.name.replace(/\.[^/.]+$/, ""),
+                              width: "100%",
+                              align: "center",
+                            }),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                } catch {
+                  // Fallback: ignore paste error
+                }
+              })();
+              return true;
+            }
+          }
+        }
+        return false;
+      },
+      handleDrop: (view, event) => {
+        const files = event.dataTransfer?.files;
+        if (files && files.length > 0 && files[0].type.startsWith("image/")) {
+          event.preventDefault();
+          const file = files[0];
+          void (async () => {
+            try {
+              const optimized = await compressImageIfNeeded(file);
+              const fd = new FormData();
+              fd.append("file", optimized);
+              const res = await fetch("/api/admin/media/upload", {
+                method: "POST",
+                body: fd,
+              });
+              if (res.ok) {
+                const data = await res.json();
+                if (data.ok && data.url) {
+                  const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
+                  const pos = coordinates ? coordinates.pos : view.state.selection.from;
+                  const nodeType = view.state.schema.nodes.customImage || view.state.schema.nodes.image;
+                  if (nodeType) {
+                    view.dispatch(
+                      view.state.tr.insert(
+                        pos,
+                        nodeType.create({
+                          src: data.url,
+                          alt: file.name.replace(/\.[^/.]+$/, ""),
+                          width: "100%",
+                          align: "center",
+                        }),
+                      ),
+                    );
+                  }
+                }
+              }
+            } catch {
+              // Fallback: ignore drop error
+            }
+          })();
+          return true;
+        }
+        return false;
       },
     },
     onUpdate: ({ editor }) => {

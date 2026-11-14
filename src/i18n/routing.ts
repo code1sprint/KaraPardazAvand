@@ -4,6 +4,8 @@ export const routing = defineRouting({
   locales: ["fa", "en"],
   defaultLocale: "fa",
   localePrefix: "always",
+  // Always land on Persian for unprefixed URLs; ignore Accept-Language / cookie.
+  localeDetection: false,
   alternateLinks: false,
 });
 
